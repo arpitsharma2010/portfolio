@@ -1,0 +1,42 @@
+.footer {
+    background-color: #F5F5F5;
+    color: #333333;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .social-icons a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+  }
+  
+  .social-icons i {
+    font-size: 24px;
+  }
+  
+  .social-icons a:hover {
+    color: #3498db;
+  }
+  
+  /* Additional styling for the dynamic year */
+  .footer-content p {
+    margin: 0;
+  }
+  
+  .footer-content p::before {
+    content: '\00a9'; /* Unicode for copyright symbol */
+    margin-right: 5px;
+  }
+
+  .darkMode {
+    background-color: #121212 ;
+    color: #FFFFFF ;
+  }
+  

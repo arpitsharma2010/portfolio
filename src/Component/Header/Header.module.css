@@ -1,0 +1,76 @@
+.header {
+    background-color: #F5F5F5;
+    color: #333333;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    font-size: 24px;
+  }
+  
+  nav ul {
+    list-style: none;
+    display: flex;
+  }
+  
+  nav li {
+    margin-right: 15px;
+    cursor: pointer;
+    color: #4CAF50 ;
+  }
+  
+  nav li:hover {
+    text-decoration: underline;
+  }
+  
+  .darkMode {
+    background-color: #121212 ;
+    color: #FFFFFF ;
+  }
+
+  .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  .toggle-switch input {
+    display: none;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #121212 ;
+    transition: 0.4s;
+    border-radius: 34px;
+  }
+  
+  .toggle-switch input:checked + .slider {
+    background-color: #FFFFFF ;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: '';
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: #F5F5F5 ;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+  
+  .toggle-switch input:checked + .slider:before {
+    transform: translateX(26px);
+    background-color: #333333 ; /* Orange color for dark mode */
+  }

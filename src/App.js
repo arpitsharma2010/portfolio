@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import Header from "./Component/Header/Header.jsx";
+import Footer from "./Component/Footer/Footer.jsx";
 
 function App() {
+  const [isDarkMode, setDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setDarkMode((prevState) => {
+      return !prevState;
+    });
+    document.body.classList.toggle("dark-mode", isDarkMode);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
+      <Header isDarkMode={isDarkMode} onToggleDarkMode={toggleDarkMode} />
+      <Footer isDarkMode={isDarkMode} />
     </div>
   );
 }
