@@ -7,8 +7,8 @@ export default function Footer({ isDarkMode }) {
     return (
         <footer className={`${classes.footer} ${isDarkMode ? classes.darkMode : ''}`}>
             <div className={classes["footer-content"]}>
-                <p>&copy; {currentYear} Arpit Sharma. All rights reserved.</p>
-                <div className={classes["social-icons"]}>
+                <p> {currentYear} Arpit Sharma. All rights reserved.</p>
+                {/* <div className={classes["social-icons"]}>
                     <a href="#" target="_blank" rel="noopener noreferrer">
                         <i className={`${classes["fa"]} ${classes["fa-facebook"]}`}></i>
                     </a>
@@ -18,7 +18,7 @@ export default function Footer({ isDarkMode }) {
                     <a href="#" target="_blank" rel="noopener noreferrer">
                         <i className={`${classes["fa"]} ${classes["fa-instagram"]}`}></i>
                     </a>
-                </div>
+                </div> */}
             </div>
         </footer>
     );
