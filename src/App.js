@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
-import "./App.css";
+import classes from "./App.module.css";
 import Header from "./Component/Header/Header.jsx";
 import Footer from "./Component/Footer/Footer.jsx";
 import Home from "./Component/Home/Home.jsx";
@@ -13,13 +13,16 @@ function App() {
     setDarkMode((prevState) => {
       return !prevState;
     });
-    document.body.classList.toggle("dark-mode", isDarkMode);
   };
 
   return (
     <>
       <BrowserRouter>
-        <div className={`app ${isDarkMode ? "dark-mode" : ""}`}>
+        <div
+          className={`${classes["App"]} ${
+            isDarkMode ? classes["dark-mode"] : classes["light-mode"]
+          }`}
+        >
           <Header isDarkMode={isDarkMode} onToggleDarkMode={toggleDarkMode} />
           <Routes>
             <Route path="/" element={<Home />} />

@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import classes from './Header.module.css';
+import AppClasses from '../../App.module.css';
 
 export default function Header({ isDarkMode, onToggleDarkMode }) {
     return (
         <>
-            <header className={`${classes.header} ${isDarkMode ? classes.darkMode : ''}`}>
+            <header className={`${classes.header}`}>
                 <Link to="/" className={classes["logo"]}>Your Logo</Link>
                 <nav>
                     <ul>

@@ -1,11 +1,12 @@
 import React from 'react';
-import classes from './Footer.module.css'; // Import your CSS file for styling
+import classes from './Footer.module.css';
+import AppClasses from "../../App.module.css";
 
 export default function Footer({ isDarkMode }) {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className={`${classes.footer} ${isDarkMode ? classes.darkMode : ''}`}>
+        <footer className={`${classes.footer}`}>
             <div className={classes["footer-content"]}>
                 <p> {currentYear} Arpit Sharma. All rights reserved.</p>
                 {/* <div className={classes["social-icons"]}>

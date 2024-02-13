@@ -1,6 +1,4 @@
 .footer {
-    background-color: #F5F5F5;
-    color: #333333;
     padding: 20px;
     text-align: center;
   }
@@ -33,10 +31,5 @@
   .footer-content p::before {
     content: '\00a9'; /* Unicode for copyright symbol */
     margin-right: 5px;
-  }
-
-  .darkMode {
-    background-color: #121212 ;
-    color: #FFFFFF ;
   }
   

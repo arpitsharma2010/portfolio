@@ -1,6 +1,4 @@
 .header {
-    background-color: #F5F5F5;
-    color: #333333;
     padding: 15px;
     display: flex;
     justify-content: space-between;
@@ -24,11 +22,6 @@
   
   nav li:hover {
     text-decoration: underline;
-  }
-  
-  .darkMode {
-    background-color: #121212 ;
-    color: #FFFFFF ;
   }
 
   .toggle-switch {
