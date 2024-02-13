@@ -5,8 +5,35 @@
     align-items: center;
   }
   
-  .logo {
-    font-size: 24px;
+  .avatar {
+    width: 40px; 
+    height: 40px;
+    border-radius: 50%; 
+  }
+
+  .logoSection {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logoContainer {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo-separator {
+    height: 50px; /* Adjust the height as needed */
+    width: 1px;
+    margin: 0 10px; /* Adjust the margin as needed */
+  }
+
+  .nav-bar {
+    display: flex;
+    padding: 0;
+    padding-right: 15px;
+    align-items: center;
+    size-adjust: inherit;
+    size: 100%;
   }
   
   nav ul {
@@ -15,13 +42,25 @@
   }
   
   nav li {
-    margin-right: 15px;
-    cursor: pointer;
-    color: #4CAF50 ;
+    display: flex;
+    align-items: center;
   }
-  
-  nav li:hover {
-    text-decoration: underline;
+
+  .url-list {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .url-routes {
+    color: #4CAF50;
+    text-decoration: none;
+  }
+
+  .url-routes:hover {
+    color: #043905;
   }
 
   .toggle-switch {
@@ -43,17 +82,21 @@
     right: 0;
     bottom: 0;
     background-color: #121212 ;
-    transition: 0.4s;
-    border-radius: 34px;
+    transition: 1s;
+    border-radius: 16px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
   }
   
   .toggle-switch input:checked + .slider {
     background-color: #FFFFFF ;
   }
   
-  .slider:before {
+  .slider::before {
+    content: '☀️';
     position: absolute;
-    content: '';
     height: 26px;
     width: 26px;
     left: 4px;
@@ -61,9 +104,12 @@
     background-color: #F5F5F5 ;
     transition: 0.4s;
     border-radius: 50%;
+    align-content: center;
   }
   
-  .toggle-switch input:checked + .slider:before {
+  .toggle-switch input:checked + .slider::before {
+    content: '🌙';
+    align-content: center;
     transform: translateX(26px);
-    background-color: #333333 ; /* Orange color for dark mode */
+    background-color: #333333 ; 
   }

@@ -1,6 +1,5 @@
 import React from 'react';
 import classes from './Footer.module.css';
-import AppClasses from "../../App.module.css";
 
 export default function Footer({ isDarkMode }) {
     const currentYear = new Date().getFullYear();
