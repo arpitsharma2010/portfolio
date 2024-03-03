@@ -46,70 +46,67 @@
     align-items: center;
   }
 
-  .url-list {
+  .left-list {
     display: flex;
-    gap: 20px;
+    justify-content: flex-start;
+}
+
+.first-list-item {
+    text-align: left;
+    padding-left: 20px; /* Add padding for extra differentiation */
+    font-weight: bolder; /* Make it bold or apply any other styling you prefer */
+}
+
+.centered-list {
+    display: flex;
+    justify-content: center;
     list-style: none;
     padding: 0;
-    margin: 0;
-  }
+}
+
+.centered-list li {
+    display: inline-block;
+    margin: 0 10px; /* Adjust the margin as needed */
+}
 
   .url-routes {
     color: #4CAF50;
     text-decoration: none;
+    font-weight: bold;
   }
 
   .url-routes:hover {
     color: #043905;
   }
 
-  .toggle-switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-  }
-  
-  .toggle-switch input {
-    display: none;
-  }
-  
-  .slider {
-    position: absolute;
+  .dark-mode-toggle {
+    background: none;
+    border: none;
     cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #121212 ;
-    transition: 1s;
-    border-radius: 16px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
+    font-size: 20px;
+    color: #4CAF50; /* You can adjust the color as needed */
+    margin-left: 10px; /* Add margin for spacing */
+}
+
+.dark-mode-toggle:hover {
+    color: #043905; /* Adjust hover color as needed */
+}
+
+@media (max-width: 768px) {
+  .header {
+      flex-direction: column; /* Stack items vertically */
+      text-align: center; /* Center text content */
+  }
+
+  .toggle-switch {
+      margin-top: 10px; /* Add some spacing between the button and the navigation */
   }
   
-  .toggle-switch input:checked + .slider {
-    background-color: #FFFFFF ;
+  .logo-separator {
+      display: none; /* Hide the separator on smaller screens */
   }
-  
-  .slider::before {
-    content: '☀️';
-    position: absolute;
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: #F5F5F5 ;
-    transition: 0.4s;
-    border-radius: 50%;
-    align-content: center;
+
+  .nav-bar {
+      padding: 10px; /* Adjust padding for smaller screens */
   }
-  
-  .toggle-switch input:checked + .slider::before {
-    content: '🌙';
-    align-content: center;
-    transform: translateX(26px);
-    background-color: #333333 ; 
-  }
+}
