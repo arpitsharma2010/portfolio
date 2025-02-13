@@ -1,43 +1,40 @@
 import React from "react";
+import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/header/Header.tsx";
+import Home from "./components/pages/Home.tsx";
+import About from "./components/pages/About.tsx";
+import Skills from "./components/pages/Skills.tsx";
+import Projects from "./components/pages/Projects.tsx";
+import Education from "./components/pages/Education.tsx";
+import Experience from "./components/pages/Experience.tsx";
+import Certifications from "./components/pages/Certifications.tsx";
+import Contact from "./components/pages/Contact.tsx";
 
 const App: React.FC = () => {
   return (
-    <div className="flex">
-      {/* Sidebar Header */}
-      <Header />
+    <Router>
+      <div className="app-container">
+        {/* Sidebar - Fixed Header */}
+        <Header />
 
-      {/* Main Content */}
-      <main className="ml-64 p-8 w-full">
-        <section id="home" className="h-screen flex justify-center items-center bg-gray-200">
-          <h1 className="text-4xl font-bold">Welcome to My Portfolio</h1>
-        </section>
-
-        <section id="about" className="h-screen flex justify-center items-center bg-white">
-          <h2 className="text-3xl font-bold">About Me</h2>
-        </section>
-
-        <section id="skills" className="h-screen flex justify-center items-center bg-gray-100">
-          <h2 className="text-3xl font-bold">Skills</h2>
-        </section>
-
-        <section id="education" className="h-screen flex justify-center items-center bg-white">
-          <h2 className="text-3xl font-bold">Education</h2>
-        </section>
-
-        <section id="experience" className="h-screen flex justify-center items-center bg-gray-100">
-          <h2 className="text-3xl font-bold">Experience</h2>
-        </section>
-
-        <section id="certifications" className="h-screen flex justify-center items-center bg-white">
-          <h2 className="text-3xl font-bold">Certifications</h2>
-        </section>
-
-        <section id="contact" className="h-screen flex justify-center items-center bg-gray-200">
-          <h2 className="text-3xl font-bold">Contact Me</h2>
-        </section>
-      </main>
-    </div>
+        {/* Main Content Area */}
+        <div className="content-container">
+        <main className="page-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/skills" element={<Skills />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/education" element={<Education />} />
+              <Route path="/experience" element={<Experience />} />
+              <Route path="/certifications" element={<Certifications />} />
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+        </main>
+        </div>
+      </div>
+    </Router>
   );
 };
 

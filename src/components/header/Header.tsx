@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../../styles/Header.css";
 
 const Header: React.FC = () => {
@@ -14,20 +15,21 @@ const Header: React.FC = () => {
         />
         <h2 className="profile-name">Arpit Sharma</h2>
         <p className="profile-bio">
-          Passionate about Web Development, AI, and Problem-Solving. Always eager to learn, grow, and create impactful solutions.
+          Software Engineer || Full-Stack Developer || AI & Cloud Enthusiast
         </p>
       </div>
 
       {/* Navigation Links - Properly Aligned */}
       <nav className="nav-section">
         <ul className="nav-links">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#education">Education</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#certifications">Certifications</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/about">About</Link></li>
+          <li><Link to="/skills">Skills</Link></li>
+          <li><Link to="/projects">Projects</Link></li>
+          <li><Link to="/education">Education</Link></li>
+          <li><Link to="/experience">Experience</Link></li>
+          <li><Link to="/certifications">Certifications</Link></li>
+          <li><Link to="/contact">Contact</Link></li>
         </ul>
       </nav>
 

@@ -1,0 +1,93 @@
+/* App Container: Side-by-Side Layout */
+.app-container {
+    display: flex;
+    overflow: hidden;
+}
+
+/* Content Container: Fixed Right Side with Scrollable Area */
+.content-container {
+    margin-left: 280px; /* Matches sidebar width */
+    width: calc(100vw - 280px); /* Takes remaining screen space */
+    min-height: 100vh;
+    overflow-y: auto; /* Makes only this section scrollable */
+    padding: 20px;
+    background-color: #f4f4f4; /* Light gray background for contrast */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Page Content */
+.page-content {
+    width: 80%;
+    max-width: 900px;
+    text-align: center;
+    flex-grow: 1;
+}
+
+/* Headings */
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #1f2937; /* Dark Gray */
+}
+
+/* Paragraphs */
+p {
+    font-size: 1.1rem;
+    color: #4b5563; /* Medium Gray */
+    line-height: 1.6;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn-primary {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2563eb;
+}
+
+.btn-secondary {
+    background-color: #10b981;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #059669;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .content-container {
+        width: calc(100vw - 250px); /* Adjust for smaller screens */
+        margin-left: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .content-container {
+        margin-left: 0;
+        width: 100%;
+    }
+}
