@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Typewriter } from "react-simple-typewriter";
-//import "../../styles/Home.css";
+import "../../styles/Home.css";
 
 const Home: React.FC = () => {
+    //let imgUrl = "./../../images/developer_image.jpg";
     const [isResumeAvailable, setIsResumeAvailable] = useState(false);
 
   // Check if the resume file exists
@@ -19,20 +20,16 @@ const Home: React.FC = () => {
     <section className="page-content">
       {/* Animated Greeting */}
       <h1 className="greeting">
-        Welcome
-        <br />
-        To
+        Hi,
         <br />
         <span className="highlight">
           <Typewriter
-            words={["Arpit Sharma's"]}
+            words={["I'm Arpit Sharma"]}
             typeSpeed={100}
             cursor
             cursorStyle="|"
           />
         </span>
-        <br />
-        Portfolio
       </h1>
 
       {/* Current Work Description */}
@@ -45,15 +42,19 @@ const Home: React.FC = () => {
           rel="noopener noreferrer"
           className="university-link"
         >
-          State University of New York at Buffalo
+          State University of New York at Buffalo(UB)
         </a>
+        <br/>
+        Specialization in Software and Hardware Systems
       </p>
+
+      <div className="image-container">
+        <img src="./../../../developer_image.jpg" alt="Developer Image" className="profile-image" />
+      </div>
 
       {/* Professional Summary */}
       <p className="description">
-        A <b>highly motivated software engineer</b> with expertise in <b>AI, machine learning, and full-stack development</b>.<br/>
-        Experienced in <b>building scalable APIs, cloud computing, and optimizing CI/CD pipelines</b>.<br/>
-        Passionate about developing innovative solutions that enhance efficiency and user experience.
+      I am a Software Engineer passionate about building scalable applications, optimizing cloud infrastructure, and automating DevOps pipelines. With experience in Java, Python, ReactJS, Spring Boot, .NET Core, and cloud platforms like AWS, I thrive on designing efficient, high-performance systems. While my core expertise lies in software development and cloud computing, I am also exploring Machine Learning & AI applications as part of my Master’s at SUNY Buffalo.
       </p>
 
       {/* Call to Action */}

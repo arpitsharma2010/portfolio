@@ -3,7 +3,6 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/header/Header.tsx";
 import Home from "./components/pages/Home.tsx";
-import About from "./components/pages/About.tsx";
 import Skills from "./components/pages/Skills.tsx";
 import Projects from "./components/pages/Projects.tsx";
 import Education from "./components/pages/Education.tsx";
@@ -23,7 +22,6 @@ const App: React.FC = () => {
         <main className="page-content">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
               <Route path="/skills" element={<Skills />} />
               <Route path="/projects" element={<Projects />} />
               <Route path="/education" element={<Education />} />
