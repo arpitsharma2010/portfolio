@@ -1,21 +1,72 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Typewriter } from "react-simple-typewriter";
+//import "../../styles/Home.css";
 
 const Home: React.FC = () => {
+    const [isResumeAvailable, setIsResumeAvailable] = useState(false);
+
+  // Check if the resume file exists
+  useEffect(() => {
+    fetch("/resume.pdf", { method: "HEAD" })
+      .then((res) => {
+        if (res.ok) {
+          setIsResumeAvailable(true);
+        }
+      })
+      .catch(() => setIsResumeAvailable(false));
+  }, []);
   return (
     <section className="page-content">
-      <h1 className="text-4xl font-bold">Welcome to My Portfolio</h1>
-      <p className="text-lg mt-4">
-        Hi, I'm Arpit Sharma, a Full-Stack Developer and AI Enthusiast.
+      {/* Animated Greeting */}
+      <h1 className="greeting">
+        Welcome
+        <br />
+        To
+        <br />
+        <span className="highlight">
+          <Typewriter
+            words={["Arpit Sharma's"]}
+            typeSpeed={100}
+            cursor
+            cursorStyle="|"
+          />
+        </span>
+        <br />
+        Portfolio
+      </h1>
+
+      {/* Current Work Description */}
+      <p className="subtitle">
+        Pursuing Master of Science in Computer Science and Engineering <br />
+        @{" "}
+        <a
+          href="https://engineering.buffalo.edu/computer-science-engineering.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="university-link"
+        >
+          State University of New York at Buffalo
+        </a>
       </p>
-      <p className="text-lg mt-4">
-        Explore my skills, experience, and projects by using the navigation links.
+
+      {/* Professional Summary */}
+      <p className="description">
+        A <b>highly motivated software engineer</b> with expertise in <b>AI, machine learning, and full-stack development</b>.<br/>
+        Experienced in <b>building scalable APIs, cloud computing, and optimizing CI/CD pipelines</b>.<br/>
+        Passionate about developing innovative solutions that enhance efficiency and user experience.
       </p>
-      
-      {/* Extra content for scrolling test */}
-      <div className="mt-10">
-        {[...Array(20)].map((_, index) => (
-          <p key={index} className="text-gray-600 mt-2">Scrollable content line {index + 1}</p>
-        ))}
+
+      {/* Call to Action */}
+      <div className="cta-buttons">
+        {isResumeAvailable ? (
+          <a href="/resume.pdf" download="Arpit_Sharma_Resume.pdf" className="btn btn-primary">
+            📄 Download Resume
+          </a>
+        ) : (
+          <button className="btn btn-disabled" disabled>
+            ❌ Resume Not Available
+          </button>
+        )}
       </div>
     </section>
   );

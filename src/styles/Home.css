@@ -1,0 +1,13 @@
+
+
+.university-link {
+    color: #2563eb; /* Blue color to match theme */
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.university-link:hover {
+    color: #1e40af; /* Darker blue on hover */
+    text-decoration: underline;
+}

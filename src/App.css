@@ -1,12 +1,13 @@
 /* App Container: Side-by-Side Layout */
 .app-container {
     display: flex;
+    height: auto; /* Full viewport height */
     overflow: hidden;
 }
 
 /* Content Container: Fixed Right Side with Scrollable Area */
 .content-container {
-    margin-left: 280px; /* Matches sidebar width */
+    margin-left: 300px; /* Matches sidebar width */
     width: calc(100vw - 280px); /* Takes remaining screen space */
     min-height: 100vh;
     overflow-y: auto; /* Makes only this section scrollable */
@@ -20,7 +21,6 @@
 
 /* Page Content */
 .page-content {
-    width: 80%;
     max-width: 900px;
     text-align: center;
     flex-grow: 1;
@@ -90,4 +90,73 @@ p {
         margin-left: 0;
         width: 100%;
     }
+}
+
+/* Greeting ("Hi") */
+.greeting {
+    font-size: 5rem; /* Enlarged */
+    font-weight: bold;
+    color: #1f2937; /* Dark Gray */
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+/* Typing Effect ("Arpit Sharma") */
+.highlight {
+    font-size: 4rem; /* Smaller than "Hi" */
+    font-weight: bold;
+    color: #2563eb; /* Blue */
+}
+
+/* Subtitle (Your Current Work) */
+.subtitle {
+    font-size: 1.5rem;
+    color: #4b5563; /* Medium Gray */
+    margin-top: 10px;
+}
+
+/* Additional Info */
+.description {
+    font-size: 1.2rem;
+    color: #6b7280; /* Softer Gray */
+    margin-top: 20px;
+}
+
+.cta-buttons {
+    margin-top: 30px;
+    gap: 15px;
+}
+
+.btn {
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn-primary {
+    background-color: #2563eb;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #1e40af;
+}
+
+.btn-secondary {
+    background-color: #10b981;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #059669;
+}
+
+/* Disabled Button */
+.btn-disabled {
+    background-color: #9ca3af;
+    color: #f3f4f6;
+    cursor: not-allowed;
 }
