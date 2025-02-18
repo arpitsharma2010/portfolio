@@ -1,26 +1,28 @@
 import React from "react";
-import SkillCard from "./../utils/SkillCard.tsx"; // Import SkillCard component
+import TechnicalSkillCard from "../utils/TechnicalSkillCard.tsx"; 
+import SoftSkillCard from "../utils/SoftSkillCard.tsx"; 
+import "./../../styles/Skills.css";
 
 const Skills: React.FC = () => {
   const technicalSkills = [
-    { name: "JavaScript", img: "./../../../developer_image.jpg" },
-    { name: "TypeScript", img: "./../../../developer_image.jpg" },
-    { name: "React", img: "./../../../developer_image.jpg" },
-    { name: "Node.js", img: "./../../../developer_image.jpg" },
-    { name: "Python", img: "./../../../developer_image.jpg" },
-    { name: "MongoDB", img: "./../../../developer_image.jpg" },
-    { name: "SQL", img: "./../../../developer_image.jpg" },
-    { name: "AWS", img: "./../../../developer_image.jpg" },
-    { name: "Docker", img: "./../../../developer_image.jpg" },
-    { name: "Git & DevOps", img: "./../../../developer_image.jpg" },
+    { name: "JavaScript", img: "./../../../Javascript.png", description: "A versatile scripting language mainly for web development." },
+    { name: "TypeScript", img: "./../../../developer_image.jpg", description: "A strongly typed superset of JavaScript." },
+    { name: "React", img: "./../../../developer_image.jpg", description: "A JavaScript library for building user interfaces." },
+    { name: "Node.js", img: "./../../../developer_image.jpg", description: "A JavaScript runtime built on Chrome's V8 engine." },
+    { name: "Python", img: "./../../../developer_image.jpg", description: "A powerful and easy-to-learn programming language." },
+    { name: "MongoDB", img: "./../../../developer_image.jpg", description: "A NoSQL database for flexible and scalable data storage." },
+    { name: "SQL", img: "./../../../developer_image.jpg", description: "A language used to manage and query structured databases." },
+    { name: "AWS", img: "./../../../developer_image.jpg", description: "A cloud computing platform offering various services." },
+    { name: "Docker", img: "./../../../developer_image.jpg", description: "A containerization platform for running applications in isolated environments." },
+    { name: "Git & DevOps", img: "./../../../developer_image.jpg", description: "Tools and practices for efficient development and deployment." }
   ];
 
   const softSkills = [
-    "Effective Communication",
-    "Problem-Solving & Critical Thinking",
-    "Leadership & Team Collaboration",
-    "Time Management & Adaptability",
-    "Creative Thinking & Innovation",
+    { name: "Effective Communication", icon: "🗣️" },
+    { name: "Problem-Solving & Critical Thinking", icon: "🧩" },
+    { name: "Leadership & Team Collaboration", icon: "👥" },
+    { name: "Time Management & Adaptability", icon: "⌛" },
+    { name: "Creative Thinking & Innovation", icon: "💡" },
   ];
 
   return (
@@ -32,41 +34,21 @@ const Skills: React.FC = () => {
         <h3 className="text-2xl font-semibold mb-4">Technical Skills</h3>
 
         {/* Skills Grid */}
-        <div className="skills-grid">
-  {technicalSkills.map((skill, index) => {
-    // Start a new row every 3 elements
-    if (index % 3 === 0) {
-      return (
-        <div key={index} className="skill-row">
-          {technicalSkills.slice(index, index + 3).map((s, i) => (
-            <div key={i} className="skill-card">
-              <img src={s.img} alt={s.name} className="skill-image" />
-              <p className="skill-name">{s.name}</p>
-            </div>
+        <div className="technical-skills-container">
+          {technicalSkills.map((skill, index) => (
+            <TechnicalSkillCard key={index} name={skill.name} img={skill.img} description={skill.description} />
           ))}
-        </div>
-      );
-    }
-    return null; // Prevents rendering elements multiple times
-  })}
         </div>
       </div>
 
       {/* Soft Skills */}
       <div className="mt-10">
         <h3 className="text-2xl font-semibold mb-4">🧠 Soft Skills</h3>
-        <ul className="soft-skills-list">
+        <div className="soft-skills-grid">
           {softSkills.map((skill, index) => (
-            <li key={index} className="soft-skill">{skill}</li>
+            <SoftSkillCard key={index} name={skill.name} icon={skill.icon} />
           ))}
-        </ul>
-      </div>
-
-      {/* Call to Action */}
-      <div className="mt-8">
-        <a href="/experience" className="btn btn-primary">
-          📂 Explore My Work
-        </a>
+        </div>
       </div>
     </section>
   );
