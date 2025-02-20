@@ -1,63 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
+import "./../../styles/Education.css";
 
 const Education: React.FC = () => {
+    const [expanded, setExpanded] = useState<number | null>(null);
+
     const educationData = [
         {
-          institution: "XYZ University",
-          logo: "/education/university.png",
-          degree: "Bachelor of Science in Computer Science",
-          year: "2018 - 2022",
-          description: "Specialized in AI and Full-Stack Development. Worked on research projects and built multiple web applications.",
+          institution: "University at Buffalo - SUNY",
+          logo: "./../../../Education/UB.jpg",
+          degree: "Master of Science in Computer Science and Engineering",
+          year: "August 2024 - Present",
+          description: "Specialization in Hardware and Software Systems.",
         },
         {
-          institution: "ABC High School",
-          logo: "/education/highschool.png",
-          degree: "Higher Secondary Education (Science)",
-          year: "2016 - 2018",
-          description: "Studied Mathematics and Computer Science, participated in national-level coding competitions.",
+          institution: "Sant Gadge Baba Amravati University",
+          logo: "./../../../Education/SGBAU.jpg",
+          degree: "Bachelors of Engineering in Computer Science and Engineering",
+          year: "August 2016 - June 2020",
+          description: "Studied Courses like , participated in national-level coding competitions.",
         },
-      ];
-  return (
-    <section className="page-content">
-      {/* Section Title */}
-      <h2 className="text-4xl font-bold">🎓 Education & Certifications</h2>
+    ];
 
-      {/* Education List */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
-        {educationData.map((edu, index) => (
-          <div key={index} className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center">
-            {/* Institution Logo */}
-            <img src={edu.logo} alt={edu.institution} className="w-20 h-20 mb-4 rounded-full shadow-lg" />
+    return (
+        <section className="page-content">
+            {/* Section Title */}
+            <h2 className="text-4xl font-bold text-center">Education</h2>
 
-            {/* Institution Name & Degree */}
-            <h3 className="text-2xl font-semibold">{edu.institution}</h3>
-            <p className="text-lg font-medium text-gray-700">{edu.degree}</p>
-            <p className="text-sm text-gray-500">{edu.year}</p>
+            {/* Timeline Container */}
+            <div className="education-timeline">
+                {educationData.map((edu, index) => (
+                    <div key={index} className="timeline-item">
+                        {/* Left Side - Year & Institution */}
+                        <div className="timeline-left">
+                            <span className="timeline-year">{edu.year}</span>
+                            <img src={edu.logo} alt={edu.institution} className="timeline-logo" />
+                        </div>
 
-            {/* Description */}
-            <p className="mt-4 text-gray-600">{edu.description}</p>
-          </div>
-        ))}
-      </div>
+                        {/* Middle - Line */}
+                        <div className="timeline-line">
+                            <span className="timeline-dot"></span>
+                        </div>
 
-      {/* CTA Button for Certifications */}
-      <div className="mt-8">
-        <a
-          href="/certifications"
-          className="bg-blue-500 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-blue-600 transition"
-        >
-          📜 View Certifications
-        </a>
-      </div>
-
-      {/* Extra content for scrolling test */}
-      <div className="mt-10">
-        {[...Array(20)].map((_, index) => (
-          <p key={index} className="text-gray-600 mt-2">More about my education - line {index + 1}</p>
-        ))}
-      </div>
-    </section>
-  );
+                        {/* Right Side - Degree & Description */}
+                        <div className={`timeline-right ${expanded === index ? "expanded" : ""}`} onClick={() => setExpanded(expanded === index ? null : index)}>
+                            <h3 className="timeline-title">{edu.institution}</h3>
+                            <p className="timeline-degree">{edu.degree}</p>
+                            {expanded === index && (
+                                <p className="timeline-description">{edu.description}</p>
+                            )}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+    );
 };
 
 export default Education;

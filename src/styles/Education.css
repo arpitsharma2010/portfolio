@@ -1,0 +1,109 @@
+/* Timeline Container */
+.education-timeline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    max-width: 800px;
+    margin: 40px auto;
+}
+
+/* Individual Timeline Item */
+.timeline-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    padding: 20px 0;
+}
+
+/* Left Side - Year & Institution Logo */
+.timeline-left {
+    width: 25%;
+    text-align: right;
+    padding-right: 20px;
+}
+
+.timeline-year {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+}
+
+.timeline-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-top: 5px;
+}
+
+/* Middle - Timeline Line */
+.timeline-line {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.timeline-dot {
+    width: 12px;
+    height: 12px;
+    background: #3498db;
+    border-radius: 50%;
+    position: absolute;
+}
+
+/* Right Side - Degree & Description */
+.timeline-right {
+    width: 60%;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.timeline-right:hover {
+    transform: scale(1.02);
+}
+
+.timeline-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.timeline-degree {
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+}
+
+.timeline-description {
+    font-size: 14px;
+    color: #555;
+    margin-top: 8px;
+}
+
+/* Expanded State */
+.expanded {
+    background: #f5f5f5;
+    padding: 20px;
+}
+
+/* CTA Button */
+.certifications-btn {
+    background: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.certifications-btn:hover {
+    background: #2980b9;
+}
