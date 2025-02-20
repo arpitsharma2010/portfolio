@@ -1,42 +1,45 @@
 import React from "react";
+import "./../../styles/Contact.css";
 
 const Contact: React.FC = () => {
+
+  let resumePDF = "https://drive.google.com/file/d/1mcqK7Ru-knL_VgGzljd00gKsXkcPcKWW/view?usp=sharing";
+
   return (
     <section className="page-content">
       {/* Section Title */}
-      <h2 className="text-4xl font-bold">📩 Get in Touch</h2>
+      <h2 className="text-4xl font-bold text-center">Get in Touch</h2>
 
       {/* Contact Information */}
-      <div className="text-lg text-gray-700 mt-6">
-        <p>📍 <strong>Location:</strong> New Delhi, India</p>
-        <p>📧 <strong>Email:</strong> <a href="mailto:your.email@example.com" className="text-blue-500 hover:underline">your.email@example.com</a></p>
-        <p>📞 <strong>Phone:</strong> +91 98765 43210</p>
+      <div className="contact-info">
+        <p><strong>Location:</strong> Buffalo, New York, USA</p>
+        <p><strong>Email:</strong> <a href="mailto:arpeet.sharma.1998@gmail.com" className="contact-link">arpeet.sharma.1998@gmail.com</a></p>
+        <p><strong>University Email:</strong> <a href="mailto:arpitdil@buffalo.edu" className="contact-link">arpitdil@buffalo.edu</a></p>
+        <p><strong>Phone:</strong> +1 (716) 750-7459</p>
       </div>
 
-      {/* Social Media Links */}
-      <h3 className="text-2xl font-semibold mt-8">Connect with Me</h3>
-      <div className="flex gap-6 mt-4">
-        <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer">
-          <img src="/contact/linkedin.png" alt="LinkedIn" className="w-12 h-12 hover:opacity-80 transition" />
+      <h3 className="text-2xl font-semibold text-center mt-6">Connect with Me</h3>
+      <div className="social-links">
+        <a href="https://www.linkedin.com/in/arpitsharma2010/" target="_blank" rel="noopener noreferrer">
+          <img src="https://media.licdn.com/dms/image/v2/C560BAQHaVYd13rRz3A/company-logo_200_200/company-logo_200_200/0/1638831590218/linkedin_logo?e=1747872000&v=beta&t=z-85R5yPMGYXef2cY7hM6fBVFVCoIeXFHZTYxqGlmP0" alt="LinkedIn" className="social-icon" />
         </a>
-        <a href="https://github.com/yourgithub" target="_blank" rel="noopener noreferrer">
-          <img src="/contact/github.png" alt="GitHub" className="w-12 h-12 hover:opacity-80 transition" />
-        </a>
-        <a href="https://twitter.com/yourtwitter" target="_blank" rel="noopener noreferrer">
-          <img src="/contact/twitter.png" alt="Twitter" className="w-12 h-12 hover:opacity-80 transition" />
+        <a href="https://github.com/arpitsharma2010" target="_blank" rel="noopener noreferrer">
+          <img src="https://media.licdn.com/dms/image/v2/C560BAQFmuLSyL1nlPA/company-logo_200_200/company-logo_200_200/0/1678231359043/github_logo?e=1747872000&v=beta&t=B4MRR9ynYVMRwwl5xOGmjRmAkrUsDpq8A9LYxpHL6y0" alt="GitHub" className="social-icon" />
         </a>
       </div>
 
-      {/* CTA Message */}
-      <div className="mt-8 max-w-2xl text-lg text-gray-600">
-        <p>Feel free to reach out to me via email or connect with me on LinkedIn! I’m always open to discussing new opportunities, collaborations, or just a friendly chat. 🚀</p>
+      <div className="contact-buttons">
+      <a href={resumePDF} download="Arpit_Sharma_Resume.pdf" className="resume-btn" target='_blank' rel='noopener noreferrer'>View Resume</a>
       </div>
 
-      {/* Extra content for scrolling test */}
-      <div className="mt-10">
-        {[...Array(20)].map((_, index) => (
-          <p key={index} className="text-gray-600 mt-2">More about how to contact me - line {index + 1}</p>
-        ))}
+      <div className="map-container">
+        <iframe 
+          title="Google Maps Location"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23819.416099526294!2d-78.8783683!3d42.8864468!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d312260e0347c1%3A0x4b308af32d6e01c8!2sBuffalo%2C%20NY!5e0!3m2!1sen!2sus!4v1708289181023!5m2!1sen!2sus"
+          width="100%"
+          height="300"
+          loading="lazy"
+        ></iframe>
       </div>
     </section>
   );
