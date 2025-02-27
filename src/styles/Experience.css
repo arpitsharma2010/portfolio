@@ -1,0 +1,114 @@
+/* Timeline Container */
+.experience-timeline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    max-width: 800px;
+    margin: 40px auto;
+}
+
+/* Individual Timeline Item */
+.timeline-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    padding: 20px 0;
+}
+
+/* Left Side - Company Info */
+.timeline-left {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+}
+
+.timeline-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.timeline-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.timeline-position {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.timeline-company {
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+}
+
+.timeline-duration {
+    font-size: 12px;
+    color: #888;
+}
+
+/* Middle - Timeline Line */
+.timeline-line {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.timeline-dot {
+    width: 12px;
+    height: 12px;
+    background: #3498db;
+    border-radius: 50%;
+    position: absolute;
+}
+
+/* Right Side - Expandable Details */
+.timeline-details {
+    width: 60%;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-align: left;
+}
+
+.timeline-details:hover {
+    transform: scale(1.02);
+}
+
+.click-to-expand {
+    font-size: 14px;
+    color: #777;
+    text-align: center;
+}
+
+/* Expanded State */
+.expanded {
+    background: #f5f5f5;
+    padding: 20px;
+}
+
+.timeline-description {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+    list-style: disc;
+    padding-left: 20px;
+}
+
+.timeline-tech-stack {
+    font-size: 14px;
+    color: #777;
+    font-weight: bold;
+    margin-top: 10px;
+}
