@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import "./../../styles/Projects.css";
 
+const defaultImage = "/projects/default-placeholder.png"; // Add a placeholder image
+
 const Projects: React.FC = () => {
   const [expandedProject, setExpandedProject] = useState<number | null>(null);
 
   const projects = [
     {
       title: "Library Management System",
-      image: "/projects/library.png",
-      description: "A secure and scalable library management system with role-based authentication for book management and loan tracking.",
+      image: "../../../Project/LibraryMainPage.png",
+      description: "Developed a full-stack Library Management System using React (TypeScript) and Spring Boot, implementing secure authentication, role-based access control, and real-time data handling.",
       details: [
         "Built with React (TypeScript) and Spring Boot for a modern, scalable, and efficient user experience.",
         "Implements JWT and OAuth to ensure secure authentication and role-based access control.",
@@ -21,7 +23,7 @@ const Projects: React.FC = () => {
     },
     {
       title: "Crop Yield Prediction Using Machine Learning",
-      image: "/projects/chatbot.png",
+      image: "../../../Project/CropYieldMainpage.jpeg",
       description: "Developed a machine learning model for crop yield prediction using Random Forest, achieving 89% accuracy, and deployed it via a Flask web service for real-world applications.",
       details: [
         "Executed a machine learning model with 89% prediction accuracy for crop yield prediction in tons per hectare using Random Forest.",
@@ -35,7 +37,7 @@ const Projects: React.FC = () => {
     },
     {
       title: "Automated System for Timetable Generation",
-      image: "/projects/portfolio.png",
+      image: "", // No image provided (should use placeholder)
       description: "Developed an Automated Timetable Generation System using PHP, MySQL, and Bootstrap, allowing professors to manage availability and view their schedules while the admin efficiently generates optimized timetables.",
       details: [
         "Engineered a robust algorithm in PHP to automatically generate optimal timetables, reducing scheduling conflicts by 80%.",
@@ -44,7 +46,7 @@ const Projects: React.FC = () => {
         "Integrated an admin panel for managing professor availability, classroom allocations, and timetable generation.",
         "Optimized MySQL database to store faculty schedules, room availability, and course allocations efficiently."
       ],
-      techStack: ["React", "TypeScript", "Tailwind CSS"],
+      techStack: ["HTML", "Bootstrap", "PHP", "MySQL", "JavaScript"],
       githubLink: "https://github.com/arpitsharma2010/Automated-System-for-Timetable-Generation/tree/master",
     },
   ];
@@ -56,15 +58,14 @@ const Projects: React.FC = () => {
       <div className="projects-container">
         {projects.map((project, index) => (
           <div key={index} className="project-card">
-            <img src={project.image} alt={project.title} className="project-image" />
+            <img 
+              src={project.image || defaultImage} 
+              alt={project.title} 
+              className="project-image" 
+            />
             <h3 className="project-title">{project.title}</h3>
             <p className="project-description">{project.description}</p>
             <div className="project-links">
-              {/* {project.demoLink && (
-                <a href={project.demoLink} target="_blank" rel="noopener noreferrer" className="project-btn">
-                  Live Demo
-                </a>
-              )} */}
               <a href={project.githubLink} target="_blank" rel="noopener noreferrer" className="project-btn github-btn">
                 GitHub
               </a>
@@ -78,7 +79,11 @@ const Projects: React.FC = () => {
       {expandedProject !== null && (
         <div className="overlay" onClick={() => setExpandedProject(null)}>
           <div className="expanded-card">
-            <img src={projects[expandedProject].image} alt={projects[expandedProject].title} className="expanded-image" />
+            <img 
+              src={projects[expandedProject].image || defaultImage} 
+              alt={projects[expandedProject].title} 
+              className="expanded-image" 
+            />
             <div className="expanded-content">
               <h3 className="expanded-title">{projects[expandedProject].title}</h3>
               <p className="expanded-description">{projects[expandedProject].description}</p>
@@ -91,11 +96,6 @@ const Projects: React.FC = () => {
                 <strong>Tech Stack:</strong> {projects[expandedProject].techStack.join(", ")}
               </p>
               <div className="expanded-links">
-                {/* {projects[expandedProject].demoLink && (
-                  <a href={projects[expandedProject].demoLink} target="_blank" rel="noopener noreferrer" className="expanded-btn">
-                    Live Demo
-                  </a>
-                )} */}
                 <a href={projects[expandedProject].githubLink} target="_blank" rel="noopener noreferrer" className="expanded-btn github-btn">
                   GitHub
                 </a>
