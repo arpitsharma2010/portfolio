@@ -3,7 +3,7 @@ import { Typewriter } from "react-simple-typewriter";
 import "../../styles/Home.css";
 
 const Home: React.FC = () => {
-    //let imgUrl = "./../../images/developer_image.jpg";
+    let resumePDF = "https://drive.google.com/file/d/1mcqK7Ru-knL_VgGzljd00gKsXkcPcKWW/view?usp=sharing";
     const [isResumeAvailable, setIsResumeAvailable] = useState(false);
 
   // Check if the resume file exists
@@ -49,7 +49,7 @@ const Home: React.FC = () => {
       </p>
 
       <div className="image-container">
-        <img src="./../../../developer_image.jpg" alt="Developer Image" className="profile-image" />
+        <img src="./../../../developer_image.jpg" alt="Developer" className="profile-image" />
       </div>
 
       {/* Professional Summary */}
@@ -60,8 +60,8 @@ const Home: React.FC = () => {
       {/* Call to Action */}
       <div className="cta-buttons">
         {isResumeAvailable ? (
-          <a href="/resume.pdf" download="Arpit_Sharma_Resume.pdf" className="btn btn-primary">
-            📄 Download Resume
+          <a href={resumePDF} download="Arpit_Sharma_Resume.pdf" className="resume-btn" target='_blank' rel='noopener noreferrer'>
+            View Resume
           </a>
         ) : (
           <button className="btn btn-disabled" disabled>
