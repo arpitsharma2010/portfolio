@@ -1,7 +1,7 @@
 {
   "name": "resume-frontend",
   "version": "0.1.0",
-  "homepage": "https://arpitsharma2010.github.io/react-gh-pages",
+  "homepage": "https://arpitsharma2010.github.io/portfolio",
   "private": true,
   "dependencies": {
     "cra-template-typescript": "1.2.0",
@@ -36,5 +36,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
   }
 }

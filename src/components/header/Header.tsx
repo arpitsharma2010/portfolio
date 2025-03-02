@@ -9,7 +9,7 @@ const Header: React.FC = () => {
       {/* Profile Section */}
       <div className="profile-section">
         <img 
-          src="./../../../profile.png" 
+          src="https://arpitsharma2010.github.io/resume-frontend/profile.png" 
           alt="Arpit Sharma" 
           className="profile-img"
         />
