@@ -3,25 +3,25 @@ import TechnicalSkillCard from "../utils/TechnicalSkillCard.tsx";
 import SoftSkillCard from "../utils/SoftSkillCard.tsx"; 
 import "./../../styles/Skills.css";
 
-const Skills: React.FC = () => {
+const Skills: React.FC = (props) => {
   const technicalSkills = [
-    { name: "Java", img: "./../../../Skills/Java.png", description: "A versatile scripting language mainly for web development." },
-    { name: "Python", img: "./../../../Skills/Python.png", description: "A strongly typed superset of JavaScript." },
-    { name: "C#", img: "./../../../Skills/CSharp.png", description: "A JavaScript library for building user interfaces." },
-    { name: "SQL", img: "./../../../Skills/SQL.png", description: "A JavaScript runtime built on Chrome's V8 engine." },
-    { name: "NoSQL", img: "./../../../Skills/NoSQL.png", description: "A powerful and easy-to-learn programming language." },
-    { name: "Javascript", img: "./../../../Skills/Javascript.png", description: "A NoSQL database for flexible and scalable data storage." },
-    { name: "Spring Boot", img: "./../../../Skills/SpringBoot.png", description: "A language used to manage and query structured databases." },
-    { name: ".NET Core", img: "./../../../Skills/DotnetCore.png", description: "A cloud computing platform offering various services." },
-    { name: "ReactJS", img: "./../../../Skills/ReactJS.png", description: "A containerization platform for running applications in isolated environments." },
-    { name: "Git", img: "./../../../Skills/Git.png", description: "Tools and practices for efficient development and deployment." },
-    { name: "GitLab", img: "./../../../Skills/GitLab.png", description: "Tools and practices for efficient development and deployment." },
-    { name: "Bitbucket", img: "./../../../Skills/Bitbucket.png", description: "Tools and practices for efficient development and deployment." },
-    { name: "Jenkins", img: "./../../../Skills/Jenkins.png", description: "Tools and practices for efficient development and deployment." },
-    { name: "JIRA", img: "./../../../Skills/JIRA.png", description: "Tools and practices for efficient development and deployment." },
-    { name: "Confluence", img: "./../../../Skills/Confluence.jpg", description: "Tools and practices for efficient development and deployment." },
-    { name: "AWS", img: "./../../../Skills/AWS.png", description: "Tools and practices for efficient development and deployment." },
-    { name: "Terraform", img: "./../../../Skills/Terraform.png", description: "Tools and practices for efficient development and deployment." },
+    { name: "Java", img: `${props.url}Skills/Java.png`, description: "A versatile scripting language mainly for web development." },
+    { name: "Python", img: `${props.url}Skills/Python.png`, description: "A strongly typed superset of JavaScript." },
+    { name: "C#", img: `${props.url}Skills/CSharp.png`, description: "A JavaScript library for building user interfaces." },
+    { name: "SQL", img: `${props.url}Skills/SQL.png`, description: "A JavaScript runtime built on Chrome's V8 engine." },
+    { name: "NoSQL", img: `${props.url}Skills/NoSQL.png`, description: "A powerful and easy-to-learn programming language." },
+    { name: "Javascript", img: `${props.url}Skills/Javascript.png`, description: "A NoSQL database for flexible and scalable data storage." },
+    { name: "Spring Boot", img: `${props.url}Skills/SpringBoot.png`, description: "A language used to manage and query structured databases." },
+    { name: ".NET Core", img: `${props.url}Skills/DotnetCore.png`, description: "A cloud computing platform offering various services." },
+    { name: "ReactJS", img: `${props.url}Skills/ReactJS.png`, description: "A containerization platform for running applications in isolated environments." },
+    { name: "Git", img: `${props.url}Skills/Git.png`, description: "Tools and practices for efficient development and deployment." },
+    { name: "GitLab", img: `${props.url}Skills/GitLab.png`, description: "Tools and practices for efficient development and deployment." },
+    { name: "Bitbucket", img: `${props.url}Skills/Bitbucket.png`, description: "Tools and practices for efficient development and deployment." },
+    { name: "Jenkins", img: `${props.url}Skills/Jenkins.png`, description: "Tools and practices for efficient development and deployment." },
+    { name: "JIRA", img: `${props.url}Skills/JIRA.png`, description: "Tools and practices for efficient development and deployment." },
+    { name: "Confluence", img: `${props.url}Skills/Confluence.jpg`, description: "Tools and practices for efficient development and deployment." },
+    { name: "AWS", img: `${props.url}Skills/AWS.png`, description: "Tools and practices for efficient development and deployment." },
+    { name: "Terraform", img: `${props.url}Skills/Terraform.png`, description: "Tools and practices for efficient development and deployment." },
   ];
 
   const softSkills = [
@@ -52,7 +52,7 @@ const Skills: React.FC = () => {
 
       {/* Soft Skills */}
       <div className="mt-10">
-        <h3 className="text-2xl font-semibold mb-4">🧠 Soft Skills</h3>
+        <h3 className="text-2xl font-semibold mb-4">Soft Skills</h3>
         <div className="soft-skills-grid">
           {softSkills.map((skill, index) => (
             <SoftSkillCard key={index} name={skill.name} icon={skill.icon} />

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./../../styles/Projects.css";
 
-const Projects: React.FC = () => {
+const Projects: React.FC = (props) => {
   const [expandedProject, setExpandedProject] = useState<number | null>(null);
 
   const projects = [
     {
       title: "Library Management System",
-      image: "../../../Project/LibraryMainPage.png",
+      image: `${props.url}Project/LibraryMainPage.png`,
       description: "Developed a full-stack Library Management System using React (TypeScript) and Spring Boot, implementing secure authentication, role-based access control, and real-time data handling.",
       timeline: "Dec 2024 – Feb 2025", 
       details: [
@@ -23,7 +23,7 @@ const Projects: React.FC = () => {
     },
     {
       title: "Crop Yield Prediction Using Machine Learning",
-      image: "../../../Project/CropYieldMainpage.jpeg",
+      image: `${props.url}Project/CropYieldMainpage.jpeg`,
       description: "Developed a machine learning model for crop yield prediction using Random Forest, achieving 89% accuracy, and deployed it via a Flask web service for real-world applications.",
       timeline: "Sep 2024 – Nov 2024", 
       details: [
@@ -39,7 +39,7 @@ const Projects: React.FC = () => {
     },
     {
       title: "Automated System for Timetable Generation",
-      image: "../../../developer_image.jpg",
+      image: `${props.url}developer_image.jpg`,
       description: "Developed an Automated Timetable Generation System using PHP, MySQL, and Bootstrap, allowing professors to manage availability and view their schedules while the admin efficiently generates optimized timetables.",
       timeline: "Jan 2020 – Apr 2020", 
       details: [

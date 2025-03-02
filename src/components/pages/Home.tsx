@@ -2,7 +2,7 @@ import React from "react";
 import { Typewriter } from "react-simple-typewriter";
 import "../../styles/Home.css";
 
-const Home: React.FC = () => {
+const Home: React.FC = (props) => {
   const resumePDF = "https://drive.google.com/file/d/1mcqK7Ru-knL_VgGzljd00gKsXkcPcKWW/view?usp=sharing";
 
   return (
@@ -39,7 +39,7 @@ const Home: React.FC = () => {
 
       {/* Developer Image */}
       <div className="image-container">
-        <img src="./../../../developer_image.jpg" alt="Developer" className="profile-image" />
+        <img src={`${props.url}/developer_image.jpg`} alt="Developer" className="profile-image" />
       </div>
 
       {/* Professional Summary */}

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./../../styles/Experience.css";
 
-const Experience: React.FC = () => {
+const Experience: React.FC = (props) => {
   const [expandedJob, setExpandedJob] = useState<number | null>(null);
 
   const allExperience = [
     {
       company: "Tata Consultancy Services (TCS)",
-      logo: "./../../../Experience/TCS.png",
+      logo: `${props.url}Experience/TCS.png`,
       website: "https://www.tcs.com/",
       position: "Systems Engineer - Softwarre Developer",
       duration: "November 2020 - July 2024",
@@ -22,7 +22,7 @@ const Experience: React.FC = () => {
     },
     {
       company: "Obdurate Technology",
-      logo: "./../../../Experience/Obdurate.png",
+      logo: `${props.url}Experience/Obdurate.png`,
       website: "https://www.obdurate.in/",
       position: "Software Engineer Intern",
       duration: "June 2019 - August 2019",

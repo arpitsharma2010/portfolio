@@ -10,23 +10,25 @@ import Experience from "./components/pages/Experience.tsx";
 import Certifications from "./components/pages/Certifications.tsx";
 import Contact from "./components/pages/Contact.tsx";
 
+const BASE_URL = "https://arpitsharma2010.github.io/portfolio/";
+
 const App: React.FC = () => {
   return (
     <Router>
       <div className="app-container">
         {/* Sidebar - Fixed Header */}
-        <Header />
+        <Header url={BASE_URL}/>
 
         {/* Main Content Area */}
         <div className="content-container">
         <main className="page-content">
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/skills" element={<Skills />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/education" element={<Education />} />
-              <Route path="/experience" element={<Experience />} />
-              <Route path="/certifications" element={<Certifications />} />
+              <Route path="/portfolio" element={<Home url={BASE_URL}/>} />
+              <Route path="/skills" element={<Skills url={BASE_URL}/>} />
+              <Route path="/projects" element={<Projects url={BASE_URL}/>} />
+              <Route path="/education" element={<Education url={BASE_URL}/>} />
+              <Route path="/experience" element={<Experience url={BASE_URL}/>} />
+              <Route path="/certifications" element={<Certifications url={BASE_URL}/>} />
               <Route path="/contact" element={<Contact />} />
             </Routes>
         </main>

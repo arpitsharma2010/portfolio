@@ -2,14 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../../styles/Header.css";
 
-const Header: React.FC = () => {
+const Header: React.FC = (props) => {
   return (
     <aside className="sidebar">
       
       {/* Profile Section */}
       <div className="profile-section">
         <img 
-          src="https://arpitsharma2010.github.io/resume-frontend/profile.png" 
+          src={`${props.url}/profile.png`}
           alt="Arpit Sharma" 
           className="profile-img"
         />
@@ -22,7 +22,7 @@ const Header: React.FC = () => {
       {/* Navigation Links - Properly Aligned */}
       <nav className="nav-section">
         <ul className="nav-links">
-          <li><Link to="/">Home</Link></li>
+          <li><Link to="/portfolio">Home</Link></li>
           <li><Link to="/skills">Skills</Link></li>
           <li><Link to="/projects">Projects</Link></li>
           <li><Link to="/education">Education</Link></li>

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./../../styles/Education.css";
 
-const Education: React.FC = () => {
+const Education: React.FC = (props) => {
     const [expanded, setExpanded] = useState<number | null>(null);
 
     const educationData = [
         {
             institution: "University at Buffalo - SUNY",
-            logo: "./../../../Education/UB.jpg",
+            logo: `${props.url}Education/UB.jpg`,
             website: "https://engineering.buffalo.edu/computer-science-engineering.html",
             degree: "Master of Science in Computer Science and Engineering",
             year: "August 2024 - Present",
@@ -26,7 +26,7 @@ const Education: React.FC = () => {
         },
         {
             institution: "Sant Gadge Baba Amravati University",
-            logo: "./../../../Education/SGBAU.jpg",
+            logo: `${props.url}Education/SGBAU.jpg`,
             website: "https://sgbau.ac.in/departments/ComputerScience/Default.aspx",
             degree: "Bachelors of Engineering in Computer Science and Engineering",
             year: "August 2016 - June 2020",

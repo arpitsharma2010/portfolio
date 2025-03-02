@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import "./../../styles/Certifications.css";
 
-const Certifications: React.FC = () => {
+const Certifications: React.FC = (props) => {
   const [expandedCert, setExpandedCert] = useState<number | null>(null);
 
   const certificationsData = [
     {
       name: "AWS Cloud Practitioner",
       organization: "Amazon Web Services",
-      logo: "../../../Certification/aws_cloud_practitioner.png",
+      logo: `${props.url}Certification/aws_cloud_practitioner.png`,
       year: "June 2022 - June 2025",
       description: "Verified understanding of cloud computing concepts and AWS.",
       certificateLink: "https://www.credly.com/badges/7b23b0c9-df00-4c90-9af9-f76705ef1085?source=linked_in_profile",
@@ -16,7 +16,7 @@ const Certifications: React.FC = () => {
     {
       name: "Microsoft Certified: Azure Fundamentals",
       organization: "Microsoft",
-      logo: "../../../Certification/azure_fundamentals.png",
+      logo: `${props.url}Certification/azure_fundamentals.png`,
       year: "March 2022",
       description: "Verified understanding of cloud computing concepts and Microsoft Azure services.",
       certificateLink: "https://www.credly.com/badges/9e81ba52-0c00-4297-a692-f1612c938499?source=linked_in_profile",
