@@ -1,21 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Typewriter } from "react-simple-typewriter";
 import "../../styles/Home.css";
 
 const Home: React.FC = () => {
-    let resumePDF = "https://drive.google.com/file/d/1mcqK7Ru-knL_VgGzljd00gKsXkcPcKWW/view?usp=sharing";
-    const [isResumeAvailable, setIsResumeAvailable] = useState(false);
+  const resumePDF = "https://drive.google.com/file/d/1mcqK7Ru-knL_VgGzljd00gKsXkcPcKWW/view?usp=sharing";
 
-  // Check if the resume file exists
-  useEffect(() => {
-    fetch("/resume.pdf", { method: "HEAD" })
-      .then((res) => {
-        if (res.ok) {
-          setIsResumeAvailable(true);
-        }
-      })
-      .catch(() => setIsResumeAvailable(false));
-  }, []);
   return (
     <section className="page-content">
       {/* Animated Greeting */}
@@ -42,32 +31,27 @@ const Home: React.FC = () => {
           rel="noopener noreferrer"
           className="university-link"
         >
-          State University of New York at Buffalo(UB)
+          State University of New York at Buffalo (UB)
         </a>
-        <br/>
+        <br />
         Specialization in Software and Hardware Systems
       </p>
 
+      {/* Developer Image */}
       <div className="image-container">
         <img src="./../../../developer_image.jpg" alt="Developer" className="profile-image" />
       </div>
 
       {/* Professional Summary */}
       <p className="description">
-      I am a Software Engineer passionate about building scalable applications, optimizing cloud infrastructure, and automating DevOps pipelines. With experience in Java, Python, ReactJS, Spring Boot, .NET Core, and cloud platforms like AWS, I thrive on designing efficient, high-performance systems. While my core expertise lies in software development and cloud computing, I am also exploring Machine Learning & AI applications as part of my Master’s at SUNY Buffalo.
+        I am a Software Engineer passionate about building scalable applications, optimizing cloud infrastructure, and automating DevOps pipelines. With experience in Java, Python, ReactJS, Spring Boot, .NET Core, and cloud platforms like AWS, I thrive on designing efficient, high-performance systems. While my core expertise lies in software development and cloud computing, I am also exploring Machine Learning & AI applications as part of my Master’s at SUNY Buffalo.
       </p>
 
-      {/* Call to Action */}
+      {/* View Resume Button */}
       <div className="cta-buttons">
-        {isResumeAvailable ? (
-          <a href={resumePDF} download="Arpit_Sharma_Resume.pdf" className="resume-btn" target='_blank' rel='noopener noreferrer'>
-            View Resume
-          </a>
-        ) : (
-          <button className="btn btn-disabled" disabled>
-            ❌ Resume Not Available
-          </button>
-        )}
+        <a href={resumePDF} className="resume-btn" target="_blank" rel="noopener noreferrer">
+          View Resume
+        </a>
       </div>
     </section>
   );

@@ -6,20 +6,39 @@ const Education: React.FC = () => {
 
     const educationData = [
         {
-          institution: "University at Buffalo - SUNY",
-          logo: "./../../../Education/UB.jpg",
-          degree: "Master of Science in Computer Science and Engineering",
-          year: "August 2024 - Present",
-          description: "Specialization in Hardware and Software Systems.",
+            institution: "University at Buffalo - SUNY",
+            logo: "./../../../Education/UB.jpg",
+            website: "https://engineering.buffalo.edu/computer-science-engineering.html",
+            degree: "Master of Science in Computer Science and Engineering",
+            year: "August 2024 - Present",
+            description: [
+                "Specialization in Hardware and Software Systems.",
+                "Relevant Courses:",
+                "• Algorithm Analysis and Design",
+                "• Data Intensive Computing",
+                "• Introduction to Machine Learning",
+                "• Computer Security",
+                "• Technological Entrepreneurship",
+                "• Computer Architecture",
+                "• Operating Systems",
+                "• Modern Networking Concepts"
+            ],
         },
         {
-          institution: "Sant Gadge Baba Amravati University",
-          logo: "./../../../Education/SGBAU.jpg",
-          degree: "Bachelors of Engineering in Computer Science and Engineering",
-          year: "August 2016 - June 2020",
-          description: "Studied Courses like , participated in national-level coding competitions.",
+            institution: "Sant Gadge Baba Amravati University",
+            logo: "./../../../Education/SGBAU.jpg",
+            website: "https://sgbau.ac.in/departments/ComputerScience/Default.aspx",
+            degree: "Bachelors of Engineering in Computer Science and Engineering",
+            year: "August 2016 - June 2020",
+            description: [
+                "Gained foundational knowledge in Computer Science and Engineering.",
+                "Participated in national-level coding competitions.",
+                "Developed hands-on projects related to web development, databases, and algorithms."
+            ],
         },
     ];
+
+    const resumePDF = "https://drive.google.com/file/d/1mcqK7Ru-knL_VgGzljd00gKsXkcPcKWW/view?usp=sharing";
 
     return (
         <section className="page-content">
@@ -30,10 +49,12 @@ const Education: React.FC = () => {
             <div className="education-timeline">
                 {educationData.map((edu, index) => (
                     <div key={index} className="timeline-item">
-                        {/* Left Side - Year & Institution */}
+                        {/* Left Side - Year & Institution Logo */}
                         <div className="timeline-left">
                             <span className="timeline-year">{edu.year}</span>
-                            <img src={edu.logo} alt={edu.institution} className="timeline-logo" />
+                            <a href={edu.website} target="_blank" rel="noopener noreferrer">
+                                <img src={edu.logo} alt={edu.institution} className="timeline-logo" />
+                            </a>
                         </div>
 
                         {/* Middle - Line */}
@@ -46,12 +67,21 @@ const Education: React.FC = () => {
                             <h3 className="timeline-title">{edu.institution}</h3>
                             <p className="timeline-degree">{edu.degree}</p>
                             {expanded === index && (
-                                <p className="timeline-description">{edu.description}</p>
+                                <ul className="timeline-description">
+                                    {edu.description.map((point, i) => (
+                                        <li key={i}>{point}</li>
+                                    ))}
+                                </ul>
                             )}
                         </div>
                     </div>
                 ))}
             </div>
+            <div className="cta-buttons">
+        <a href={resumePDF} className="resume-btn" target="_blank" rel="noopener noreferrer">
+          View Resume
+        </a>
+      </div>
         </section>
     );
 };

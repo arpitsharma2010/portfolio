@@ -6,54 +6,35 @@ const Experience: React.FC = () => {
 
   const allExperience = [
     {
-      company: "Tata Consultancy Services(TCS)",
+      company: "Tata Consultancy Services (TCS)",
       logo: "./../../../Experience/TCS.png",
-      position: "Systems Engineer - Software Developer",
-      duration: "April 2021 - July 2024",
+      website: "https://www.tcs.com/",
+      position: "Systems Engineer - Softwarre Developer",
+      duration: "November 2020 - July 2024",
       description: [
-        "Developed and optimized high-performance web applications using React and TypeScript.",
-        "Implemented scalable APIs and microservices architecture in Node.js.",
-        "Led a team of developers to improve UI/UX and performance of enterprise applications.",
+        "Worked in the BFSI (Banking, Financial Services, and Insurance) team, collaborating with a Norwegian bank to enhance digital pension and investment service solutions, improving user engagement by 30% through feature upgrades.",
+        "Developed and optimized microservices using .NET Core and Onion Architecture, achieving 80% error-free rate and seamless integration between AWS Lambda-based microservices.",
+        "Implemented CI/CD pipelines by migrating Jenkins to GitLab and deploying infrastructure using Terraform, reducing deployment time.",
+        "Worked in an Agile development environment, managing sprint workflows with JIRA & Confluence.",
+        "Recognized as a 'Digital Cadre' within the first six months, ranking among the top 5% of new hires for exceptional technical proficiency in Java and innovative problem-solving."
       ],
-      techStack: ["React", "Node.js", "TypeScript", "GraphQL", "Docker"],
+      techStack: ["C#", ".NET Core", "AWS Lambda", "API Gateway", "Terraform", "GitLab CI/CD", "DynamoDB", "Microservices Architecture", "Agile", "JIRA", "Confluence", "Postman", "Unit Test"],
     },
     {
-      company: "Startup XYZ",
-      logo: "/experience/startup.png",
-      position: "Full-Stack Developer",
-      duration: "2020 - 2021",
+      company: "Obdurate Technology",
+      logo: "./../../../Experience/Obdurate.png",
+      website: "https://www.obdurate.in/",
+      position: "Software Engineer Intern",
+      duration: "June 2019 - August 2019",
       description: [
-        "Designed and developed a full-stack e-commerce platform.",
-        "Implemented authentication, payment integration, and RESTful APIs.",
-        "Deployed and maintained cloud infrastructure using AWS services.",
+        "Developed and optimized Python scripts for sensor interfacing, data acquisition, and preprocessing, improving data throughput by 15%.",
+        "Debugged and enhanced Python code performance, reducing CPU load by 20%, leading to increased system stability and responsiveness."
       ],
-      techStack: ["React", "Node.js", "MongoDB", "AWS", "Stripe"],
-    },
-    {
-      company: "Microsoft",
-      logo: "/experience/microsoft.png",
-      position: "Frontend Developer Intern",
-      duration: "2021 - 2022",
-      description: [
-        "Built and enhanced UI components using React and Tailwind CSS.",
-        "Optimized front-end performance and accessibility for enterprise applications.",
-        "Collaborated with designers and backend engineers to create seamless user experiences.",
-      ],
-      techStack: ["React", "Redux", "JavaScript", "Tailwind CSS"],
-    },
-    {
-      company: "ABC Tech",
-      logo: "/experience/abctech.png",
-      position: "Machine Learning Intern",
-      duration: "2020",
-      description: [
-        "Developed a machine learning model to predict user behavior based on large datasets.",
-        "Implemented NLP-based chatbot for customer support automation.",
-        "Researched and optimized deep learning models for text classification.",
-      ],
-      techStack: ["Python", "TensorFlow", "Scikit-Learn", "Flask"],
+      techStack: ["Python", "RaspberryPI", "Sensor Interfacing"],
     },
   ];
+
+  const resumePDF = "https://drive.google.com/file/d/1mcqK7Ru-knL_VgGzljd00gKsXkcPcKWW/view?usp=sharing";
 
   return (
     <section className="page-content">
@@ -64,13 +45,15 @@ const Experience: React.FC = () => {
           <div key={index} className="timeline-item">
             {/* Left - Company Info */}
             <div className="timeline-left">
-              <img src={job.logo} alt={job.company} className="timeline-logo" />
+              <a href={job.website} target="_blank" rel="noopener noreferrer">
+                <img src={job.logo} alt={job.company} className="timeline-logo" />
+              </a>
               <div className="timeline-info">
                 <h3 className="timeline-position">{job.position}</h3>
                 <p className="timeline-company">{job.company}</p>
                 <p className="timeline-duration">{job.duration}</p>
               </div>
-            </div>
+</div>
 
             {/* Middle - Timeline Line */}
             <div className="timeline-line">
@@ -78,13 +61,15 @@ const Experience: React.FC = () => {
             </div>
 
             {/* Right - Expandable Details */}
-            <div className={`timeline-details ${expandedJob === index ? "expanded" : ""}`}
-                 onClick={() => setExpandedJob(expandedJob === index ? null : index)}>
+            <div
+              className={`timeline-details ${expandedJob === index ? "expanded" : ""}`}
+              onClick={() => setExpandedJob(expandedJob === index ? null : index)}
+            >
               {expandedJob === index ? (
                 <>
                   <ul className="timeline-description">
                     {job.description.map((point, i) => (
-                      <li key={i}>{point}</li>
+                      <li key={i} className="detail-point">{point}</li> // Ensure only one bullet per item
                     ))}
                   </ul>
                   <p className="timeline-tech-stack">
@@ -97,6 +82,11 @@ const Experience: React.FC = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="cta-buttons">
+        <a href={resumePDF} className="resume-btn" target="_blank" rel="noopener noreferrer">
+          View Resume
+        </a>
       </div>
     </section>
   );

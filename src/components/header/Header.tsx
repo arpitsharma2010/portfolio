@@ -9,7 +9,7 @@ const Header: React.FC = () => {
       {/* Profile Section */}
       <div className="profile-section">
         <img 
-          src="https://lh3.googleusercontent.com/a/ACg8ocKlA3mIUA4Ws1YLoYDiVYfnZjTG9jQ_IjcqO5UQk6u-0Oq6MwEFBA=s576-c-no" 
+          src="./../../../profile.png" 
           alt="Arpit Sharma" 
           className="profile-img"
         />

@@ -5,16 +5,23 @@ import "./../../styles/Skills.css";
 
 const Skills: React.FC = () => {
   const technicalSkills = [
-    { name: "JavaScript", img: "./../../../Javascript.png", description: "A versatile scripting language mainly for web development." },
-    { name: "TypeScript", img: "./../../../developer_image.jpg", description: "A strongly typed superset of JavaScript." },
-    { name: "React", img: "./../../../developer_image.jpg", description: "A JavaScript library for building user interfaces." },
-    { name: "Node.js", img: "./../../../developer_image.jpg", description: "A JavaScript runtime built on Chrome's V8 engine." },
-    { name: "Python", img: "./../../../developer_image.jpg", description: "A powerful and easy-to-learn programming language." },
-    { name: "MongoDB", img: "./../../../developer_image.jpg", description: "A NoSQL database for flexible and scalable data storage." },
-    { name: "SQL", img: "./../../../developer_image.jpg", description: "A language used to manage and query structured databases." },
-    { name: "AWS", img: "./../../../developer_image.jpg", description: "A cloud computing platform offering various services." },
-    { name: "Docker", img: "./../../../developer_image.jpg", description: "A containerization platform for running applications in isolated environments." },
-    { name: "Git & DevOps", img: "./../../../developer_image.jpg", description: "Tools and practices for efficient development and deployment." }
+    { name: "Java", img: "./../../../Skills/Java.png", description: "A versatile scripting language mainly for web development." },
+    { name: "Python", img: "./../../../Skills/Python.png", description: "A strongly typed superset of JavaScript." },
+    { name: "C#", img: "./../../../Skills/CSharp.png", description: "A JavaScript library for building user interfaces." },
+    { name: "SQL", img: "./../../../Skills/SQL.png", description: "A JavaScript runtime built on Chrome's V8 engine." },
+    { name: "NoSQL", img: "./../../../Skills/NoSQL.png", description: "A powerful and easy-to-learn programming language." },
+    { name: "Javascript", img: "./../../../Skills/Javascript.png", description: "A NoSQL database for flexible and scalable data storage." },
+    { name: "Spring Boot", img: "./../../../Skills/SpringBoot.png", description: "A language used to manage and query structured databases." },
+    { name: ".NET Core", img: "./../../../Skills/DotnetCore.png", description: "A cloud computing platform offering various services." },
+    { name: "ReactJS", img: "./../../../Skills/ReactJS.png", description: "A containerization platform for running applications in isolated environments." },
+    { name: "Git", img: "./../../../Skills/Git.png", description: "Tools and practices for efficient development and deployment." },
+    { name: "GitLab", img: "./../../../Skills/GitLab.png", description: "Tools and practices for efficient development and deployment." },
+    { name: "Bitbucket", img: "./../../../Skills/Bitbucket.png", description: "Tools and practices for efficient development and deployment." },
+    { name: "Jenkins", img: "./../../../Skills/Jenkins.png", description: "Tools and practices for efficient development and deployment." },
+    { name: "JIRA", img: "./../../../Skills/JIRA.png", description: "Tools and practices for efficient development and deployment." },
+    { name: "Confluence", img: "./../../../Skills/Confluence.jpg", description: "Tools and practices for efficient development and deployment." },
+    { name: "AWS", img: "./../../../Skills/AWS.png", description: "Tools and practices for efficient development and deployment." },
+    { name: "Terraform", img: "./../../../Skills/Terraform.png", description: "Tools and practices for efficient development and deployment." },
   ];
 
   const softSkills = [
@@ -24,6 +31,8 @@ const Skills: React.FC = () => {
     { name: "Time Management & Adaptability", icon: "⌛" },
     { name: "Creative Thinking & Innovation", icon: "💡" },
   ];
+
+  const resumePDF = "https://drive.google.com/file/d/1mcqK7Ru-knL_VgGzljd00gKsXkcPcKWW/view?usp=sharing";
 
   return (
     <section className="page-content">
@@ -49,6 +58,11 @@ const Skills: React.FC = () => {
             <SoftSkillCard key={index} name={skill.name} icon={skill.icon} />
           ))}
         </div>
+      </div>
+      <div className="cta-buttons">
+        <a href={resumePDF} className="resume-btn" target="_blank" rel="noopener noreferrer">
+          View Resume
+        </a>
       </div>
     </section>
   );
