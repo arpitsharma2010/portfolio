@@ -23,7 +23,7 @@ const App: React.FC = () => {
         <div className="content-container">
         <main className="page-content">
             <Routes>
-              <Route path="/portfolio" element={<Home url={BASE_URL}/>} />
+              <Route path="/" element={<Home url={BASE_URL}/>} />
               <Route path="/skills" element={<Skills url={BASE_URL}/>} />
               <Route path="/projects" element={<Projects url={BASE_URL}/>} />
               <Route path="/education" element={<Education url={BASE_URL}/>} />

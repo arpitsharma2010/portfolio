@@ -1,7 +1,7 @@
 {
   "name": "resume-frontend",
   "version": "0.1.0",
-  "homepage": "https://arpitsharma2010.github.io/portfolio",
+  "homepage": "https://arpitsharma2010.github.io",
   "private": true,
   "dependencies": {
     "cra-template-typescript": "1.2.0",

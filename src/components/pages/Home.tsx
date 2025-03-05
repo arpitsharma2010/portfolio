@@ -44,7 +44,7 @@ const Home: React.FC = (props) => {
 
       {/* Professional Summary */}
       <p className="description">
-        I am a Software Engineer passionate about building scalable applications, optimizing cloud infrastructure, and automating DevOps pipelines. With experience in Java, Python, ReactJS, Spring Boot, .NET Core, and cloud platforms like AWS, I thrive on designing efficient, high-performance systems. While my core expertise lies in software development and cloud computing, I am also exploring Machine Learning & AI applications as part of my Master’s at SUNY Buffalo.
+        I am a Software Engineer passionate about building scalable applications, optimizing cloud infrastructure, and automating DevOps pipelines. With more than 3.5 years of experience in Software development using Java, Python, ReactJS, Spring Boot, .NET Core, and cloud platforms like AWS, I thrive on designing efficient, high-performance systems. While my core expertise lies in software development and cloud computing, I am also exploring Machine Learning & AI applications as part of my Master’s at SUNY Buffalo.
       </p>
 
       {/* View Resume Button */}
