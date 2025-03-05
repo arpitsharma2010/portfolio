@@ -22,7 +22,7 @@ const Header: React.FC = (props) => {
       {/* Navigation Links - Properly Aligned */}
       <nav className="nav-section">
         <ul className="nav-links">
-          <li><Link to="/home">Home</Link></li>
+          <li><Link to="/portfolio">Home</Link></li>
           <li><Link to="/skills">Skills</Link></li>
           <li><Link to="/projects">Projects</Link></li>
           <li><Link to="/education">Education</Link></li>
