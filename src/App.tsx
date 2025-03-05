@@ -23,13 +23,13 @@ const App: React.FC = () => {
         <div className="content-container">
         <main className="page-content">
             <Routes>
-              <Route path="/portfolio" element={<Home url={BASE_URL}/>} />
-              <Route path="/skills" element={<Skills url={BASE_URL}/>} />
-              <Route path="/projects" element={<Projects url={BASE_URL}/>} />
-              <Route path="/education" element={<Education url={BASE_URL}/>} />
-              <Route path="/experience" element={<Experience url={BASE_URL}/>} />
-              <Route path="/certifications" element={<Certifications url={BASE_URL}/>} />
-              <Route path="/contact" element={<Contact />} />
+              <Route path="/portfolio/" element={<Home url={BASE_URL}/>} />
+              <Route path="/portfolio/skills/" element={<Skills url={BASE_URL}/>} />
+              <Route path="/portfolio/projects/" element={<Projects url={BASE_URL}/>} />
+              <Route path="/portfolio/education/" element={<Education url={BASE_URL}/>} />
+              <Route path="/portfolio/experience/" element={<Experience url={BASE_URL}/>} />
+              <Route path="/portfolio/certifications/" element={<Certifications url={BASE_URL}/>} />
+              <Route path="/portfolio/contact/" element={<Contact />} />
             </Routes>
         </main>
         </div>
