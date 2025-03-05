@@ -6,6 +6,22 @@ const Projects: React.FC = (props) => {
 
   const projects = [
     {
+      title: "Portfolio Website",
+      image: `${props.url}Project/Portfolio.png`,
+      description: "Developed a personal portfolio website using React (TypeScript) to showcase projects, experience, and skills.",
+      timeline: "Feb 2025 – Present",
+      details: [
+        "Built the website using React (TypeScript) for modular and maintainable code.",
+        "Implemented project showcase, experience section, and a clean, responsive UI.",
+        "Integrated GitHub Pages for seamless deployment and hosting.",
+        "Optimized asset loading and structured the project with reusable components.",
+        "Continuously improving and adding features based on feedback."
+      ],
+      techStack: ["React", "TypeScript", "CSS", "GitHub Pages"],
+      githubFrontend: "https://github.com/arpitsharma2010/Portfolio",
+      githubBackend: "",
+    },
+    {
       title: "Library Management System",
       image: `${props.url}Project/LibraryMainPage.png`,
       description: "Developed a full-stack Library Management System using React (TypeScript) and Spring Boot, implementing secure authentication, role-based access control, and real-time data handling.",
