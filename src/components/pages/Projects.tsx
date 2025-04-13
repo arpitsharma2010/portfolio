@@ -6,6 +6,20 @@ const Projects: React.FC = (props) => {
 
   const projects = [
     {
+      title: "16-bit Single-Cycle RISC Processor on FPGA",
+      image: "${props.url}developer_image.jpg", 
+      description: "Designed and deployed a modular 16-bit single-cycle processor with 10 custom RISC-style instructions on Basys3 FPGA using Verilog.",
+      timeline: "Feb 2025 – Apr 2025",
+      details: [
+        "Designed a single-cycle 16-bit processor supporting 10 custom RISC-style instructions: add, sub, sll, and, addi, lw, sw, beq, bne, and jmp.",
+        "Built modular components: ALU, register file, control unit, data/instruction memory, and branching/jump logic.",
+        "Implemented a two-button stepping system: first press shows rt/rd register value, second press executes instruction and updates LEDs.",
+        "Tested with instructions like ADDI R1, R0, 5; ADD R1, R3, R0; SW R1, R0, 2; BEQ R9, R9, 1; and JMP -4 to validate arithmetic, memory, and control flow operations."
+      ],
+      techStack: ["Verilog", "Xilinx Vivado", "Basys3 FPGA", "Digital Logic Design"],
+      githubLink: "https://github.com/arpitsharma2010/16bit-FPGA-Processor", // replace with actual repo if available
+    },
+    {
       title: "Portfolio Website",
       image: `${props.url}Project/Portfolio.png`,
       description: "Developed a personal portfolio website using React (TypeScript) to showcase projects, experience, and skills.",
