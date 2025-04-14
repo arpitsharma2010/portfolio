@@ -63,9 +63,9 @@ const Header: React.FC<HeaderProps> = ({ url }) => {
           >
             View Resume
           </a>
-          <div className="w-full flex justify-center">
+          {/* <div className="w-full flex justify-center">
             <ThemeToggle />
-          </div>
+          </div> */}
           <div className="text-center text-xs text-light-textMuted dark:text-dark-textMuted">
             © {new Date().getFullYear()} Arpit Sharma<br />All rights reserved.
           </div>
@@ -106,9 +106,9 @@ const Header: React.FC<HeaderProps> = ({ url }) => {
             View Resume
           </a>
 
-          <div className="flex justify-end mt-4">
+          {/* <div className="flex justify-end mt-4">
             <ThemeToggle />
-          </div>
+          </div> */}
         </div>
       )}
     </>
