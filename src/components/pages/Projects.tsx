@@ -12,7 +12,7 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
   const projects = [
     {
       title: "16-bit Single-Cycle RISC Processor on FPGA",
-      image: `${url}developer_image.jpg`,
+      image: `${url}Project/Microprocessor.png`,
       description: "Designed and deployed a modular 16-bit single-cycle processor with 10 custom RISC-style instructions on Basys3 FPGA using Verilog.",
       timeline: "Feb 2025 – Apr 2025",
       details: [
