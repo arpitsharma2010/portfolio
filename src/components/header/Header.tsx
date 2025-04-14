@@ -109,6 +109,9 @@ const Header: React.FC<HeaderProps> = ({ url }) => {
           {/* <div className="flex justify-end mt-4">
             <ThemeToggle />
           </div> */}
+          <div className="text-center text-xs text-light-textMuted dark:text-dark-textMuted">
+            © {new Date().getFullYear()} Arpit Sharma<br />All rights reserved.
+          </div>
         </div>
       )}
     </>
