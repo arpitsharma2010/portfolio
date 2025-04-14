@@ -1,44 +1,94 @@
 import React from "react";
-import "./../../styles/Contact.css";
+import {
+  FaLinkedin,
+  FaGithub,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaPhone,
+} from "react-icons/fa";
 
 const Contact: React.FC = () => {
-
-  let resumePDF = "https://drive.google.com/file/d/1mcqK7Ru-knL_VgGzljd00gKsXkcPcKWW/view?usp=sharing";
+  const resumePDF =
+    "https://drive.google.com/file/d/1mcqK7Ru-knL_VgGzljd00gKsXkcPcKWW/view?usp=sharing";
 
   return (
-    <section className="page-content">
-      {/* Section Title */}
-      <h2 className="text-4xl font-bold text-center">Get in Touch</h2>
+    <section className="w-full px-4 py-16 min-h-screen bg-white text-gray-900 dark:bg-[#0f172a] dark:text-white transition-colors duration-300">
+      <h2 className="text-4xl font-extrabold text-center mb-12 text-cyan-600 dark:text-cyan-400">
+        Get in Touch
+      </h2>
 
-      {/* Contact Information */}
-      <div className="contact-info">
-        <p><strong>Location:</strong> Buffalo, New York, USA</p>
-        <p><strong>Email:</strong> <a href="mailto:arpeet.sharma.1998@gmail.com" className="contact-link">arpeet.sharma.1998@gmail.com</a></p>
-        <p><strong>University Email:</strong> <a href="mailto:arpitdil@buffalo.edu" className="contact-link">arpitdil@buffalo.edu</a></p>
-        <p><strong>Phone:</strong> +1 (716) 750-7459</p>
+      {/* Contact Info Grid */}
+      <div className="grid sm:grid-cols-2 gap-6 text-center max-w-4xl mx-auto mb-12">
+        <div className="flex flex-col items-center">
+          <FaMapMarkerAlt className="text-cyan-500 text-2xl mb-2" />
+          <p className="font-semibold">Buffalo, New York, USA</p>
+        </div>
+        <div className="flex flex-col items-center">
+          <FaEnvelope className="text-cyan-500 text-2xl mb-2" />
+          <a
+            href="mailto:arpeet.sharma.1998@gmail.com"
+            className="text-blue-600 dark:text-blue-300 hover:underline text-sm"
+          >
+            arpeet.sharma.1998@gmail.com
+          </a>
+          <a
+            href="mailto:arpitdil@buffalo.edu"
+            className="text-blue-600 dark:text-blue-300 hover:underline text-sm"
+          >
+            arpitdil@buffalo.edu
+          </a>
+        </div>
+        <div className="flex flex-col items-center">
+          <FaPhone className="text-cyan-500 text-2xl mb-2" />
+          <p className="font-semibold">+1 (716) 750-7459</p>
+        </div>
       </div>
 
-      <h3 className="text-2xl font-semibold text-center mt-6">Connect with Me</h3>
-      <div className="social-links">
-        <a href="https://www.linkedin.com/in/arpitsharma2010/" target="_blank" rel="noopener noreferrer">
-          <img src="https://media.licdn.com/dms/image/v2/C560BAQHaVYd13rRz3A/company-logo_200_200/company-logo_200_200/0/1638831590218/linkedin_logo?e=1747872000&v=beta&t=z-85R5yPMGYXef2cY7hM6fBVFVCoIeXFHZTYxqGlmP0" alt="LinkedIn" className="social-icon" />
+      {/* Social Links */}
+      <h3 className="text-2xl font-semibold text-center text-cyan-500 dark:text-cyan-300 mb-6">
+        Connect with Me
+      </h3>
+      <div className="flex justify-center gap-8 mb-12">
+        <a
+          href="https://www.linkedin.com/in/arpitsharma2010/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-cyan-500 transition transform hover:scale-110"
+        >
+          <FaLinkedin className="text-3xl" />
         </a>
-        <a href="https://github.com/arpitsharma2010" target="_blank" rel="noopener noreferrer">
-          <img src="https://media.licdn.com/dms/image/v2/C560BAQFmuLSyL1nlPA/company-logo_200_200/company-logo_200_200/0/1678231359043/github_logo?e=1747872000&v=beta&t=B4MRR9ynYVMRwwl5xOGmjRmAkrUsDpq8A9LYxpHL6y0" alt="GitHub" className="social-icon" />
+        <a
+          href="https://github.com/arpitsharma2010"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-cyan-500 transition transform hover:scale-110"
+        >
+          <FaGithub className="text-3xl" />
         </a>
       </div>
 
-      <div className="contact-buttons">
-      <a href={resumePDF} download="Arpit_Sharma_Resume.pdf" className="resume-btn" target='_blank' rel='noopener noreferrer'>View Resume</a>
+      {/* Resume CTA */}
+      <div className="flex justify-center mb-12">
+        <a
+          href={resumePDF}
+          download="Arpit_Sharma_Resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-6 py-3 bg-cyan-600 text-white font-semibold rounded-lg shadow hover:bg-cyan-700 transition"
+        >
+          View Resume
+        </a>
       </div>
 
-      <div className="map-container">
-        <iframe 
+      {/* Google Map */}
+      <div className="w-full max-w-4xl mx-auto">
+        <iframe
           title="Google Maps Location"
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23819.416099526294!2d-78.8783683!3d42.8864468!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d312260e0347c1%3A0x4b308af32d6e01c8!2sBuffalo%2C%20NY!5e0!3m2!1sen!2sus!4v1708289181023!5m2!1sen!2sus"
           width="100%"
           height="300"
           loading="lazy"
+          className="rounded-lg shadow-lg"
         ></iframe>
       </div>
     </section>

@@ -1,92 +1,88 @@
-import React, { useState } from "react";
-import "./../../styles/Experience.css";
+import React from "react";
 
-const Experience: React.FC = (props) => {
-  const [expandedJob, setExpandedJob] = useState<number | null>(null);
+interface ExperienceProps {
+  url: string;
+}
 
+const Experience: React.FC<ExperienceProps> = ({ url }) => {
   const allExperience = [
     {
       company: "Tata Consultancy Services (TCS)",
-      logo: `${props.url}Experience/TCS.png`,
+      logo: `${url}Experience/TCS.png`,
       website: "https://www.tcs.com/",
-      position: "Systems Engineer - Softwarre Developer",
-      duration: "November 2020 - July 2024",
+      position: "Systems Engineer - Software Developer",
+      duration: "Nov 2020 – Jul 2024",
       description: [
-        "Worked in the BFSI (Banking, Financial Services, and Insurance) team, collaborating with a Norwegian bank to enhance digital pension and investment service solutions, improving user engagement by 30% through feature upgrades.",
-        "Developed and optimized microservices using .NET Core and Onion Architecture, achieving 80% error-free rate and seamless integration between AWS Lambda-based microservices.",
-        "Implemented CI/CD pipelines by migrating Jenkins to GitLab and deploying infrastructure using Terraform, reducing deployment time.",
-        "Worked in an Agile development environment, managing sprint workflows with JIRA & Confluence.",
-        "Recognized as a 'Digital Cadre' within the first six months, ranking among the top 5% of new hires for exceptional technical proficiency in Java and innovative problem-solving."
+        "Collaborated with a Norwegian bank to enhance pension services, increasing user engagement by 30%.",
+        "Built and optimized .NET Core microservices with Onion Architecture and AWS Lambda.",
+        "Migrated CI/CD pipelines from Jenkins to GitLab, deployed infra using Terraform.",
+        "Worked in Agile; managed sprints with JIRA and Confluence.",
+        "Awarded 'Digital Cadre' status (top 5% of new hires globally)."
       ],
-      techStack: ["C#", ".NET Core", "AWS Lambda", "API Gateway", "Terraform", "GitLab CI/CD", "DynamoDB", "Microservices Architecture", "Agile", "JIRA", "Confluence", "Postman", "Unit Test"],
+      techStack: ["C#", ".NET Core", "AWS Lambda", "Terraform", "GitLab CI/CD"],
     },
     {
       company: "Obdurate Technology",
-      logo: `${props.url}Experience/Obdurate.png`,
+      logo: `${url}Experience/Obdurate.png`,
       website: "https://www.obdurate.in/",
       position: "Software Engineer Intern",
-      duration: "June 2019 - August 2019",
+      duration: "Jun 2019 – Aug 2019",
       description: [
-        "Developed and optimized Python scripts for sensor interfacing, data acquisition, and preprocessing, improving data throughput by 15%.",
-        "Debugged and enhanced Python code performance, reducing CPU load by 20%, leading to increased system stability and responsiveness."
+        "Developed Python scripts for sensor interfacing and data preprocessing.",
+        "Reduced CPU load by 20%, improving system responsiveness.",
       ],
-      techStack: ["Python", "RaspberryPI", "Sensor Interfacing"],
+      techStack: ["Python", "Raspberry Pi", "Sensor Interfacing"],
     },
   ];
 
-  const resumePDF = "https://drive.google.com/file/d/1mcqK7Ru-knL_VgGzljd00gKsXkcPcKWW/view?usp=sharing";
-
   return (
-    <section className="page-content">
-      <h2 className="text-4xl font-bold text-center">Work Experience</h2>
+    <section className="w-full px-4 py-16 bg-white text-gray-900 dark:bg-[#0f172a] dark:text-white min-h-screen transition-colors duration-300">
+      <h2 className="text-4xl font-extrabold text-center mb-12 text-cyan-600 dark:text-cyan-400">Work Experience</h2>
 
-      <div className="experience-timeline">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
         {allExperience.map((job, index) => (
-          <div key={index} className="timeline-item">
-            {/* Left - Company Info */}
-            <div className="timeline-left">
-              <a href={job.website} target="_blank" rel="noopener noreferrer">
-                <img src={job.logo} alt={job.company} className="timeline-logo" />
-              </a>
-              <div className="timeline-info">
-                <h3 className="timeline-position">{job.position}</h3>
-                <p className="timeline-company">{job.company}</p>
-                <p className="timeline-duration">{job.duration}</p>
-              </div>
-</div>
-
-            {/* Middle - Timeline Line */}
-            <div className="timeline-line">
-              <span className="timeline-dot"></span>
+          <div
+            key={index}
+            className="relative flex flex-col justify-between h-full rounded-xl bg-gray-100 dark:bg-[#1e293b] border border-cyan-500/10 p-6 hover:border-cyan-400/30 transition-all shadow-md"
+          >
+            {/* Duration Ribbon */}
+            <div className="absolute -top-4 left-4 bg-cyan-600 text-xs px-3 py-1 rounded-full shadow text-white">
+              {job.duration}
             </div>
 
-            {/* Right - Expandable Details */}
-            <div
-              className={`timeline-details ${expandedJob === index ? "expanded" : ""}`}
-              onClick={() => setExpandedJob(expandedJob === index ? null : index)}
-            >
-              {expandedJob === index ? (
-                <>
-                  <ul className="timeline-description">
-                    {job.description.map((point, i) => (
-                      <li key={i} className="detail-point">{point}</li> // Ensure only one bullet per item
-                    ))}
-                  </ul>
-                  <p className="timeline-tech-stack">
-                    <strong>Tech Stack:</strong> {job.techStack.join(", ")}
-                  </p>
-                </>
-              ) : (
-                <p className="click-to-expand">Click to see more...</p>
-              )}
+            {/* Company Info */}
+            <div className="flex flex-col items-center text-center mb-4">
+              <a href={job.website} target="_blank" rel="noopener noreferrer">
+                <img
+                  src={job.logo}
+                  alt={job.company}
+                  className="w-14 h-14 rounded-full object-contain border border-cyan-500 shadow-sm mb-3"
+                />
+              </a>
+              <h3 className="text-lg font-bold text-cyan-700 dark:text-cyan-300">{job.position}</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">{job.company}</p>
+            </div>
+
+            {/* Description */}
+            <ul className="list-disc list-inside space-y-1 text-sm text-gray-700 dark:text-gray-300 mb-6 px-2">
+              {job.description.map((point, i) => (
+                <li key={i}>{point}</li>
+              ))}
+            </ul>
+
+            {/* Tech Stack */}
+            <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-cyan-500/20">
+              {job.techStack.map((tech, i) => (
+                <span
+                  key={i}
+                  className="bg-cyan-700/20 text-cyan-700 dark:text-cyan-300 text-xs px-2 py-1 rounded-full font-mono"
+                >
+                  {tech}
+                </span>
+              ))}
             </div>
           </div>
         ))}
-      </div>
-      <div className="cta-buttons">
-        <a href={resumePDF} className="resume-btn" target="_blank" rel="noopener noreferrer">
-          View Resume
-        </a>
       </div>
     </section>
   );
