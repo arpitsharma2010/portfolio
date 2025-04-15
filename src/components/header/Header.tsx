@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ThemeToggle from '../utils/ThemeToggle.tsx';
+import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 
 interface HeaderProps {
   url: string;
@@ -77,9 +78,16 @@ const Header: React.FC<HeaderProps> = ({ url }) => {
         <h1 className="text-xl font-semibold">Arpit Sharma</h1>
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="text-inherit focus:outline-none text-2xl"
+          className="text-inherit focus:outline-none text-2xl transition-all duration-300 ease-in-out"
+          aria-label="Toggle menu"
         >
-          {menuOpen ? "✕" : "☰"}
+          <span className="transition-transform duration-300 ease-in-out transform">
+            {menuOpen ? (
+              <HiOutlineX className="text-3xl rotate-0 scale-100" />
+            ) : (
+              <HiOutlineMenu className="text-3xl rotate-0 scale-100" />
+            )}
+          </span>
         </button>
       </header>
 
