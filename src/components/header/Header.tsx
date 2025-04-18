@@ -9,7 +9,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ url }) => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const resumePDF = "https://drive.google.com/file/d/1mcqK7Ru-knL_VgGzljd00gKsXkcPcKWW/view?usp=sharing";
+  const resumePDF = "https://drive.google.com/file/d/1mcqK7Ru-knL_VgGzljd00gKsXkcPcKWW/view";
 
   const navLinks = [
     { to: "/portfolio/", label: "Home" },
