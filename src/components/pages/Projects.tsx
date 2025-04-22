@@ -23,7 +23,7 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
       ],
       techStack: ["Verilog", "Xilinx Vivado", "Basys3 FPGA", "Digital Logic Design"],
       repos: [
-        { label: "GitHub", url: "https://github.com/arpitsharma2010/16bit-FPGA-Processor" }
+        { label: "GitHub", url: "https://github.com/arpitsharma2010/micro16-fpga-core" }
       ]
     },
     {
