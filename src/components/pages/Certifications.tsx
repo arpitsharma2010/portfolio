@@ -10,7 +10,7 @@ const Certifications: React.FC<CertificationsProps> = ({ url }) => {
       name: "AWS Cloud Practitioner",
       organization: "Amazon Web Services",
       logo: `${url}Certification/aws_cloud_practitioner.png`,
-      year: "June 2022 - June 2025",
+      year: "June 2022 - May 2028",
       description: "Verified understanding of cloud computing concepts and AWS.",
       certificateLink:
         "https://www.credly.com/badges/7b23b0c9-df00-4c90-9af9-f76705ef1085?source=linked_in_profile",
