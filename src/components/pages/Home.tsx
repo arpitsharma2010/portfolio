@@ -2,7 +2,7 @@ import React from "react";
 import { Typewriter } from "react-simple-typewriter";
 
 const Home: React.FC<{ url: string }> = ({ url }) => {
-  const resume = "https://drive.google.com/file/d/1mcqK7Ru-knL_VgGzljd00gKsXkcPcKWW/view";
+  const resume = "https://drive.google.com/file/d/1fJuLB-ssJNGaScMs10mAl4_FIe5Fx00K/view";
 
   return (
     <section className="min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden bg-light-surface text-light-text dark:bg-[#0f172a] dark:text-white transition-colors duration-300">
