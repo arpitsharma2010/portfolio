@@ -5,7 +5,10 @@ import {
   FaEnvelope,
   FaMapMarkerAlt,
   FaPhone,
+  FaInstagram,
 } from "react-icons/fa";
+import { SiLeetcode } from "react-icons/si";
+import SocialLinks from "../utils/SocialLinks.tsx";
 
 const Contact: React.FC = () => {
   const resumePDF =
@@ -49,22 +52,7 @@ const Contact: React.FC = () => {
         Connect with Me
       </h3>
       <div className="flex justify-center gap-8 mb-12">
-        <a
-          href="https://www.linkedin.com/in/arpitsharma2010/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-cyan-500 transition transform hover:scale-110"
-        >
-          <FaLinkedin className="text-3xl" />
-        </a>
-        <a
-          href="https://github.com/arpitsharma2010"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-cyan-500 transition transform hover:scale-110"
-        >
-          <FaGithub className="text-3xl" />
-        </a>
+        <SocialLinks size="text-3xl" gap="gap-8" />
       </div>
 
       {/* Resume CTA */}

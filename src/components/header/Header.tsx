@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import ThemeToggle from '../utils/ThemeToggle.tsx';
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
+import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
+import { SiLeetcode } from "react-icons/si";
+import SocialLinks from "../utils/SocialLinks.tsx";
+
+// import ThemeToggle from "../utils/ThemeToggle.tsx";
 
 interface HeaderProps {
   url: string;
@@ -9,7 +13,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ url }) => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const resumePDF = "https://drive.google.com/file/d/1mcqK7Ru-knL_VgGzljd00gKsXkcPcKWW/view";
+  const resumePDF = "https://drive.google.com/file/d/1fJuLB-ssJNGaScMs10mAl4_FIe5Fx00K/view";
 
   const navLinks = [
     { to: "/portfolio/", label: "Home" },
@@ -53,6 +57,8 @@ const Header: React.FC<HeaderProps> = ({ url }) => {
             ))}
           </ul>
         </nav>
+
+        <SocialLinks size="text-2xl" gap="gap-5" />
 
         {/* Footer */}
         <div className="flex flex-col items-center mb-6 space-y-4 px-4 w-full">
@@ -104,6 +110,8 @@ const Header: React.FC<HeaderProps> = ({ url }) => {
               {link.label}
             </Link>
           ))}
+
+          <SocialLinks size="text-2xl" gap="gap-6" />
 
           <a
             href={resumePDF}
