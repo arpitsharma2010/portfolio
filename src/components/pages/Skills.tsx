@@ -8,24 +8,35 @@ interface SkillsProps {
 
 const Skills: React.FC<SkillsProps> = ({ url }) => {
   const technicalSkills = [
-    { name: "Java", img: `${url}Skills/Java.png`, description: "A high-level, object-oriented programming language used for building platform-independent applications." },
-    { name: "Python", img: `${url}Skills/Python.png`, description: "A versatile, high-level programming language known for its readability and wide range of applications in data science, web development, and automation." },
-    { name: "C#", img: `${url}Skills/CSharp.png`, description: "A modern, object-oriented programming language developed by Microsoft for building a wide range of applications on the .NET platform." },
-    { name: "SQL", img: `${url}Skills/SQL.png`, description: "A standard language used to manage and query relational databases." },
-    { name: "NoSQL", img: `${url}Skills/NoSQL.png`, description: "A category of non-relational databases designed for scalable and flexible data storage, ideal for large-scale applications." },
-    { name: "Javascript", img: `${url}Skills/Javascript.png`, description: "A dynamic programming language primarily used for creating interactive effects within web browsers." },
-    { name: "Spring Boot", img: `${url}Skills/SpringBoot.png`, description: "A framework for building production-ready Java applications with minimal configuration." },
-    { name: ".NET Core", img: `${url}Skills/DotnetCore.png`, description: "A cross-platform, open-source framework by Microsoft for building modern, cloud-based, and internet-connected applications." },
-    { name: "ReactJS", img: `${url}Skills/ReactJS.png`, description: "A JavaScript library developed by Facebook for building fast and interactive user interfaces." },
-    { name: "Git", img: `${url}Skills/Git.png`, description: "A distributed version control system used to track changes in source code during software development." },
-    { name: "GitLab", img: `${url}Skills/GitLab.png`, description: "A web-based DevOps platform providing source code management (SCM), CI/CD, and more." },
-    { name: "Bitbucket", img: `${url}Skills/Bitbucket.png`, description: "A Git-based source code repository hosting service, with built-in CI/CD and Jira integration." },
-    { name: "Jenkins", img: `${url}Skills/Jenkins.png`, description: "An open-source automation server used to build, test, and deploy software through continuous integration and continuous delivery (CI/CD)." },
-    { name: "JIRA", img: `${url}Skills/JIRA.png`, description: "A project management tool developed by Atlassian, widely used for bug tracking, issue tracking, and agile project management." },
-    { name: "Confluence", img: `${url}Skills/Confluence.jpg`, description: "A collaboration wiki tool used to help teams collaborate and share knowledge efficiently." },
-    { name: "AWS", img: `${url}Skills/AWS.png`, description: "Amazon Web Services is a comprehensive cloud computing platform offering computing power, storage, and other services." },
-    { name: "Terraform", img: `${url}Skills/Terraform.png`, description: "An open-source infrastructure as code tool that enables you to provision and manage cloud infrastructure with configuration files." },
-  ];
+  // --- Languages ---
+  { name: "Java",       img: `${url}/Skills/Java.png`,                 description: "Java SE/EE" },
+  { name: "Python",     img: "https://www.python.org/static/community_logos/python-logo-generic.svg", description: "General-purpose, data, automation" },
+  { name: "C#",         img: `${url}/Skills/CSharp.png`,               description: ".NET development" },
+  { name: "JavaScript", img: "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png", description: "Web & Node.js" },
+
+  // --- Data/DB (generic concepts = CDN icons) ---
+  { name: "SQL",        img: "https://cdn.simpleicons.org/postgresql",           description: "Relational DB querying" },
+  { name: "NoSQL",      img: "https://cdn.simpleicons.org/mongodb",              description: "Document/Key-Value stores" },
+
+  // --- Frameworks ---
+  { name: "Spring Boot", img: "https://upload.wikimedia.org/wikipedia/commons/7/79/Spring_Boot.svg", description: "Java microservices" },
+  { name: ".NET Core",   img: "https://raw.githubusercontent.com/dotnet/brand/main/logo/dotnet-logo.svg", description: "Cross‑platform .NET runtime" },
+  { name: "ReactJS",     img: "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg", description: "UI library" },
+
+  // --- VCS / DevOps ---
+  { name: "Git",        img: "https://git-scm.com/images/logos/downloads/Git-Icon-1788C.svg", description: "Version control" },
+  { name: "GitLab",     img: "https://res.cloudinary.com/about-gitlab-com/image/upload/v1752630620/gd54rr1tngju5ftli1dx.svg", description: "SCM + CI/CD" },
+  { name: "Bitbucket",  img: `${url}/Skills/Bitbucket.png`, description: "SCM" },
+  { name: "Jenkins",    img: "https://get.jenkins.io/art/jenkins-logo/logo.svg", description: "CI server" },
+
+  // --- Work mgmt (Atlassian) ---
+  { name: "Jira",        img: "https://cdn.simpleicons.org/jira",                 description: "Agile project tracking" },
+  { name: "Confluence",  img: "https://cdn.simpleicons.org/confluence",           description: "Team wiki/docs" },
+
+  // --- Cloud / IaC ---
+  { name: "AWS",        img: `${url}/Skills/AWS.png`,            description: "Cloud services" },
+  { name: "Terraform",  img: "https://cdn.simpleicons.org/terraform",            description: "Infrastructure as Code" },
+];
 
   const softSkills = [
     { name: "Effective Communication", icon: "🗣️" },

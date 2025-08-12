@@ -13,7 +13,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ url }) => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const resumePDF = "https://drive.google.com/file/d/1fJuLB-ssJNGaScMs10mAl4_FIe5Fx00K/view";
+  const resumePDF = "https://drive.google.com/file/d/1QbMvtAiTB9eITC3ZfUHW6WDwC25Fkb89/view";
 
   const navLinks = [
     { to: "/portfolio/", label: "Home" },
