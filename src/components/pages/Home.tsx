@@ -56,6 +56,27 @@ const Home: React.FC<{ url: string }> = ({ url }) => {
         </div>
       </div>
 
+      <section className="flex justify-center mt-10">
+        <div
+          className="badge-base LI-profile-badge"
+          data-locale="en_US"
+          data-size="extra-large"
+          data-theme="light"
+          data-type="HORIZONTAL"
+          data-vanity="arpitsharma2010"   // 🔗 Replace with your LinkedIn vanity URL
+          data-version="v1"
+        >
+          <a
+            className="badge-base__link LI-simple-link"
+            href="https://www.linkedin.com/in/arpitsharma2010?trk=profile-badge"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Arpit Sharma
+          </a>
+        </div>
+      </section>
+
       {/* GitHub Contributions
       <div className="mt-20 w-full max-w-4xl z-10">
         <h3 className="text-2xl font-semibold text-center text-cyan-600 dark:text-cyan-400 mb-6">GitHub Contributions</h3>

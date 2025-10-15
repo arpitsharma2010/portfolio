@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
-import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
-import { SiLeetcode } from "react-icons/si";
 import SocialLinks from "../utils/SocialLinks.tsx";
 
 // import ThemeToggle from "../utils/ThemeToggle.tsx";
