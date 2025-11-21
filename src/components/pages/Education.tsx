@@ -5,102 +5,165 @@ interface EducationProps {
   url: string;
 }
 
-const Education: React.FC<EducationProps> = ({ url }) => {
-  const [expanded, setExpanded] = useState<number | null>(null);
+type EducationItem = {
+  institution: string;
+  logo: string;
+  website: string;
+  degree: string;
+  year: string;
+  summary: string;
+  highlights: string[];
+  courses?: string[];
+};
 
-  const educationData = [
+const Education: React.FC<EducationProps> = ({ url }) => {
+  const [expanded, setExpanded] = useState<number | null>(0);
+
+  const educationData: EducationItem[] = [
     {
-      institution: "University at Buffalo - SUNY",
+      institution: "University at Buffalo – SUNY",
       logo: `${url}Education/UB.jpg`,
       website: "https://engineering.buffalo.edu/computer-science-engineering.html",
-      degree: "Master of Science in Computer Science and Engineering",
-      year: "August 2024 - Present",
-      description: [
-        "Specialization in Hardware and Software Systems.",
-        "Relevant Courses:",
-        "• Algorithm Analysis and Design",
-        "• Data Intensive Computing",
-        "• Introduction to Machine Learning",
-        "• Computer Security",
-        "• Technological Entrepreneurship",
-        "• Computer Architecture",
-        "• Operating Systems",
-        "• Modern Networking Concepts"
+      degree: "M.S. Computer Science & Engineering (GPA: 3.71 / 4)",
+      year: "Aug 2024 – Dec 2025",
+      summary:
+        "Graduate study focused on computer science and engineering with hands-on work in machine learning pipelines, FPGA design, and production-grade software delivery—matching the research projects outlined in my resume.",
+      highlights: [
+        "Translating research into practice via the custom 16-bit single-cycle RISC processor built on Basys3 FPGA.",
+        "Bringing industry experience into coursework by documenting ML experiments similar to crop-yield prediction efforts.",
+      ],
+      courses: [
+        "Algorithm Analysis and Design",
+        "Data Intensive Computing",
+        "Introduction to Machine Learning",
+        "Computer Security",
+        "Technological Entrepreneurship",
+        "Computer Architecture",
+        "Operating Systems",
+        "Modern Networking Concepts",
       ],
     },
     {
       institution: "Sant Gadge Baba Amravati University",
       logo: `${url}Education/SGBAU.jpg`,
       website: "https://sgbau.ac.in/departments/ComputerScience/Default.aspx",
-      degree: "Bachelors of Engineering in Computer Science and Engineering",
-      year: "August 2016 - June 2020",
-      description: [
-        "Gained foundational knowledge in Computer Science and Engineering.",
-        "Participated in national-level coding competitions.",
-        "Developed hands-on projects related to web development, databases, and algorithms."
+      degree: "B.E. Computer Science & Engineering (GPA: 8.67 / 10)",
+      year: "Jul 2016 – Oct 2020",
+      summary:
+        "Undergraduate engineering program that grounded me in algorithms, databases, and end-to-end project delivery—skills later applied to fintech, healthcare, and agri-tech initiatives.",
+      highlights: [
+        "Completed capstone and lab work that informed the hospital management system and IoT automation projects in my resume.",
+        "Maintained an 8.67/10 GPA while contributing to team projects and coding assignments across the curriculum.",
+      ],
+      courses: [
+        "Data Structures & Algorithms",
+        "Database Management Systems",
+        "Operating Systems",
+        "Computer Networks",
       ],
     },
   ];
 
   return (
-    <section className="w-full px-4 py-16 min-h-screen bg-white dark:bg-[#0f172a] text-gray-900 dark:text-white transition-colors duration-300">
-      <h2 className="text-4xl font-extrabold text-center mb-12 text-cyan-600 dark:text-cyan-400">Education</h2>
+    <section className="w-full px-4 py-16 sm:px-6 text-gray-900 transition-colors duration-300 dark:text-white">
+      <h2 className="mb-6 text-center text-4xl font-extrabold text-cyan-300">Education</h2>
+      <p className="mx-auto max-w-3xl text-center text-sm text-slate-300">
+        An academic journey shaped by curiosity and industry-ready rigor—pairing research-driven
+        graduate work with foundational engineering practice.
+      </p>
 
-      <div className="relative border-l-4 border-cyan-500/30 pl-6 space-y-10 max-w-4xl mx-auto">
+      <div className="relative mx-auto mt-12 max-w-5xl space-y-10">
+        <div
+          className="pointer-events-none absolute left-5 top-0 hidden h-full w-px bg-gradient-to-b from-cyan-400/60 to-transparent md:block"
+          aria-hidden
+        />
+
         {educationData.map((edu, index) => {
           const isOpen = expanded === index;
 
           return (
-            <div
-              key={index}
-              className="group transition-all duration-300 cursor-pointer rounded-xl border border-cyan-500/10 p-6 bg-gray-100 dark:bg-[#1e293b] hover:border-cyan-400/30 relative"
-              onClick={() => setExpanded(isOpen ? null : index)}
+            <article
+              key={edu.institution}
+              className="relative rounded-3xl border border-white/5 bg-white/5 p-6 shadow-xl shadow-black/20 backdrop-blur-md transition hover:border-cyan-400/40"
             >
-              {/* Timeline Dot */}
-              <div className="absolute left-[-0.75rem] top-[2.25rem] w-5 h-5 rounded-full bg-cyan-500 border-4 border-white dark:border-[#0f172a] shadow-md animate-pulse" />
+              <div
+                className="absolute left-3 top-12 hidden h-4 w-4 -translate-x-1/2 rounded-full border-4 border-[#020817] bg-cyan-400 shadow-lg md:block"
+                aria-hidden
+              />
 
-              {/* Row Layout */}
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                {/* Year */}
-                <span className="text-sm text-gray-500 dark:text-gray-400 font-mono min-w-[160px] text-center md:text-left">
-                  {edu.year}
-                </span>
-
-                {/* Logo */}
-                <a href={edu.website} target="_blank" rel="noopener noreferrer" className="shrink-0 mx-auto md:mx-0">
-                  <img
-                    src={edu.logo}
-                    alt={edu.institution}
-                    className="w-14 h-14 rounded-full object-cover border border-cyan-500 shadow-md"
-                  />
-                </a>
-
-                {/* Institution Info */}
-                <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-lg font-semibold text-cyan-700 dark:text-cyan-300">{edu.institution}</h3>
-                  <p className="text-gray-600 dark:text-gray-400 italic text-sm">{edu.degree}</p>
-
-                  {isOpen ? (
-                    <ul className="mt-3 list-disc pl-5 text-gray-800 dark:text-gray-300 space-y-1 text-sm text-left">
-                      {edu.description.map((point, i) => (
-                        <li key={i} className="leading-relaxed">{point}</li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="mt-2 text-xs text-gray-500 dark:text-gray-400 italic">Click to view details</p>
-                  )}
+              <div className="flex flex-col gap-6 md:flex-row md:items-center">
+                <div className="flex flex-col items-center text-center md:items-start md:text-left">
+                  <a href={edu.website} target="_blank" rel="noopener noreferrer">
+                    <img
+                      src={edu.logo}
+                      alt={edu.institution}
+                      className="h-20 w-20 rounded-2xl border border-white/10 object-cover shadow-lg"
+                      loading="lazy"
+                    />
+                  </a>
+                  <p className="mt-3 text-xs uppercase tracking-[0.3em] text-cyan-200">{edu.year}</p>
                 </div>
 
-                {/* Chevron Icon */}
-                <div className="flex items-center">
-                  <FaChevronDown
-                    className={`text-cyan-500 transition-transform duration-300 ${
-                      isOpen ? "rotate-180" : ""
+                <div className="flex-1 text-left">
+                  <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                    <div>
+                      <h3 className="text-xl font-bold text-white">{edu.institution}</h3>
+                      <p className="text-sm text-slate-300">{edu.degree}</p>
+                    </div>
+                    <button
+                      onClick={() => setExpanded(isOpen ? null : index)}
+                      className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-200 transition hover:border-cyan-400/40"
+                      aria-expanded={isOpen}
+                    >
+                      {isOpen ? "Hide details" : "Program insights"}
+                      <FaChevronDown
+                        className={`transition-transform ${isOpen ? "rotate-180" : ""}`}
+                        aria-hidden
+                      />
+                    </button>
+                  </div>
+
+                  <p className="mt-4 text-sm text-slate-200">{edu.summary}</p>
+
+                  <ul className="mt-4 grid gap-3 text-sm text-slate-100 md:grid-cols-2">
+                    {edu.highlights.map((point) => (
+                      <li
+                        key={point}
+                        className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 leading-relaxed"
+                      >
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div
+                    className={`mt-4 grid transition-all duration-500 ${
+                      isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                     }`}
-                  />
+                  >
+                    <div className="overflow-hidden">
+                      {edu.courses && edu.courses.length > 0 && (
+                        <>
+                          <p className="text-xs uppercase tracking-[0.3em] text-cyan-200">
+                            Core coursework
+                          </p>
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            {edu.courses.map((course) => (
+                              <span
+                                key={course}
+                                className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-cyan-100"
+                              >
+                                {course}
+                              </span>
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </article>
           );
         })}
       </div>

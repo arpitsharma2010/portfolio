@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  FaLinkedin,
-  FaGithub,
-  FaEnvelope,
-  FaMapMarkerAlt,
-  FaPhone,
-  FaInstagram,
-} from "react-icons/fa";
-import { SiLeetcode } from "react-icons/si";
+import { FaEnvelope, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
 import SocialLinks from "../utils/SocialLinks.tsx";
 
 const Contact: React.FC = () => {
@@ -15,7 +7,7 @@ const Contact: React.FC = () => {
     "https://drive.google.com/file/d/1mcqK7Ru-knL_VgGzljd00gKsXkcPcKWW/view?usp=sharing";
 
   return (
-    <section className="w-full px-4 py-16 min-h-screen bg-white text-gray-900 dark:bg-[#0f172a] dark:text-white transition-colors duration-300">
+    <section className="w-full px-4 py-16 sm:px-6 min-h-screen bg-white text-gray-900 dark:bg-[#0f172a] dark:text-white transition-colors duration-300">
       <h2 className="text-4xl font-extrabold text-center mb-12 text-cyan-600 dark:text-cyan-400">
         Get in Touch
       </h2>
@@ -28,12 +20,6 @@ const Contact: React.FC = () => {
         </div>
         <div className="flex flex-col items-center">
           <FaEnvelope className="text-cyan-500 text-2xl mb-2" />
-          <a
-            href="mailto:arpeet.sharma.1998@gmail.com"
-            className="text-blue-600 dark:text-blue-300 hover:underline text-sm"
-          >
-            arpeet.sharma.1998@gmail.com
-          </a>
           <a
             href="mailto:arpitdil@buffalo.edu"
             className="text-blue-600 dark:text-blue-300 hover:underline text-sm"
