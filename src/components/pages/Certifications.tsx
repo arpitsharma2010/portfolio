@@ -1,11 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 interface CertificationsProps {
   url: string;
 }
 
+type CredlyBadge = {
+  id: string;
+  width: number;
+  height: number;
+};
+
+type Certification = {
+  name: string;
+  organization: string;
+  logo: string;
+  year: string;
+  description: string;
+  certificateLink: string;
+  badge: CredlyBadge;
+};
+
 const Certifications: React.FC<CertificationsProps> = ({ url }) => {
-  const certificationsData = [
+  const certificationsData: Certification[] = [
     {
       name: "AWS Cloud Practitioner",
       organization: "Amazon Web Services",
@@ -14,6 +30,11 @@ const Certifications: React.FC<CertificationsProps> = ({ url }) => {
       description: "Verified understanding of cloud computing concepts and AWS.",
       certificateLink:
         "https://www.credly.com/badges/7b23b0c9-df00-4c90-9af9-f76705ef1085?source=linked_in_profile",
+      badge: {
+        id: "ab41a701-5d3f-45f6-9b02-53fe3a4a6e71",
+        width: 150,
+        height: 270,
+      },
     },
     {
       name: "Microsoft Certified: Azure Fundamentals",
@@ -24,8 +45,38 @@ const Certifications: React.FC<CertificationsProps> = ({ url }) => {
         "Verified understanding of cloud computing concepts and Microsoft Azure services.",
       certificateLink:
         "https://www.credly.com/badges/9e81ba52-0c00-4297-a692-f1612c938499?source=linked_in_profile",
+      badge: {
+        id: "9e81ba52-0c00-4297-a692-f1612c938499",
+        width: 150,
+        height: 270,
+      },
     },
   ];
+
+  useEffect(() => {
+    const scriptId = "credly-embed-script";
+    const credlyWindow = window as typeof window & {
+      Credly?: { load?: () => void };
+    };
+
+    const loadCredlyBadges = () => {
+      credlyWindow.Credly?.load?.();
+    };
+
+    const existingScript = document.getElementById(scriptId) as HTMLScriptElement | null;
+
+    if (existingScript) {
+      loadCredlyBadges();
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.id = scriptId;
+    script.async = true;
+    script.src = "https://cdn.credly.com/assets/utilities/embed.js";
+    script.onload = loadCredlyBadges;
+    document.body.appendChild(script);
+  }, []);
 
   return (
     <section className="w-full px-4 py-16 min-h-screen bg-white text-gray-900 dark:bg-[#0f172a] dark:text-white transition-colors duration-300">
@@ -33,42 +84,41 @@ const Certifications: React.FC<CertificationsProps> = ({ url }) => {
         Certifications & Achievements
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {certificationsData.map((cert, index) => (
-          <div key={index} className="perspective">
-            <div className="relative h-64 w-full transition-transform duration-700 transform-style preserve-3d hover:rotate-y-180">
-              {/* Front Side */}
-              <div className="absolute inset-0 bg-gray-100 dark:bg-[#1e293b] border border-cyan-500/10 rounded-xl p-5 flex flex-col justify-center items-center backface-hidden shadow-md hover:shadow-cyan-500/20">
-                <img
-                  src={cert.logo}
-                  alt={cert.organization}
-                  className="w-16 h-16 object-contain rounded-full border border-cyan-400 mb-3"
+      <div className="grid grid-cols-1 gap-8 max-w-5xl mx-auto sm:grid-cols-2">
+        {certificationsData.map((cert) => (
+          <article
+            key={cert.name}
+            className="flex h-full flex-col gap-6 rounded-3xl border border-white/10 bg-white/5 p-6 text-center shadow-xl shadow-black/20 backdrop-blur-md"
+          >
+            <div className="flex justify-center">
+              <div className="w-[180px] rounded-2xl border border-cyan-200/40 bg-white/90 p-3 shadow-inner dark:bg-[#0b152b]">
+                <div
+                  className="credly-badge"
+                  data-iframe-width={cert.badge.width}
+                  data-iframe-height={cert.badge.height}
+                  data-share-badge-id={cert.badge.id}
+                  data-share-badge-host="https://www.credly.com"
                 />
-                <h3 className="text-lg font-bold text-cyan-700 dark:text-cyan-300 text-center">
-                  {cert.name}
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {cert.organization}
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                  {cert.year}
-                </p>
-              </div>
-
-              {/* Back Side */}
-              <div className="absolute inset-0 bg-cyan-700 text-white rounded-xl p-6 flex flex-col justify-center items-center rotate-y-180 backface-hidden">
-                <p className="text-sm text-center mb-4">{cert.description}</p>
-                <a
-                  href={cert.certificateLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 bg-white text-cyan-700 font-semibold rounded hover:bg-gray-200 transition text-sm"
-                >
-                  🎓 View Certificate
-                </a>
               </div>
             </div>
-          </div>
+
+            <div>
+              <h3 className="text-xl font-bold text-cyan-600 dark:text-cyan-300">{cert.name}</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-300">{cert.organization}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{cert.year}</p>
+            </div>
+
+            <p className="text-sm text-slate-700 dark:text-slate-200">{cert.description}</p>
+
+            <a
+              href={cert.certificateLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-cyan-500/30 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:border-cyan-300 hover:bg-cyan-500/20"
+            >
+              🔒 Verify on Credly
+            </a>
+          </article>
         ))}
       </div>
     </section>
