@@ -16,7 +16,7 @@ const Contact: React.FC = () => {
       <div className="grid sm:grid-cols-2 gap-6 text-center max-w-4xl mx-auto mb-12">
         <div className="flex flex-col items-center">
           <FaMapMarkerAlt className="text-cyan-500 text-2xl mb-2" />
-          <p className="font-semibold">Buffalo, New York, USA</p>
+          <p className="font-semibold text-center">Jersey City, New Jersey, USA</p>
         </div>
         <div className="flex flex-col items-center">
           <FaEnvelope className="text-cyan-500 text-2xl mb-2" />
@@ -25,6 +25,12 @@ const Contact: React.FC = () => {
             className="text-blue-600 dark:text-blue-300 hover:underline text-sm"
           >
             arpitdil@buffalo.edu
+          </a>
+          <a
+            href="mailto:arpeet.sharma.1998@gmail.com"
+            className="text-blue-600 dark:text-blue-300 hover:underline text-sm mt-1"
+          >
+            arpeet.sharma.1998@gmail.com
           </a>
         </div>
         <div className="flex flex-col items-center">
@@ -58,7 +64,7 @@ const Contact: React.FC = () => {
       <div className="w-full max-w-4xl mx-auto">
         <iframe
           title="Google Maps Location"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23819.416099526294!2d-78.8783683!3d42.8864468!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d312260e0347c1%3A0x4b308af32d6e01c8!2sBuffalo%2C%20NY!5e0!3m2!1sen!2sus!4v1708289181023!5m2!1sen!2sus"
+          src="https://www.google.com/maps?q=Jersey%20City%2C%20New%20Jersey&output=embed"
           width="100%"
           height="300"
           loading="lazy"

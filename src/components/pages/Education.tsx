@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
+import { FiAward, FiBookOpen } from "react-icons/fi";
 
 interface EducationProps {
   url: string;
@@ -66,53 +67,47 @@ const Education: React.FC<EducationProps> = ({ url }) => {
 
   return (
     <section className="w-full px-4 py-16 sm:px-6 text-gray-900 transition-colors duration-300 dark:text-white">
-      <h2 className="mb-6 text-center text-4xl font-extrabold text-cyan-300">Education</h2>
-      <p className="mx-auto max-w-3xl text-center text-sm text-slate-300">
-        An academic journey shaped by curiosity and industry-ready rigor—pairing research-driven
-        graduate work with foundational engineering practice.
-      </p>
+      <h2 className="text-center text-4xl font-black text-cyan-300">Education</h2>
 
-      <div className="relative mx-auto mt-12 max-w-5xl space-y-10">
-        <div
-          className="pointer-events-none absolute left-5 top-0 hidden h-full w-px bg-gradient-to-b from-cyan-400/60 to-transparent md:block"
-          aria-hidden
-        />
-
+      <div className="relative mx-auto mt-12 max-w-5xl space-y-8">
         {educationData.map((edu, index) => {
           const isOpen = expanded === index;
 
           return (
             <article
               key={edu.institution}
-              className="relative rounded-3xl border border-white/5 bg-white/5 p-6 shadow-xl shadow-black/20 backdrop-blur-md transition hover:border-cyan-400/40"
+              className="relative overflow-hidden rounded-3xl border border-white/5 bg-gradient-to-br from-slate-900/60 via-slate-900/40 to-slate-900/70 p-6 shadow-2xl shadow-black/30 backdrop-blur"
             >
-              <div
-                className="absolute left-3 top-12 hidden h-4 w-4 -translate-x-1/2 rounded-full border-4 border-[#020817] bg-cyan-400 shadow-lg md:block"
-                aria-hidden
-              />
-
-              <div className="flex flex-col gap-6 md:flex-row md:items-center">
+              <div className="grid gap-6 md:grid-cols-[180px,1fr] md:items-center">
                 <div className="flex flex-col items-center text-center md:items-start md:text-left">
-                  <a href={edu.website} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={edu.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4 shadow-inner"
+                  >
                     <img
                       src={edu.logo}
                       alt={edu.institution}
-                      className="h-20 w-20 rounded-2xl border border-white/10 object-cover shadow-lg"
+                      className="h-20 w-20 rounded-2xl border border-white/10 object-cover"
                       loading="lazy"
                     />
                   </a>
-                  <p className="mt-3 text-xs uppercase tracking-[0.3em] text-cyan-200">{edu.year}</p>
+                  <p className="mt-4 text-xs uppercase tracking-[0.4em] text-cyan-200">{edu.year}</p>
                 </div>
 
-                <div className="flex-1 text-left">
-                  <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
-                      <h3 className="text-xl font-bold text-white">{edu.institution}</h3>
+                      <span className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1 text-xs uppercase tracking-[0.35em] text-cyan-200">
+                        <FiAward aria-hidden /> Program
+                      </span>
+                      <h3 className="mt-3 text-2xl font-bold text-white">{edu.institution}</h3>
                       <p className="text-sm text-slate-300">{edu.degree}</p>
                     </div>
                     <button
                       onClick={() => setExpanded(isOpen ? null : index)}
-                      className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-200 transition hover:border-cyan-400/40"
+                      className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-100 transition hover:border-cyan-300"
                       aria-expanded={isOpen}
                     >
                       {isOpen ? "Hide details" : "Program insights"}
@@ -123,28 +118,29 @@ const Education: React.FC<EducationProps> = ({ url }) => {
                     </button>
                   </div>
 
-                  <p className="mt-4 text-sm text-slate-200">{edu.summary}</p>
+                  <p className="text-sm text-slate-200">{edu.summary}</p>
 
-                  <ul className="mt-4 grid gap-3 text-sm text-slate-100 md:grid-cols-2">
+                  <div className="grid gap-3 text-sm text-slate-100 md:grid-cols-2">
                     {edu.highlights.map((point) => (
-                      <li
+                      <div
                         key={point}
-                        className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 leading-relaxed"
+                        className="flex items-start gap-3 rounded-2xl border border-white/5 bg-white/5 px-4 py-3"
                       >
-                        {point}
-                      </li>
+                        <FiBookOpen className="mt-1 shrink-0 text-cyan-300" />
+                        <span>{point}</span>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
 
                   <div
-                    className={`mt-4 grid transition-all duration-500 ${
+                    className={`grid transition-all duration-500 ${
                       isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                     }`}
                   >
                     <div className="overflow-hidden">
                       {edu.courses && edu.courses.length > 0 && (
                         <>
-                          <p className="text-xs uppercase tracking-[0.3em] text-cyan-200">
+                          <p className="text-xs uppercase tracking-[0.35em] text-cyan-200">
                             Core coursework
                           </p>
                           <div className="mt-3 flex flex-wrap gap-2">
