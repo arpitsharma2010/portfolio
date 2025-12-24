@@ -145,7 +145,7 @@ const Header: React.FC<HeaderProps> = ({ url, theme, onThemeToggle }) => {
             href={resumePDF}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-ion/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-ion shadow-glow transition hover:border-plasma/60 hover:text-white"
+            className="resume-button inline-flex w-full items-center justify-center gap-2 rounded-full border border-ion/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-ion shadow-glow transition hover:border-plasma/60 hover:text-white"
           >
             <FiDownload /> Resume
           </a>
@@ -179,7 +179,7 @@ const Header: React.FC<HeaderProps> = ({ url, theme, onThemeToggle }) => {
               href={resumePDF}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden items-center gap-2 rounded-full border border-ion/40 px-3 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-ion shadow-glow transition hover:border-plasma/60 hover:text-white sm:inline-flex"
+              className="resume-button hidden items-center gap-2 rounded-full border border-ion/40 px-3 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-ion shadow-glow transition hover:border-plasma/60 hover:text-white sm:inline-flex"
             >
               <FiDownload /> Resume
             </a>

@@ -184,7 +184,7 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
                     {highlights.map((h, i) => (
                       <li
                         key={i}
-                        className="inline-flex items-center gap-1 rounded-full border border-amber-300/40 bg-amber-400/10 px-3 py-0.5 text-[11px] font-semibold text-amber-200"
+                        className="achievement-pill inline-flex items-center gap-1 rounded-full px-3 py-0.5 text-[11px] font-semibold"
                       >
                         🎖 <span>{h}</span>
                       </li>
