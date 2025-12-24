@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import Contact from "../Contact";
 
 describe("Contact page", () => {
-  it("renders location, emails, and phone", () => {
+  it("renders location, emails and phone", () => {
     render(<Contact />);
 
     expect(screen.getByText(/Jersey City, New Jersey, USA/i)).toBeInTheDocument();

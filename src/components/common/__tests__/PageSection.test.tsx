@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import PageSection from "../PageSection";
 
 describe("PageSection", () => {
-  it("renders eyebrow, title, description, and children", () => {
+  it("renders eyebrow, title, description and children", () => {
     render(
       <PageSection eyebrow="Intro" title="Section Title" description="Helpful details" align="center">
         <p>Child content</p>

@@ -1,5 +1,5 @@
 import React from "react";
-import { FiExternalLink } from "react-icons/fi";
+// icons removed
 import PageSection from "../common/PageSection.tsx";
 
 interface ExperienceProps {
@@ -33,7 +33,7 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
 
   const allExperience: Job[] = [
     {
-      company: "Tata Consultancy Services (Client: DNB, Norway)",
+      company: "Tata Consultancy Services (DNB, Norway)",
       logo: `${url}Experience/TCS.png`,
       website: "https://www.tcs.com/",
       position: "Senior Software Developer",
@@ -60,7 +60,7 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
       ],
     },
     {
-      company: "Tata Consultancy Services (Client: DNB, Norway)",
+      company: "Tata Consultancy Services (DNB, Norway)",
       logo: `${url}Experience/TCS.png`,
       website: "https://www.tcs.com/",
       position: "Software Developer",
@@ -72,10 +72,10 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
         "Maintained 85%+ SonarQube coverage",
       ],
       description: [
-        "Owned C# .NET Core and Entity Framework services powering DNB’s savings and investment platforms, integrating AWS DynamoDB, API Gateway, Lambda, and internal banking partners through well-documented REST APIs.",
+        "Owned C# .NET Core and Entity Framework services powering DNB’s savings and investment platforms, integrating AWS DynamoDB, API Gateway, Lambda and internal banking partners through well-documented REST APIs.",
         "Automated deploy pipelines by moving more than ten repositories from Jenkins to GitLab CI/CD, backing infrastructure with Terraform and AWS Secrets Manager.",
-        "Monitored 10,000+ CloudWatch log events, triaged runtime issues with the on-call team, and enforced 85%+ SonarQube coverage with NUnit/Moq test suites.",
-        "Drove Agile ceremonies with product, QA, and operations stakeholders using Jira, Bitbucket, and Swagger/OpenAPI templates to keep releases transparent.",
+        "Monitored 10,000+ CloudWatch log events, triaged runtime issues with the on-call team and enforced 85%+ SonarQube coverage with NUnit/Moq test suites.",
+        "Drove Agile ceremonies with product, QA and operations stakeholders using Jira, Bitbucket and Swagger/OpenAPI templates to keep releases transparent.",
       ],
       techStack: [
         "C#",
@@ -101,7 +101,7 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
       location: "Pune, India",
       highlight: "Built hospital management MVP with secure APIs",
       description: [
-        "Designed and shipped a Hospital Management System with appointments, billing, and pharmacy modules using ReactJS and Spring Boot.",
+        "Designed and shipped a Hospital Management System with appointments, billing and pharmacy modules using ReactJS and Spring Boot.",
         "Implemented 10+ REST APIs with input validation and OAuth2 authentication, connected to MySQL for persistence.",
         "Authored 25+ JUnit tests covering billing and inventory logic and practiced two-week Agile sprints with Git-based workflows.",
       ],
@@ -115,9 +115,9 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
       duration: "Jun 2019 – Aug 2019",
       location: "Amravati, India",
       description: [
-        "Developed Python scripts on Raspberry Pi for sensor interfacing, irrigation control, and environmental monitoring, improving automation throughput by roughly 15%.",
+        "Developed Python scripts on Raspberry Pi for sensor interfacing, irrigation control and environmental monitoring, improving automation throughput by roughly 15%.",
         "Refactored Python modules to cut latency by 20%, increasing stability of the farming IoT solution.",
-        "Implemented GPIO-driven automation and gained hands-on practice connecting sensors, relays, and communication protocols in the field.",
+        "Implemented GPIO-driven automation and gained hands-on practice connecting sensors, relays and communication protocols in the field.",
       ],
       techStack: ["Python", "Raspberry Pi", "GPIO", "Sensors", "IoT"],
     },
@@ -128,7 +128,7 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
       <PageSection
         eyebrow="Career"
         title="Work Experience"
-        description="Building resilient, API-driven platforms across finance and health tech. I thrive at the intersection of architecture, DevOps, and collaboration—leading delivery while keeping accessibility, observability, and documentation in the loop."
+        description="Building resilient, API-driven platforms across finance and health tech. I thrive at the intersection of architecture, DevOps and collaboration leading delivery while keeping accessibility, observability and documentation in the loop."
         align="center"
       >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -154,21 +154,15 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
             >
               <div className="absolute inset-0 bg-gradient-to-br from-plasma/10 via-transparent to-ion/10 opacity-60" aria-hidden />
               <div className="relative flex flex-col items-center text-center">
-                <div className="flex items-center gap-3">
-                  <div className="rounded-full border border-white/10 bg-white/5 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.3em] text-text-mute">
+                <div className="flex w-full items-center justify-between gap-3">
+                  <div className="rounded-full border border-white/20 bg-gradient-to-r from-plasma/40 to-ion/40 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.3em] text-white shadow-glow">
                     {job.duration}
                   </div>
                   {job.location && (
                     <span className="text-[10px] uppercase tracking-[0.35em] text-text-mute">{job.location}</span>
                   )}
                 </div>
-                <a
-                  href={job.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 focus:outline-none focus:ring-2 focus:ring-ion/60 rounded-2xl"
-                  aria-label={`Open ${job.company} website`}
-                >
+                <div className="mt-4">
                   {showLogos ? (
                     <img
                       src={job.logo}
@@ -181,7 +175,7 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
                       {job.company.split(" ")[0]}
                     </div>
                   )}
-                </a>
+                </div>
                 <h3 className="mt-3 text-xl font-semibold text-white">{job.position}</h3>
                 <p className="text-sm text-slate-300">{job.company}</p>
 
@@ -220,18 +214,6 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
                     </span>
                   ))}
                 </div>
-              </div>
-
-              <div className="relative flex items-center justify-between text-[11px] uppercase tracking-[0.3em] text-text-mute">
-                <span>Impact-focused delivery</span>
-                <a
-                  href={job.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 rounded-full border border-white/10 px-3 py-1 text-text-mute transition hover:border-ion/50 hover:text-ion"
-                >
-                  Visit <FiExternalLink />
-                </a>
               </div>
             </article>
           );

@@ -8,7 +8,7 @@ jest.mock("react-simple-typewriter", () => ({
 }));
 
 describe("Home page", () => {
-  it("renders hero content, stats, and actions", () => {
+  it("renders hero content, stats and actions", () => {
     render(
       <MemoryRouter>
         <Home url="/assets/" />

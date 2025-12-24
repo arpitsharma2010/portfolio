@@ -11,10 +11,10 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
 
   const projects = [
     {
-      title: "WanderGenie – AI Travel Planning Engine",
+      title: "WanderGenie - AI Travel Planning Engine",
       image: `${url}Project/WanderGenie.jpeg`,
       description:
-        "Full-stack AI travel assistant built at UBHacking 2025 that turns natural-language prompts into time-aware itineraries with maps, POIs, and booking links.",
+        "Full-stack AI travel assistant built at UBHacking 2025 that turns natural-language prompts into time-aware itineraries with maps, POIs and booking links.",
       timeline: "Nov 2025",
       details: [
         "Engineered a multi-agent LangGraph workflow (Planner → Researcher → Packager) so complex trips are decomposed into verifiable subtasks before packaging the final plan.",
@@ -47,12 +47,12 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
       title: "Custom 16-bit Processor on FPGA",
       image: `${url}Project/Microprocessor.png`,
       description:
-        "Graduate research project translating Verilog fundamentals into a working single-cycle RISC CPU with a 10-instruction ISA on a Basys3 FPGA—exactly as described in my resume.",
+        "Graduate research project translating Verilog fundamentals into a working single-cycle RISC CPU with a 10-instruction ISA on a Basys3 FPGA exactly as described in my resume.",
       timeline: "Feb 2025 – Apr 2025",
       details: [
         "Architected modular datapath components (ALU, register file, control logic, instruction/data memory) so each block could be tested independently before integrating the processor.",
-        "Implemented a two-button stepping mechanism—first button exposes rt/rd register values on the 7-segment display, second executes the instruction—allowing professors to follow state transitions in real time.",
-        "Validated arithmetic, memory, and control-flow instructions (ADDI, LW, SW, BEQ, BNE, JMP) via RTL simulation and Xilinx Vivado before flashing to hardware, mirroring the verification workflow called out on my resume.",
+        "Implemented a two-button stepping mechanism first button exposes rt/rd register values on the 7-segment display, second executes the instruction allowing professors to follow state transitions in real time.",
+        "Validated arithmetic, memory and control-flow instructions (ADDI, LW, SW, BEQ, BNE, JMP) via RTL simulation and Xilinx Vivado before flashing to hardware, mirroring the verification workflow called out on my resume.",
       ],
       techStack: ["Verilog", "Xilinx Vivado", "Basys3 FPGA", "Digital Logic Design"],
       repos: [{ label: "GitHub", url: "https://github.com/arpitsharma2010/micro16-fpga-core" }],
@@ -61,11 +61,11 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
       title: "Crop Yield Prediction and Analysis",
       image: `${url}Project/CropYieldMainpage.jpeg`,
       description:
-        "Machine learning pipeline that cleans agricultural datasets, compares models, and deploys the best performer via a Flask web interface to provide real-time yield predictions for non-technical stakeholders.",
+        "Machine learning pipeline that cleans agricultural datasets, compares models and deploys the best performer via a Flask web interface to provide real-time yield predictions for non-technical stakeholders.",
       timeline: "Sep 2024 – Nov 2024",
       details: [
-        "Processed rainfall, soil, and crop attributes using Pandas and PySpark; performed EDA with Seaborn/Matplotlib to expose trends and correlations highlighted in my resume.",
-        "Trained Linear Regression, KNN, Random Forest, and XGBoost models with Scikit-learn, ultimately selecting the Random Forest approach for its documented accuracy.",
+        "Processed rainfall, soil and crop attributes using Pandas and PySpark; performed EDA with Seaborn/Matplotlib to expose trends and correlations highlighted in my resume.",
+        "Trained Linear Regression, KNN, Random Forest and XGBoost models with Scikit-learn, ultimately selecting the Random Forest approach for its documented accuracy.",
         "Served predictions through a Flask app backed by HTML/CSS so growers and policymakers could submit field data and receive guidance instantly without touching notebooks.",
       ],
       techStack: ["Python", "Flask", "Pandas", "PySpark", "Scikit-learn", "Random Forest"],
@@ -75,12 +75,12 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
       title: "Portfolio Website",
       image: `${url}Project/Portfolio.png`,
       description:
-        "Personal portfolio built with React + TypeScript and Tailwind to showcase projects, experience, and research updates in a modular, component-driven structure.",
+        "Personal portfolio built with React + TypeScript and Tailwind to showcase projects, experience and research updates in a modular, component-driven structure.",
       timeline: "Feb 2025 – Present",
       details: [
-        "Defined reusable layout primitives (PageSection, ModuleCard) so sections such as Home, Skills, and Projects can evolve without rewriting layout glue.",
+        "Defined reusable layout primitives (PageSection, ModuleCard) so sections such as Home, Skills and Projects can evolve without rewriting layout glue.",
         "Integrated GitHub Pages deployment for fast iteration and a custom theme hook that honors OS preference before storing manual overrides.",
-        "Continuously extends sections—experience timelines, resume-aligned stats, formal palettes—based on recruiter and mentor feedback.",
+        "Continuously extends sections experience timelines, resume-aligned stats, formal palettes based on recruiter and mentor feedback.",
       ],
       techStack: ["React", "TypeScript", "Tailwind CSS", "GitHub Pages"],
       repos: [{ label: "Repository", url: "https://github.com/arpitsharma2010/Portfolio" }],
@@ -89,11 +89,11 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
       title: "Library Management System",
       image: `${url}Project/LibraryMainPage.png`,
       description:
-        "Full-stack system using React (TypeScript) and Spring Boot that offers secure authentication, admin workflows, and real-time book tracking for faculty and students.",
+        "Full-stack system using React (TypeScript) and Spring Boot that offers secure authentication, admin workflows and real-time book tracking for faculty and students.",
       timeline: "Dec 2024 – Feb 2025",
       details: [
         "Implemented JWT + OAuth-backed authentication with role-based dashboards for admins and borrowers.",
-        "Admins can add/update/remove inventory, respond to queries, and monitor borrowing activity while users extend loans, rate books, and request purchases.",
+        "Admins can add/update/remove inventory, respond to queries and monitor borrowing activity while users extend loans, rate books and request purchases.",
         "Optimized SQL schema and caching to keep catalog queries responsive even during exam-season spikes.",
       ],
       techStack: ["React", "Spring Boot", "Java", "SQL", "OAuth2", "JWT"],
@@ -106,7 +106,7 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
       title: "Automated Timetable Generation",
       image: `${url}developer_image.jpg`,
       description:
-        "Scheduling tool using PHP, MySQL, and Bootstrap for universities to assign faculty, avoid clashes, and let professors manage their availability digitally.",
+        "Scheduling tool using PHP, MySQL and Bootstrap for universities to assign faculty, avoid clashes and let professors manage their availability digitally.",
       timeline: "Jan 2020 – Apr 2020",
       details: [
         "Designed professor availability forms and admin dashboards so stakeholders could update slots without spreadsheets.",
@@ -149,7 +149,6 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
             </div>
             <div className="relative z-10 flex flex-col gap-4 p-6">
               <div>
-                <p className="text-[11px] uppercase tracking-[0.4em] text-text-mute">Spotlight</p>
                 <h3 className="mt-2 text-2xl font-semibold text-white">{project.title}</h3>
               </div>
               <p className="text-sm text-slate-200">{project.description}</p>

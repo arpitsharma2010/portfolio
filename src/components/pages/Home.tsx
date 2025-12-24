@@ -6,11 +6,10 @@ import PageSection from "../common/PageSection.tsx";
 
 const resume = "https://drive.google.com/file/d/1fJuLB-ssJNGaScMs10mAl4_FIe5Fx00K/view";
 
-const focusBadges = [
-  ".NET Core + Entity Framework",
-  "GitLab CI/CD + Terraform",
-  "AWS Lambda + API Gateway",
-  "FPGA + ML research",
+const quickStats = [
+  { label: "Years delivering", value: "3.5+", detail: "Banking healthcare and research workloads" },
+  { label: "APIs shipped", value: "30+", detail: "C#/.NET Core services with contract-first docs" },
+  { label: "CI/CD uplifts", value: "10 repos", detail: "Jenkins → GitLab pipelines scripted with Terraform" },
 ];
 
 const Home: React.FC<{ url: string }> = ({ url }) => {
@@ -19,21 +18,21 @@ const Home: React.FC<{ url: string }> = ({ url }) => {
       <PageSection
         eyebrow="Arpit Dilip Sharma"
         title="Results driven software developer"
-        description="3.5+ years of backend engineering, cloud deployments, and full stack delivery using .NET Core, AWS, React, and SQL exactly as summarized on my resume."
+        description="3.5+ years of software engineering cloud deployments and microservices using .NET Core, AWS, React, NoSQL and SQL exactly as summarized on my resume."
       >
         <div className="grid gap-8 xl:grid-cols-[1.15fr_0.85fr]">
           <div className="space-y-6">
             <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-6 shadow-[0_15px_50px_rgba(0,0,0,0.45)]">
               <p className="font-mono text-[11px] uppercase tracking-[0.5em] text-text-mute">Hello world</p>
               <h1 className="mt-3 text-4xl font-black leading-tight text-white sm:text-5xl">
-                Backend + cloud engineer for regulated teams
+                Backend + cloud engineer shaping reliable launches
               </h1>
               <p className="mt-4 text-base text-slate-300">
                 <Typewriter
                   words={[
                     "Shipping .NET Core REST APIs for DNB",
                     "Automating GitLab + Terraform deployments",
-                    "Researching ML + FPGA builds at SUNY Buffalo",
+                    "Applying ML + FPGA research to real projects",
                   ]}
                   loop
                   typeSpeed={80}
@@ -62,27 +61,15 @@ const Home: React.FC<{ url: string }> = ({ url }) => {
               </Link>
             </div>
 
-            <div className="flex flex-wrap gap-2">
-              {focusBadges.map((pill) => (
-                <span
-                  key={pill}
-                  className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] uppercase tracking-[0.3em] text-text-mute"
-                >
-                  {pill}
-                </span>
-              ))}
-            </div>
-
             <div className="grid gap-3 sm:grid-cols-2">
-              {[
-                { label: "Current", value: "M.S. CS&E @ SUNY Buffalo" },
-                { label: "Previous", value: "Senior Software Developer @ TCS" },
-              ].map((card) => (
-                <div key={card.label} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200">
-                  <p className="text-[11px] uppercase tracking-[0.4em] text-text-mute">{card.label}</p>
-                  <p className="mt-1 font-semibold text-white">{card.value}</p>
-                </div>
-              ))}
+              <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200">
+                <p className="text-[11px] uppercase tracking-[0.4em] text-text-mute">Current</p>
+                <p className="mt-1 font-semibold text-white">M.S. CS&E @ SUNY Buffalo</p>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200">
+                <p className="text-[11px] uppercase tracking-[0.4em] text-text-mute">Previous</p>
+                <p className="mt-1 font-semibold text-white">Senior Software Developer @ TCS</p>
+              </div>
             </div>
           </div>
 
@@ -97,36 +84,49 @@ const Home: React.FC<{ url: string }> = ({ url }) => {
               />
             </div>
             <dl className="mt-6 grid gap-4 text-sm text-slate-200">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <dt className="text-[11px] uppercase tracking-[0.5em] text-text-mute">Comms</dt>
-                <dd className="text-base font-semibold text-white">arpitdil@buffalo.edu</dd>
-                <dd className="text-xs text-slate-400">+1 (716) 750-7459</dd>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <dt className="text-[11px] uppercase tracking-[0.5em] text-text-mute">Focus</dt>
-                <dd className="text-base font-semibold text-white">Backend engineering · Cloud deployments · ML/FPGA research</dd>
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 space-y-2">
+                <div>
+                  <dt className="text-[11px] uppercase tracking-[0.5em] text-text-mute">Availability</dt>
+                  <dd className="text-base font-semibold text-white">Full-time Feb 2026</dd>
+                </div>
+                <div>
+                  <dt className="text-[11px] uppercase tracking-[0.5em] text-text-mute">Email</dt>
+                  <dd className="text-base font-semibold text-white">arpeet.sharma.1998@gmail.com</dd>
+                </div>
+                <div>
+                  <dt className="text-[11px] uppercase tracking-[0.5em] text-text-mute">Phone</dt>
+                  <dd className="text-base font-semibold text-white">+1 (716) 750-7459</dd>
+                </div>
+                <div>
+                  <dt className="text-[11px] uppercase tracking-[0.5em] text-text-mute">Location</dt>
+                  <dd className="text-base font-semibold text-white">Jersey City, New Jersey</dd>
+                </div>
               </div>
             </dl>
           </div>
         </div>
       </PageSection>
 
-      <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-6 rounded-[2rem] border border-white/10 bg-white/5 px-6 py-6 text-center text-sm text-slate-200 shadow-[0_15px_45px_rgba(0,0,0,0.35)]">
-        <div>
-          <p className="text-[11px] uppercase tracking-[0.4em] text-text-mute">Experience</p>
-          <p className="mt-1 text-2xl font-semibold text-white">3.5+ years</p>
+      <PageSection
+        eyebrow="Snapshot"
+        title="Impact in a glance"
+        description="Instrumentation documentation and measurable releases keep stakeholders trusting the process."
+        align="center"
+        variant="muted"
+      >
+        <div className="grid gap-4 sm:grid-cols-3">
+          {quickStats.map((stat) => (
+            <div
+              key={stat.label}
+              className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-5 text-center shadow-[0_15px_35px_rgba(0,0,0,0.35)]"
+            >
+              <p className="text-3xl font-bold text-white">{stat.value}</p>
+              <p className="mt-1 text-[11px] uppercase tracking-[0.4em] text-text-mute">{stat.label}</p>
+              <p className="mt-3 text-xs text-slate-300">{stat.detail}</p>
+            </div>
+          ))}
         </div>
-        <span className="text-white/30 text-2xl">•</span>
-        <div>
-          <p className="text-[11px] uppercase tracking-[0.4em] text-text-mute">APIs shipped</p>
-          <p className="mt-1 text-2xl font-semibold text-white">30+</p>
-        </div>
-        <span className="text-white/30 text-2xl">•</span>
-        <div>
-          <p className="text-[11px] uppercase tracking-[0.4em] text-text-mute">CI/CD migrations</p>
-          <p className="mt-1 text-2xl font-semibold text-white">10+</p>
-        </div>
-      </div>
+      </PageSection>
     </div>
   );
 };

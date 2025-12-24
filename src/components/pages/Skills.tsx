@@ -5,19 +5,19 @@ const skillGroups = [
   {
     title: "Languages & Systems",
     description:
-      "C#, Java, Python, JavaScript (ES6+), C, C++, SQL, PHP, HTML5/CSS3, and Verilog form the backbone of my .NET Core APIs, browser interfaces, data engineering utilities, and FPGA designs.",
+      "C#, Java, Python, JavaScript (ES6+), C, C++, SQL, PHP, HTML5/CSS3 and Verilog form the backbone of my .NET Core APIs, browser interfaces, data engineering utilities and FPGA designs.",
     tools: ["C#", "Java", "Python", "JavaScript (ES6+)", "C", "C++", "SQL", "PHP", "HTML5/CSS3", "Verilog"],
   },
   {
     title: "Frameworks & Libraries",
     description:
-      ".NET Core with Entity Framework powers savings and investment services, while Spring Boot, ReactJS, Flask, FastAPI, PyTorch, and Bootstrap help me deliver UI surfaces, ML prototypes, and internal portals with consistent coding standards.",
+      ".NET Core with Entity Framework powers savings and investment services, while Spring Boot, ReactJS, Flask, FastAPI, PyTorch and Bootstrap help me deliver UI surfaces, ML prototypes and internal portals with consistent coding standards.",
     tools: [".NET Core", "Entity Framework", "Spring Boot", "ReactJS", "Flask", "FastAPI", "PyTorch", "Bootstrap"],
   },
   {
     title: "Cloud & DevOps",
     description:
-      "AWS Lambda, API Gateway, DynamoDB, S3, and CloudWatch host production workloads; Terraform, Docker, Jenkins, and GitLab CI/CD automate the path from pull request to deployment with controlled rollbacks and observability baked in.",
+      "AWS Lambda, API Gateway, DynamoDB, S3 and CloudWatch host production workloads; Terraform, Docker, Jenkins and GitLab CI/CD automate the path from pull request to deployment with controlled rollbacks and observability baked in.",
     tools: [
       "AWS Lambda",
       "API Gateway",
@@ -33,7 +33,7 @@ const skillGroups = [
   {
     title: "Testing, Security & Data",
     description:
-      "JUnit, NUnit, and Moq keep business logic regression-free; Swagger/OpenAPI, OAuth2, Postman, SonarQube, MySQL, Pandas, PySpark, and Scikit-learn ensure every API contract, data pipeline, and ML model is traceable and validated.",
+      "JUnit, NUnit and Moq keep business logic regression-free; Swagger/OpenAPI, OAuth2, Postman, SonarQube, MySQL, Pandas, PySpark and Scikit-learn ensure every API contract, data pipeline and ML model is traceable and validated.",
     tools: [
       "JUnit",
       "NUnit",
@@ -51,7 +51,7 @@ const skillGroups = [
   {
     title: "Workflow & Collaboration",
     description:
-      "Git (distributed), Jira, Confluence, Agile/Scrum cadences, and RESTful API design templates keep cross-functional teams aligned from planning through QA handoff.",
+      "Git (distributed), Jira, Confluence, Agile/Scrum cadences and RESTful API design templates keep cross-functional teams aligned from planning through QA handoff.",
     tools: ["Git", "Jira", "Confluence", "Agile/Scrum", "RESTful API Design"],
   },
 ];
@@ -72,7 +72,6 @@ const Skills: React.FC = () => {
             >
               <div className="absolute inset-0 bg-gradient-to-br from-plasma/10 via-transparent to-ion/10 opacity-60" aria-hidden />
               <div className="relative">
-                <p className="text-[11px] uppercase tracking-[0.4em] text-text-mute">Discipline</p>
                 <h3 className="mt-2 text-2xl font-semibold text-white">{group.title}</h3>
                 <p className="mt-2 text-sm text-slate-200">{group.description}</p>
               </div>

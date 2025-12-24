@@ -4,7 +4,7 @@ import { FiLayers } from "react-icons/fi";
 import ModuleCard from "../ModuleCard";
 
 describe("ModuleCard", () => {
-  it("renders title, description, highlights, tags, and icon", () => {
+  it("renders title, description, highlights, tags and icon", () => {
     const highlights = ["First highlight", "Second highlight"];
     const tags = ["React", "TypeScript"];
 

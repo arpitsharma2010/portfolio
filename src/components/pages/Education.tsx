@@ -29,7 +29,7 @@ const Education: React.FC<EducationProps> = ({ url }) => {
       degree: "M.S. Computer Science & Engineering (GPA: 3.77 / 4)",
       year: "Aug 2024 – Dec 2025",
       summary:
-        "Graduate study focused on computer science and engineering with hands-on work in machine learning pipelines, FPGA design, and production-grade software delivery—matching the research projects outlined in my resume.",
+        "Graduate study focused on computer science and engineering with hands-on work in machine learning pipelines, FPGA design and production-grade software delivery matching the research projects outlined in my resume.",
       highlights: [
         "Translating research into practice via the custom 16-bit single-cycle RISC processor built on Basys3 FPGA.",
         "Bringing industry experience into coursework by documenting ML experiments similar to crop-yield prediction efforts.",
@@ -54,7 +54,7 @@ const Education: React.FC<EducationProps> = ({ url }) => {
       degree: "B.E. Computer Science & Engineering (GPA: 8.67 / 10)",
       year: "Jul 2016 – Oct 2020",
       summary:
-        "Undergraduate engineering program that grounded me in algorithms, databases, and end-to-end project delivery—skills later applied to fintech, healthcare, and agri-tech initiatives.",
+        "Undergraduate engineering program that grounded me in algorithms, databases and end-to-end project delivery skills later applied to fintech, healthcare and agri-tech initiatives.",
       highlights: [
         "Completed capstone and lab work that informed the hospital management system and IoT automation projects in my resume.",
         "Maintained an 8.67/10 GPA while contributing to team projects and coding assignments across the curriculum.",
@@ -86,7 +86,7 @@ const Education: React.FC<EducationProps> = ({ url }) => {
       <PageSection
         eyebrow="Academics"
         title="Education"
-        description="Graduate research at SUNY Buffalo plus an undergraduate engineering degree that set the foundation for backend, ML, and hardware projects."
+        description="Graduate student at SUNY Buffalo plus an undergraduate engineering degree that set the foundation for software, ML and hardware projects."
         align="center"
       >
         <></>
