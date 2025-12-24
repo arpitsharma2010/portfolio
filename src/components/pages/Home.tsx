@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Typewriter } from "react-simple-typewriter";
 import { FiArrowRight, FiDownload } from "react-icons/fi";
 import PageSection from "../common/PageSection.tsx";
+import SEO from "../utils/SEO.tsx";
 
 const resume = "https://drive.google.com/file/d/1fJuLB-ssJNGaScMs10mAl4_FIe5Fx00K/view";
 
@@ -13,8 +14,48 @@ const quickStats = [
 ];
 
 const Home: React.FC<{ url: string }> = ({ url }) => {
+  const pageUrl = `${url}`;
+  const seoDescription =
+    "Arpit Sharma is a Senior Software Developer crafting .NET Core services, AWS-backed architectures, and CI/CD pipelines for regulated industries.";
+  const seoKeywords = [
+    "Arpit Sharma",
+    "Senior Software Developer",
+    ".NET Core portfolio",
+    "AWS engineer",
+    "GitLab CI/CD expert",
+    "Terraform automation",
+    "Full-stack engineer Jersey City",
+  ];
+
   return (
-    <div className="flex flex-col gap-10 text-white">
+    <>
+      <SEO
+        title="Arpit Sharma | Senior Software Developer"
+        description={seoDescription}
+        keywords={seoKeywords}
+        image={`${url}arpit-sharma.jpg`}
+        url={pageUrl}
+        type="website"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "Arpit Sharma Portfolio",
+          url: pageUrl,
+          description: seoDescription,
+          about: {
+            "@type": "Person",
+            name: "Arpit Sharma",
+            jobTitle: "Senior Software Developer",
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: "Jersey City",
+              addressRegion: "NJ",
+              addressCountry: "USA",
+            },
+          },
+        }}
+      />
+      <div className="flex flex-col gap-10 text-white">
       <PageSection
         eyebrow="Arpit Dilip Sharma"
         title="Results driven software developer"
@@ -128,6 +169,7 @@ const Home: React.FC<{ url: string }> = ({ url }) => {
         </div>
       </PageSection>
     </div>
+    </>
   );
 };
 

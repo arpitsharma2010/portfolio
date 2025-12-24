@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FiArrowUpRight, FiGithub, FiTarget } from "react-icons/fi";
 import PageSection from "../common/PageSection.tsx";
+import SEO from "../utils/SEO.tsx";
 
 interface ProjectsProps {
   url: string;
@@ -117,8 +118,43 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
     },
   ];
 
+  const pageUrl = `${url}projects/`;
+  const seoDescription =
+    "Highlighted projects from Arpit Sharma covering AI travel planning, FPGA processors, machine learning pipelines, and this portfolio.";
+
   return (
-    <section className="flex flex-col gap-10 text-white">
+    <>
+      <SEO
+        title="Projects | Arpit Sharma"
+        description={seoDescription}
+        keywords={[
+          "Arpit Sharma projects",
+          "AI travel assistant",
+          "FPGA processor project",
+          "Machine learning crop yield",
+          "React portfolio project",
+        ]}
+        image={`${url}Project/Portfolio.png`}
+        url={pageUrl}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "Highlighted Projects - Arpit Sharma",
+          numberOfItems: projects.length,
+          itemListElement: projects.map((project, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            item: {
+              "@type": "CreativeWork",
+              name: project.title,
+              description: project.description,
+              url: pageUrl,
+              image: project.image,
+            },
+          })),
+        }}
+      />
+      <section className="flex flex-col gap-10 text-white">
       <PageSection
         eyebrow="Case studies & builds"
         title="Projects"
@@ -273,6 +309,7 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
         </div>
       )}
     </section>
+    </>
   );
 };
 

@@ -1,5 +1,6 @@
 import React from "react";
 import PageSection from "../common/PageSection.tsx";
+import SEO from "../utils/SEO.tsx";
 
 const skillGroups = [
   {
@@ -56,9 +57,49 @@ const skillGroups = [
   },
 ];
 
-const Skills: React.FC = () => {
+interface SkillsProps {
+  url: string;
+}
+
+const Skills: React.FC<SkillsProps> = ({ url }) => {
+  const pageUrl = `${url}skills/`;
+  const description =
+    "Technical skill matrix covering languages, frameworks, cloud platforms, and collaboration tooling Arpit Sharma uses to deliver banking and research software.";
+  const keywords = [
+    "Arpit Sharma skills",
+    ".NET Core skills",
+    "AWS expertise",
+    "GitLab CI/CD skills",
+    "Terraform automation skills",
+    "Software engineer resume skills",
+  ];
+
   return (
-    <section className="flex flex-col gap-10 text-white">
+    <>
+      <SEO
+        title="Skills | Arpit Sharma"
+        description={description}
+        keywords={keywords}
+        image={`${url}arpit-sharma.jpg`}
+        url={pageUrl}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "Skillset - Arpit Sharma",
+          numberOfItems: skillGroups.length,
+          itemListElement: skillGroups.map((group, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            item: {
+              "@type": "DefinedTerm",
+              name: group.title,
+              description: group.description,
+              alternateName: group.tools.join(", "),
+            },
+          })),
+        }}
+      />
+      <section className="flex flex-col gap-10 text-white">
       <PageSection
         eyebrow="Capability stack"
         title="Skills from my resume"
@@ -90,6 +131,7 @@ const Skills: React.FC = () => {
         </div>
       </PageSection>
     </section>
+    </>
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { FiAward, FiBookOpen } from "react-icons/fi";
 import PageSection from "../common/PageSection.tsx";
+import SEO from "../utils/SEO.tsx";
 
 interface EducationProps {
   url: string;
@@ -81,8 +82,41 @@ const Education: React.FC<EducationProps> = ({ url }) => {
     },
   ];
 
+  const pageUrl = `${url}education/`;
+  const description =
+    "Academic background for Arpit Sharma including an M.S. in Computer Science at SUNY Buffalo and a B.E. in Computer Science at SGBAU.";
+
   return (
-    <section className="flex flex-col gap-10 text-white">
+    <>
+      <SEO
+        title="Education | Arpit Sharma"
+        description={description}
+        keywords={[
+          "Arpit Sharma education",
+          "SUNY Buffalo MS CS",
+          "SGBAU Computer Science",
+          "Arpit Sharma GPA",
+        ]}
+        image={`${url}Education/UB.jpg`}
+        url={pageUrl}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "Education - Arpit Sharma",
+          numberOfItems: educationData.length,
+          itemListElement: educationData.map((edu, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            item: {
+              "@type": "CollegeOrUniversity",
+              name: edu.institution,
+              url: edu.website,
+              description: edu.summary,
+            },
+          })),
+        }}
+      />
+      <section className="flex flex-col gap-10 text-white">
       <PageSection
         eyebrow="Academics"
         title="Education"
@@ -183,6 +217,7 @@ const Education: React.FC<EducationProps> = ({ url }) => {
         })}
       </div>
     </section>
+    </>
   );
 };
 

@@ -22,12 +22,12 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Home url={BASE_URL} />} />
             <Route path="/portfolio/" element={<Home url={BASE_URL} />} />
-            <Route path="/portfolio/skills/" element={<Skills />} />
+            <Route path="/portfolio/skills/" element={<Skills url={BASE_URL} />} />
             <Route path="/portfolio/projects/" element={<Projects url={BASE_URL} />} />
             <Route path="/portfolio/education/" element={<Education url={BASE_URL} />} />
             <Route path="/portfolio/experience/" element={<Experience url={BASE_URL} />} />
             <Route path="/portfolio/certifications/" element={<Certifications url={BASE_URL} />} />
-            <Route path="/portfolio/contact/" element={<Contact />} />
+            <Route path="/portfolio/contact/" element={<Contact url={BASE_URL} />} />
             <Route path="*" element={<Home url={BASE_URL} />} />
           </Routes>
         </MainLayout>

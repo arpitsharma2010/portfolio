@@ -1,6 +1,7 @@
 import React from "react";
 // icons removed
 import PageSection from "../common/PageSection.tsx";
+import SEO from "../utils/SEO.tsx";
 
 interface ExperienceProps {
   url: string;
@@ -23,6 +24,19 @@ type Job = {
 const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
   const normalizeHighlights = (h?: string | string[]) =>
     !h ? [] : Array.isArray(h) ? h : [h];
+
+  const pageUrl = `${url}experience/`;
+  const seoImage = `${url}Experience/TCS.png`;
+  const seoDescription =
+    "Professional experience of Arpit Sharma spanning Senior Software Developer roles at Tata Consultancy Services delivering .NET Core APIs, DevOps pipelines, and IoT solutions.";
+  const seoKeywords = [
+    "Arpit Sharma experience",
+    "Senior Software Developer TCS",
+    "GitLab CI pipelines",
+    "Terraform infrastructure",
+    "AWS Lambda developer",
+    "DNB banking engineer",
+  ];
 
   const quickStats = [
     { label: "REST APIs delivered", value: "30+" },
@@ -124,7 +138,32 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
   ];
 
   return (
-    <section className="flex flex-col gap-10 text-white">
+    <>
+      <SEO
+        title="Experience | Arpit Sharma"
+        description={seoDescription}
+        keywords={seoKeywords}
+        image={seoImage}
+        url={pageUrl}
+        type="profile"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "Professional Experience - Arpit Sharma",
+          numberOfItems: allExperience.length,
+          itemListElement: allExperience.map((job, idx) => ({
+            "@type": "ListItem",
+            position: idx + 1,
+            item: {
+              "@type": "Organization",
+              name: job.company,
+              url: job.website,
+              description: job.description[0] ?? job.position,
+            },
+          })),
+        }}
+      />
+      <section className="flex flex-col gap-10 text-white">
       <PageSection
         eyebrow="Career"
         title="Work Experience"
@@ -220,6 +259,7 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
         })}
       </div>
     </section>
+    </>
   );
 };
 

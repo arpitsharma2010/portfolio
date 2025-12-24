@@ -26,7 +26,7 @@ const Header: React.FC<HeaderProps> = ({ url, theme, onThemeToggle }) => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const location = useLocation();
   const isDarkMode = theme === "dark";
-  const resumePDF = "https://drive.google.com/file/d/1STvn96l2SdtA4TYAxSvIHf5QyJ6KwFzs/view";
+  const resumePDF = "https://drive.google.com/file/d/1STvn96l2SdtA4TYAxSvIHf5QyJ6KwFzs";
 
   useEffect(() => {
     const calculateScrollProgress = () => {

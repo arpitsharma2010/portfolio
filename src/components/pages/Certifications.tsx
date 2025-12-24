@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import PageSection from "../common/PageSection.tsx";
+import SEO from "../utils/SEO.tsx";
 
 interface CertificationsProps {
   url: string;
@@ -79,8 +80,44 @@ const Certifications: React.FC<CertificationsProps> = ({ url }) => {
     document.body.appendChild(script);
   }, []);
 
+  const pageUrl = `${url}certifications/`;
+  const description =
+    "Credentials held by Arpit Sharma including AWS Cloud Practitioner and Microsoft Azure Fundamentals badges with Credly verification.";
+
   return (
-    <section className="flex flex-col gap-10 text-white">
+    <>
+      <SEO
+        title="Certifications | Arpit Sharma"
+        description={description}
+        keywords={[
+          "Arpit Sharma certifications",
+          "AWS Cloud Practitioner badge",
+          "Azure Fundamentals certification",
+        ]}
+        image={`${url}Certification/aws_cloud_practitioner.png`}
+        url={pageUrl}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "Certifications - Arpit Sharma",
+          numberOfItems: certificationsData.length,
+          itemListElement: certificationsData.map((cert, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            item: {
+              "@type": "EducationalOccupationalCredential",
+              name: cert.name,
+              description: cert.description,
+              url: cert.certificateLink,
+              provider: {
+                "@type": "Organization",
+                name: cert.organization,
+              },
+            },
+          })),
+        }}
+      />
+      <section className="flex flex-col gap-10 text-white">
       <PageSection
         eyebrow="Certifications & Achievements"
         title="Certifications & Achievements"
@@ -129,6 +166,7 @@ const Certifications: React.FC<CertificationsProps> = ({ url }) => {
         ))}
       </div>
     </section>
+    </>
   );
 };
 

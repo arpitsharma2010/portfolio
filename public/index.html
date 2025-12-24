@@ -1,22 +1,79 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
   <script>
-      const theme = localStorage.getItem("theme");
-      if (
-        theme === "dark" ||
-        (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
-      ) {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.add("light");
-      }
-    </script>
-<head>
+    const theme = localStorage.getItem("theme");
+    if (
+      theme === "dark" ||
+      (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.add("light");
+    }
+  </script>
+  <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arpit Sharma | Portfolio</title>
-</head>
-<body>
+    <meta
+      name="description"
+      content="Portfolio of Arpit Sharma, Senior Software Developer specializing in .NET Core, REST APIs, cloud platforms, and DevOps automation across finance and health tech."
+    >
+    <meta
+      name="keywords"
+      content="Arpit Sharma, Senior Software Developer, .NET Core engineer, AWS, GitLab CI/CD, Terraform, REST API, portfolio"
+    >
+    <meta name="author" content="Arpit Sharma">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#020617">
+    <link rel="canonical" href="https://arpitsharma2010.github.io/portfolio/">
+    <meta property="og:title" content="Arpit Sharma | Senior Software Developer Portfolio">
+    <meta
+      property="og:description"
+      content="Explore Arpit Sharma's work building .NET Core services, cloud-native architectures, DevOps pipelines, and ML-driven prototypes."
+    >
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://arpitsharma2010.github.io/portfolio/">
+    <meta property="og:image" content="https://arpitsharma2010.github.io/portfolio/arpit-sharma.jpg">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Arpit Sharma | Senior Software Developer Portfolio">
+    <meta
+      name="twitter:description"
+      content="Full-stack engineer shipping resilient APIs, CI/CD automation, and research-backed solutions."
+    >
+    <meta name="twitter:image" content="https://arpitsharma2010.github.io/portfolio/arpit-sharma.jpg">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Arpit Sharma",
+        "jobTitle": "Senior Software Developer",
+        "url": "https://arpitsharma2010.github.io/portfolio/",
+        "image": "https://arpitsharma2010.github.io/portfolio/arpit-sharma.jpg",
+        "sameAs": [
+          "https://www.linkedin.com/in/arpitsharma2010",
+          "https://github.com/arpitsharma2010"
+        ],
+        "knowsAbout": [
+          ".NET Core",
+          "AWS",
+          "GitLab CI/CD",
+          "Terraform",
+          "REST APIs"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Jersey City",
+          "addressRegion": "NJ",
+          "addressCountry": "USA"
+        },
+        "description": "Engineer focusing on regulated banking platforms, CI/CD automation, and documentation-first delivery."
+      }
+    </script>
+  </head>
+  <body>
     <div id="root"></div>
     <script
       src="https://platform.linkedin.com/badges/js/profile.js"
@@ -24,5 +81,5 @@
       defer
       type="text/javascript"
     ></script>
-</body>
+  </body>
 </html>

@@ -2,12 +2,51 @@ import React from "react";
 import { FaEnvelope, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
 import PageSection from "../common/PageSection.tsx";
 import SocialLinks from "../utils/SocialLinks.tsx";
+import SEO from "../utils/SEO.tsx";
 
 const resumePDF = "https://drive.google.com/file/d/1mcqK7Ru-knL_VgGzljd00gKsXkcPcKWW/view?usp=sharing";
 
-const Contact: React.FC = () => {
+interface ContactProps {
+  url: string;
+}
+
+const Contact: React.FC<ContactProps> = ({ url }) => {
+  const pageUrl = `${url}contact/`;
+  const description =
+    "Contact Arpit Sharma in Jersey City, New Jersey for senior software engineering opportunities, collaborations, or speaking engagements.";
+
   return (
-    <section className="flex flex-col gap-10 text-white">
+    <>
+      <SEO
+        title="Contact | Arpit Sharma"
+        description={description}
+        keywords={[
+          "Contact Arpit Sharma",
+          "Jersey City software developer",
+          "Arpit Sharma email",
+          "Senior software engineer contact",
+        ]}
+        image={`${url}arpit-sharma.jpg`}
+        url={pageUrl}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          url: pageUrl,
+          mainEntity: {
+            "@type": "Person",
+            name: "Arpit Sharma",
+            email: "arpeet.sharma.1998@gmail.com",
+            telephone: "+1-716-750-7459",
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: "Jersey City",
+              addressRegion: "NJ",
+              addressCountry: "USA",
+            },
+          },
+        }}
+      />
+      <section className="flex flex-col gap-10 text-white">
       <PageSection
         eyebrow="Contact"
         title="Get in Touch"
@@ -65,6 +104,7 @@ const Contact: React.FC = () => {
         </div>
       </PageSection>
     </section>
+    </>
   );
 };
 
