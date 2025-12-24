@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FiArrowUpRight, FiGithub, FiTarget } from "react-icons/fi";
+import PageSection from "../common/PageSection.tsx";
 
 interface ProjectsProps {
   url: string;
@@ -7,13 +8,6 @@ interface ProjectsProps {
 
 const Projects: React.FC<ProjectsProps> = ({ url }) => {
   const [expandedProject, setExpandedProject] = useState<number | null>(null);
-
-  const impactStats = [
-    { label: "Research builds", value: "4", note: "Hardware + ML experiments shipped" },
-    { label: "Hackathon podiums", value: "2", note: "Award-winning prototypes" },
-    { label: "CI-ready repos", value: "8", note: "Documented automation" },
-    { label: "Users served", value: "1K+", note: "Stakeholders & hackathon judges" },
-  ];
 
   const projects = [
     {
@@ -124,62 +118,63 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
   ];
 
   return (
-    <section className="relative w-full px-4 py-16 sm:px-6 text-gray-900 dark:text-white transition-colors duration-300">
-      <div className="text-center">
-        <p className="text-sm uppercase tracking-[0.4em] text-cyan-500">Case studies & builds</p>
-        <h2 className="mt-3 text-4xl font-black text-cyan-600 dark:text-cyan-300">Projects</h2>
-        <p className="mt-4 text-base text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
-          Hands-on work ranging from AI copilots to FPGA research. Same engineering discipline, just different canvases.
-        </p>
-      </div>
+    <section className="flex flex-col gap-10 text-white">
+      <PageSection
+        eyebrow="Case studies & builds"
+        title="Projects"
+        description="Hands-on work ranging from AI copilots to FPGA research. Same engineering discipline, just different canvases."
+        align="center"
+      >
+        <></>
+      </PageSection>
 
-      <div className="mt-10 grid gap-8 lg:grid-cols-2">
+      <div className="grid gap-8 lg:grid-cols-2">
         {projects.map((project, index) => (
           <article
             key={project.title}
-            className="group relative overflow-hidden rounded-3xl border border-white/5 bg-white dark:bg-slate-900/60 shadow-xl shadow-black/30 transition hover:-translate-y-1 hover:border-cyan-400/40"
+            className="group relative overflow-hidden rounded-[2.2rem] border border-white/10 bg-white/[0.05] shadow-[0_25px_80px_rgba(0,0,0,0.55)] transition hover:-translate-y-1"
           >
-            <div className="absolute inset-x-6 top-6 h-32 rounded-3xl bg-gradient-to-r from-cyan-500/20 to-transparent blur-3xl opacity-0 transition group-hover:opacity-100" />
-            <div className="relative h-60 overflow-hidden">
+            <div className="absolute inset-x-6 top-6 h-32 rounded-[2rem] bg-gradient-to-r from-plasma/20 to-transparent blur-3xl opacity-0 transition group-hover:opacity-100" />
+            <div className="relative h-60 overflow-hidden rounded-b-[2.5rem] rounded-t-[2.2rem]">
               <img
                 src={project.image}
                 alt={project.title}
                 className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-              <div className="absolute left-4 top-4 rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white backdrop-blur">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+              <div className="absolute left-4 top-4 rounded-full border border-white/40 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.4em] text-white backdrop-blur">
                 {project.timeline}
               </div>
             </div>
             <div className="relative z-10 flex flex-col gap-4 p-6">
               <div>
-                <p className="text-xs uppercase tracking-[0.4em] text-cyan-400">Spotlight</p>
-                <h3 className="mt-2 text-2xl font-bold text-slate-900 dark:text-white">{project.title}</h3>
+                <p className="text-[11px] uppercase tracking-[0.4em] text-text-mute">Spotlight</p>
+                <h3 className="mt-2 text-2xl font-semibold text-white">{project.title}</h3>
               </div>
-              <p className="text-sm text-slate-600 dark:text-slate-300">{project.description}</p>
+              <p className="text-sm text-slate-200">{project.description}</p>
 
-              <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-200">
+              <ul className="space-y-2 text-sm text-slate-200">
                 {project.details.slice(0, 2).map((detail) => (
                   <li key={detail} className="flex items-start gap-2">
-                    <FiTarget className="mt-1 shrink-0 text-cyan-400" />
+                    <FiTarget className="mt-1 shrink-0 text-ion" />
                     <span>{detail}</span>
                   </li>
                 ))}
               </ul>
 
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 text-xs">
                 {project.techStack.slice(0, 4).map((tech) => (
                   <span
                     key={tech}
-                    className="rounded-full border border-slate-200/70 dark:border-white/10 bg-slate-50 dark:bg-white/5 px-3 py-1 text-xs font-semibold text-slate-700 dark:text-slate-200"
+                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-semibold uppercase tracking-[0.2em] text-text-mute"
                   >
                     {tech}
                   </span>
                 ))}
                 {project.techStack.length > 4 && (
-                  <span className="rounded-full border border-dashed border-cyan-400/40 px-3 py-1 text-xs text-cyan-400">
-                    +{project.techStack.length - 4} more
+                  <span className="rounded-full border border-dashed border-ion/40 px-3 py-1 text-xs uppercase tracking-[0.2em] text-ion">
+                    +{project.techStack.length - 4}
                   </span>
                 )}
               </div>
@@ -191,7 +186,7 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
                     href={repo.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-slate-200 dark:border-white/10 px-4 py-2 text-sm font-semibold text-slate-900 dark:text-slate-100 hover:border-cyan-400"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white hover:border-ion/60"
                   >
                     <FiGithub /> {repo.label}
                   </a>
@@ -199,10 +194,10 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
               </div>
 
               <button
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-cyan-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-cyan-500"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-plasma to-ion px-5 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white shadow-glow-sm"
                 onClick={() => setExpandedProject(index)}
               >
-                View build notes <FiArrowUpRight />
+                Build notes <FiArrowUpRight />
               </button>
             </div>
           </article>
@@ -211,15 +206,15 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
 
       {expandedProject !== null && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-md"
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-black/80 p-4 backdrop-blur-2xl lg:pl-[22rem]"
           onClick={() => setExpandedProject(null)}
         >
           <div
-            className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-cyan-500/20 bg-white/90 p-8 text-gray-900 shadow-2xl dark:bg-slate-900/80 dark:text-white"
+            className="relative flex max-h-[90vh] w-full max-w-4xl flex-col overflow-y-auto rounded-[2rem] border border-white/10 bg-panel-dark p-8 text-white shadow-[0_30px_120px_rgba(0,0,0,0.6)]"
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="absolute top-4 right-4 text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 text-xl"
+              className="absolute top-4 right-4 rounded-full border border-white/10 p-2 text-xl text-white hover:border-flare/50 hover:text-flare"
               onClick={() => setExpandedProject(null)}
             >
               ✕
@@ -228,35 +223,33 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
             <img
               src={projects[expandedProject].image}
               alt={projects[expandedProject].title}
-              className="mb-4 h-56 w-full rounded-2xl object-cover"
+              className="mb-4 h-56 w-full rounded-[1.5rem] object-cover"
             />
-            <h3 className="text-3xl font-bold text-cyan-700 dark:text-cyan-300">
-              {projects[expandedProject].title}
-            </h3>
-            <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+            <h3 className="text-3xl font-bold text-ion">{projects[expandedProject].title}</h3>
+            <p className="mt-1 text-sm text-text-mute">
               <strong>Timeline:</strong> {projects[expandedProject].timeline}
             </p>
-            <p className="mt-3 text-gray-700 dark:text-gray-300">{projects[expandedProject].description}</p>
+            <p className="mt-3 text-sm text-slate-200">{projects[expandedProject].description}</p>
 
-            <ul className="mt-4 space-y-3 text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+            <ul className="mt-4 space-y-3 text-sm leading-relaxed text-slate-100">
               {projects[expandedProject].details.map((point) => (
                 <li
                   key={point}
-                  className="flex items-start gap-3 rounded-2xl border border-white/40 bg-white/70 p-3 dark:border-white/10 dark:bg-white/5"
+                  className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-3"
                 >
-                  <FiTarget className="mt-0.5 shrink-0 text-cyan-500" />
+                  <FiTarget className="mt-0.5 shrink-0 text-ion" />
                   <span>{point}</span>
                 </li>
               ))}
             </ul>
 
             <div className="mt-6">
-              <p className="text-xs uppercase tracking-[0.3em] text-cyan-500">Tech stack</p>
+              <p className="text-[11px] uppercase tracking-[0.4em] text-text-mute">Tech stack</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {projects[expandedProject].techStack.map((tech) => (
                   <span
                     key={tech}
-                    className="rounded-full border border-cyan-500/20 bg-white/70 px-3 py-1 text-xs font-semibold text-slate-700 dark:bg-white/10 dark:text-slate-100"
+                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-text-mute"
                   >
                     {tech}
                   </span>
@@ -271,7 +264,7 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
                   href={repo.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 rounded-full border border-cyan-500/30 px-4 py-2 text-sm font-semibold text-cyan-700 dark:text-cyan-300"
+                  className="flex items-center gap-2 rounded-full border border-ion/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-ion"
                 >
                   <FiGithub /> {repo.label}
                 </a>

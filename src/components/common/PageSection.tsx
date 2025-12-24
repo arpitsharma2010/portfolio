@@ -21,9 +21,8 @@ const alignmentMap: Record<Alignment, string> = {
 
 const variantMap: Record<Variant, string> = {
   default:
-    "bg-white/90 dark:bg-slate-900/70 border-slate-200/70 dark:border-white/10 shadow-xl shadow-slate-900/5",
-  muted:
-    "bg-slate-50/80 dark:bg-slate-900/40 border-slate-200/60 dark:border-white/5 shadow-lg shadow-slate-900/5",
+    "border-white/10 bg-gradient-to-br from-white/[0.05] via-white/[0.02] to-transparent shadow-[0_25px_80px_rgba(0,0,0,0.55)]",
+  muted: "border-white/5 bg-white/[0.03]",
 };
 
 const PageSection: React.FC<PageSectionProps> = ({
@@ -39,24 +38,22 @@ const PageSection: React.FC<PageSectionProps> = ({
   return (
     <section
       id={id}
-      className={`relative isolate w-full overflow-hidden rounded-2xl border px-5 py-8 sm:rounded-3xl sm:px-8 sm:py-10 backdrop-blur ${variantMap[variant]} ${className}`}
+      className={`relative isolate w-full overflow-hidden rounded-[2.2rem] border px-6 py-8 sm:px-10 sm:py-11 backdrop-blur-xl ${variantMap[variant]} ${className}`}
     >
-      <div className={`flex flex-col gap-3 ${alignmentMap[align]}`}>
+      <div className="pointer-events-none absolute inset-0 opacity-50 mix-blend-screen" aria-hidden>
+        <div className="absolute -top-28 right-10 h-40 w-40 rounded-full bg-plasma/30 blur-3xl" />
+        <div className="absolute -bottom-24 left-8 h-48 w-48 rounded-full bg-ion/25 blur-3xl" />
+      </div>
+      <div className={`relative flex flex-col gap-3 text-white ${alignmentMap[align]}`}>
         {eyebrow && (
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-300">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-text-mute">
             {eyebrow}
           </p>
         )}
-        {title && (
-          <h2 className="text-2xl font-semibold text-slate-900 dark:text-white sm:text-3xl">
-            {title}
-          </h2>
-        )}
-        {description && (
-          <p className="max-w-3xl text-sm text-slate-600 dark:text-slate-300">{description}</p>
-        )}
+        {title && <h2 className="text-3xl font-bold tracking-tight text-white">{title}</h2>}
+        {description && <p className="max-w-3xl text-sm text-slate-300">{description}</p>}
       </div>
-      <div className="mt-8">{children}</div>
+      <div className="relative mt-8">{children}</div>
     </section>
   );
 };

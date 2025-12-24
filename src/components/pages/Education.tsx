@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { FiAward, FiBookOpen } from "react-icons/fi";
+import PageSection from "../common/PageSection.tsx";
 
 interface EducationProps {
   url: string;
@@ -25,7 +26,7 @@ const Education: React.FC<EducationProps> = ({ url }) => {
       institution: "University at Buffalo – SUNY",
       logo: `${url}Education/UB.jpg`,
       website: "https://engineering.buffalo.edu/computer-science-engineering.html",
-      degree: "M.S. Computer Science & Engineering (GPA: 3.71 / 4)",
+      degree: "M.S. Computer Science & Engineering (GPA: 3.77 / 4)",
       year: "Aug 2024 – Dec 2025",
       summary:
         "Graduate study focused on computer science and engineering with hands-on work in machine learning pipelines, FPGA design, and production-grade software delivery—matching the research projects outlined in my resume.",
@@ -42,6 +43,8 @@ const Education: React.FC<EducationProps> = ({ url }) => {
         "Computer Architecture",
         "Operating Systems",
         "Modern Networking Concepts",
+        "Database Management Systems",
+        "Statistical Data Mining"
       ],
     },
     {
@@ -57,34 +60,55 @@ const Education: React.FC<EducationProps> = ({ url }) => {
         "Maintained an 8.67/10 GPA while contributing to team projects and coding assignments across the curriculum.",
       ],
       courses: [
-        "Data Structures & Algorithms",
-        "Database Management Systems",
-        "Operating Systems",
         "Computer Networks",
+        "Design and Analysis of Algorithm",
+        "Operating System",
+        "Microprocessor Systems",
+        "Computer Programming",
+        "Database Systems",
+        "Operating Systems",
+        "Network Security",
+        "Embedded Systems",
+        "Data Structures",
+        "Software Engineering",
+        "Object Oriented Programming (OOP)",
+        "Artificial Intelligence (AI)",
+        "Web Engineering",
+        "Digital Signal Processing",
+        "Computer Organization",
+        "Computer Architecture",
       ],
     },
   ];
 
   return (
-    <section className="w-full px-4 py-16 sm:px-6 text-gray-900 transition-colors duration-300 dark:text-white">
-      <h2 className="text-center text-4xl font-black text-cyan-300">Education</h2>
+    <section className="flex flex-col gap-10 text-white">
+      <PageSection
+        eyebrow="Academics"
+        title="Education"
+        description="Graduate research at SUNY Buffalo plus an undergraduate engineering degree that set the foundation for backend, ML, and hardware projects."
+        align="center"
+      >
+        <></>
+      </PageSection>
 
-      <div className="relative mx-auto mt-12 max-w-5xl space-y-8">
+      <div className="space-y-8">
         {educationData.map((edu, index) => {
           const isOpen = expanded === index;
 
           return (
             <article
               key={edu.institution}
-              className="relative overflow-hidden rounded-3xl border border-white/5 bg-gradient-to-br from-slate-900/60 via-slate-900/40 to-slate-900/70 p-6 shadow-2xl shadow-black/30 backdrop-blur"
+              className="relative overflow-hidden rounded-[2.2rem] border border-white/10 bg-white/[0.05] p-6 shadow-[0_25px_80px_rgba(0,0,0,0.45)]"
             >
-              <div className="grid gap-6 md:grid-cols-[180px,1fr] md:items-center">
+              <div className="absolute inset-0 bg-gradient-to-br from-plasma/10 via-transparent to-ion/10 opacity-60" aria-hidden />
+              <div className="relative grid gap-6 md:grid-cols-[200px,1fr] md:items-center">
                 <div className="flex flex-col items-center text-center md:items-start md:text-left">
                   <a
                     href={edu.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4 shadow-inner"
+                    className="rounded-[1.6rem] border border-white/15 bg-white/5 p-4 shadow-inner"
                   >
                     <img
                       src={edu.logo}
@@ -93,13 +117,13 @@ const Education: React.FC<EducationProps> = ({ url }) => {
                       loading="lazy"
                     />
                   </a>
-                  <p className="mt-4 text-xs uppercase tracking-[0.4em] text-cyan-200">{edu.year}</p>
+                  <p className="mt-4 text-[11px] uppercase tracking-[0.4em] text-text-mute">{edu.year}</p>
                 </div>
 
                 <div className="flex flex-col gap-4">
                   <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
-                      <span className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1 text-xs uppercase tracking-[0.35em] text-cyan-200">
+                      <span className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1 text-[11px] uppercase tracking-[0.35em] text-text-mute">
                         <FiAward aria-hidden /> Program
                       </span>
                       <h3 className="mt-3 text-2xl font-bold text-white">{edu.institution}</h3>
@@ -107,14 +131,11 @@ const Education: React.FC<EducationProps> = ({ url }) => {
                     </div>
                     <button
                       onClick={() => setExpanded(isOpen ? null : index)}
-                      className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-100 transition hover:border-cyan-300"
+                      className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.3em] text-text-mute transition hover:border-ion/60 hover:text-ion"
                       aria-expanded={isOpen}
                     >
                       {isOpen ? "Hide details" : "Program insights"}
-                      <FaChevronDown
-                        className={`transition-transform ${isOpen ? "rotate-180" : ""}`}
-                        aria-hidden
-                      />
+                      <FaChevronDown className={`transition-transform ${isOpen ? "rotate-180" : ""}`} aria-hidden />
                     </button>
                   </div>
 
@@ -124,9 +145,9 @@ const Education: React.FC<EducationProps> = ({ url }) => {
                     {edu.highlights.map((point) => (
                       <div
                         key={point}
-                        className="flex items-start gap-3 rounded-2xl border border-white/5 bg-white/5 px-4 py-3"
+                        className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3"
                       >
-                        <FiBookOpen className="mt-1 shrink-0 text-cyan-300" />
+                        <FiBookOpen className="mt-1 shrink-0 text-ion" />
                         <span>{point}</span>
                       </div>
                     ))}
@@ -140,14 +161,12 @@ const Education: React.FC<EducationProps> = ({ url }) => {
                     <div className="overflow-hidden">
                       {edu.courses && edu.courses.length > 0 && (
                         <>
-                          <p className="text-xs uppercase tracking-[0.35em] text-cyan-200">
-                            Core coursework
-                          </p>
+                          <p className="text-[11px] uppercase tracking-[0.35em] text-text-mute">Core coursework</p>
                           <div className="mt-3 flex flex-wrap gap-2">
                             {edu.courses.map((course) => (
                               <span
                                 key={course}
-                                className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-cyan-100"
+                                className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-text-mute"
                               >
                                 {course}
                               </span>

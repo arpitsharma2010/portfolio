@@ -1,5 +1,6 @@
 import React from "react";
 import { FiExternalLink } from "react-icons/fi";
+import PageSection from "../common/PageSection.tsx";
 
 interface ExperienceProps {
   url: string;
@@ -123,79 +124,73 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
   ];
 
   return (
-    <section
-      aria-labelledby="experience-heading"
-      className="w-full px-4 py-16 sm:px-6 text-gray-900 dark:text-white min-h-screen transition-colors duration-300"
-    >
-      <h2
-        id="experience-heading"
-        className="text-4xl font-extrabold text-center mb-6 text-cyan-300"
+    <section className="flex flex-col gap-10 text-white">
+      <PageSection
+        eyebrow="Career"
+        title="Work Experience"
+        description="Building resilient, API-driven platforms across finance and health tech. I thrive at the intersection of architecture, DevOps, and collaboration—leading delivery while keeping accessibility, observability, and documentation in the loop."
+        align="center"
       >
-        Work Experience
-      </h2>
-      <p className="mx-auto max-w-3xl text-center text-sm text-slate-300">
-        Building resilient, API-driven platforms across finance and health tech. I thrive at the
-        intersection of architecture, DevOps, and human collaboration—leading delivery while keeping
-        accessibility, observability, and documentation in the loop.
-      </p>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {quickStats.map((stat) => (
+            <div
+              key={stat.label}
+              className="rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-4 text-center shadow-[0_15px_40px_rgba(0,0,0,0.45)]"
+            >
+              <p className="text-2xl font-black text-white">{stat.value}</p>
+              <p className="mt-1 text-[11px] uppercase tracking-[0.3em] text-text-mute">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </PageSection>
 
-      <div className="mx-auto mt-10 grid max-w-4xl grid-cols-1 gap-4 text-center text-slate-200 sm:grid-cols-2 lg:grid-cols-4">
-        {quickStats.map((stat) => (
-          <div
-            key={stat.label}
-            className="rounded-2xl border border-white/10 bg-white/5 px-3 py-4 text-sm font-semibold backdrop-blur"
-          >
-            <p className="text-2xl font-black text-white">{stat.value}</p>
-            <p className="mt-1 text-[11px] uppercase tracking-[0.3em] text-cyan-200">{stat.label}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="mx-auto mt-12 grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-2">
+      <div className="grid gap-8 md:grid-cols-2">
         {allExperience.map((job, index) => {
           const highlights = normalizeHighlights(job.highlight);
           return (
             <article
               key={index}
-              className="relative flex h-full flex-col justify-between rounded-3xl border border-white/5 bg-white/5 p-6 text-left shadow-xl shadow-black/20 backdrop-blur transition hover:-translate-y-1 hover:border-cyan-400/50 focus-within:border-cyan-400/70"
+              className="group relative flex h-full flex-col gap-5 overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-6 shadow-[0_25px_70px_rgba(0,0,0,0.45)]"
             >
-              <div className="absolute -top-4 left-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.3em] text-white shadow-lg">
-                {job.duration}
-              </div>
-
-              <div className="mb-4 flex flex-col items-center text-center">
+              <div className="absolute inset-0 bg-gradient-to-br from-plasma/10 via-transparent to-ion/10 opacity-60" aria-hidden />
+              <div className="relative flex flex-col items-center text-center">
+                <div className="flex items-center gap-3">
+                  <div className="rounded-full border border-white/10 bg-white/5 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.3em] text-text-mute">
+                    {job.duration}
+                  </div>
+                  {job.location && (
+                    <span className="text-[10px] uppercase tracking-[0.35em] text-text-mute">{job.location}</span>
+                  )}
+                </div>
                 <a
                   href={job.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded-full"
+                  className="mt-4 focus:outline-none focus:ring-2 focus:ring-ion/60 rounded-2xl"
                   aria-label={`Open ${job.company} website`}
                 >
                   {showLogos ? (
                     <img
                       src={job.logo}
                       alt={`${job.company} logo`}
-                      className="mb-3 h-16 w-16 rounded-2xl border border-white/10 bg-white/10 object-contain shadow"
+                      className="h-16 w-16 rounded-2xl border border-white/10 bg-white/10 object-contain shadow"
                       loading="lazy"
                     />
                   ) : (
-                    <div className="mb-3 flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-cyan-600/20 text-xs text-cyan-100">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-ion/10 text-xs text-ion">
                       {job.company.split(" ")[0]}
                     </div>
                   )}
                 </a>
-                <h3 className="text-lg font-bold text-white">{job.position}</h3>
-                <p className="text-sm text-slate-300">
-                  {job.company}
-                  {job.location ? ` · ${job.location}` : ""}
-                </p>
+                <h3 className="mt-3 text-xl font-semibold text-white">{job.position}</h3>
+                <p className="text-sm text-slate-300">{job.company}</p>
 
                 {highlights.length > 0 && (
-                  <ul className="mt-3 mb-2 flex flex-wrap gap-2 px-2">
+                  <ul className="mt-3 flex flex-wrap justify-center gap-2">
                     {highlights.map((h, i) => (
                       <li
                         key={i}
-                        className="inline-flex items-center gap-1 rounded-full border border-amber-300/40 bg-amber-400/10 px-2.5 py-0.5 text-[11px] font-semibold text-amber-200"
+                        className="inline-flex items-center gap-1 rounded-full border border-amber-300/40 bg-amber-400/10 px-3 py-0.5 text-[11px] font-semibold text-amber-200"
                       >
                         🎖 <span>{h}</span>
                       </li>
@@ -204,21 +199,22 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
                 )}
               </div>
 
-              <ul className="mb-6 space-y-4 text-sm leading-relaxed text-slate-200 list-disc pl-5">
+              <ul className="relative space-y-3 text-sm text-slate-200">
                 {job.description.map((point, i) => (
-                  <li key={i}>
-                    {point}
+                  <li key={i} className="flex gap-3">
+                    <span className="mt-2 h-1 w-6 rounded-full bg-ion" aria-hidden />
+                    <span>{point}</span>
                   </li>
                 ))}
               </ul>
 
-              <div className="mt-auto border-t border-white/10 pt-4">
-                <p className="text-xs uppercase tracking-[0.3em] text-cyan-200 mb-2">Stack</p>
+              <div className="relative border-t border-white/10 pt-4">
+                <p className="text-[11px] uppercase tracking-[0.3em] text-text-mute mb-2">Stack</p>
                 <div className="flex flex-wrap gap-2">
                   {job.techStack.map((tech, i) => (
                     <span
                       key={i}
-                      className="rounded-full border border-white/10 bg-white/5 px-2 py-1 font-mono text-[11px] text-cyan-100"
+                      className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[11px] text-text-mute"
                     >
                       {tech}
                     </span>
@@ -226,13 +222,13 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
                 </div>
               </div>
 
-              <div className="mt-4 flex items-center justify-between text-xs text-slate-400">
+              <div className="relative flex items-center justify-between text-[11px] uppercase tracking-[0.3em] text-text-mute">
                 <span>Impact-focused delivery</span>
                 <a
                   href={job.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 rounded-full border border-white/10 px-3 py-1 text-[11px] font-semibold text-cyan-200 transition hover:border-cyan-400/40"
+                  className="inline-flex items-center gap-1 rounded-full border border-white/10 px-3 py-1 text-text-mute transition hover:border-ion/50 hover:text-ion"
                 >
                   Visit <FiExternalLink />
                 </a>

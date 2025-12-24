@@ -13,20 +13,22 @@ import usePreferredTheme from "./hooks/usePreferredTheme.ts";
 const BASE_URL = "https://arpitsharma2010.github.io/portfolio/";
 
 const App: React.FC = () => {
-  const { theme, toggleTheme } = usePreferredTheme();
+  const { theme, toggleTheme, transitionOrigin } = usePreferredTheme();
 
   return (
     <div className={theme}>
       <Router>
-        <MainLayout url={BASE_URL} theme={theme} onThemeToggle={toggleTheme}>
+        <MainLayout url={BASE_URL} theme={theme} onThemeToggle={toggleTheme} transitionOrigin={transitionOrigin ?? undefined}>
           <Routes>
+            <Route path="/" element={<Home url={BASE_URL} />} />
             <Route path="/portfolio/" element={<Home url={BASE_URL} />} />
-            <Route path="/portfolio/skills/" element={<Skills url={BASE_URL} />} />
+            <Route path="/portfolio/skills/" element={<Skills />} />
             <Route path="/portfolio/projects/" element={<Projects url={BASE_URL} />} />
             <Route path="/portfolio/education/" element={<Education url={BASE_URL} />} />
             <Route path="/portfolio/experience/" element={<Experience url={BASE_URL} />} />
             <Route path="/portfolio/certifications/" element={<Certifications url={BASE_URL} />} />
             <Route path="/portfolio/contact/" element={<Contact />} />
+            <Route path="*" element={<Home url={BASE_URL} />} />
           </Routes>
         </MainLayout>
       </Router>

@@ -20,6 +20,7 @@ const getInitialTheme = (): ThemeMode => {
 
 const usePreferredTheme = () => {
   const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
+  const [transitionOrigin, setTransitionOrigin] = useState<{ x: number; y: number } | null>(null);
   const [isUserChoice, setIsUserChoice] = useState<boolean>(() => {
     if (typeof window === "undefined") return false;
     const stored = window.localStorage.getItem(STORAGE_KEY);
@@ -55,9 +56,16 @@ const usePreferredTheme = () => {
     return () => mediaQuery.removeEventListener("change", listener);
   }, [isUserChoice]);
 
-  const toggleTheme = useCallback(() => {
+  const toggleTheme = useCallback((origin?: { x: number; y: number }) => {
+    if (origin) {
+      setTransitionOrigin(origin);
+    }
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
     setIsUserChoice(true);
+
+    if (origin) {
+      setTimeout(() => setTransitionOrigin(null), 800);
+    }
   }, []);
 
   const resetToSystem = useCallback(() => {
@@ -67,7 +75,7 @@ const usePreferredTheme = () => {
     setTheme(prefersDark ? "dark" : "light");
   }, []);
 
-  return { theme, setTheme, toggleTheme, resetToSystem };
+  return { theme, setTheme, toggleTheme, resetToSystem, transitionOrigin };
 };
 
 export default usePreferredTheme;

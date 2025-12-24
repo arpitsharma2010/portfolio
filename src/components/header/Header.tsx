@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
+import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
 import { FaMoon, FaSun } from "react-icons/fa";
+import { FiDownload } from "react-icons/fi";
 import SocialLinks from "../utils/SocialLinks.tsx";
 
 interface HeaderProps {
@@ -10,177 +11,198 @@ interface HeaderProps {
   onThemeToggle: () => void;
 }
 
+const navLinks = [
+  { to: "/portfolio/", label: "Home" },
+  { to: "/portfolio/skills/", label: "Skills" },
+  { to: "/portfolio/projects/", label: "Projects" },
+  { to: "/portfolio/education/", label: "Education" },
+  { to: "/portfolio/experience/", label: "Experience" },
+  { to: "/portfolio/certifications/", label: "Certifications" },
+  { to: "/portfolio/contact/", label: "Contact" },
+];
+
 const Header: React.FC<HeaderProps> = ({ url, theme, onThemeToggle }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const resumePDF = "https://drive.google.com/file/d/1e_GcWvtUy6fHMgnmjvwzVIFNeFW0F457/view?usp=sharing";
   const location = useLocation();
   const isDarkMode = theme === "dark";
-
-  const navLinks = [
-    { to: "/portfolio/", label: "Home" },
-    { to: "/portfolio/skills/", label: "Skills" },
-    { to: "/portfolio/projects/", label: "Projects" },
-    { to: "/portfolio/education/", label: "Education" },
-    { to: "/portfolio/experience/", label: "Experience" },
-    { to: "/portfolio/certifications/", label: "Certifications" },
-    { to: "/portfolio/contact/", label: "Contact" },
-  ];
-
-  const calculateScrollProgress = () => {
-    const totalHeight =
-      document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = window.scrollY;
-    if (totalHeight > 0) {
-      setScrollProgress((scrolled / totalHeight) * 100);
-    }
-  };
+  const resumePDF = "https://drive.google.com/file/d/1STvn96l2SdtA4TYAxSvIHf5QyJ6KwFzs/view";
 
   useEffect(() => {
+    const calculateScrollProgress = () => {
+      const totalHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = window.scrollY;
+      if (totalHeight > 0) {
+        setScrollProgress((scrolled / totalHeight) * 100);
+      }
+    };
+
     window.addEventListener("scroll", calculateScrollProgress);
     calculateScrollProgress();
-
-    return () => {
-      window.removeEventListener("scroll", calculateScrollProgress);
-    };
+    return () => window.removeEventListener("scroll", calculateScrollProgress);
   }, []);
-
-  const renderNavLinks = (onClick?: () => void) => (
-    <ul className="flex flex-col gap-2">
-      {navLinks.map((link) => {
-        const isActive =
-          location.pathname === link.to ||
-          (link.to !== "/portfolio/" && location.pathname.startsWith(link.to));
-
-        return (
-          <li key={link.to}>
-            <Link
-              to={link.to}
-              onClick={onClick}
-              className={`group relative flex items-center gap-3 rounded-xl px-4 py-2 text-sm font-semibold tracking-wide transition
-                ${
-                  isActive
-                    ? "text-cyan-700 dark:text-cyan-300"
-                    : "text-slate-600 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-300"
-                }`}
-            >
-              <span
-                className={`absolute left-2 h-6 w-1 rounded-full bg-gradient-to-b from-cyan-600 to-blue-500 transition-all duration-300
-                ${isActive ? "opacity-100 scale-y-125" : "opacity-0 scale-y-0 group-hover:opacity-100 group-hover:scale-y-100"}`}
-                aria-hidden
-              />
-              <span>{link.label}</span>
-            </Link>
-          </li>
-        );
-      })}
-    </ul>
-  );
 
   const ThemeButton = ({ className = "" }: { className?: string }) => (
     <button
-      onClick={() => {
-        onThemeToggle();
+      onClick={(event) => {
+        const rect = event.currentTarget.getBoundingClientRect();
+        const origin = {
+          x: rect.left + rect.width / 2 + window.scrollX,
+          y: rect.top + rect.height / 2 + window.scrollY,
+        };
+        onThemeToggle(origin);
         setMenuOpen(false);
       }}
-      className={`flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-cyan-400 hover:text-cyan-600 dark:border-white/10 dark:bg-white/5 dark:text-white ${className}`}
+      className={`group relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white transition hover:border-ion/50 hover:text-ion ${className}`}
       aria-label={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
     >
-      {isDarkMode ? (
-        <>
-          <FaSun className="text-amber-300" />
-          <span>Light</span>
-        </>
-      ) : (
-        <>
-          <FaMoon className="text-cyan-300" />
-          <span>Dark</span>
-        </>
-      )}
+      <span className="pointer-events-none absolute inset-0 translate-y-full bg-gradient-to-r from-plasma/40 to-ion/40 transition-transform duration-300 ease-out group-hover:translate-y-0" />
+      <span className="relative flex items-center gap-2">
+        {isDarkMode ? <FaSun className="text-amber-300" /> : <FaMoon className="text-aurora" />}
+        {isDarkMode ? "Light" : "Dark"}
+      </span>
     </button>
   );
+
+  const renderNavLink = (
+    link: (typeof navLinks)[number],
+    onClick?: () => void,
+    variant: "sidebar" | "mobile" = "mobile"
+  ) => {
+    const isActive =
+      location.pathname === link.to || (link.to !== "/portfolio/" && location.pathname.startsWith(link.to));
+
+    const baseStyles =
+      variant === "sidebar"
+        ? "w-full rounded-2xl px-4 py-2 text-left text-xs font-semibold uppercase tracking-[0.35em]"
+        : "group relative overflow-hidden rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em]";
+
+    return (
+      <Link
+        key={link.to}
+        to={link.to}
+        onClick={onClick}
+        className={`${baseStyles} transition ${
+          variant === "sidebar"
+            ? isActive
+              ? "bg-white/10 text-ion"
+              : "text-slate-300 hover:text-white"
+            : isActive
+            ? "text-ion"
+            : "text-slate-300 hover:text-white"
+        }`}
+      >
+        {variant === "mobile" && (
+          <span
+            className={`absolute inset-0 opacity-0 transition group-hover:opacity-100 ${
+              isActive ? "opacity-100" : ""
+            }`}
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(56,249,215,0.2), rgba(168,85,247,0.25))",
+              boxShadow: "0 0 30px rgba(56,249,215,0.35)",
+            }}
+            aria-hidden
+          />
+        )}
+        <span className="relative z-10">{link.label}</span>
+      </Link>
+    );
+  };
 
   return (
     <>
       <div
-        className="fixed left-0 top-0 z-[9999] h-1 w-full bg-gradient-to-r from-cyan-500/60 to-blue-500/60 transition-all duration-75 ease-out lg:hidden"
-        style={{ width: `${scrollProgress}%` }}
+        className="fixed top-0 left-0 z-[60] h-1 bg-gradient-to-r from-plasma/60 via-ion/70 to-flare/70 lg:hidden"
+        style={{ width: `${scrollProgress}%`, transition: "width 80ms ease-out" }}
         aria-hidden
       />
 
       {/* Desktop sidebar */}
-      <aside className="fixed top-0 left-0 hidden h-screen w-72 flex-col justify-between border-r border-slate-200/60 bg-white/90 px-6 py-8 text-slate-900 shadow-2xl backdrop-blur-lg dark:border-white/5 dark:bg-slate-950/60 dark:text-white lg:flex z-40">
-        <div className="flex flex-col items-center text-center">
+      <aside className="fixed left-4 top-4 hidden h-[calc(100vh-2rem)] w-72 flex-col justify-between rounded-[2rem] border border-white/10 bg-panel-dark/80 p-6 text-white shadow-[0_20px_120px_rgba(0,0,0,0.65)] backdrop-blur-2xl lg:flex z-40 theme-aware-panel">
+        <div className="flex flex-col items-center text-center gap-4">
           <div className="relative">
-            <div className="absolute -inset-3 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-500 opacity-70 blur-2xl" aria-hidden />
+            <span className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-plasma/50 to-ion/30 blur-xl" aria-hidden />
             <img
-              src={`${url}profile.png`}
+              src={`${url}arpit-sharma.jpg`}
               alt="Arpit Sharma"
-              className="relative h-28 w-28 rounded-2xl border border-white/10 object-cover shadow-2xl"
+              className="relative h-20 w-20 rounded-2xl border border-white/20 object-cover"
+              loading="lazy"
             />
           </div>
-          <h2 className="mt-4 text-2xl font-semibold tracking-tight">Arpit Sharma</h2>
-          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
-            Software Engineer · Full-Stack · Cloud & AI Enthusiast
-          </p>
-          <div className="mt-4 rounded-full bg-slate-100 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-cyan-700 dark:bg-white/10 dark:text-cyan-200">
-            Available for Full time roles starting Feb 2026
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-slate-400">Arpit Sharma</p>
+            <p className="text-[11px] uppercase tracking-[0.35em] text-aurora">Software Engineer</p>
           </div>
         </div>
 
-        <nav className="w-full">{renderNavLinks()}</nav>
+        <nav className="flex flex-col gap-2">
+          {navLinks.map((link) => renderNavLink(link, undefined, "sidebar"))}
+        </nav>
 
-        <div className="flex flex-col items-center gap-4">
-          <SocialLinks size="text-xl" gap="gap-4" />
+        <div className="flex flex-col gap-3">
           <a
             href={resumePDF}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-cyan-600 to-blue-500 px-4 py-2 text-sm font-semibold tracking-wide text-white shadow-lg shadow-cyan-500/30 transition hover:brightness-110"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-ion/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-ion shadow-glow transition hover:border-plasma/60 hover:text-white"
           >
-            View Resume
+            <FiDownload /> Resume
           </a>
-          <ThemeButton className="w-full" />
-          <p className="text-center text-[11px] text-slate-500 dark:text-slate-400">
-            © {new Date().getFullYear()} Arpit Sharma • Crafted with curiosity
-          </p>
+          <ThemeButton className="w-full justify-center" />
+          <SocialLinks />
         </div>
       </aside>
 
       {/* Mobile header */}
-      <header className="fixed top-0 left-0 z-40 flex w-full items-center justify-between border-b border-slate-200/70 bg-white/90 px-4 py-3 text-slate-900 shadow-lg backdrop-blur dark:border-white/10 dark:bg-slate-900/70 dark:text-white lg:hidden">
-        <div>
-          <p className="text-[11px] uppercase tracking-[0.3em] text-cyan-700 dark:text-cyan-300">Portfolio</p>
-          <h1 className="text-lg font-semibold text-slate-900 dark:text-white">Arpit Sharma</h1>
-        </div>
-        <div className="flex items-center gap-3">
-          <ThemeButton />
-          <button
-            onClick={() => setMenuOpen((prev) => !prev)}
-            className="rounded-full border border-slate-300 p-2 text-2xl text-slate-700 transition hover:border-cyan-400 hover:text-cyan-600 dark:border-white/10 dark:text-white"
-            aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
-          >
-            {menuOpen ? <HiOutlineX /> : <HiOutlineMenu />}
-          </button>
+      <header className="fixed top-4 left-0 z-50 w-full px-3 sm:px-6 lg:hidden">
+        <div className="mx-auto flex w-full max-w-[calc(100vw-1.5rem)] items-center gap-4 rounded-[1.7rem] border border-white/10 bg-panel-dark px-4 py-3 shadow-[0_20px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl theme-aware-panel">
+          <Link to="/portfolio/" className="flex items-center gap-3">
+            <div className="relative">
+              <span className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-plasma/50 to-ion/30 blur-lg" aria-hidden />
+              <img
+                src={`${url}arpit-sharma.jpg`}
+                alt="Arpit Sharma"
+                className="relative h-12 w-12 rounded-2xl border border-white/20 object-cover"
+                loading="lazy"
+              />
+            </div>
+            <div className="flex flex-col leading-tight">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.5em] text-slate-400">Arpit</span>
+              <span className="text-lg font-bold text-white">Sharma</span>
+              <span className="text-[11px] uppercase tracking-[0.35em] text-aurora">Software Developer</span>
+            </div>
+          </Link>
+
+          <div className="ml-auto flex items-center gap-2">
+            <a
+              href={resumePDF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden items-center gap-2 rounded-full border border-ion/40 px-3 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-ion shadow-glow transition hover:border-plasma/60 hover:text-white sm:inline-flex"
+            >
+              <FiDownload /> Resume
+            </a>
+            <ThemeButton />
+            <button
+              onClick={() => setMenuOpen((prev) => !prev)}
+              className="rounded-full border border-white/10 p-3 text-white transition hover:border-ion/50"
+              aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+            >
+              {menuOpen ? <HiOutlineX className="text-2xl" /> : <HiOutlineMenuAlt3 className="text-2xl" />}
+            </button>
+          </div>
         </div>
       </header>
 
-      {/* Mobile drawer */}
       {menuOpen && (
-        <div className="fixed top-[70px] left-0 z-30 w-full space-y-5 rounded-b-3xl border border-slate-200/80 bg-white/95 px-6 py-6 text-slate-900 shadow-2xl backdrop-blur dark:border-white/10 dark:bg-slate-900/95 dark:text-white lg:hidden">
-          <nav>{renderNavLinks(() => setMenuOpen(false))}</nav>
-          <SocialLinks size="text-2xl" gap="gap-6" />
-          <a
-            href={resumePDF}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block w-full rounded-2xl bg-gradient-to-r from-cyan-600 to-blue-500 px-4 py-2 text-center text-sm font-semibold tracking-wide text-white"
-          >
-            View Resume
-          </a>
-          <p className="text-center text-[11px] text-slate-500 dark:text-slate-400">
-            © {new Date().getFullYear()} Arpit Sharma
-          </p>
+        <div className="fixed top-24 left-0 z-40 w-full px-3 sm:px-6 lg:px-10">
+          <div className="mx-auto flex w-full max-w-5xl flex-col gap-5 rounded-3xl border border-white/10 bg-panel-dark px-5 py-6 shadow-[0_20px_80px_rgba(0,0,0,0.6)] backdrop-blur-2xl theme-aware-panel">
+            <nav className="flex flex-wrap gap-2">
+              {navLinks.map((link) => renderNavLink(link, () => setMenuOpen(false)))}
+            </nav>
+            <SocialLinks />
+          </div>
         </div>
       )}
     </>

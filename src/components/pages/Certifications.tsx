@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import PageSection from "../common/PageSection.tsx";
 
 interface CertificationsProps {
   url: string;
@@ -79,19 +80,25 @@ const Certifications: React.FC<CertificationsProps> = ({ url }) => {
   }, []);
 
   return (
-    <section className="w-full px-4 py-16 min-h-screen bg-white text-gray-900 dark:bg-[#0f172a] dark:text-white transition-colors duration-300">
-      <h2 className="text-4xl font-extrabold text-center mb-12 text-cyan-600 dark:text-cyan-400">
-        Certifications & Achievements
-      </h2>
+    <section className="flex flex-col gap-10 text-white">
+      <PageSection
+        eyebrow="Certifications & Achievements"
+        title="Certifications & Achievements"
+        description="Badges embedded from Credly so recruiters can verify authenticity instantly."
+        align="center"
+      >
+        <></>
+      </PageSection>
 
-      <div className="grid grid-cols-1 gap-8 max-w-5xl mx-auto sm:grid-cols-2">
+      <div className="mx-auto grid w-full max-w-5xl grid-cols-1 gap-8 sm:grid-cols-2">
         {certificationsData.map((cert) => (
           <article
             key={cert.name}
-            className="flex h-full flex-col gap-6 rounded-3xl border border-white/10 bg-white/5 p-6 text-center shadow-xl shadow-black/20 backdrop-blur-md"
+            className="relative flex h-full flex-col gap-6 overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.05] p-6 text-center shadow-[0_25px_80px_rgba(0,0,0,0.45)]"
           >
-            <div className="flex justify-center">
-              <div className="w-[180px] rounded-2xl border border-cyan-200/40 bg-white/90 p-3 shadow-inner dark:bg-[#0b152b]">
+            <div className="absolute inset-0 bg-gradient-to-br from-plasma/10 via-transparent to-ion/10 opacity-60" aria-hidden />
+            <div className="relative flex justify-center">
+              <div className="w-[180px] rounded-2xl border border-white/15 bg-white/90 p-3 shadow-inner dark:bg-[#050b1b]">
                 <div
                   className="credly-badge"
                   data-iframe-width={cert.badge.width}
@@ -102,19 +109,19 @@ const Certifications: React.FC<CertificationsProps> = ({ url }) => {
               </div>
             </div>
 
-            <div>
-              <h3 className="text-xl font-bold text-cyan-600 dark:text-cyan-300">{cert.name}</h3>
-              <p className="text-sm text-slate-600 dark:text-slate-300">{cert.organization}</p>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{cert.year}</p>
+            <div className="relative">
+              <h3 className="text-xl font-bold text-white">{cert.name}</h3>
+              <p className="text-sm text-slate-300">{cert.organization}</p>
+              <p className="mt-1 text-[11px] uppercase tracking-[0.35em] text-text-mute">{cert.year}</p>
             </div>
 
-            <p className="text-sm text-slate-700 dark:text-slate-200">{cert.description}</p>
+            <p className="relative text-sm text-slate-200">{cert.description}</p>
 
             <a
               href={cert.certificateLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-cyan-500/30 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:border-cyan-300 hover:bg-cyan-500/20"
+              className="relative inline-flex items-center justify-center gap-2 rounded-full border border-ion/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-ion transition hover:border-flare/50 hover:text-white"
             >
               🔒 Verify on Credly
             </a>

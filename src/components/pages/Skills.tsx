@@ -1,15 +1,11 @@
 import React from "react";
 import PageSection from "../common/PageSection.tsx";
 
-interface SkillsProps {
-  url: string;
-}
-
 const skillGroups = [
   {
     title: "Languages & Systems",
     description:
-      "C#, Java, Python, JavaScript (ES6+), C, C++, SQL, PHP, HTML5/CSS3, and Verilog form the backbone of my .NET Core APIs, browser interfaces, data engineering utilities, and FPGA designs. Each production feature mixes at least two of these languages, so I keep reference implementations documented for quick onboarding.",
+      "C#, Java, Python, JavaScript (ES6+), C, C++, SQL, PHP, HTML5/CSS3, and Verilog form the backbone of my .NET Core APIs, browser interfaces, data engineering utilities, and FPGA designs.",
     tools: ["C#", "Java", "Python", "JavaScript (ES6+)", "C", "C++", "SQL", "PHP", "HTML5/CSS3", "Verilog"],
   },
   {
@@ -55,41 +51,45 @@ const skillGroups = [
   {
     title: "Workflow & Collaboration",
     description:
-      "Git (distributed), Jira, Confluence, Agile/Scrum cadences, and RESTful API design templates keep cross-functional teams aligned from planning through QA handoff, mirroring the collaboration model outlined in my resume experience.",
+      "Git (distributed), Jira, Confluence, Agile/Scrum cadences, and RESTful API design templates keep cross-functional teams aligned from planning through QA handoff.",
     tools: ["Git", "Jira", "Confluence", "Agile/Scrum", "RESTful API Design"],
   },
 ];
 
-const Skills: React.FC<SkillsProps> = () => {
+const Skills: React.FC = () => {
   return (
-    <section className="w-full px-4 py-16 sm:px-6 min-h-screen transition-colors duration-300 bg-light-surface text-light-text dark:bg-[#0f172a] dark:text-white">
-      <h2 className="text-4xl font-extrabold text-center mb-12 tracking-wide text-cyan-700 dark:text-cyan-400">
-        Skills From My Resume
-      </h2>
-
-      <div className="max-w-6xl mx-auto grid grid-cols-1 gap-6 xl:grid-cols-2">
-        {skillGroups.map((group) => (
-          <PageSection
-            key={group.title}
-            eyebrow={group.title}
-            title=""
-            description={group.description}
-            variant="muted"
-            className="h-full"
-          >
-            <div className="flex flex-wrap gap-2">
-              {group.tools.map((tool) => (
-                <span
-                  key={tool}
-                  className="rounded-full border border-slate-200/80 bg-white/90 px-3 py-1 text-sm font-semibold text-slate-700 dark:border-white/10 dark:bg-slate-900/50 dark:text-slate-100"
-                >
-                  {tool}
-                </span>
-              ))}
-            </div>
-          </PageSection>
-        ))}
-      </div>
+    <section className="flex flex-col gap-10 text-white">
+      <PageSection
+        eyebrow="Capability stack"
+        title="Skills from my resume"
+        description="Everything here is in my resume, pairing years of regulated delivery with the research and prototypes I’m actively building."
+      >
+        <div className="grid gap-6 md:grid-cols-2">
+          {skillGroups.map((group) => (
+            <article
+              key={group.title}
+              className="relative flex h-full flex-col gap-4 overflow-hidden rounded-[1.8rem] border border-white/10 bg-white/[0.04] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.45)]"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-plasma/10 via-transparent to-ion/10 opacity-60" aria-hidden />
+              <div className="relative">
+                <p className="text-[11px] uppercase tracking-[0.4em] text-text-mute">Discipline</p>
+                <h3 className="mt-2 text-2xl font-semibold text-white">{group.title}</h3>
+                <p className="mt-2 text-sm text-slate-200">{group.description}</p>
+              </div>
+              <div className="relative flex flex-wrap gap-2">
+                {group.tools.map((tool) => (
+                  <span
+                    key={tool}
+                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-text-mute"
+                  >
+                    {tool}
+                  </span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </PageSection>
     </section>
   );
 };

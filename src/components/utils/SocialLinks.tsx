@@ -12,24 +12,23 @@ const links = [
   { href: "https://github.com/arpitsharma2010", label: "GitHub", Icon: FaGithub },
 ];
 
-const SocialLinks: React.FC<SocialLinksProps> = ({ size = "text-2xl", gap = "gap-5" }) => {
-  return (
-    <div className={`flex justify-center ${gap}`}>
-      {links.map(({ href, label, Icon }) => (
-        <a
-          key={label}
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={label}
-          className="text-inherit hover:text-light-primary dark:hover:text-dark-primary transition transform hover:scale-110"
-          title={label}
-        >
-          <Icon className={size} />
-        </a>
-      ))}
-    </div>
-  );
-};
+const SocialLinks: React.FC<SocialLinksProps> = ({ size = "text-2xl", gap = "gap-5" }) => (
+  <div className={`flex items-center ${gap}`}>
+    {links.map(({ href, label, Icon }) => (
+      <a
+        key={label}
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={label}
+        title={label}
+        className="group relative inline-flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/5 text-ion transition hover:border-ion/60 hover:text-white"
+      >
+        <span className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-b from-plasma/30 to-ion/30 opacity-0 blur-lg transition group-hover:opacity-100" />
+        <Icon className={`${size} relative`} />
+      </a>
+    ))}
+  </div>
+);
 
 export default SocialLinks;
