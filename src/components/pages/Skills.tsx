@@ -6,14 +6,14 @@ const skillGroups = [
   {
     title: "Languages & Systems",
     description:
-      "C#, Java, Python, JavaScript (ES6+), C, C++, SQL, PHP, HTML5/CSS3 and Verilog form the backbone of my .NET Core APIs, browser interfaces, data engineering utilities and FPGA designs.",
-    tools: ["C#", "Java", "Python", "JavaScript (ES6+)", "C", "C++", "SQL", "PHP", "HTML5/CSS3", "Verilog"],
+      "C#, Java, Go, Python, JavaScript (ES6+), C, C++, SQL, PHP, HTML5/CSS3 and Verilog form the backbone of my .NET Core, gRPC and WebSocket services, browser interfaces, data engineering utilities and FPGA designs.",
+    tools: ["C#", "Java", "Go", "Python", "JavaScript (ES6+)", "C", "C++", "SQL", "PHP", "HTML5/CSS3", "Verilog"],
   },
   {
     title: "Frameworks & Libraries",
     description:
-      ".NET Core with Entity Framework powers savings and investment services, while Spring Boot, ReactJS, Flask, FastAPI, PyTorch and Bootstrap help me deliver UI surfaces, ML prototypes and internal portals with consistent coding standards.",
-    tools: [".NET Core", "Entity Framework", "Spring Boot", "ReactJS", "Flask", "FastAPI", "PyTorch", "Bootstrap"],
+      ".NET Core with Entity Framework powers savings and investment services, while gRPC, WebSocket servers, Spring Boot, ReactJS, Flask, FastAPI, PyTorch and Bootstrap help me deliver realtime APIs, ML prototypes and internal portals with consistent coding standards.",
+    tools: [".NET Core", "Entity Framework", "gRPC", "WebSocket", "Spring Boot", "ReactJS", "Flask", "FastAPI", "PyTorch", "Bootstrap"],
   },
   {
     title: "Cloud & DevOps",
@@ -64,7 +64,7 @@ interface SkillsProps {
 const Skills: React.FC<SkillsProps> = ({ url }) => {
   const pageUrl = `${url}skills/`;
   const description =
-    "Technical skill matrix covering languages, frameworks, cloud platforms, and collaboration tooling Arpit Sharma uses to deliver banking and research software.";
+    "Technical skill matrix covering languages, frameworks, cloud platforms and collaboration tooling Arpit Sharma uses to deliver banking and research software.";
   const keywords = [
     "Arpit Sharma skills",
     ".NET Core skills",

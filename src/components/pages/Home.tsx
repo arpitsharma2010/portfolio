@@ -16,7 +16,7 @@ const quickStats = [
 const Home: React.FC<{ url: string }> = ({ url }) => {
   const pageUrl = `${url}`;
   const seoDescription =
-    "Arpit Sharma is a Senior Software Developer crafting .NET Core services, AWS-backed architectures, and CI/CD pipelines for regulated industries.";
+    "Versatile Software Engineer with nearly four years delivering enterprise-grade solutions across frontend, backend, cloud infrastructure, and DevOps using C#, Java, Python, JavaScript, React, .NET Core, Spring Boot, AWS, Docker/Kubernetes, and CI/CD automation.";
   const seoKeywords = [
     "Arpit Sharma",
     "Senior Software Developer",
@@ -24,7 +24,7 @@ const Home: React.FC<{ url: string }> = ({ url }) => {
     "AWS engineer",
     "GitLab CI/CD expert",
     "Terraform automation",
-    "Full-stack engineer Jersey City",
+    "Full-stack engineer Buffalo",
   ];
 
   return (
@@ -48,8 +48,8 @@ const Home: React.FC<{ url: string }> = ({ url }) => {
             jobTitle: "Senior Software Developer",
             address: {
               "@type": "PostalAddress",
-              addressLocality: "Jersey City",
-              addressRegion: "NJ",
+              addressLocality: "Buffalo",
+              addressRegion: "NY",
               addressCountry: "USA",
             },
           },
@@ -59,14 +59,14 @@ const Home: React.FC<{ url: string }> = ({ url }) => {
       <PageSection
         eyebrow="Arpit Dilip Sharma"
         title="Results driven software developer"
-        description="3.5+ years of software engineering cloud deployments and microservices using .NET Core, AWS, React, NoSQL and SQL exactly as summarized on my resume."
+        description="Versatile Software Engineer with nearly four years building enterprise-grade solutions across frontend, backend, cloud infrastructure, and DevOps. Technology-agnostic problem solver skilled in C#, Java, Python, JavaScript, React, .NET Core, Spring Boot, AWS, Docker/Kubernetes, and CI/CD automation."
       >
         <div className="grid gap-8 xl:grid-cols-[1.15fr_0.85fr]">
           <div className="space-y-6">
             <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-6 shadow-[0_15px_50px_rgba(0,0,0,0.45)]">
               <p className="font-mono text-[11px] uppercase tracking-[0.5em] text-text-mute">Hello world</p>
               <h1 className="mt-3 text-4xl font-black leading-tight text-white sm:text-5xl">
-                Backend + cloud engineer shaping reliable launches
+                Full-stack + cloud engineer shaping reliable launches
               </h1>
               <p className="mt-4 text-base text-slate-300">
                 <Typewriter
@@ -105,7 +105,8 @@ const Home: React.FC<{ url: string }> = ({ url }) => {
             <div className="grid gap-3 sm:grid-cols-2">
               <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200">
                 <p className="text-[11px] uppercase tracking-[0.4em] text-text-mute">Current</p>
-                <p className="mt-1 font-semibold text-white">M.S. CS&E @ SUNY Buffalo</p>
+                <p className="mt-1 font-semibold text-white">Volunteer Research Assistant · SUNY Buffalo</p>
+                <p className="text-xs text-slate-300">Graduated Jan 2025 · M.S. CS&E @ SUNY Buffalo</p>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200">
                 <p className="text-[11px] uppercase tracking-[0.4em] text-text-mute">Previous</p>
@@ -128,7 +129,7 @@ const Home: React.FC<{ url: string }> = ({ url }) => {
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4 space-y-2">
                 <div>
                   <dt className="text-[11px] uppercase tracking-[0.5em] text-text-mute">Availability</dt>
-                  <dd className="text-base font-semibold text-white">Full-time Feb 2026</dd>
+                  <dd className="text-base font-semibold text-white">Immediate</dd>
                 </div>
                 <div>
                   <dt className="text-[11px] uppercase tracking-[0.5em] text-text-mute">Email</dt>
@@ -140,7 +141,7 @@ const Home: React.FC<{ url: string }> = ({ url }) => {
                 </div>
                 <div>
                   <dt className="text-[11px] uppercase tracking-[0.5em] text-text-mute">Location</dt>
-                  <dd className="text-base font-semibold text-white">Jersey City, New Jersey</dd>
+                  <dd className="text-base font-semibold text-white">Buffalo, New York · Open for relocation anywhere in USA</dd>
                 </div>
               </div>
             </dl>

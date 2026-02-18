@@ -27,11 +27,12 @@ const Education: React.FC<EducationProps> = ({ url }) => {
       institution: "University at Buffalo – SUNY",
       logo: `${url}Education/UB.jpg`,
       website: "https://engineering.buffalo.edu/computer-science-engineering.html",
-      degree: "M.S. Computer Science & Engineering (GPA: 3.77 / 4)",
+      degree: "M.S. Computer Science & Engineering (Graduated Jan 2025, GPA: 3.77 / 4)",
       year: "Aug 2024 – Dec 2025",
       summary:
         "Graduate study focused on computer science and engineering with hands-on work in machine learning pipelines, FPGA design and production-grade software delivery matching the research projects outlined in my resume.",
       highlights: [
+        "Graduated in January 2025 after accelerating key capstone deliverables.",
         "Translating research into practice via the custom 16-bit single-cycle RISC processor built on Basys3 FPGA.",
         "Bringing industry experience into coursework by documenting ML experiments similar to crop-yield prediction efforts.",
       ],
@@ -55,9 +56,9 @@ const Education: React.FC<EducationProps> = ({ url }) => {
       degree: "B.E. Computer Science & Engineering (GPA: 8.67 / 10)",
       year: "Jul 2016 – Oct 2020",
       summary:
-        "Undergraduate engineering program that grounded me in algorithms, databases and end-to-end project delivery skills later applied to fintech, healthcare and agri-tech initiatives.",
+        "Undergraduate engineering program that grounded me in algorithms, databases and end-to-end project delivery skills later applied to fintech, healthcare and agri-tech initiatives, including multiple projects across C++, Java, and ODBC-backed databases.",
       highlights: [
-        "Completed capstone and lab work that informed the hospital management system and IoT automation projects in my resume.",
+        "Delivered projects in C++, Java, and ODBC-connected databases that simulated enterprise data flows.",
         "Maintained an 8.67/10 GPA while contributing to team projects and coding assignments across the curriculum.",
       ],
       courses: [

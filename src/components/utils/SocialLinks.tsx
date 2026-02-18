@@ -1,6 +1,7 @@
 // src/components/common/SocialLinks.tsx
 import React from "react";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { SiLeetcode } from "react-icons/si";
 
 interface SocialLinksProps {
   size?: string; // icon size e.g., "2xl", "3xl"
@@ -10,6 +11,7 @@ interface SocialLinksProps {
 const links = [
   { href: "https://www.linkedin.com/in/arpitsharma2010/", label: "LinkedIn", Icon: FaLinkedin },
   { href: "https://github.com/arpitsharma2010", label: "GitHub", Icon: FaGithub },
+  { href: "https://leetcode.com/u/arpitsharma2010/", label: "LeetCode", Icon: SiLeetcode },
 ];
 
 const SocialLinks: React.FC<SocialLinksProps> = ({ size = "text-2xl", gap = "gap-5" }) => (

@@ -13,18 +13,18 @@ const MainLayout: React.FC<LayoutProps> = ({ children, url, theme, onThemeToggle
   const isLight = theme === "light";
   const backdropStyle = {
     backgroundImage: isLight
-      ? "radial-gradient(circle at 15% 20%, rgba(125,211,252,0.35), transparent 50%), radial-gradient(circle at 80% 0%, rgba(244,114,182,0.25), transparent 45%), radial-gradient(circle at 50% 90%, rgba(253,186,116,0.25), transparent 40%)"
-      : "radial-gradient(circle at 15% 20%, rgba(76,201,255,0.18), transparent 45%), radial-gradient(circle at 80% 0%, rgba(168,85,247,0.16), transparent 40%), radial-gradient(circle at 50% 90%, rgba(248,113,113,0.1), transparent 40%)",
+      ? "radial-gradient(circle at 18% 20%, rgba(0,91,187,0.25), transparent 55%), radial-gradient(circle at 78% 0%, rgba(20,193,165,0.2), transparent 45%), radial-gradient(circle at 55% 90%, rgba(249,115,22,0.2), transparent 40%)"
+      : "radial-gradient(circle at 15% 20%, rgba(0,91,187,0.22), transparent 50%), radial-gradient(circle at 80% 0%, rgba(20,193,165,0.22), transparent 40%), radial-gradient(circle at 45% 90%, rgba(249,115,22,0.15), transparent 40%)",
   };
 
   const glowTopStyle = {
-    backgroundColor: isLight ? "rgba(129,140,248,0.3)" : "rgba(168,85,247,0.2)",
+    backgroundColor: isLight ? "rgba(79,147,255,0.25)" : "rgba(0,91,187,0.25)",
   };
   const glowLeftStyle = {
-    backgroundColor: isLight ? "rgba(96,165,250,0.25)" : "rgba(56,189,248,0.2)",
+    backgroundColor: isLight ? "rgba(20,193,165,0.2)" : "rgba(20,193,165,0.2)",
   };
   const glowRightStyle = {
-    backgroundColor: isLight ? "rgba(251,191,36,0.25)" : "rgba(248,113,113,0.15)",
+    backgroundColor: isLight ? "rgba(249,115,22,0.2)" : "rgba(249,115,22,0.15)",
   };
 
   return (
