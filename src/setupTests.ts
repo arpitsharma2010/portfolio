@@ -1,9 +1,11 @@
 import "@testing-library/jest-dom";
 import React from "react";
+import { vi } from "vitest";
 
-jest.mock("react-router-dom", () => {
-    const React = require("react");
-    const RouterContext = React.createContext({ pathname: "/portfolio/" });
+globalThis.jest = vi as unknown as typeof jest;
+
+vi.mock("react-router-dom", () => {
+  const RouterContext = React.createContext({ pathname: "/portfolio/" });
 
   const Link = ({ to, children, ...rest }: { to: string; children: React.ReactNode }) =>
     React.createElement("a", { href: to, ...rest }, children);

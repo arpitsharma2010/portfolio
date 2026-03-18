@@ -1,9 +1,10 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import { vi } from "vitest";
 import Home from "../Home";
 
-jest.mock("react-simple-typewriter", () => ({
+vi.mock("react-simple-typewriter", () => ({
   Typewriter: ({ words }: { words: string[] }) => <span>{words[0]}</span>,
 }));
 
@@ -21,6 +22,6 @@ describe("Home page", () => {
       "href",
       expect.stringContaining("drive.google.com"),
     );
-    expect(screen.getAllByText(/REST APIs shipped/i)).toHaveLength(1);
+    expect(screen.getAllByText(/APIs shipped/i)).toHaveLength(1);
   });
 });

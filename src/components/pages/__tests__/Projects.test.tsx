@@ -13,7 +13,7 @@ describe("Projects page", () => {
 
     expect(screen.getByText(/WanderGenie/i)).toBeInTheDocument();
 
-    const viewButtons = screen.getAllByRole("button", { name: /View build notes/i });
+    const viewButtons = screen.getAllByRole("button", { name: /Build notes/i });
     fireEvent.click(viewButtons[0]);
 
     expect(screen.getByText(/Timeline:/i)).toBeInTheDocument();

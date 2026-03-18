@@ -1,13 +1,14 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import { vi } from "vitest";
 import Header from "../Header";
 
 describe("Header", () => {
   const renderHeader = () =>
     render(
       <MemoryRouter initialEntries={["/portfolio/"]}>
-        <Header url="/" theme="light" onThemeToggle={jest.fn()} />
+        <Header url="/" theme="light" onThemeToggle={vi.fn()} />
       </MemoryRouter>,
     );
 
@@ -19,7 +20,7 @@ describe("Header", () => {
   });
 
   it("invokes theme toggle handler", () => {
-    const onThemeToggle = jest.fn();
+    const onThemeToggle = vi.fn();
     render(
       <MemoryRouter>
         <Header url="/" theme="light" onThemeToggle={onThemeToggle} />
@@ -38,6 +39,6 @@ describe("Header", () => {
     fireEvent.click(menuButton);
 
     expect(screen.getByRole("button", { name: /close navigation menu/i })).toBeInTheDocument();
-    expect(screen.getAllByText(/View Resume/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Resume/i).length).toBeGreaterThan(0);
   });
 });

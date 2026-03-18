@@ -13,6 +13,6 @@ describe("Experience page", () => {
 
     expect(screen.getByText(/Work Experience/i)).toBeInTheDocument();
     expect(screen.getByText(/Senior Software Developer/)).toBeInTheDocument();
-    expect(screen.getByText(/REST APIs delivered/i)).toBeInTheDocument();
+    expect(screen.getByText(/^Manual Ops Reduced$/i)).toBeInTheDocument();
   });
 });
