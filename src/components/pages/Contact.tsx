@@ -4,7 +4,7 @@ import PageSection from "../common/PageSection.tsx";
 import SocialLinks from "../utils/SocialLinks.tsx";
 import SEO from "../utils/SEO.tsx";
 
-const resumePDF = "https://drive.google.com/file/d/1mcqK7Ru-knL_VgGzljd00gKsXkcPcKWW/view?usp=sharing";
+const resumePDF = "https://drive.google.com/file/d/1e_GcWvtUy6fHMgnmjvwzVIFNeFW0F457/view?usp=sharing";
 
 interface ContactProps {
   url: string;
@@ -13,7 +13,7 @@ interface ContactProps {
 const Contact: React.FC<ContactProps> = ({ url }) => {
   const pageUrl = `${url}contact/`;
   const description =
-    "Contact Arpit Sharma in Buffalo, New York for senior software engineering opportunities, collaborations, or speaking engagements.";
+    "Contact Arpit Sharma in Buffalo, New York for Senior Software Development Engineer opportunities, collaborations, or speaking engagements.";
 
   return (
     <>
@@ -24,7 +24,7 @@ const Contact: React.FC<ContactProps> = ({ url }) => {
           "Contact Arpit Sharma",
           "Buffalo software developer",
           "Arpit Sharma email",
-          "Senior software engineer contact",
+          "Senior Software Development Engineer contact",
         ]}
         image={`${url}arpit-sharma.jpg`}
         url={pageUrl}
@@ -60,7 +60,7 @@ const Contact: React.FC<ContactProps> = ({ url }) => {
                 Let's build something <span className="text-brand-sapphire">extraordinary.</span>
               </h3>
               <p className="text-lg text-slate-400 leading-relaxed max-w-md">
-                Whether you have a specific project in mind, are looking for a senior software engineer to join your team, or just want to chat about cloud architecture, I'm always open to discussing new opportunities.
+                Whether you have a specific project in mind, are looking for a Senior Software Development Engineer to join your team, or just want to chat about cloud architecture, I'm always open to discussing new opportunities.
               </p>
               <div className="pt-6 flex flex-col sm:flex-row gap-4">
                 <a 

@@ -8,7 +8,7 @@ import SocialLinks from "../utils/SocialLinks.tsx";
 interface HeaderProps {
   url: string;
   theme: string;
-  onThemeToggle: () => void;
+  onThemeToggle: (origin?: { x: number; y: number }) => void;
 }
 
 const navLinks = [
@@ -53,58 +53,32 @@ const Header: React.FC<HeaderProps> = ({ url, theme, onThemeToggle }) => {
         onThemeToggle(origin);
         setMenuOpen(false);
       }}
-      className={`group relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white transition hover:border-ion/50 hover:text-ion ${className}`}
+      className={`group flex items-center justify-center gap-3 rounded-xl border border-slate-700 bg-white/[0.02] px-4 py-3 text-sm font-semibold tracking-wide text-slate-300 transition-all hover:bg-white/[0.05] hover:text-white ${className}`}
       aria-label={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
     >
-      <span className="pointer-events-none absolute inset-0 translate-y-full bg-gradient-to-r from-plasma/40 to-ion/40 transition-transform duration-300 ease-out group-hover:translate-y-0" />
-      <span className="relative flex items-center gap-2">
-        {isDarkMode ? <FaSun className="text-amber-300" /> : <FaMoon className="text-aurora" />}
-        {isDarkMode ? "Light" : "Dark"}
-      </span>
+      {isDarkMode ? <FaSun className="text-amber-400 text-lg" /> : <FaMoon className="text-brand-sapphire text-lg" />}
+      <span className="hidden lg:block">{isDarkMode ? "Light Mode" : "Dark Mode"}</span>
     </button>
   );
 
   const renderNavLink = (
     link: (typeof navLinks)[number],
     onClick?: () => void,
-    variant: "sidebar" | "mobile" = "mobile"
   ) => {
     const isActive =
       location.pathname === link.to || (link.to !== "/portfolio/" && location.pathname.startsWith(link.to));
-
-    const baseStyles =
-      variant === "sidebar"
-        ? "w-full rounded-2xl px-4 py-2 text-left text-xs font-semibold uppercase tracking-[0.35em]"
-        : "group relative overflow-hidden rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em]";
 
     return (
       <Link
         key={link.to}
         to={link.to}
         onClick={onClick}
-        className={`${baseStyles} transition ${
-          variant === "sidebar"
-            ? isActive
-              ? "bg-white/10 text-ion"
-              : "text-slate-300 hover:text-white"
-            : isActive
-            ? "text-ion"
-            : "text-slate-300 hover:text-white"
+        className={`flex items-center w-full rounded-xl px-4 py-3 text-sm font-bold tracking-wider transition-all border-l-4 ${
+          isActive
+            ? "border-brand-sapphire bg-brand-sapphire/10 text-brand-sapphire"
+            : "border-transparent text-slate-400 hover:bg-white/[0.04] hover:text-slate-200 hover:border-slate-500"
         }`}
       >
-        {variant === "mobile" && (
-          <span
-            className={`absolute inset-0 opacity-0 transition group-hover:opacity-100 ${
-              isActive ? "opacity-100" : ""
-            }`}
-            style={{
-              background:
-                "linear-gradient(90deg, rgba(56,249,215,0.2), rgba(168,85,247,0.25))",
-              boxShadow: "0 0 30px rgba(56,249,215,0.35)",
-            }}
-            aria-hidden
-          />
-        )}
         <span className="relative z-10">{link.label}</span>
       </Link>
     );
@@ -113,80 +87,78 @@ const Header: React.FC<HeaderProps> = ({ url, theme, onThemeToggle }) => {
   return (
     <>
       <div
-        className="fixed top-0 left-0 z-[60] h-1 bg-gradient-to-r from-plasma/60 via-ion/70 to-flare/70 lg:hidden"
+        className="fixed top-0 left-0 z-[60] h-1 bg-gradient-to-r from-brand-amber via-brand-emerald to-brand-sapphire lg:hidden"
         style={{ width: `${scrollProgress}%`, transition: "width 80ms ease-out" }}
         aria-hidden
       />
 
       {/* Desktop sidebar */}
-      <aside className="fixed left-4 top-4 hidden h-[calc(100vh-2rem)] w-72 flex-col justify-between rounded-[2rem] border border-white/10 bg-panel-dark/80 p-6 text-white shadow-[0_20px_120px_rgba(0,0,0,0.65)] backdrop-blur-2xl lg:flex z-40 theme-aware-panel">
-        <div className="flex flex-col items-center text-center gap-4">
-          <div className="relative">
-            <span className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-plasma/50 to-ion/30 blur-xl" aria-hidden />
+      <aside className="fixed left-6 top-6 hidden h-[calc(100vh-3rem)] w-72 flex-col justify-between rounded-3xl border border-slate-800 bg-white/[0.02] p-8 text-slate-100 shadow-2xl backdrop-blur-3xl lg:flex z-40 theme-aware-panel">
+        <div className="flex flex-col items-center text-center gap-5">
+          <div className="relative group">
+            <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-brand-amber to-brand-sapphire opacity-20 blur transition duration-500 group-hover:opacity-60" aria-hidden />
             <img
               src={`${url}arpit-sharma.jpg`}
               alt="Arpit Sharma"
-              className="relative h-20 w-20 rounded-2xl border border-white/20 object-cover"
+              className="relative h-28 w-28 rounded-full border-2 border-slate-700 object-cover shadow-lg"
               loading="lazy"
             />
           </div>
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-slate-400">Arpit Sharma</p>
-            <p className="text-[11px] uppercase tracking-[0.35em] text-aurora">Software Engineer</p>
+            <h2 className="text-2xl font-extrabold tracking-tight text-slate-100">Arpit Sharma</h2>
+            <p className="mt-1.5 text-xs font-mono uppercase tracking-widest text-brand-sapphire font-semibold">Software Development Engineer</p>
           </div>
         </div>
 
-        <nav className="flex flex-col gap-2">
-          {navLinks.map((link) => renderNavLink(link, undefined, "sidebar"))}
+        <nav className="flex flex-col gap-1.5 flex-1 justify-center mt-6 mb-4">
+          {navLinks.map((link) => renderNavLink(link))}
         </nav>
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           <a
             href={resumePDF}
             target="_blank"
             rel="noopener noreferrer"
-            className="resume-button inline-flex w-full items-center justify-center gap-2 rounded-full border border-ion/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-ion shadow-glow transition hover:border-plasma/60 hover:text-white"
+            className="flex w-full items-center justify-center gap-3 rounded-xl bg-brand-sapphire px-4 py-3.5 text-sm font-bold tracking-widest uppercase text-white shadow-md transition-all hover:bg-blue-700 hover:shadow-lg active:scale-95"
           >
-            <FiDownload /> Resume
+            <FiDownload className="text-lg" /> Download Resume
           </a>
-          <ThemeButton className="w-full justify-center" />
+          <ThemeButton className="w-full" />
           <SocialLinks />
         </div>
       </aside>
 
       {/* Mobile header */}
-      <header className="fixed top-4 left-0 z-50 w-full px-3 sm:px-6 lg:hidden">
-        <div className="mx-auto flex w-full max-w-[calc(100vw-1.5rem)] items-center gap-4 rounded-[1.7rem] border border-white/10 bg-panel-dark px-4 py-3 shadow-[0_20px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl theme-aware-panel">
+      <header className="fixed top-0 left-0 z-50 w-full lg:hidden bg-slate-950/80 border-b border-slate-800/60 backdrop-blur-2xl theme-aware-panel shadow-sm">
+        <div className="mx-auto flex w-full items-center justify-between px-5 py-3.5">
           <Link to="/portfolio/" className="flex items-center gap-3">
             <div className="relative">
-              <span className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-plasma/50 to-ion/30 blur-lg" aria-hidden />
               <img
-                src={`${url}arpit-sharma.jpg`}
+                src={`${url}developer_image.jpg`}
                 alt="Arpit Sharma"
-                className="relative h-12 w-12 rounded-2xl border border-white/20 object-cover"
+                className="h-11 w-11 rounded-full border border-slate-700 object-cover shadow-sm"
                 loading="lazy"
               />
             </div>
             <div className="flex flex-col leading-tight">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.5em] text-slate-400">Arpit</span>
-              <span className="text-lg font-bold text-white">Sharma</span>
-              <span className="text-[11px] uppercase tracking-[0.35em] text-aurora">Software Developer</span>
+              <span className="text-sm font-bold text-slate-100 uppercase tracking-wide">Arpit Sharma</span>
+              <span className="text-[10px] font-mono tracking-widest text-brand-sapphire uppercase font-semibold mt-0.5">Software Development Engineer</span>
             </div>
           </Link>
 
-          <div className="ml-auto flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-3">
             <a
               href={resumePDF}
               target="_blank"
               rel="noopener noreferrer"
-              className="resume-button hidden items-center gap-2 rounded-full border border-ion/40 px-3 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-ion shadow-glow transition hover:border-plasma/60 hover:text-white sm:inline-flex"
+              className="hidden sm:flex items-center gap-2 rounded-xl bg-brand-sapphire px-4 py-2 text-xs font-bold tracking-widest uppercase text-white shadow-sm transition hover:bg-blue-700"
             >
               <FiDownload /> Resume
             </a>
-            <ThemeButton />
+            <ThemeButton className="!px-3 !py-2 !w-auto !border-transparent !bg-transparent hover:!bg-white/[0.05] !gap-0" />
             <button
               onClick={() => setMenuOpen((prev) => !prev)}
-              className="rounded-full border border-white/10 p-3 text-white transition hover:border-ion/50"
+              className="rounded-xl border border-transparent p-2 text-slate-300 hover:bg-white/[0.1] hover:text-white transition-all active:scale-95"
               aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
             >
               {menuOpen ? <HiOutlineX className="text-2xl" /> : <HiOutlineMenuAlt3 className="text-2xl" />}
@@ -195,12 +167,22 @@ const Header: React.FC<HeaderProps> = ({ url, theme, onThemeToggle }) => {
         </div>
       </header>
 
+      {/* Mobile Menu Dropdown */}
       {menuOpen && (
-        <div className="fixed top-24 left-0 z-40 w-full px-3 sm:px-6 lg:px-10">
-          <div className="mx-auto flex w-full max-w-5xl flex-col gap-5 rounded-3xl border border-white/10 bg-panel-dark px-5 py-6 shadow-[0_20px_80px_rgba(0,0,0,0.6)] backdrop-blur-2xl theme-aware-panel">
-            <nav className="flex flex-wrap gap-2">
+        <div className="fixed top-[70px] left-0 z-40 w-full px-4 pb-6 lg:hidden">
+          <div className="mx-auto flex w-full flex-col gap-6 rounded-2xl border border-slate-800 bg-slate-900 px-6 py-8 shadow-2xl backdrop-blur-3xl theme-aware-panel animate-in slide-in-from-top-4 fade-in duration-200">
+            <nav className="flex flex-col gap-2">
               {navLinks.map((link) => renderNavLink(link, () => setMenuOpen(false)))}
             </nav>
+            <div className="h-px w-full bg-slate-800" />
+            <a
+              href={resumePDF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex sm:hidden w-full items-center justify-center gap-3 rounded-xl bg-brand-sapphire px-4 py-3.5 text-sm font-bold tracking-widest uppercase text-white shadow-md transition-all hover:bg-blue-700 active:scale-95"
+            >
+              <FiDownload className="text-lg" /> Download Resume
+            </a>
             <SocialLinks />
           </div>
         </div>

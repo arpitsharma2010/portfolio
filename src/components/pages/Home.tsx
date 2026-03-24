@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import { FiArrowRight, FiDownload } from "react-icons/fi";
 import SEO from "../utils/SEO.tsx";
 
-const resume = "https://drive.google.com/file/d/1fJuLB-ssJNGaScMs10mAl4_FIe5Fx00K/view";
+const resume = "https://drive.google.com/file/d/1e_GcWvtUy6fHMgnmjvwzVIFNeFW0F457/view?usp=sharing";
 
 const Home: React.FC<{ url: string }> = ({ url }) => {
   const pageUrl = `${url}`;
   const seoDescription =
-    "Versatile Software Engineer with nearly four years delivering enterprise-grade solutions across frontend, backend, cloud infrastructure, and DevOps.";
+    "Versatile Software Development Engineer with nearly four years delivering enterprise-grade solutions across frontend, backend, cloud infrastructure, and DevOps.";
   const seoKeywords = [
     "Arpit Sharma",
     "Senior Software Developer",
@@ -20,7 +20,7 @@ const Home: React.FC<{ url: string }> = ({ url }) => {
   return (
     <>
       <SEO
-        title="Arpit Sharma | Software Engineer"
+        title="Arpit Sharma | Software Development Engineer"
         description={seoDescription}
         keywords={seoKeywords}
         image={`${url}arpit-sharma.jpg`}
@@ -34,16 +34,16 @@ const Home: React.FC<{ url: string }> = ({ url }) => {
           <div className="flex-1 space-y-8 z-10 w-full">
             <div>
               <p className="font-mono text-xs uppercase tracking-widest text-brand-sapphire mb-5">
-                Software Developer
+                Software Development Engineer
               </p>
               <h1 className="text-5xl lg:text-7xl font-extrabold leading-tight tracking-tight text-slate-100">
-                Building reliable software for{" "}
+                Architecting high-performance{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">
-                  enterprise scale.
+                  engineering solutions.
                 </span>
               </h1>
               <p className="mt-8 text-lg lg:text-xl text-slate-400 max-w-2xl leading-relaxed">
-                Versatile engineer with nearly four years delivering high-performance solutions across frontend, backend, cloud infrastructure, and DevOps. Let's shape robust launches together.
+                Results-driven Full-Stack Engineer with nearly 4 years of experience designing scalable distributed systems, optimizing cloud infrastructure, and deploying enterprise-grade web applications.
               </p>
             </div>
             

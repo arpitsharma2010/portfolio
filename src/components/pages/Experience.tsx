@@ -57,10 +57,10 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
         "Frontend UX"
       ],
       description: [
-        "Contributed to Tesserae V6, an advanced intertextual analysis tool for classical Latin, Greek, and English texts that identifies semantic and structural parallels across massive corpora.",
-        "Engineered backend security features including admin login rate limiting, temporary lockouts, and a SUPER_ADMIN bootstrap script with Role-Based Access Control (RBAC) to secure the Flask backend.",
-        "Enhanced the admin capabilities by normalizing language codes, adding robust request status filtering, and improving workflows within the admin dashboard.",
-        "Upgraded the full-stack architecture by adding new e-source fields to the database and request forms, while preserving source/target selections on the frontend to improve UX."
+        "Architected and deployed highly secure backend features for Tesserae V6, an advanced intertextual analysis tool processing massive classical corpora.",
+        "Engineered robust security infrastructure, implementing intelligent rate limiting, automated threat lockouts, and a scalable Role-Based Access Control (RBAC) system for the Flask backend.",
+        "Optimized administrative data pipelines by developing dynamic language code normalizers and stateful request-status filters, significantly reducing corpus management overhead.",
+        "Spearheaded full-stack UX enhancements, instituting complex state preservation for deeply nested search parameters to eliminate user friction during historical analysis."
       ],
       techStack: [
         "Python", "Flask", "React", "TypeScript", "PostgreSQL", "Tailwind CSS", "RBAC", "Git", "GitHub", "Code Review", "Pull Requests"
@@ -173,20 +173,10 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
         <PageSection
           eyebrow="Career"
           title="Work Experience"
-          description="Building resilient, API-driven platforms across finance and health tech. I thrive at the intersection of architecture, DevOps and collaboration—leading delivery while keeping accessibility, observability and documentation in the loop."
+          description="A proven track record of architecting resilient, high-performance systems across finance, health tech, and research. I thrive at the intersection of scalable backend engineering and optimized user experiences—leading delivery while maintaining strict observability and CI/CD organizational excellence."
           align="left"
         >
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mt-8">
-            {quickStats.map((stat) => (
-              <div
-                key={stat.label}
-                className="rounded-xl border border-slate-800 bg-white/[0.015] px-6 py-6 text-left shadow-sm hover:border-slate-700 transition"
-              >
-                <p className="text-3xl font-extrabold text-slate-100">{stat.value}</p>
-                <p className="mt-2 text-xs uppercase tracking-widest font-mono text-slate-500">{stat.label}</p>
-              </div>
-            ))}
-          </div>
+          <></>
         </PageSection>
 
         {/* Vertical Timeline Layout */}

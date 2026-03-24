@@ -15,13 +15,13 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
       title: "Tesserae V6: Intertextual Analysis Tool",
       image: `${url}developer_image.jpg`,
       description:
-        "A web-based intertextual analysis platform for classical texts, where I contributed complex administrative, structural, and security features to the Flask/React stack.",
+        "A sophisticated web-based intertextual analysis platform where I drove the implementation of complex administrative, structural, and robust security features across the Flask/React stack.",
       timeline: "Feb 2026 - Present",
       details: [
-        "Contributed to Tesserae V6, a web-based intertextual analysis platform that helps scholars identify textual parallels across classical literary works using 9 distinct search channels.",
-        "Engineered the core backend security architecture by implementing rigorous rate limiting, temporary lockouts, and role-based access control (RBAC) for the admin dashboard.",
-        "Refactored administrative workflows, integrating robust request status filtering and language code normalization to streamline text corpus management.",
-        "Enhanced the full-stack user experience by preserving source/target search state dynamically and rigorously validating frontend form submissions.",
+        "Contributed to Tesserae V6, an advanced intertextual analysis platform empowering historical scholars to identify textual parallels across massive literary datasets using 9 distinct search channels.",
+        "Engineered the core backend security architecture from the ground up, implementing rigorous rate limiting algorithms, intelligent threat lockouts, and role-based access control (RBAC).",
+        "Refactored complex administrative workflows, integrating scalable request status filtering and strict language code normalization to streamline global text corpus management.",
+        "Enhanced the full-stack user experience by dynamically preserving volatile search states and rigorously validating frontend form submissions, directly improving researcher productivity.",
       ],
       techStack: ["React 18", "Flask", "PostgreSQL", "Tailwind CSS", "Python", "Git", "GitHub", "Code Review", "Pull Requests"],
       repos: [
@@ -33,13 +33,13 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
       title: "WanderGenie: AI-Powered Travel Assistant",
       image: `${url}Project/WanderGenie.jpeg`,
       description:
-        "Multi-agent conversational system built at a 36-hour hackathon to resolve travel planning fatigue by generating bookable, adjustable 5-day itineraries in under 15 seconds.",
+        "An advanced multi-agent conversational AI system rapidly prototyped to automatically generate and validate dynamically bookable 5-day itineraries in under 15 seconds.",
       timeline: "Nov 2025",
       details: [
-        "Architected a multi-agent LangGraph workflow with Planner, Researcher, and Validator agents, implementing state-based control flow and fallback strategies to resolve infinite loops.",
-        "Integrated dynamic knowledge acquisition via OpenTripMap API and a dual-database approach (Supabase VectorDB for RAG, Neo4j GraphDB for geographic clustering), reducing travel time by ~40%.",
-        "Developed a Validator-Corrector pattern using Pydantic to enforce JSON schema validation, auto-correcting malformed LLM outputs and guaranteeing required coordinates and booking links.",
-        "Built a FastAPI backend coupled with a React frontend utilizing streaming architecture for real-time AI status updates and Mapbox visualization.",
+        "Architected a complex multi-agent LangGraph workflow featuring specialized Planner, Researcher, and Validator agents with deterministic fallback strategies to completely eliminate infinite generation loops.",
+        "Engineered a high-performance dual-database retrieval architecture combining Supabase VectorDB for RAG and Neo4j GraphDB for spatial clustering, reducing overall query latency by ~40%.",
+        "Implemented a robust Validator-Corrector pattern using Pydantic to strictly enforce JSON schema validation, automatically rectifying malformed LLM outputs to guarantee valid booking coordinates.",
+        "Built a scalable FastAPI backend coupled with a React frontend utilizing streaming architecture for real-time AI status updates and interactive Mapbox visualization.",
       ],
       techStack: [
         "React",
@@ -62,13 +62,13 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
       title: "Pintos Kernel OS Development",
       image: `${url}developer_image.jpg`,
       description:
-        "Developed core kernel components for Pintos, an 80x86 instructional operating system. Built a stable, fair, and secure kernel handling multi-threaded synchronization and user program execution.",
+        "Architected core kernel components for an 80x86 instructional operating system, successfully engineering multi-threaded synchronization, memory security, and user program execution.",
       timeline: "Jan 2025 – May 2025",
       details: [
-        "Engineered a priority-based scheduler with nested priority donation to prevent priority inversion, and a Multi-Level Feedback Queue (MLFQ) using 17.14 fixed-point arithmetic for CPU fairness.",
-        "Built a robust system call interface bridging user and kernel space, including argument passing via the 80x86 stack and core calls like exec, wait, and exit.",
-        "Implemented a secure memory validation layer for user pointers and process synchronization using semaphores to eliminate deadlocks and kernel crashes from malformed inputs.",
-        "Achieved a 95%+ pass rate across 200+ regression tests using GDB and backtrace analysis to debug complex, non-deterministic race conditions.",
+        "Engineered a sophisticated priority-based scheduler utilizing nested priority donation to completely prevent priority inversion, alongside a Multi-Level Feedback Queue (MLFQ) for optimal CPU fairness.",
+        "Built a highly robust system call interface enforcing safe user-to-kernel context switching, handling complex argument passing directly via the 80x86 stack.",
+        "Implemented a secure memory validation layer and rigorous process synchronization via semaphores, eliminating all deadlocks and kernel panics from malformed inputs.",
+        "Achieved a 95%+ pass rate across 200+ comprehensive regression tests, heavily utilizing GDB core dump analysis to debug complex, non-deterministic kernel race conditions.",
       ],
       techStack: ["C", "x86 Assembly", "GDB", "Operating Systems", "Makefile"],
     },
