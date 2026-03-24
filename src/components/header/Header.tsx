@@ -4,6 +4,7 @@ import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { FiDownload } from "react-icons/fi";
 import SocialLinks from "../utils/SocialLinks.tsx";
+import { trackPageView } from "../../utils/analytics.ts";
 
 interface HeaderProps {
   url: string;
@@ -61,6 +62,13 @@ const Header: React.FC<HeaderProps> = ({ url, theme, onThemeToggle }) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  // Track SPA page views when section changes
+  useEffect(() => {
+    if (activeAttr) {
+      trackPageView(`/portfolio/#${activeAttr}`);
+    }
+  }, [activeAttr]);
 
   const ThemeButton = ({ className = "" }: { className?: string }) => (
     <button
