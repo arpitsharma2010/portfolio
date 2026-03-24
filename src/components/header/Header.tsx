@@ -133,37 +133,37 @@ const Header: React.FC<HeaderProps> = ({ url, theme, onThemeToggle }) => {
       />
 
       {/* Desktop sidebar */}
-      <aside className="fixed left-6 top-6 hidden h-[calc(100vh-3rem)] w-72 flex-col justify-between rounded-3xl border border-slate-800 bg-white/[0.02] p-8 text-slate-100 shadow-2xl backdrop-blur-3xl lg:flex z-40 theme-aware-panel">
-        <div className="flex flex-col items-center text-center gap-5">
+      <aside className="fixed left-6 top-6 hidden h-[calc(100vh-3rem)] w-72 flex-col justify-between overflow-y-auto overflow-x-hidden rounded-3xl border border-slate-800 bg-white/[0.02] p-6 text-slate-100 shadow-2xl backdrop-blur-3xl lg:flex z-40 theme-aware-panel [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-slate-700/50 hover:[&::-webkit-scrollbar-thumb]:bg-brand-sapphire/50">
+        <div className="flex flex-col items-center text-center gap-4 shrink-0 mt-2">
           <div className="relative group">
             <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-brand-amber to-brand-sapphire opacity-20 blur transition duration-500 group-hover:opacity-60" aria-hidden />
             <img
               src={`${url}arpit-sharma.jpg`}
               alt="Arpit Sharma"
-              className="relative h-28 w-28 rounded-full border-2 border-slate-700 object-cover shadow-lg"
+              className="relative h-24 w-24 rounded-full border-2 border-slate-700 object-cover shadow-lg"
               loading="lazy"
             />
           </div>
           <div>
-            <h2 className="text-2xl font-extrabold tracking-tight text-slate-100">Arpit Sharma</h2>
-            <p className="mt-1.5 text-xs font-mono uppercase tracking-widest text-brand-sapphire font-semibold">Software Development Engineer</p>
+            <h2 className="text-xl font-extrabold tracking-tight text-slate-100">Arpit Sharma</h2>
+            <p className="mt-1 text-[11px] font-mono uppercase tracking-widest text-brand-sapphire font-semibold">Software Development Engineer</p>
           </div>
         </div>
 
-        <nav className="flex flex-col gap-1.5 flex-1 justify-center mt-6 mb-4">
+        <nav className="flex flex-col gap-1.5 flex-1 min-h-[220px] justify-center my-6">
           {navLinks.map((link) => renderNavLink(link))}
         </nav>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 shrink-0 mb-2">
           <a
             href={resumePDF}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex w-full items-center justify-center gap-3 rounded-xl bg-brand-sapphire px-4 py-3.5 text-sm font-bold tracking-widest uppercase text-white shadow-md transition-all hover:bg-blue-700 hover:shadow-lg active:scale-95"
+            className="flex w-full items-center justify-center gap-3 rounded-xl bg-brand-sapphire px-4 py-3 text-sm font-bold tracking-widest uppercase text-white shadow-md transition-all hover:bg-blue-700 hover:shadow-lg active:scale-95"
           >
             <FiDownload className="text-lg" /> Download Resume
           </a>
-          <ThemeButton className="w-full" />
+          <ThemeButton className="w-full !py-3" />
           <SocialLinks />
         </div>
       </aside>
