@@ -5,43 +5,42 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        void: "#01050e",
-        nebula: "#031320",
-        plasma: "#0b6fd0", // SUNY Buffalo blue
-        ion: "#14c1a5", // DNB mint
-        flare: "#f97316", // SGBAU orange
-        aurora: "#4ec0ff",
-        holo: "#0f1b2d",
-        "panel-dark": "rgba(3, 14, 22, 0.8)",
-        "panel-light": "rgba(255, 255, 255, 0.08)",
-        "text-mute": "#9bc3ff",
-        "brand-emerald": "#0a4f4a",
-        "brand-sapphire": "#005bbb",
-        "brand-amber": "#ffb347",
+        // Professional Navy/Slate Palette
+        void: "#080b12", // Very dark slate (almost black)
+        nebula: "#0f172a", // Tailwind slate-900
+        plasma: "#1d4ed8", // Tailwind blue-700
+        ion: "#0f766e", // Tailwind teal-700
+        flare: "#b45309", // Tailwind amber-700
+        aurora: "#38bdf8", // Tailwind sky-400 (for subtle highlights)
+        holo: "#1e293b", // Tailwind slate-800
+        
+        "panel-dark": "rgba(15, 23, 42, 0.8)", // slate-900 with opacity
+        "panel-light": "rgba(255, 255, 255, 0.05)",
+        "text-mute": "#94a3b8", // slate-400
+        
+        "brand-emerald": "#047857",
+        "brand-sapphire": "#1e40af",
+        "brand-amber": "#d97706",
       },
       boxShadow: {
-        glow: "0 0 45px rgba(20, 193, 165, 0.35)",
-        "glow-sm": "0 0 18px rgba(11, 111, 208, 0.35)",
+        // Soft, professional shadows instead of neon glow
+        glow: "0 10px 25px -5px rgba(15, 23, 42, 0.3)",
+        "glow-sm": "0 4px 6px -1px rgba(15, 23, 42, 0.2)",
       },
       backgroundImage: {
         "grid-nebula":
-          "linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(0deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
+          "linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(0deg, rgba(255,255,255,0.02) 1px, transparent 1px)",
         "orbital":
-          "radial-gradient(circle at 20% 20%, rgba(20, 193, 165, 0.28), transparent 55%), radial-gradient(circle at 80% 0%, rgba(0, 91, 187, 0.22), transparent 45%), radial-gradient(circle at 40% 80%, rgba(249, 115, 22, 0.18), transparent 35%)",
+          "radial-gradient(circle at 50% 0%, rgba(30, 64, 175, 0.1), transparent 50%)",
       },
       keyframes: {
         "slow-pulse": {
-          "0%, 100%": { opacity: 0.35, transform: "scale(0.98)" },
-          "50%": { opacity: 0.8, transform: "scale(1.02)" },
-        },
-        "orbit-spin": {
-          from: { transform: "rotate(0deg)" },
-          to: { transform: "rotate(360deg)" },
+          "0%, 100%": { opacity: 0.8 },
+          "50%": { opacity: 1 },
         },
       },
       animation: {
         "pulse-holo": "slow-pulse 10s ease-in-out infinite",
-        "orbit-spin": "orbit-spin 40s linear infinite",
       },
     },
   },

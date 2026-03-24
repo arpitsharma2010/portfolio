@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FiArrowUpRight, FiGithub, FiTarget } from "react-icons/fi";
+import { FiArrowUpRight, FiGithub, FiTarget, FiX } from "react-icons/fi";
 import PageSection from "../common/PageSection.tsx";
 import SEO from "../utils/SEO.tsx";
 
@@ -12,17 +12,34 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
 
   const projects = [
     {
-      title: "WanderGenie - AI Travel Planning Engine",
+      title: "Tesserae V6: Intertextual Analysis Tool",
+      image: `${url}developer_image.jpg`,
+      description:
+        "A web-based intertextual analysis platform for classical texts, where I contributed complex administrative, structural, and security features to the Flask/React stack.",
+      timeline: "Feb 2026 - Present",
+      details: [
+        "Contributed to Tesserae V6, a web-based intertextual analysis platform that helps scholars identify textual parallels across classical literary works using 9 distinct search channels.",
+        "Engineered the core backend security architecture by implementing rigorous rate limiting, temporary lockouts, and role-based access control (RBAC) for the admin dashboard.",
+        "Refactored administrative workflows, integrating robust request status filtering and language code normalization to streamline text corpus management.",
+        "Enhanced the full-stack user experience by preserving source/target search state dynamically and rigorously validating frontend form submissions.",
+      ],
+      techStack: ["React 18", "Flask", "PostgreSQL", "Tailwind CSS", "Python", "Git", "GitHub", "Code Review", "Pull Requests"],
+      repos: [
+        { label: "Web App", url: "https://tesserae.caset.buffalo.edu/" },
+        { label: "GitHub", url: "https://github.com/tesserae/tesserae-v6" },
+      ],
+    },
+    {
+      title: "WanderGenie: AI-Powered Travel Assistant",
       image: `${url}Project/WanderGenie.jpeg`,
       description:
-        "Full-stack AI travel assistant built at UBHacking 2025 that turns natural-language prompts into time-aware itineraries with maps, POIs and booking links.",
+        "Multi-agent conversational system built at a 36-hour hackathon to resolve travel planning fatigue by generating bookable, adjustable 5-day itineraries in under 15 seconds.",
       timeline: "Nov 2025",
       details: [
-        "Engineered a multi-agent LangGraph workflow (Planner → Researcher → Packager) so complex trips are decomposed into verifiable subtasks before packaging the final plan.",
-        "Grounded itineraries using Neo4j for POI relationships plus Supabase pgvector for semantic retrieval, eliminating hallucinations and keeping recommendations geographically accurate.",
-        "Built the React + TypeScript frontend with interactive maps and timeline cards sourced directly from dynamically assembled itinerary metadata.",
-        "Implemented a FastAPI backend powered by AWS Nova Pro with GPT-4o-mini fallback to guarantee low-latency inference during hackathon load tests.",
-        "Deployed via AWS Amplify (frontend), AWS EC2 + API Gateway (backend routing), integrating OpenTripMap data for rich points of interest.",
+        "Architected a multi-agent LangGraph workflow with Planner, Researcher, and Validator agents, implementing state-based control flow and fallback strategies to resolve infinite loops.",
+        "Integrated dynamic knowledge acquisition via OpenTripMap API and a dual-database approach (Supabase VectorDB for RAG, Neo4j GraphDB for geographic clustering), reducing travel time by ~40%.",
+        "Developed a Validator-Corrector pattern using Pydantic to enforce JSON schema validation, auto-correcting malformed LLM outputs and guaranteeing required coordinates and booking links.",
+        "Built a FastAPI backend coupled with a React frontend utilizing streaming architecture for real-time AI status updates and Mapbox visualization.",
       ],
       techStack: [
         "React",
@@ -30,14 +47,11 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
         "FastAPI",
         "Python",
         "LangGraph",
-        "AWS Bedrock (Nova Pro)",
-        "GPT-4o-mini",
         "Neo4j",
-        "Supabase pgvector",
+        "Supabase",
+        "Pydantic",
         "OpenTripMap API",
-        "AWS Amplify",
-        "AWS EC2",
-        "AWS API Gateway",
+        "Mapbox",
       ],
       repos: [
         { label: "GitHub", url: "https://github.com/arpitsharma2010/WanderGenie-ai-travel-assistant" },
@@ -45,31 +59,61 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
       ],
     },
     {
-      title: "Custom 16-bit Processor on FPGA",
+      title: "Pintos Kernel OS Development",
+      image: `${url}developer_image.jpg`,
+      description:
+        "Developed core kernel components for Pintos, an 80x86 instructional operating system. Built a stable, fair, and secure kernel handling multi-threaded synchronization and user program execution.",
+      timeline: "Jan 2025 – May 2025",
+      details: [
+        "Engineered a priority-based scheduler with nested priority donation to prevent priority inversion, and a Multi-Level Feedback Queue (MLFQ) using 17.14 fixed-point arithmetic for CPU fairness.",
+        "Built a robust system call interface bridging user and kernel space, including argument passing via the 80x86 stack and core calls like exec, wait, and exit.",
+        "Implemented a secure memory validation layer for user pointers and process synchronization using semaphores to eliminate deadlocks and kernel crashes from malformed inputs.",
+        "Achieved a 95%+ pass rate across 200+ regression tests using GDB and backtrace analysis to debug complex, non-deterministic race conditions.",
+      ],
+      techStack: ["C", "x86 Assembly", "GDB", "Operating Systems", "Makefile"],
+    },
+    {
+      title: "TacoDB: Mini Relational Database Management System",
+      image: `${url}developer_image.jpg`,
+      description:
+        "Functional mini-RDBMS built from scratch in C++, implementing the full stack from a POSIX-based disk I/O space manager to an iterator-based Volcano Model query execution engine.",
+      timeline: "Aug 2025 – Nov 2025",
+      details: [
+        "Built a Buffer Pool Manager utilizing LRU/Clock algorithms and RAII patterns for safe page unpinning, effectively preventing memory leaks and deadlocks.",
+        "Developed a Slotted-Page storage layer with in-page compaction to maximize space utilization by eliminating internal fragmentation for variable-length records.",
+        "Engineered a B+ Tree index supporting efficient O(log N) lookups and range scans, utilizing custom visualization tools to debug complex node invariants during splits and merges.",
+        "Designed an iterator-based Volcano Model execution engine with SeqScan, Filter, and Join operators, transitioning from O(N × M) Nested Loop to O(N + M) Hash Joins for a ~10x speedup.",
+      ],
+      techStack: ["C++", "RDBMS", "B+ Tree", "Volcano Model", "Buffer Pool", "POSIX I/O"],
+    },
+    {
+      title: "16-Bit RISC-style CPU",
       image: `${url}Project/Microprocessor.png`,
       description:
-        "Graduate research project translating Verilog fundamentals into a working single-cycle RISC CPU with a 10-instruction ISA on a Basys3 FPGA exactly as described in my resume.",
+        "Designed and implemented a custom 16-bit single-cycle RISC-style processor from scratch using Verilog, successfully validating a 10-instruction ISA on a Basys3 FPGA.",
       timeline: "Feb 2025 – Apr 2025",
       details: [
-        "Architected modular datapath components (ALU, register file, control logic, instruction/data memory) so each block could be tested independently before integrating the processor.",
-        "Implemented a two-button stepping mechanism first button exposes rt/rd register values on the 7-segment display, second executes the instruction allowing professors to follow state transitions in real time.",
-        "Validated arithmetic, memory and control-flow instructions (ADDI, LW, SW, BEQ, BNE, JMP) via RTL simulation and Xilinx Vivado before flashing to hardware, mirroring the verification workflow called out on my resume.",
+        "Architected a custom 16-bit ISA with R, I, and J-type instructions, building modular datapath components including an ALU, dual-read Register File, and separated Control Unit.",
+        "Implemented a synchronized two-button execution mechanism to prevent mechanical bounce, allowing real-time debugging of registers and ALU states directly on the FPGA's 7-segment display.",
+        "Engineered precise shift-left and sign-extension logic to accurately compute branch targets for memory and control flow operations (LW, SW, BEQ, BNE, JMP).",
+        "Validated the hardware design via a comprehensive Vivado testbench simulating 40+ execution cycles before successfully flashing and testing on the Artix-7 FPGA.",
       ],
-      techStack: ["Verilog", "Xilinx Vivado", "Basys3 FPGA", "Digital Logic Design"],
+      techStack: ["Verilog", "Xilinx Vivado", "Basys3 FPGA", "Artix-7", "ISA Design", "Digital Logic"],
       repos: [{ label: "GitHub", url: "https://github.com/arpitsharma2010/micro16-fpga-core" }],
     },
     {
-      title: "Crop Yield Prediction and Analysis",
+      title: "Crop Yield Prediction System",
       image: `${url}Project/CropYieldMainpage.jpeg`,
       description:
-        "Machine learning pipeline that cleans agricultural datasets, compares models and deploys the best performer via a Flask web interface to provide real-time yield predictions for non-technical stakeholders.",
+        "End-to-end machine learning system that transforms raw environmental agricultural data into actionable real-time crop yield predictions for non-technical users.",
       timeline: "Sep 2024 – Nov 2024",
       details: [
-        "Processed rainfall, soil and crop attributes using Pandas and PySpark; performed EDA with Seaborn/Matplotlib to expose trends and correlations highlighted in my resume.",
-        "Trained Linear Regression, KNN, Random Forest and XGBoost models with Scikit-learn, ultimately selecting the Random Forest approach for its documented accuracy.",
-        "Served predictions through a Flask app backed by HTML/CSS so growers and policymakers could submit field data and receive guidance instantly without touching notebooks.",
+        "Analyzed environmental data (rainfall, temperature, etc.) using Matplotlib/Seaborn for EDA, and scaled the data pipeline to handle large datasets using PySpark and Spark SQL.",
+        "Engineered robust features by applying One-Hot Encoding for categorical variables and Standard Scaling for numerical parameters, avoiding the memory limits of single machines.",
+        "Evaluated multiple models using K-Fold Cross-Validation (R2, MSE, MAE) and serialized the most accurate Random Forest and XGBoost models using Joblib.",
+        "Built and deployed a Flask API backed by HTML/CSS serving the PySpark pipeline, allowing seamless and real-time inference in a user-facing web application.",
       ],
-      techStack: ["Python", "Flask", "Pandas", "PySpark", "Scikit-learn", "Random Forest"],
+      techStack: ["Python", "Flask", "PySpark", "Spark MLlib", "Pandas", "Scikit-learn", "Random Forest", "XGBoost"],
       repos: [{ label: "GitHub", url: "https://github.com/arpitsharma2010/Crop-Yield-Prediction" }],
     },
     {
@@ -154,161 +198,158 @@ const Projects: React.FC<ProjectsProps> = ({ url }) => {
           })),
         }}
       />
-      <section className="flex flex-col gap-10 text-white">
-      <PageSection
-        eyebrow="Case studies & builds"
-        title="Projects"
-        description="Hands-on work ranging from AI copilots to FPGA research. Same engineering discipline, just different canvases."
-        align="center"
-      >
-        <></>
-      </PageSection>
+      <div className="flex flex-col gap-12 pb-12 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <PageSection
+          eyebrow="Case studies & builds"
+          title="Projects"
+          description="A curated selection of my work ranging from AI copilots to FPGA research. Different canvases, driven by the same engineering discipline."
+          align="left"
+        >
+          <div className="grid gap-8 lg:grid-cols-2 mt-4 xl:gap-10">
+            {projects.map((project, index) => (
+              <article
+                key={project.title}
+                className="group flex flex-col overflow-hidden rounded-2xl border border-slate-800 bg-white/[0.015] shadow-sm transition-all hover:border-slate-600 hover:shadow-md h-full"
+              >
+                <div className="relative h-56 w-full overflow-hidden border-b border-slate-800 shrink-0">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80" />
+                  <div className="absolute left-4 top-4 rounded-md border border-slate-600/50 bg-slate-900/60 px-3 py-1 text-[10px] font-mono uppercase tracking-widest text-slate-200 backdrop-blur-md shadow-sm">
+                    {project.timeline}
+                  </div>
+                </div>
+                
+                <div className="relative flex flex-col flex-grow p-6 sm:p-8">
+                  <h3 className="text-2xl font-bold text-slate-100 mb-3">{project.title}</h3>
+                  <p className="text-[15px] leading-relaxed text-slate-400 mb-6 flex-grow">{project.description}</p>
 
-      <div className="grid gap-8 lg:grid-cols-2">
-        {projects.map((project, index) => (
-          <article
-            key={project.title}
-            className="group relative overflow-hidden rounded-[2.2rem] border border-white/10 bg-white/[0.05] shadow-[0_25px_80px_rgba(0,0,0,0.55)] transition hover:-translate-y-1"
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    {project.techStack.slice(0, 4).map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded-md bg-slate-800/80 px-2.5 py-1 text-xs font-medium text-slate-300 border border-slate-700/50"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                    {project.techStack.length > 4 && (
+                      <span className="rounded-md bg-slate-800/30 border border-slate-700 px-2.5 py-1 text-xs font-mono text-slate-400">
+                        +{project.techStack.length - 4}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-slate-800">
+                    <div className="flex flex-wrap gap-3">
+                      {(project.repos ?? []).map((repo) => (
+                        <a
+                          key={repo.url}
+                          href={repo.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-brand-sapphire transition-colors"
+                        >
+                          <FiGithub /> {repo.label}
+                        </a>
+                      ))}
+                    </div>
+
+                    <button
+                      className="inline-flex items-center gap-2 rounded-lg bg-slate-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-slate-200 transition-colors hover:bg-slate-700"
+                      onClick={() => setExpandedProject(index)}
+                    >
+                      Details <FiArrowUpRight />
+                    </button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </PageSection>
+
+        {expandedProject !== null && (
+          <div
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm lg:pl-[22rem]"
+            onClick={() => setExpandedProject(null)}
           >
-            <div className="absolute inset-x-6 top-6 h-32 rounded-[2rem] bg-gradient-to-r from-plasma/20 to-transparent blur-3xl opacity-0 transition group-hover:opacity-100" />
-            <div className="relative h-60 overflow-hidden rounded-b-[2.5rem] rounded-t-[2.2rem]">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-              <div className="absolute left-4 top-4 rounded-full border border-white/40 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.4em] text-white backdrop-blur">
-                {project.timeline}
-              </div>
-            </div>
-            <div className="relative z-10 flex flex-col gap-4 p-6">
-              <div>
-                <h3 className="mt-2 text-2xl font-semibold text-white">{project.title}</h3>
-              </div>
-              <p className="text-sm text-slate-200">{project.description}</p>
+            <div
+              className="relative flex max-h-[90vh] w-full max-w-4xl flex-col overflow-y-auto rounded-2xl border border-slate-700 bg-slate-900 p-8 text-slate-200 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                className="absolute top-6 right-6 rounded-lg p-2 text-slate-400 hover:bg-slate-800 hover:text-white transition-colors"
+                onClick={() => setExpandedProject(null)}
+                aria-label="Close modal"
+              >
+                <FiX size={24} />
+              </button>
 
-              <ul className="space-y-2 text-sm text-slate-200">
-                {project.details.slice(0, 2).map((detail) => (
-                  <li key={detail} className="flex items-start gap-2">
-                    <FiTarget className="mt-1 shrink-0 text-ion" />
-                    <span>{detail}</span>
+              <div className="h-48 sm:h-64 mb-6 -mx-8 -mt-8 overflow-hidden rounded-t-2xl border-b border-slate-700 relative">
+                <img
+                  src={projects[expandedProject].image}
+                  alt={projects[expandedProject].title}
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
+              </div>
+              
+              <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-100 pr-10">{projects[expandedProject].title}</h3>
+              <p className="mt-3 text-sm font-mono tracking-widest text-slate-400 uppercase">
+                {projects[expandedProject].timeline}
+              </p>
+              
+              <p className="mt-6 text-[15px] leading-relaxed text-slate-300 border-l-2 border-brand-sapphire pl-4">
+                {projects[expandedProject].description}
+              </p>
+
+              <ul className="mt-8 space-y-4">
+                {projects[expandedProject].details.map((point) => (
+                  <li
+                    key={point}
+                    className="flex items-start gap-4 text-[15px] text-slate-300 leading-relaxed"
+                  >
+                    <FiTarget className="mt-1 shrink-0 text-brand-sapphire" size={18} />
+                    <span>{point}</span>
                   </li>
                 ))}
               </ul>
 
-              <div className="flex flex-wrap gap-2 text-xs">
-                {project.techStack.slice(0, 4).map((tech) => (
-                  <span
-                    key={tech}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-semibold uppercase tracking-[0.2em] text-text-mute"
-                  >
-                    {tech}
-                  </span>
-                ))}
-                {project.techStack.length > 4 && (
-                  <span className="rounded-full border border-dashed border-ion/40 px-3 py-1 text-xs uppercase tracking-[0.2em] text-ion">
-                    +{project.techStack.length - 4}
-                  </span>
-                )}
+              <div className="mt-10 pt-8 border-t border-slate-800">
+                <p className="text-xs uppercase tracking-widest font-mono text-slate-500 mb-4">Tech Stack</p>
+                <div className="flex flex-wrap gap-2">
+                  {projects[expandedProject].techStack.map((tech) => (
+                    <span
+                      key={tech}
+                      className="rounded-md bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-slate-300 border border-slate-700/80"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
               </div>
 
-              <div className="flex flex-wrap gap-3">
-                {(project.repos ?? []).map((repo) => (
+              <div className="mt-8 flex flex-wrap gap-4">
+                {(projects[expandedProject].repos ?? []).map((repo) => (
                   <a
                     key={repo.url}
                     href={repo.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white hover:border-ion/60"
+                    className="flex items-center gap-2 rounded-lg bg-brand-sapphire px-5 py-2.5 text-sm font-semibold text-white shadow hover:bg-blue-700 transition-colors"
                   >
                     <FiGithub /> {repo.label}
                   </a>
                 ))}
               </div>
-
-              <button
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-plasma to-ion px-5 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white shadow-glow-sm"
-                onClick={() => setExpandedProject(index)}
-              >
-                Build notes <FiArrowUpRight />
-              </button>
-            </div>
-          </article>
-        ))}
-      </div>
-
-      {expandedProject !== null && (
-        <div
-          className="fixed inset-0 z-[70] flex items-center justify-center bg-black/80 p-4 backdrop-blur-2xl lg:pl-[22rem]"
-          onClick={() => setExpandedProject(null)}
-        >
-          <div
-            className="relative flex max-h-[90vh] w-full max-w-4xl flex-col overflow-y-auto rounded-[2rem] border border-white/10 bg-panel-dark p-8 text-white shadow-[0_30px_120px_rgba(0,0,0,0.6)]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              className="absolute top-4 right-4 rounded-full border border-white/10 p-2 text-xl text-white hover:border-flare/50 hover:text-flare"
-              onClick={() => setExpandedProject(null)}
-            >
-              ✕
-            </button>
-
-            <img
-              src={projects[expandedProject].image}
-              alt={projects[expandedProject].title}
-              className="mb-4 h-56 w-full rounded-[1.5rem] object-cover"
-            />
-            <h3 className="text-3xl font-bold text-ion">{projects[expandedProject].title}</h3>
-            <p className="mt-1 text-sm text-text-mute">
-              <strong>Timeline:</strong> {projects[expandedProject].timeline}
-            </p>
-            <p className="mt-3 text-sm text-slate-200">{projects[expandedProject].description}</p>
-
-            <ul className="mt-4 space-y-3 text-sm leading-relaxed text-slate-100">
-              {projects[expandedProject].details.map((point) => (
-                <li
-                  key={point}
-                  className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-3"
-                >
-                  <FiTarget className="mt-0.5 shrink-0 text-ion" />
-                  <span>{point}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-6">
-              <p className="text-[11px] uppercase tracking-[0.4em] text-text-mute">Tech stack</p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {projects[expandedProject].techStack.map((tech) => (
-                  <span
-                    key={tech}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-text-mute"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-6 flex flex-wrap gap-3">
-              {(projects[expandedProject].repos ?? []).map((repo) => (
-                <a
-                  key={repo.url}
-                  href={repo.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 rounded-full border border-ion/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-ion"
-                >
-                  <FiGithub /> {repo.label}
-                </a>
-              ))}
             </div>
           </div>
-        </div>
-      )}
-    </section>
+        )}
+      </div>
     </>
   );
 };

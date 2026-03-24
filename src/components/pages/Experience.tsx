@@ -1,5 +1,4 @@
 import React from "react";
-// icons removed
 import PageSection from "../common/PageSection.tsx";
 import SEO from "../utils/SEO.tsx";
 
@@ -17,7 +16,6 @@ type Job = {
   location?: string;
   description: string[];
   techStack: string[];
-  // can be single string or string[] from data; we'll normalize to string[]
   highlight?: string | string[];
 };
 
@@ -46,6 +44,28 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
   ];
 
   const allExperience: Job[] = [
+    {
+      company: "University at Buffalo (Tesserae Project)",
+      logo: `${url}developer_image.jpg`,
+      website: "https://tesserae.caset.buffalo.edu/",
+      position: "Volunteer Software Engineer",
+      duration: "Feb 2026 – Present",
+      location: "Buffalo, NY, USA",
+      highlight: [
+        "Backend Security",
+        "Data Pipelines",
+        "Frontend UX"
+      ],
+      description: [
+        "Contributed to Tesserae V6, an advanced intertextual analysis tool for classical Latin, Greek, and English texts that identifies semantic and structural parallels across massive corpora.",
+        "Engineered backend security features including admin login rate limiting, temporary lockouts, and a SUPER_ADMIN bootstrap script with Role-Based Access Control (RBAC) to secure the Flask backend.",
+        "Enhanced the admin capabilities by normalizing language codes, adding robust request status filtering, and improving workflows within the admin dashboard.",
+        "Upgraded the full-stack architecture by adding new e-source fields to the database and request forms, while preserving source/target selections on the frontend to improve UX."
+      ],
+      techStack: [
+        "Python", "Flask", "React", "TypeScript", "PostgreSQL", "Tailwind CSS", "RBAC", "Git", "GitHub", "Code Review", "Pull Requests"
+      ],
+    },
     {
       company: "Tata Consultancy Services (DNB, Norway)",
       logo: `${url}Experience/TCS.png`,
@@ -149,102 +169,113 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
           })),
         }}
       />
-      <section className="flex flex-col gap-10 text-white">
-      <PageSection
-        eyebrow="Career"
-        title="Work Experience"
-        description="Building resilient, API-driven platforms across finance and health tech. I thrive at the intersection of architecture, DevOps and collaboration leading delivery while keeping accessibility, observability and documentation in the loop."
-        align="center"
-      >
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {quickStats.map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-4 text-center shadow-[0_15px_40px_rgba(0,0,0,0.45)]"
-            >
-              <p className="text-2xl font-black text-white">{stat.value}</p>
-              <p className="mt-1 text-[11px] uppercase tracking-[0.3em] text-text-mute">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-      </PageSection>
+      <div className="flex flex-col gap-16 pb-12 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <PageSection
+          eyebrow="Career"
+          title="Work Experience"
+          description="Building resilient, API-driven platforms across finance and health tech. I thrive at the intersection of architecture, DevOps and collaboration—leading delivery while keeping accessibility, observability and documentation in the loop."
+          align="left"
+        >
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mt-8">
+            {quickStats.map((stat) => (
+              <div
+                key={stat.label}
+                className="rounded-xl border border-slate-800 bg-white/[0.015] px-6 py-6 text-left shadow-sm hover:border-slate-700 transition"
+              >
+                <p className="text-3xl font-extrabold text-slate-100">{stat.value}</p>
+                <p className="mt-2 text-xs uppercase tracking-widest font-mono text-slate-500">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </PageSection>
 
-      <div className="grid gap-8 md:grid-cols-2">
-        {allExperience.map((job, index) => {
-          const highlights = normalizeHighlights(job.highlight);
-          return (
-            <article
-              key={index}
-              className="group relative flex h-full flex-col gap-5 overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-6 shadow-[0_25px_70px_rgba(0,0,0,0.45)]"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-plasma/10 via-transparent to-ion/10 opacity-60" aria-hidden />
-              <div className="relative flex flex-col items-center text-center">
-                <div className="flex w-full items-center justify-between gap-3">
-                  <div className="rounded-full border border-white/20 bg-gradient-to-r from-plasma/40 to-ion/40 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.3em] text-white shadow-glow">
-                    {job.duration}
-                  </div>
-                  {job.location && (
-                    <span className="text-[10px] uppercase tracking-[0.35em] text-text-mute">{job.location}</span>
-                  )}
-                </div>
-                <div className="mt-4">
-                  {showLogos ? (
-                    <img
-                      src={job.logo}
-                      alt={`${job.company} logo`}
-                      className="h-16 w-16 rounded-2xl border border-white/10 bg-white/10 object-contain shadow"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-ion/10 text-xs text-ion">
-                      {job.company.split(" ")[0]}
+        {/* Vertical Timeline Layout */}
+        <section className="relative w-full max-w-5xl mx-auto mt-4 px-2">
+          {/* Main vertical line */}
+          <div className="absolute left-6 md:left-8 top-8 bottom-0 w-px bg-slate-800" aria-hidden="true" />
+          
+          <div className="space-y-16">
+            {allExperience.map((job, index) => {
+              const highlights = normalizeHighlights(job.highlight);
+              return (
+                <article
+                  key={index}
+                  className="relative pl-16 md:pl-24 group"
+                >
+                  {/* Timeline Dot */}
+                  <span className="absolute left-[20px] md:left-[28px] top-8 h-3.5 w-3.5 rounded-full border border-slate-600 bg-slate-900 group-hover:bg-brand-sapphire group-hover:border-brand-sapphire group-hover:scale-125 transition-all duration-300 z-10" aria-hidden="true" />
+                  
+                  {/* Card Content */}
+                  <div className="bg-white/[0.01] border border-slate-800/80 rounded-2xl p-6 sm:p-9 hover:border-slate-600 transition shadow-sm group-hover:shadow-md">
+                    
+                    { /* Header */ }
+                    <div className="flex flex-col xl:flex-row xl:justify-between xl:items-start gap-4 mb-8">
+                      <div className="flex gap-5 items-start">
+                        {showLogos && job.logo && (
+                           <img
+                             src={job.logo}
+                             alt={`${job.company} logo`}
+                             className="h-14 w-14 rounded-xl border border-slate-700 bg-white shadow-sm object-contain p-1 shrink-0 hidden sm:block"
+                             loading="lazy"
+                           />
+                        )}
+                        <div>
+                          <h3 className="text-2xl font-bold text-slate-100 tracking-tight">{job.position}</h3>
+                          <p className="text-lg text-slate-400 mt-1.5 font-medium">{job.company}</p>
+                        </div>
+                      </div>
+                      <div className="flex flex-row xl:flex-col items-center xl:items-end gap-3 xl:gap-2">
+                        <span className="inline-flex items-center rounded-md bg-slate-800/80 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-slate-300 border border-slate-700">
+                          {job.duration}
+                        </span>
+                        {job.location && (
+                          <span className="text-xs font-mono uppercase tracking-widest text-slate-500">{job.location}</span>
+                        )}
+                      </div>
                     </div>
-                  )}
-                </div>
-                <h3 className="mt-3 text-xl font-semibold text-white">{job.position}</h3>
-                <p className="text-sm text-slate-300">{job.company}</p>
 
-                {highlights.length > 0 && (
-                  <ul className="mt-3 flex flex-wrap justify-center gap-2">
-                    {highlights.map((h, i) => (
-                      <li
-                        key={i}
-                        className="achievement-pill inline-flex items-center gap-1 rounded-full px-3 py-0.5 text-[11px] font-semibold"
-                      >
-                        🎖 <span>{h}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
+                    { /* Highlights */ }
+                    {highlights.length > 0 && (
+                      <div className="mb-8 flex flex-wrap gap-2.5">
+                        {highlights.map((h, i) => (
+                          <span key={i} className="inline-flex items-center rounded-md bg-brand-sapphire/10 px-3 py-1.5 text-xs font-medium text-blue-300 border border-brand-sapphire/20">
+                            ✓ {h}
+                          </span>
+                        ))}
+                      </div>
+                    )}
 
-              <ul className="relative space-y-3 text-sm text-slate-200">
-                {job.description.map((point, i) => (
-                  <li key={i} className="flex gap-3">
-                    <span className="mt-2 h-1 w-6 rounded-full bg-ion" aria-hidden />
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
+                    { /* Description */ }
+                    <ul className="space-y-4 text-slate-300 text-[15px] leading-relaxed mb-8">
+                      {job.description.map((point, i) => (
+                        <li key={i} className="flex gap-3.5 items-start">
+                          <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-600 group-hover:bg-brand-sapphire transition-colors" aria-hidden />
+                          <span>{point}</span>
+                        </li>
+                      ))}
+                    </ul>
 
-              <div className="relative border-t border-white/10 pt-4">
-                <p className="text-[11px] uppercase tracking-[0.3em] text-text-mute mb-2">Stack</p>
-                <div className="flex flex-wrap gap-2">
-                  {job.techStack.map((tech, i) => (
-                    <span
-                      key={i}
-                      className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[11px] text-text-mute"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </article>
-          );
-        })}
+                    { /* Stack */ }
+                    <div className="pt-6 border-t border-slate-800/60">
+                      <p className="text-[11px] font-mono tracking-widest uppercase text-slate-500 mb-4">Tech Stack</p>
+                      <div className="flex flex-wrap gap-2">
+                        {job.techStack.map((tech, i) => (
+                          <span
+                            key={i}
+                            className="rounded-md bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-slate-300 border border-slate-700/80 hover:bg-slate-800 transition-colors"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
       </div>
-    </section>
     </>
   );
 };
