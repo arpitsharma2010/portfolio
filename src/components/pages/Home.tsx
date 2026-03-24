@@ -57,12 +57,12 @@ const Home: React.FC<{ url: string }> = ({ url }) => {
               >
                 <FiDownload /> Download Resume
               </a>
-              <Link
-                to="/portfolio/contact/"
+              <a
+                href="#contact"
                 className="inline-flex items-center gap-2 rounded-lg border border-slate-600 bg-transparent px-7 py-4 text-sm font-semibold text-slate-200 transition-all hover:bg-white/[0.05] active:scale-95"
               >
                 Let’s collaborate <FiArrowRight aria-hidden />
-              </Link>
+              </a>
             </div>
           </div>
           

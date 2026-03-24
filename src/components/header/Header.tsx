@@ -12,13 +12,13 @@ interface HeaderProps {
 }
 
 const navLinks = [
-  { to: "/portfolio/", label: "Home" },
-  { to: "/portfolio/skills/", label: "Skills" },
-  { to: "/portfolio/projects/", label: "Projects" },
-  { to: "/portfolio/education/", label: "Education" },
-  { to: "/portfolio/experience/", label: "Experience" },
-  { to: "/portfolio/certifications/", label: "Certifications" },
-  { to: "/portfolio/contact/", label: "Contact" },
+  { to: "home", label: "Home" },
+  { to: "skills", label: "Skills" },
+  { to: "projects", label: "Projects" },
+  { to: "education", label: "Education" },
+  { to: "experience", label: "Experience" },
+  { to: "certifications", label: "Certifications" },
+  { to: "contact", label: "Contact" },
 ];
 
 const Header: React.FC<HeaderProps> = ({ url, theme, onThemeToggle }) => {
@@ -28,18 +28,38 @@ const Header: React.FC<HeaderProps> = ({ url, theme, onThemeToggle }) => {
   const isDarkMode = theme === "dark";
   const resumePDF = "https://drive.google.com/file/d/1e_GcWvtUy6fHMgnmjvwzVIFNeFW0F457/view?usp=sharing";
 
+  const [activeAttr, setActiveAttr] = useState("home");
+
   useEffect(() => {
-    const calculateScrollProgress = () => {
+    const handleScroll = () => {
+      // 1. Calculate overall scroll progress for the top bar
       const totalHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       const scrolled = window.scrollY;
       if (totalHeight > 0) {
         setScrollProgress((scrolled / totalHeight) * 100);
       }
+
+      // 2. Active nav link scroll spy
+      // Triggers as soon as a section enters the bottom 30% of the viewport.
+      const sections = document.querySelectorAll("section[id]");
+      let currentActiveId = "home";
+      
+      sections.forEach((section) => {
+        const sectionTop = (section as HTMLElement).offsetTop;
+        if (scrollY >= sectionTop - window.innerHeight * 0.7) {
+          currentActiveId = section.id;
+        }
+      });
+      
+      setActiveAttr(currentActiveId);
     };
 
-    window.addEventListener("scroll", calculateScrollProgress);
-    calculateScrollProgress();
-    return () => window.removeEventListener("scroll", calculateScrollProgress);
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // init
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const ThemeButton = ({ className = "" }: { className?: string }) => (
@@ -65,14 +85,26 @@ const Header: React.FC<HeaderProps> = ({ url, theme, onThemeToggle }) => {
     link: (typeof navLinks)[number],
     onClick?: () => void,
   ) => {
-    const isActive =
-      location.pathname === link.to || (link.to !== "/portfolio/" && location.pathname.startsWith(link.to));
+    const isActive = activeAttr === link.to;
+
+    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault();
+      const target = document.getElementById(link.to);
+      if (target) {
+        window.scrollTo({
+          top: target.offsetTop - 40,
+          behavior: 'smooth'
+        });
+      }
+      if (onClick) onClick();
+      window.history.pushState(null, "", `#${link.to}`);
+    };
 
     return (
-      <Link
+      <a
         key={link.to}
-        to={link.to}
-        onClick={onClick}
+        href={`#${link.to}`}
+        onClick={handleClick}
         className={`flex items-center w-full rounded-xl px-4 py-3 text-sm font-bold tracking-wider transition-all border-l-4 ${
           isActive
             ? "border-brand-sapphire bg-brand-sapphire/10 text-brand-sapphire"
@@ -80,7 +112,7 @@ const Header: React.FC<HeaderProps> = ({ url, theme, onThemeToggle }) => {
         }`}
       >
         <span className="relative z-10">{link.label}</span>
-      </Link>
+      </a>
     );
   };
 

@@ -29,6 +29,52 @@ const AnalyticsTracker: React.FC<AnalyticsTrackerProps> = ({ children }) => {
   return <>{children}</>;
 };
 
+const Divider = () => (
+  <div className="w-full flex justify-center py-16 lg:py-24 opacity-60">
+    <div className="h-px w-full max-w-4xl bg-gradient-to-r from-transparent via-brand-sapphire/40 to-transparent" />
+  </div>
+);
+
+const PortfolioSPA = ({ url }: { url: string }) => {
+  return (
+    <div className="flex flex-col w-full scroll-smooth">
+      <section id="home" className="scroll-mt-24 min-h-[90vh] flex flex-col justify-center">
+        <Home url={url} />
+      </section>
+      <Divider />
+      
+      <section id="skills" className="scroll-mt-24 min-h-[80vh] flex flex-col justify-center">
+        <Skills url={url} />
+      </section>
+      <Divider />
+      
+      <section id="projects" className="scroll-mt-24 min-h-[80vh]">
+        <Projects url={url} />
+      </section>
+      <Divider />
+      
+      <section id="education" className="scroll-mt-24 min-h-[60vh] flex flex-col justify-center">
+        <Education url={url} />
+      </section>
+      <Divider />
+      
+      <section id="experience" className="scroll-mt-24 min-h-[80vh]">
+        <Experience url={url} />
+      </section>
+      <Divider />
+      
+      <section id="certifications" className="scroll-mt-24 min-h-[60vh] flex flex-col justify-center">
+        <Certifications url={url} />
+      </section>
+      <Divider />
+      
+      <section id="contact" className="scroll-mt-24 min-h-[70vh] flex flex-col justify-center">
+        <Contact url={url} />
+      </section>
+    </div>
+  );
+};
+
 const App: React.FC = () => {
   const { theme, toggleTheme, transitionOrigin } = usePreferredTheme();
 
@@ -38,15 +84,7 @@ const App: React.FC = () => {
         <AnalyticsTracker>
           <MainLayout url={BASE_URL} theme={theme} onThemeToggle={toggleTheme} transitionOrigin={transitionOrigin ?? undefined}>
             <Routes>
-              <Route path="/" element={<Home url={BASE_URL} />} />
-              <Route path="/portfolio/" element={<Home url={BASE_URL} />} />
-              <Route path="/portfolio/skills/" element={<Skills url={BASE_URL} />} />
-              <Route path="/portfolio/projects/" element={<Projects url={BASE_URL} />} />
-              <Route path="/portfolio/education/" element={<Education url={BASE_URL} />} />
-              <Route path="/portfolio/experience/" element={<Experience url={BASE_URL} />} />
-              <Route path="/portfolio/certifications/" element={<Certifications url={BASE_URL} />} />
-              <Route path="/portfolio/contact/" element={<Contact url={BASE_URL} />} />
-              <Route path="*" element={<Home url={BASE_URL} />} />
+              <Route path="*" element={<PortfolioSPA url={BASE_URL} />} />
             </Routes>
           </MainLayout>
         </AnalyticsTracker>
