@@ -11,7 +11,7 @@ const Home: React.FC<{ url: string }> = ({ url }) => {
     "Versatile Software Development Engineer with nearly four years delivering enterprise-grade solutions across frontend, backend, cloud infrastructure, and DevOps.";
   const seoKeywords = [
     "Arpit Sharma",
-    "Senior Software Developer",
+    "Software Engineer II",
     ".NET Core portfolio",
     "AWS engineer",
     "Full-stack engineer Buffalo",

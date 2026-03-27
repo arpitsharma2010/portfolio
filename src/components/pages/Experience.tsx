@@ -29,7 +29,7 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
     "Professional experience of Arpit Sharma covering senior software development at Tata Consultancy Services building cloud-native banking platforms, CI/CD automation and IoT solutions.";
   const seoKeywords = [
     "Arpit Sharma experience",
-    "Senior Software Developer TCS",
+    "Software Engineer II TCS",
     "GitLab CI pipelines",
     "Terraform infrastructure",
     "AWS Lambda developer",
@@ -70,7 +70,7 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
       company: "Tata Consultancy Services (DNB, Norway)",
       logo: `${url}Experience/TCS.png`,
       website: "https://www.tcs.com/",
-      position: "Senior Software Developer",
+      position: "Software Engineer II",
       duration: "Sep 2023 – Jul 2024",
       location: "Pune, India",
       highlight: [
@@ -92,7 +92,7 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
       company: "Tata Consultancy Services (DNB, Norway)",
       logo: `${url}Experience/TCS.png`,
       website: "https://www.tcs.com/",
-      position: "Software Developer",
+      position: "Software Engineer I",
       duration: "Apr 2021 – Aug 2023",
       location: "Pune, India",
       highlight: [
