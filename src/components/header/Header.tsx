@@ -5,6 +5,7 @@ import { FaMoon, FaSun } from "react-icons/fa";
 import { FiDownload } from "react-icons/fi";
 import SocialLinks from "../utils/SocialLinks.tsx";
 import { trackPageView } from "../../utils/analytics.ts";
+import { RESUME_URL } from "../../utils/constants";
 
 interface HeaderProps {
   url: string;
@@ -27,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({ url, theme, onThemeToggle }) => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const location = useLocation();
   const isDarkMode = theme === "dark";
-  const resumePDF = "https://drive.google.com/file/d/1e_GcWvtUy6fHMgnmjvwzVIFNeFW0F457/view?usp=sharing";
+  const resumePDF = RESUME_URL;
 
   const [activeAttr, setActiveAttr] = useState("home");
 

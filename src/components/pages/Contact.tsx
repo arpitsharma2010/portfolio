@@ -3,8 +3,9 @@ import { FaEnvelope, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
 import PageSection from "../common/PageSection.tsx";
 import SocialLinks from "../utils/SocialLinks.tsx";
 import SEO from "../utils/SEO.tsx";
+import { RESUME_URL } from "../../utils/constants";
 
-const resumePDF = "https://drive.google.com/file/d/1e_GcWvtUy6fHMgnmjvwzVIFNeFW0F457/view?usp=sharing";
+const resumePDF = RESUME_URL;
 
 interface ContactProps {
   url: string;

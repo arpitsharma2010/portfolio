@@ -2,8 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FiArrowRight, FiDownload } from "react-icons/fi";
 import SEO from "../utils/SEO.tsx";
+import { RESUME_URL } from "../../utils/constants";
 
-const resume = "https://drive.google.com/file/d/1e_GcWvtUy6fHMgnmjvwzVIFNeFW0F457/view?usp=sharing";
+const resume = RESUME_URL;
 
 const Home: React.FC<{ url: string }> = ({ url }) => {
   const pageUrl = `${url}`;
