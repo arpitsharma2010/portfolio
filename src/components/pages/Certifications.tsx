@@ -25,6 +25,20 @@ type Certification = {
 const Certifications: React.FC<CertificationsProps> = ({ url }) => {
   const certificationsData: Certification[] = [
     {
+      name: "AWS Certified Solutions Architect - Associate",
+      organization: "Amazon Web Services",
+      logo: `${url}Certification/aws_cloud_practitioner.png`,
+      year: "May 2026",
+      description:
+        "Validates the ability to design resilient, secure, and cost-optimized architectures on AWS.",
+      certificateLink: "https://www.credly.com/badges/495050db-4418-464b-8031-b1a06fae0012",
+      badge: {
+        id: "495050db-4418-464b-8031-b1a06fae0012",
+        width: 150,
+        height: 270,
+      },
+    },
+    {
       name: "AWS Cloud Practitioner",
       organization: "Amazon Web Services",
       logo: `${url}Certification/aws_cloud_practitioner.png`,
@@ -82,7 +96,7 @@ const Certifications: React.FC<CertificationsProps> = ({ url }) => {
 
   const pageUrl = `${url}certifications/`;
   const description =
-    "Credentials held by Arpit Sharma including AWS Cloud Practitioner and Microsoft Azure Fundamentals badges with Credly verification.";
+    "Credentials held by Arpit Sharma including AWS Certified Solutions Architect - Associate, AWS Cloud Practitioner, and Microsoft Azure Fundamentals badges with Credly verification.";
 
   return (
     <>
@@ -91,6 +105,7 @@ const Certifications: React.FC<CertificationsProps> = ({ url }) => {
         description={description}
         keywords={[
           "Arpit Sharma certifications",
+          "AWS Solutions Architect Associate badge",
           "AWS Cloud Practitioner badge",
           "Azure Fundamentals certification",
         ]}
