@@ -44,10 +44,9 @@ const Certifications: React.FC<CertificationsProps> = ({ url }) => {
       logo: `${url}Certification/aws_cloud_practitioner.png`,
       year: "June 2022 - May 2028",
       description: "Verified understanding of cloud computing concepts and AWS.",
-      certificateLink:
-        "https://www.credly.com/badges/7b23b0c9-df00-4c90-9af9-f76705ef1085?source=linked_in_profile",
+      certificateLink: "https://www.credly.com/badges/ddcfbe0f-49df-413d-938f-3914713a590e",
       badge: {
-        id: "ab41a701-5d3f-45f6-9b02-53fe3a4a6e71",
+        id: "ddcfbe0f-49df-413d-938f-3914713a590e",
         width: 150,
         height: 270,
       },
