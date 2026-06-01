@@ -15,6 +15,7 @@ const Home: React.FC<{ url: string }> = ({ url }) => {
     "Software Engineer II",
     ".NET Core portfolio",
     "AWS engineer",
+    "AWS Certified Solutions Architect",
     "Full-stack engineer Buffalo",
   ];
 
@@ -44,7 +45,7 @@ const Home: React.FC<{ url: string }> = ({ url }) => {
                 </span>
               </h1>
               <p className="mt-8 text-lg lg:text-xl text-slate-400 max-w-2xl leading-relaxed">
-                Results-driven Full-Stack Engineer with nearly 4 years of experience designing scalable distributed systems, optimizing cloud infrastructure, and deploying enterprise-grade web applications.
+                Results-driven Full-Stack Engineer and AWS Certified Solutions Architect - Associate with nearly 4 years of experience designing scalable distributed systems, optimizing cloud infrastructure, and deploying enterprise-grade web applications.
               </p>
             </div>
             

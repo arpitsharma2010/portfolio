@@ -71,7 +71,7 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
       logo: `${url}Experience/TCS.png`,
       website: "https://www.tcs.com/",
       position: "Software Engineer II",
-      duration: "Sep 2023 – Jul 2024",
+      duration: "Apr 2023 – Jul 2024",
       location: "Pune, India",
       highlight: [
         "Microservices Reverse-Engineering",
@@ -93,7 +93,7 @@ const Experience: React.FC<ExperienceProps> = ({ url, showLogos = true }) => {
       logo: `${url}Experience/TCS.png`,
       website: "https://www.tcs.com/",
       position: "Software Engineer I",
-      duration: "Apr 2021 – Aug 2023",
+      duration: "Apr 2021 – Mar 2023",
       location: "Pune, India",
       highlight: [
         "Event-Driven Systems",
