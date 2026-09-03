@@ -17,6 +17,16 @@ const App: React.FC = () => {
     initAnalytics();
   }, []);
 
+  // The browser resolves a load-time #hash before React has rendered the
+  // sections, so a shared deep link lands at the wrong offset. Re-apply it once
+  // the sections exist.
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+    const target = document.getElementById(id);
+    target?.scrollIntoView({ behavior: "instant", block: "start" });
+  }, []);
+
   return (
     <MainLayout
       theme={theme}
