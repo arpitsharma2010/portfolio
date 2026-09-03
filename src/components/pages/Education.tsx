@@ -1,225 +1,173 @@
-import React, { useState } from "react";
-import { FaChevronDown } from "react-icons/fa";
-import { FiAward, FiBookOpen } from "react-icons/fi";
+import React from "react";
+import { FiExternalLink } from "react-icons/fi";
 import PageSection from "../common/PageSection.tsx";
-import SEO from "../utils/SEO.tsx";
+import { ASSET_BASE } from "../../utils/constants";
 
-interface EducationProps {
-  url: string;
-}
+const education = [
+  {
+    institution: "University at Buffalo, SUNY",
+    logo: `${ASSET_BASE}Education/UB.jpg`,
+    website: "https://engineering.buffalo.edu/computer-science-engineering.html",
+    degree: "M.S. Computer Science & Engineering",
+    detail: "GPA 3.77 / 4",
+    period: "Aug 2024 – Dec 2025",
+    courses: [
+      "Algorithm Analysis and Design",
+      "Operating Systems",
+      "Database Management Systems",
+      "Computer Architecture",
+      "Computer Security",
+      "Modern Networking Concepts",
+      "Data Intensive Computing",
+      "Introduction to Machine Learning",
+      "Statistical Data Mining",
+      "Technological Entrepreneurship",
+    ],
+  },
+  {
+    institution: "Sant Gadge Baba Amravati University",
+    logo: `${ASSET_BASE}Education/SGBAU.jpg`,
+    website: "https://sgbau.ac.in/departments/ComputerScience/Default.aspx",
+    degree: "B.E. Computer Science & Engineering",
+    detail: "GPA 8.67 / 10",
+    period: "Jul 2016 – Oct 2020",
+    courses: [
+      "Data Structures",
+      "Design and Analysis of Algorithms",
+      "Operating Systems",
+      "Database Systems",
+      "Computer Networks",
+      "Network Security",
+      "Computer Architecture",
+      "Microprocessor Systems",
+      "Embedded Systems",
+      "Object Oriented Programming",
+      "Software Engineering",
+      "Artificial Intelligence",
+      "Digital Signal Processing",
+      "Web Engineering",
+    ],
+  },
+];
 
-type EducationItem = {
-  institution: string;
-  logo: string;
-  website: string;
-  degree: string;
-  year: string;
-  summary: string;
-  highlights: string[];
-  courses?: string[];
-};
+const certifications = [
+  {
+    name: "AWS Certified Solutions Architect – Associate",
+    issuer: "Amazon Web Services",
+    date: "May 2026",
+    url: "https://www.credly.com/badges/495050db-4418-464b-8031-b1a06fae0012",
+  },
+  {
+    name: "AWS Certified Cloud Practitioner",
+    issuer: "Amazon Web Services",
+    date: "Jun 2022 – May 2028",
+    url: "https://www.credly.com/badges/ddcfbe0f-49df-413d-938f-3914713a590e",
+  },
+  {
+    name: "Microsoft Certified: Azure Fundamentals",
+    issuer: "Microsoft",
+    date: "Mar 2022",
+    url: "https://www.credly.com/badges/9e81ba52-0c00-4297-a692-f1612c938499",
+  },
+];
 
-const Education: React.FC<EducationProps> = ({ url }) => {
-  const [expanded, setExpanded] = useState<number | null>(0);
-
-  const educationData: EducationItem[] = [
-    {
-      institution: "University at Buffalo – SUNY",
-      logo: `${url}Education/UB.jpg`,
-      website: "https://engineering.buffalo.edu/computer-science-engineering.html",
-      degree: "M.S. Computer Science & Engineering (Graduated Jan 2025, GPA: 3.77 / 4)",
-      year: "Aug 2024 – Dec 2025",
-      summary:
-        "Graduate study focused on computer science and engineering with hands-on work in machine learning pipelines, FPGA design and production-grade software delivery matching the research projects outlined in my resume.",
-      highlights: [
-        "Graduated in January 2025 after accelerating key capstone deliverables.",
-        "Translating research into practice via the custom 16-bit single-cycle RISC processor built on Basys3 FPGA.",
-        "Bringing industry experience into coursework by documenting ML experiments similar to crop-yield prediction efforts.",
-      ],
-      courses: [
-        "Algorithm Analysis and Design",
-        "Data Intensive Computing",
-        "Introduction to Machine Learning",
-        "Computer Security",
-        "Technological Entrepreneurship",
-        "Computer Architecture",
-        "Operating Systems",
-        "Modern Networking Concepts",
-        "Database Management Systems",
-        "Statistical Data Mining"
-      ],
-    },
-    {
-      institution: "Sant Gadge Baba Amravati University",
-      logo: `${url}Education/SGBAU.jpg`,
-      website: "https://sgbau.ac.in/departments/ComputerScience/Default.aspx",
-      degree: "B.E. Computer Science & Engineering (GPA: 8.67 / 10)",
-      year: "Jul 2016 – Oct 2020",
-      summary:
-        "Undergraduate engineering program that grounded me in algorithms, databases and end-to-end project delivery skills later applied to fintech, healthcare and agri-tech initiatives, including multiple projects across C++, Java, and ODBC-backed databases.",
-      highlights: [
-        "Delivered projects in C++, Java, and ODBC-connected databases that simulated enterprise data flows.",
-        "Maintained an 8.67/10 GPA while contributing to team projects and coding assignments across the curriculum.",
-      ],
-      courses: [
-        "Computer Networks",
-        "Design and Analysis of Algorithm",
-        "Operating System",
-        "Microprocessor Systems",
-        "Computer Programming",
-        "Database Systems",
-        "Operating Systems",
-        "Network Security",
-        "Embedded Systems",
-        "Data Structures",
-        "Software Engineering",
-        "Object Oriented Programming (OOP)",
-        "Artificial Intelligence (AI)",
-        "Web Engineering",
-        "Digital Signal Processing",
-        "Computer Organization",
-        "Computer Architecture",
-      ],
-    },
-  ];
-
-  const pageUrl = `${url}education/`;
-  const description =
-    "Academic background for Arpit Sharma including an M.S. in Computer Science at SUNY Buffalo and a B.E. in Computer Science at SGBAU.";
-
-  return (
-    <>
-      <SEO
-        title="Education | Arpit Sharma"
-        description={description}
-        keywords={[
-          "Arpit Sharma education",
-          "SUNY Buffalo MS CS",
-          "SGBAU Computer Science",
-          "Arpit Sharma GPA",
-        ]}
-        image={`${url}Education/UB.jpg`}
-        url={pageUrl}
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "ItemList",
-          name: "Education - Arpit Sharma",
-          numberOfItems: educationData.length,
-          itemListElement: educationData.map((edu, index) => ({
-            "@type": "ListItem",
-            position: index + 1,
-            item: {
-              "@type": "CollegeOrUniversity",
-              name: edu.institution,
-              url: edu.website,
-              description: edu.summary,
-            },
-          })),
-        }}
-      />
-      <section className="flex flex-col gap-10 text-white">
-      <PageSection
-        eyebrow="Academics"
-        title="Education"
-        description="Graduate student at SUNY Buffalo plus an undergraduate engineering degree that set the foundation for software, ML and hardware projects."
-        align="center"
-      >
-        <></>
-      </PageSection>
-
-      <div className="space-y-8">
-        {educationData.map((edu, index) => {
-          const isOpen = expanded === index;
-
-          return (
-            <article
-              key={edu.institution}
-              className="relative overflow-hidden rounded-[2.2rem] border border-white/10 bg-white/[0.05] p-6 shadow-[0_25px_80px_rgba(0,0,0,0.45)]"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-plasma/10 via-transparent to-ion/10 opacity-60" aria-hidden />
-              <div className="relative grid gap-6 md:grid-cols-[200px,1fr] md:items-center">
-                <div className="flex flex-col items-center text-center md:items-start md:text-left">
-                  <a
-                    href={edu.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rounded-[1.6rem] border border-white/15 bg-white/5 p-4 shadow-inner"
-                  >
-                    <img
-                      src={edu.logo}
-                      alt={edu.institution}
-                      className="h-20 w-20 rounded-2xl border border-white/10 object-cover"
-                      loading="lazy"
-                    />
-                  </a>
-                  <p className="mt-4 text-[11px] uppercase tracking-[0.4em] text-text-mute">{edu.year}</p>
-                </div>
-
-                <div className="flex flex-col gap-4">
-                  <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                    <div>
-                      <span className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1 text-[11px] uppercase tracking-[0.35em] text-text-mute">
-                        <FiAward aria-hidden /> Program
-                      </span>
-                      <h3 className="mt-3 text-2xl font-bold text-white">{edu.institution}</h3>
-                      <p className="text-sm text-slate-300">{edu.degree}</p>
-                    </div>
-                    <button
-                      onClick={() => setExpanded(isOpen ? null : index)}
-                      className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.3em] text-text-mute transition hover:border-ion/60 hover:text-ion"
-                      aria-expanded={isOpen}
+const Education: React.FC = () => (
+  <PageSection eyebrow="Education" title="Education & certifications">
+    <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-4">
+        {education.map((item) => (
+          <article
+            key={item.institution}
+            className="rounded-xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900/40"
+          >
+            <div className="flex items-start gap-4">
+              <img
+                src={item.logo}
+                alt=""
+                className="h-12 w-12 shrink-0 rounded-lg border border-slate-200 object-cover dark:border-slate-700"
+                loading="lazy"
+              />
+              <div className="flex w-full flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+                <div>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
+                    {item.degree}
+                  </h3>
+                  <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                    <a
+                      href={item.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 dark:decoration-slate-600 dark:hover:text-sky-400"
                     >
-                      {isOpen ? "Hide details" : "Program insights"}
-                      <FaChevronDown className={`transition-transform ${isOpen ? "rotate-180" : ""}`} aria-hidden />
-                    </button>
-                  </div>
-
-                  <p className="text-sm text-slate-200">{edu.summary}</p>
-
-                  <div className="grid gap-3 text-sm text-slate-100 md:grid-cols-2">
-                    {edu.highlights.map((point) => (
-                      <div
-                        key={point}
-                        className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3"
-                      >
-                        <FiBookOpen className="mt-1 shrink-0 text-ion" />
-                        <span>{point}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div
-                    className={`grid transition-all duration-500 ${
-                      isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-                    }`}
-                  >
-                    <div className="overflow-hidden">
-                      {edu.courses && edu.courses.length > 0 && (
-                        <>
-                          <p className="text-[11px] uppercase tracking-[0.35em] text-text-mute">Core coursework</p>
-                          <div className="mt-3 flex flex-wrap gap-2">
-                            {edu.courses.map((course) => (
-                              <span
-                                key={course}
-                                className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-text-mute"
-                              >
-                                {course}
-                              </span>
-                            ))}
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </div>
+                      {item.institution}
+                    </a>
+                  </p>
+                </div>
+                <div className="shrink-0 text-left sm:text-right">
+                  <p className="font-mono text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400">
+                    {item.period}
+                  </p>
+                  <p className="font-mono text-xs uppercase tracking-wider text-slate-500 dark:text-slate-500">
+                    {item.detail}
+                  </p>
                 </div>
               </div>
-            </article>
-          );
-        })}
+            </div>
+
+            <details className="group mt-5 border-t border-slate-200 pt-4 dark:border-slate-800">
+              <summary className="cursor-pointer text-sm font-semibold text-blue-700 marker:content-none dark:text-sky-400">
+                Coursework
+                <span className="ml-1 font-normal text-slate-500 group-open:hidden">
+                  ({item.courses.length})
+                </span>
+              </summary>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {item.courses.map((course) => (
+                  <li
+                    key={course}
+                    className="rounded border border-slate-200 bg-slate-50 px-2 py-1 text-xs text-slate-600 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-400"
+                  >
+                    {course}
+                  </li>
+                ))}
+              </ul>
+            </details>
+          </article>
+        ))}
       </div>
-    </section>
-    </>
-  );
-};
+
+      <div className="flex flex-col gap-3">
+        <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500">
+          Certifications
+        </h3>
+        <ul className="divide-y divide-slate-200 overflow-hidden rounded-xl border border-slate-200 bg-white dark:divide-slate-800 dark:border-slate-800 dark:bg-slate-900/40">
+          {certifications.map((cert) => (
+            <li
+              key={cert.name}
+              className="flex flex-col gap-2 p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-5"
+            >
+              <div>
+                <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                  {cert.name}
+                </p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">
+                  {cert.issuer} · {cert.date}
+                </p>
+              </div>
+              <a
+                href={cert.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-blue-700 underline-offset-4 hover:underline dark:text-sky-400"
+              >
+                Verify <FiExternalLink aria-hidden />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </PageSection>
+);
 
 export default Education;

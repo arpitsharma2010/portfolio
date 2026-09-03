@@ -2,242 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
-.perspective {
-  perspective: 1400px;
-}
-.transform-style {
-  transform-style: preserve-3d;
-}
-.backface-hidden {
-  backface-visibility: hidden;
-}
-.rotate-y-180 {
-  transform: rotateY(180deg);
-}
-
 :root {
-  color-scheme: dark;
-  --space: #0f172a;
-  --surface: rgba(15, 23, 42, 0.85);
-  --glow: rgba(30, 64, 175, 0.15);
+  color-scheme: light dark;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-html,
-body {
-  min-height: 100%;
-}
-
 body {
   margin: 0;
-  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: #f1f5f9;
-  background: #0f172a; /* Slate 900 base */
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
-  position: relative;
-  overflow-x: hidden;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -2;
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-  background-size: 60px 60px;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -3;
-  background: radial-gradient(circle at 50% 0%, rgba(30, 64, 175, 0.08), transparent 70%);
-}
-
-.bg-grid-pattern {
-  background-image: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.03) 1px,
-      transparent 1px
-    ),
-    linear-gradient(0deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-  opacity: 0.5;
-}
-
-.bg-glow {
-  background: radial-gradient(circle at 50% 0%, rgba(30, 64, 175, 0.08), transparent 60%);
-}
-
-/* Reduced animations for a professional feel */
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
-  100% { transform: translateY(0px); }
-}
-
-.animate-float-slow {
-  animation: float 8s ease-in-out infinite;
-}
-
-.animate-float-slower {
-  animation: float 12s ease-in-out infinite;
-  animation-delay: 2s;
-}
-
-.scanline-overlay {
-  display: none; /* Removed for professional aesthetic */
-}
-
-.theme-light .bg-grid-pattern {
-  background-image: linear-gradient(
-      90deg,
-      rgba(15, 23, 42, 0.05) 1px,
-      transparent 1px
-    ),
-    linear-gradient(0deg, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
-}
-
-.theme-light .scanline-overlay {
-  background-image: linear-gradient(
-    rgba(15, 23, 42, 0.06) 1px,
-    transparent 1px
-  );
-  opacity: 0.08;
-}
-
-/* Light Mode Text Overrides */
-.theme-light .text-white,
-.theme-light .text-slate-50,
-.theme-light .text-slate-100 {
-  color: #0f172a !important; /* Very dark slate */
-}
-.theme-light .text-slate-200 {
-  color: #1e293b !important;
-}
-.theme-light .text-slate-300 {
-  color: #334155 !important;
-}
-.theme-light .text-slate-400 {
-  color: #475569 !important;
-}
-.theme-light .text-slate-500 {
-  color: #64748b !important;
-}
-.theme-light .text-text-mute {
-  color: #1d4ed8 !important; /* Brand sapphire */
-}
-
-/* Light Mode Background Overrides */
-.theme-light .bg-slate-900,
-.theme-light .bg-slate-950,
-.theme-light .bg-void {
-  background-color: #ffffff !important;
-}
-.theme-light .bg-slate-800 {
-  background-color: #f8fafc !important;
-}
-.theme-light .bg-slate-700 {
-  background-color: #f1f5f9 !important;
-}
-
-/* Translucent whites (dark mode backgrounds) converted to proper light backgrounds */
-.theme-light .bg-white\/5,
-.theme-light .bg-white\/10,
-.theme-light .bg-white\/\[0\.015\],
-.theme-light .bg-white\/\[0\.02\],
-.theme-light .bg-white\/\[0\.03\],
-.theme-light .bg-white\/\[0\.04\],
-.theme-light .bg-white\/\[0\.05\] {
-  background-color: rgba(15, 23, 42, 0.04) !important;
-}
-
-/* Cards & Pills Background */
-.theme-light .bg-slate-800\/80,
-.theme-light .bg-slate-800\/50,
-.theme-light .bg-slate-800\/30,
-.theme-light .bg-slate-900\/60 {
-  background-color: rgba(15, 23, 42, 0.06) !important;
-}
-
-/* Light Mode Border Overrides */
-.theme-light .border-white\/10,
-.theme-light .border-white\/15,
-.theme-light .border-white\/5,
-.theme-light .border-white\/\[0\.02\],
-.theme-light .border-slate-800,
-.theme-light .border-slate-700\/50,
-.theme-light .border-slate-700,
-.theme-light .border-slate-600\/50,
-.theme-light .border-slate-600 {
-  border-color: rgba(15, 23, 42, 0.12) !important;
-}
-
-/* Light Mode Gradient Overrides */
-.theme-light .from-slate-900 {
-  --tw-gradient-from: #ffffff var(--tw-gradient-from-position) !important;
-  --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important;
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
-}
-
-.theme-aware-panel {
-  transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
-}
-
-.theme-light .theme-aware-panel {
-  background-color: rgba(255, 255, 255, 0.9) !important;
-  border-color: rgba(15, 23, 42, 0.1) !important;
-  box-shadow: 0 20px 80px rgba(15, 23, 42, 0.15) !important;
-  color: #0f172a !important;
-}
-
-.theme-light .resume-button:hover {
-  color: #0f172a !important;
-  border-color: rgba(15, 23, 42, 0.2) !important;
-  background-color: rgba(15, 23, 42, 0.05);
-}
-
-.achievement-pill {
-  border: 1px solid rgba(251, 191, 36, 0.4);
-  background-color: rgba(251, 191, 36, 0.12);
-  color: #fde68a;
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-}
-
-.achievement-pill span {
-  color: inherit;
-}
-
-.theme-light .achievement-pill {
-  background-color: rgba(251, 191, 36, 0.22);
-  border-color: rgba(217, 119, 6, 0.5);
-  color: #92400e;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
-}
-
-.theme-transition {
-  position: relative;
-  overflow: hidden;
-}
-
+/* Radial reveal played once when the theme toggle is pressed.
+   Fixed (not absolute) so the page root needs no overflow clipping, which
+   would turn it into a scroll container and break the sticky header. */
 .theme-transition::after {
   content: "";
-  position: absolute;
+  position: fixed;
   width: 200vmax;
   height: 200vmax;
   border-radius: 50%;
   pointer-events: none;
-  background: inherit;
-  z-index: 1;
+  z-index: 50;
   opacity: 0;
   top: var(--transition-origin-y, 50%);
   left: var(--transition-origin-x, 50%);
@@ -245,16 +46,15 @@ body::after {
 }
 
 .theme-transition.theme-dark::after {
-  background: radial-gradient(circle, rgba(15, 23, 42, 0.95), transparent 65%);
+  background: radial-gradient(circle, rgba(11, 17, 32, 0.95), transparent 65%);
 }
 
 .theme-transition.theme-light::after {
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.95), transparent 70%);
+  background: radial-gradient(circle, rgba(248, 250, 252, 0.95), transparent 70%);
 }
 
 .theme-transition.theme-transition-active::after {
-  opacity: 1;
-  animation: ripple-spread 0.8s ease forwards;
+  animation: ripple-spread 0.7s ease forwards;
 }
 
 @keyframes ripple-spread {

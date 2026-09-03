@@ -1,23 +1,25 @@
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { render, screen } from "@testing-library/react";
 import Projects from "../Projects";
 
-describe("Projects page", () => {
-  it("renders project cards and opens modal with build notes", () => {
-    render(
-      <MemoryRouter>
-        <Projects url="/assets/" />
-      </MemoryRouter>,
+describe("Projects", () => {
+  it("features WanderGenie and Taco-DB with their details inline", () => {
+    render(<Projects />);
+
+    expect(screen.getByRole("heading", { name: "WanderGenie" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Taco-DB" })).toBeInTheDocument();
+    expect(screen.getAllByText("Architecture")).toHaveLength(2);
+    expect(screen.getAllByRole("link", { name: /github/i })[0]).toHaveAttribute(
+      "href",
+      "https://github.com/arpitsharma2010/WanderGenie-ai-travel-assistant",
     );
+  });
 
-    expect(screen.getByText(/WanderGenie/i)).toBeInTheDocument();
+  it("lists the secondary projects", () => {
+    render(<Projects />);
 
-    const viewButtons = screen.getAllByRole("button", { name: /Build notes/i });
-    fireEvent.click(viewButtons[0]);
-
-    expect(screen.getByText(/Timeline:/i)).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "✕" }));
-    expect(screen.queryByText(/Timeline:/i)).not.toBeInTheDocument();
+    expect(screen.getByText("Pintos Kernel")).toBeInTheDocument();
+    expect(screen.getByText("16-bit RISC-style CPU")).toBeInTheDocument();
+    expect(screen.getByText("Crop Yield Prediction")).toBeInTheDocument();
+    expect(screen.getByText("Library Management System")).toBeInTheDocument();
   });
 });

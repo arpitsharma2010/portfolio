@@ -1,357 +1,226 @@
-import React, { useState } from "react";
-import { FiArrowUpRight, FiGithub, FiTarget, FiX } from "react-icons/fi";
+import React from "react";
+import { FiExternalLink } from "react-icons/fi";
 import PageSection from "../common/PageSection.tsx";
-import SEO from "../utils/SEO.tsx";
+import { ASSET_BASE } from "../../utils/constants";
 
-interface ProjectsProps {
-  url: string;
-}
+type Link = { label: string; url: string };
 
-const Projects: React.FC<ProjectsProps> = ({ url }) => {
-  const [expandedProject, setExpandedProject] = useState<number | null>(null);
+type Featured = {
+  title: string;
+  tagline: string;
+  image?: string;
+  built: string;
+  architecture: string;
+  challenge: string;
+  stack: string[];
+  links: Link[];
+};
 
-  const projects = [
-    {
-      title: "Tesserae V6: Intertextual Analysis Tool",
-      image: `${url}developer_image.jpg`,
-      description:
-        "A sophisticated web-based intertextual analysis platform where I drove the implementation of complex administrative, structural, and robust security features across the Flask/React stack.",
-      timeline: "Feb 2026 - Present",
-      details: [
-        "Contributed to Tesserae V6, an advanced intertextual analysis platform empowering historical scholars to identify textual parallels across massive literary datasets using 9 distinct search channels.",
-        "Engineered the core backend security architecture from the ground up, implementing rigorous rate limiting algorithms, intelligent threat lockouts, and role-based access control (RBAC).",
-        "Refactored complex administrative workflows, integrating scalable request status filtering and strict language code normalization to streamline global text corpus management.",
-        "Enhanced the full-stack user experience by dynamically preserving volatile search states and rigorously validating frontend form submissions, directly improving researcher productivity.",
-      ],
-      techStack: ["React 18", "Flask", "PostgreSQL", "Tailwind CSS", "Python", "Git", "GitHub", "Code Review", "Pull Requests"],
-      repos: [
-        { label: "Web App", url: "https://tesserae.caset.buffalo.edu/" },
-        { label: "GitHub", url: "https://github.com/tesserae/tesserae-v6" },
-      ],
-    },
-    {
-      title: "WanderGenie: AI-Powered Travel Assistant",
-      image: `${url}Project/WanderGenie.jpeg`,
-      description:
-        "An advanced multi-agent conversational AI system rapidly prototyped to automatically generate and validate dynamically bookable 5-day itineraries in under 15 seconds.",
-      timeline: "Nov 2025",
-      details: [
-        "Architected a complex multi-agent LangGraph workflow featuring specialized Planner, Researcher, and Validator agents with deterministic fallback strategies to completely eliminate infinite generation loops.",
-        "Engineered a high-performance dual-database retrieval architecture combining Supabase VectorDB for RAG and Neo4j GraphDB for spatial clustering, reducing overall query latency by ~40%.",
-        "Implemented a robust Validator-Corrector pattern using Pydantic to strictly enforce JSON schema validation, automatically rectifying malformed LLM outputs to guarantee valid booking coordinates.",
-        "Built a scalable FastAPI backend coupled with a React frontend utilizing streaming architecture for real-time AI status updates and interactive Mapbox visualization.",
-      ],
-      techStack: [
-        "React",
-        "TypeScript",
-        "FastAPI",
-        "Python",
-        "LangGraph",
-        "Neo4j",
-        "Supabase",
-        "Pydantic",
-        "OpenTripMap API",
-        "Mapbox",
-      ],
-      repos: [
-        { label: "GitHub", url: "https://github.com/arpitsharma2010/WanderGenie-ai-travel-assistant" },
-        { label: "DevPost", url: "https://devpost.com/software/wandergenie-ai-travel-assistant" },
-      ],
-    },
-    {
-      title: "Pintos Kernel OS Development",
-      image: `${url}developer_image.jpg`,
-      description:
-        "Architected core kernel components for an 80x86 instructional operating system, successfully engineering multi-threaded synchronization, memory security, and user program execution.",
-      timeline: "Jan 2025 – May 2025",
-      details: [
-        "Engineered a sophisticated priority-based scheduler utilizing nested priority donation to completely prevent priority inversion, alongside a Multi-Level Feedback Queue (MLFQ) for optimal CPU fairness.",
-        "Built a highly robust system call interface enforcing safe user-to-kernel context switching, handling complex argument passing directly via the 80x86 stack.",
-        "Implemented a secure memory validation layer and rigorous process synchronization via semaphores, eliminating all deadlocks and kernel panics from malformed inputs.",
-        "Achieved a 95%+ pass rate across 200+ comprehensive regression tests, heavily utilizing GDB core dump analysis to debug complex, non-deterministic kernel race conditions.",
-      ],
-      techStack: ["C", "x86 Assembly", "GDB", "Operating Systems", "Makefile"],
-    },
-    {
-      title: "TacoDB: Mini Relational Database Management System",
-      image: `${url}developer_image.jpg`,
-      description:
-        "Functional mini-RDBMS built from scratch in C++, implementing the full stack from a POSIX-based disk I/O space manager to an iterator-based Volcano Model query execution engine.",
-      timeline: "Aug 2025 – Nov 2025",
-      details: [
-        "Built a Buffer Pool Manager utilizing LRU/Clock algorithms and RAII patterns for safe page unpinning, effectively preventing memory leaks and deadlocks.",
-        "Developed a Slotted-Page storage layer with in-page compaction to maximize space utilization by eliminating internal fragmentation for variable-length records.",
-        "Engineered a B+ Tree index supporting efficient O(log N) lookups and range scans, utilizing custom visualization tools to debug complex node invariants during splits and merges.",
-        "Designed an iterator-based Volcano Model execution engine with SeqScan, Filter, and Join operators, transitioning from O(N × M) Nested Loop to O(N + M) Hash Joins for a ~10x speedup.",
-      ],
-      techStack: ["C++", "RDBMS", "B+ Tree", "Volcano Model", "Buffer Pool", "POSIX I/O"],
-    },
-    {
-      title: "16-Bit RISC-style CPU",
-      image: `${url}Project/Microprocessor.png`,
-      description:
-        "Designed and implemented a custom 16-bit single-cycle RISC-style processor from scratch using Verilog, successfully validating a 10-instruction ISA on a Basys3 FPGA.",
-      timeline: "Feb 2025 – Apr 2025",
-      details: [
-        "Architected a custom 16-bit ISA with R, I, and J-type instructions, building modular datapath components including an ALU, dual-read Register File, and separated Control Unit.",
-        "Implemented a synchronized two-button execution mechanism to prevent mechanical bounce, allowing real-time debugging of registers and ALU states directly on the FPGA's 7-segment display.",
-        "Engineered precise shift-left and sign-extension logic to accurately compute branch targets for memory and control flow operations (LW, SW, BEQ, BNE, JMP).",
-        "Validated the hardware design via a comprehensive Vivado testbench simulating 40+ execution cycles before successfully flashing and testing on the Artix-7 FPGA.",
-      ],
-      techStack: ["Verilog", "Xilinx Vivado", "Basys3 FPGA", "Artix-7", "ISA Design", "Digital Logic"],
-      repos: [{ label: "GitHub", url: "https://github.com/arpitsharma2010/micro16-fpga-core" }],
-    },
-    {
-      title: "Crop Yield Prediction System",
-      image: `${url}Project/CropYieldMainpage.jpeg`,
-      description:
-        "End-to-end machine learning system that transforms raw environmental agricultural data into actionable real-time crop yield predictions for non-technical users.",
-      timeline: "Sep 2024 – Nov 2024",
-      details: [
-        "Analyzed environmental data (rainfall, temperature, etc.) using Matplotlib/Seaborn for EDA, and scaled the data pipeline to handle large datasets using PySpark and Spark SQL.",
-        "Engineered robust features by applying One-Hot Encoding for categorical variables and Standard Scaling for numerical parameters, avoiding the memory limits of single machines.",
-        "Evaluated multiple models using K-Fold Cross-Validation (R2, MSE, MAE) and serialized the most accurate Random Forest and XGBoost models using Joblib.",
-        "Built and deployed a Flask API backed by HTML/CSS serving the PySpark pipeline, allowing seamless and real-time inference in a user-facing web application.",
-      ],
-      techStack: ["Python", "Flask", "PySpark", "Spark MLlib", "Pandas", "Scikit-learn", "Random Forest", "XGBoost"],
-      repos: [{ label: "GitHub", url: "https://github.com/arpitsharma2010/Crop-Yield-Prediction" }],
-    },
-    {
-      title: "Portfolio Website",
-      image: `${url}Project/Portfolio.png`,
-      description:
-        "Personal portfolio built with React + TypeScript and Tailwind to showcase projects, experience and research updates in a modular, component-driven structure.",
-      timeline: "Feb 2025 – Present",
-      details: [
-        "Defined reusable layout primitives (PageSection, ModuleCard) so sections such as Home, Skills and Projects can evolve without rewriting layout glue.",
-        "Integrated GitHub Pages deployment for fast iteration and a custom theme hook that honors OS preference before storing manual overrides.",
-        "Continuously extends sections experience timelines, resume-aligned stats, formal palettes based on recruiter and mentor feedback.",
-      ],
-      techStack: ["React", "TypeScript", "Tailwind CSS", "GitHub Pages"],
-      repos: [{ label: "Repository", url: "https://github.com/arpitsharma2010/Portfolio" }],
-    },
-    {
-      title: "Library Management System",
-      image: `${url}Project/LibraryMainPage.png`,
-      description:
-        "Full-stack system using React (TypeScript) and Spring Boot that offers secure authentication, admin workflows and real-time book tracking for faculty and students.",
-      timeline: "Dec 2024 – Feb 2025",
-      details: [
-        "Implemented JWT + OAuth-backed authentication with role-based dashboards for admins and borrowers.",
-        "Admins can add/update/remove inventory, respond to queries and monitor borrowing activity while users extend loans, rate books and request purchases.",
-        "Optimized SQL schema and caching to keep catalog queries responsive even during exam-season spikes.",
-      ],
-      techStack: ["React", "Spring Boot", "Java", "SQL", "OAuth2", "JWT"],
-      repos: [
-        { label: "Web App", url: "https://github.com/arpitsharma2010/react-library-project" },
-        { label: "API", url: "https://github.com/arpitsharma2010/spring-boot-library" },
-      ],
-    },
-    {
-      title: "Automated Timetable Generation",
-      image: `${url}developer_image.jpg`,
-      description:
-        "Scheduling tool using PHP, MySQL and Bootstrap for universities to assign faculty, avoid clashes and let professors manage their availability digitally.",
-      timeline: "Jan 2020 – Apr 2020",
-      details: [
-        "Designed professor availability forms and admin dashboards so stakeholders could update slots without spreadsheets.",
-        "Built conflict-detection logic in PHP with MySQL transactions to ensure classrooms and faculty were not double booked.",
-        "Exported finalized schedules to printable templates and email notifications, reducing manual effort for department coordinators.",
-      ],
-      techStack: ["PHP", "MySQL", "Bootstrap", "JavaScript"],
-    },
-  ];
+const featured: Featured[] = [
+  {
+    title: "WanderGenie",
+    tagline: "Multi-agent LLM travel assistant",
+    image: `${ASSET_BASE}Project/WanderGenie.jpeg`,
+    built:
+      "A travel assistant that plans a trip by reasoning over real data instead of improvising an answer from the model's weights alone.",
+    architecture:
+      "Three specialised agents coordinated with LangGraph, orchestrating four external tools and APIs across multi-step workflows. Retrieval is hybrid: pgvector for semantic similarity over embeddings, Neo4j for the relationships between places, combined with live external travel data before any recommendation is generated. Packaged with Docker and deployed on AWS.",
+    challenge:
+      "Multi-agent graphs fail by looping — one agent hands work to another and the pair never terminates. Constraining the graph so each step either makes progress or hands back a deterministic fallback was the real engineering problem, not the prompting.",
+    stack: [
+      "Python",
+      "LangGraph",
+      "OpenAI APIs",
+      "pgvector",
+      "Neo4j",
+      "Embeddings",
+      "Hybrid RAG",
+      "Docker",
+      "AWS",
+    ],
+    links: [
+      { label: "GitHub", url: "https://github.com/arpitsharma2010/WanderGenie-ai-travel-assistant" },
+      { label: "DevPost", url: "https://devpost.com/software/wandergenie-ai-travel-assistant" },
+    ],
+  },
+  {
+    title: "Taco-DB",
+    tagline: "Relational database system in C++",
+    built:
+      "A working relational database engine written from scratch in C++ — storage, indexing and query execution, not a wrapper over an existing one.",
+    architecture:
+      "Disk-based storage with a buffer pool for caching pages in memory, a B+ Tree index for record retrieval and updates, and a Volcano-style iterator execution engine. Ordering and joins are handled by external merge sort and hash joins, so datasets larger than memory still process.",
+    challenge:
+      "Replacing nested-loop joins with hash joins and sorting externally rather than in memory produced up to a 10x query-processing improvement on large datasets. The gain came from the algorithms and the I/O pattern, which is the whole argument for understanding the layer underneath the query.",
+    stack: [
+      "C++",
+      "B+ Tree",
+      "Buffer Pool",
+      "Volcano Model",
+      "External Merge Sort",
+      "Hash Joins",
+      "POSIX I/O",
+    ],
+    links: [],
+  },
+];
 
-  const pageUrl = `${url}projects/`;
-  const seoDescription =
-    "Highlighted projects from Arpit Sharma covering AI travel planning, FPGA processors, machine learning pipelines, and this portfolio.";
+const alsoBuilt = [
+  {
+    title: "Pintos Kernel",
+    description:
+      "Kernel components for an 80x86 instructional OS: a priority scheduler with donation, a system-call interface with user-memory validation, and semaphore-based process synchronisation.",
+    stack: ["C", "x86 Assembly", "GDB"],
+    links: [] as Link[],
+  },
+  {
+    title: "16-bit RISC-style CPU",
+    description:
+      "A single-cycle 16-bit processor in Verilog — custom ISA, ALU, register file and control unit — validated in simulation and then flashed to a Basys3 FPGA.",
+    stack: ["Verilog", "Vivado", "FPGA"],
+    links: [{ label: "GitHub", url: "https://github.com/arpitsharma2010/micro16-fpga-core" }],
+  },
+  {
+    title: "Crop Yield Prediction",
+    description:
+      "End-to-end ML pipeline over environmental data, scaled with PySpark and served for real-time inference behind a Flask API.",
+    stack: ["Python", "PySpark", "Scikit-learn", "Flask"],
+    links: [{ label: "GitHub", url: "https://github.com/arpitsharma2010/Crop-Yield-Prediction" }],
+  },
+  {
+    title: "Library Management System",
+    description:
+      "Full-stack system with JWT/OAuth authentication and role-based dashboards for administrators and borrowers.",
+    stack: ["Java", "Spring Boot", "React", "SQL"],
+    links: [
+      { label: "Frontend", url: "https://github.com/arpitsharma2010/react-library-project" },
+      { label: "API", url: "https://github.com/arpitsharma2010/spring-boot-library" },
+    ],
+  },
+];
 
-  return (
-    <>
-      <SEO
-        title="Projects | Arpit Sharma"
-        description={seoDescription}
-        keywords={[
-          "Arpit Sharma projects",
-          "AI travel assistant",
-          "FPGA processor project",
-          "Machine learning crop yield",
-          "React portfolio project",
-        ]}
-        image={`${url}Project/Portfolio.png`}
-        url={pageUrl}
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "ItemList",
-          name: "Highlighted Projects - Arpit Sharma",
-          numberOfItems: projects.length,
-          itemListElement: projects.map((project, index) => ({
-            "@type": "ListItem",
-            position: index + 1,
-            item: {
-              "@type": "CreativeWork",
-              name: project.title,
-              description: project.description,
-              url: pageUrl,
-              image: project.image,
-            },
-          })),
-        }}
-      />
-      <div className="flex flex-col gap-12 pb-12 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <PageSection
-          eyebrow="Case studies & builds"
-          title="Projects"
-          description="A curated selection of my work ranging from AI copilots to FPGA research. Different canvases, driven by the same engineering discipline."
-          align="left"
+const linkClass =
+  "inline-flex items-center gap-1.5 text-sm font-semibold text-blue-700 underline-offset-4 hover:underline dark:text-sky-400";
+
+const stackList = (stack: string[]) => (
+  <ul className="flex flex-wrap gap-2">
+    {stack.map((tech) => (
+      <li
+        key={tech}
+        className="rounded border border-slate-200 bg-slate-50 px-2 py-1 font-mono text-xs text-slate-600 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-400"
+      >
+        {tech}
+      </li>
+    ))}
+  </ul>
+);
+
+const Detail: React.FC<{ label: string; children: React.ReactNode }> = ({ label, children }) => (
+  <div>
+    <p className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500">
+      {label}
+    </p>
+    <p className="mt-1.5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">{children}</p>
+  </div>
+);
+
+const Projects: React.FC = () => (
+  <PageSection
+    eyebrow="Projects"
+    title="Selected projects"
+    description="Two builds that show how I approach architecture, plus the systems and ML work behind them."
+  >
+    <div className="flex flex-col gap-8">
+      {featured.map((project) => (
+        <article
+          key={project.title}
+          className="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900/40"
         >
-          <div className="grid gap-8 lg:grid-cols-2 mt-4 xl:gap-10">
-            {projects.map((project, index) => (
-              <article
-                key={project.title}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-slate-800 bg-white/[0.015] shadow-sm transition-all hover:border-slate-600 hover:shadow-md h-full"
-              >
-                <div className="relative h-56 w-full overflow-hidden border-b border-slate-800 shrink-0">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80" />
-                  <div className="absolute left-4 top-4 rounded-md border border-slate-600/50 bg-slate-900/60 px-3 py-1 text-[10px] font-mono uppercase tracking-widest text-slate-200 backdrop-blur-md shadow-sm">
-                    {project.timeline}
-                  </div>
-                </div>
-                
-                <div className="relative flex flex-col flex-grow p-6 sm:p-8">
-                  <h3 className="text-2xl font-bold text-slate-100 mb-3">{project.title}</h3>
-                  <p className="text-[15px] leading-relaxed text-slate-400 mb-6 flex-grow">{project.description}</p>
-
-                  <div className="flex flex-wrap gap-2 mb-8">
-                    {project.techStack.slice(0, 4).map((tech) => (
-                      <span
-                        key={tech}
-                        className="rounded-md bg-slate-800/80 px-2.5 py-1 text-xs font-medium text-slate-300 border border-slate-700/50"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                    {project.techStack.length > 4 && (
-                      <span className="rounded-md bg-slate-800/30 border border-slate-700 px-2.5 py-1 text-xs font-mono text-slate-400">
-                        +{project.techStack.length - 4}
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-slate-800">
-                    <div className="flex flex-wrap gap-3">
-                      {(project.repos ?? []).map((repo) => (
-                        <a
-                          key={repo.url}
-                          href={repo.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-brand-sapphire transition-colors"
-                        >
-                          <FiGithub /> {repo.label}
-                        </a>
-                      ))}
-                    </div>
-
-                    <button
-                      className="inline-flex items-center gap-2 rounded-lg bg-slate-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-slate-200 transition-colors hover:bg-slate-700"
-                      onClick={() => setExpandedProject(index)}
-                    >
-                      Details <FiArrowUpRight />
-                    </button>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </PageSection>
-
-        {expandedProject !== null && (
-          <div
-            className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm lg:pl-[22rem]"
-            onClick={() => setExpandedProject(null)}
-          >
-            <div
-              className="relative flex max-h-[90vh] w-full max-w-4xl flex-col overflow-y-auto rounded-2xl border border-slate-700 bg-slate-900 p-8 text-slate-200 shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                className="absolute top-6 right-6 rounded-lg p-2 text-slate-400 hover:bg-slate-800 hover:text-white transition-colors"
-                onClick={() => setExpandedProject(null)}
-                aria-label="Close modal"
-              >
-                <FiX size={24} />
-              </button>
-
-              <div className="h-48 sm:h-64 mb-6 -mx-8 -mt-8 overflow-hidden rounded-t-2xl border-b border-slate-700 relative">
-                <img
-                  src={projects[expandedProject].image}
-                  alt={projects[expandedProject].title}
-                  className="h-full w-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
-              </div>
-              
-              <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-100 pr-10">{projects[expandedProject].title}</h3>
-              <p className="mt-3 text-sm font-mono tracking-widest text-slate-400 uppercase">
-                {projects[expandedProject].timeline}
+          {project.image && (
+            <img
+              src={project.image}
+              alt={`${project.title} interface`}
+              className="h-44 w-full border-b border-slate-200 object-cover dark:border-slate-800 sm:h-56"
+              loading="lazy"
+            />
+          )}
+          <div className="flex flex-col gap-5 p-6 sm:p-7">
+            <div>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100">
+                {project.title}
+              </h3>
+              <p className="mt-1 text-sm font-medium text-blue-700 dark:text-sky-400">
+                {project.tagline}
               </p>
-              
-              <p className="mt-6 text-[15px] leading-relaxed text-slate-300 border-l-2 border-brand-sapphire pl-4">
-                {projects[expandedProject].description}
+              <p className="mt-3 text-base leading-relaxed text-slate-600 dark:text-slate-400">
+                {project.built}
               </p>
+            </div>
 
-              <ul className="mt-8 space-y-4">
-                {projects[expandedProject].details.map((point) => (
-                  <li
-                    key={point}
-                    className="flex items-start gap-4 text-[15px] text-slate-300 leading-relaxed"
-                  >
-                    <FiTarget className="mt-1 shrink-0 text-brand-sapphire" size={18} />
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
+            <div className="flex flex-col gap-4 border-t border-slate-200 pt-5 dark:border-slate-800">
+              <Detail label="Architecture">{project.architecture}</Detail>
+              <Detail label="Engineering challenge">{project.challenge}</Detail>
+            </div>
 
-              <div className="mt-10 pt-8 border-t border-slate-800">
-                <p className="text-xs uppercase tracking-widest font-mono text-slate-500 mb-4">Tech Stack</p>
-                <div className="flex flex-wrap gap-2">
-                  {projects[expandedProject].techStack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="rounded-md bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-slate-300 border border-slate-700/80"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
+            {stackList(project.stack)}
 
-              <div className="mt-8 flex flex-wrap gap-4">
-                {(projects[expandedProject].repos ?? []).map((repo) => (
+            {project.links.length > 0 && (
+              <div className="flex flex-wrap gap-5">
+                {project.links.map((link) => (
                   <a
-                    key={repo.url}
-                    href={repo.url}
+                    key={link.url}
+                    href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 rounded-lg bg-brand-sapphire px-5 py-2.5 text-sm font-semibold text-white shadow hover:bg-blue-700 transition-colors"
+                    className={linkClass}
                   >
-                    <FiGithub /> {repo.label}
+                    {link.label} <FiExternalLink aria-hidden />
                   </a>
                 ))}
               </div>
-            </div>
+            )}
           </div>
-        )}
+        </article>
+      ))}
+
+      <div className="flex flex-col gap-4">
+        <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500">
+          Also built
+        </h3>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {alsoBuilt.map((project) => (
+            <article
+              key={project.title}
+              className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40"
+            >
+              <h4 className="text-base font-bold text-slate-900 dark:text-slate-100">
+                {project.title}
+              </h4>
+              <p className="flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                {project.description}
+              </p>
+              {stackList(project.stack)}
+              {project.links.length > 0 && (
+                <div className="flex flex-wrap gap-4">
+                  {project.links.map((link) => (
+                    <a
+                      key={link.url}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={linkClass}
+                    >
+                      {link.label} <FiExternalLink aria-hidden />
+                    </a>
+                  ))}
+                </div>
+              )}
+            </article>
+          ))}
+        </div>
       </div>
-    </>
-  );
-};
+    </div>
+  </PageSection>
+);
 
 export default Projects;

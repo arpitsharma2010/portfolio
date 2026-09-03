@@ -68,14 +68,7 @@ const usePreferredTheme = () => {
     }
   }, []);
 
-  const resetToSystem = useCallback(() => {
-    if (typeof window === "undefined") return;
-    setIsUserChoice(false);
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setTheme(prefersDark ? "dark" : "light");
-  }, []);
-
-  return { theme, setTheme, toggleTheme, resetToSystem, transitionOrigin };
+  return { theme, toggleTheme, transitionOrigin };
 };
 
 export default usePreferredTheme;

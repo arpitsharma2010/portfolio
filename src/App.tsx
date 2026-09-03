@@ -1,95 +1,52 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import MainLayout from "./MainLayout.tsx";
 import Home from "./components/pages/Home.tsx";
-import Skills from "./components/pages/Skills.tsx";
-import Projects from "./components/pages/Projects.tsx";
-import Education from "./components/pages/Education.tsx";
 import Experience from "./components/pages/Experience.tsx";
-import Certifications from "./components/pages/Certifications.tsx";
+import Projects from "./components/pages/Projects.tsx";
+import Skills from "./components/pages/Skills.tsx";
+import About from "./components/pages/About.tsx";
+import Education from "./components/pages/Education.tsx";
 import Contact from "./components/pages/Contact.tsx";
 import usePreferredTheme from "./hooks/usePreferredTheme.ts";
-import { initAnalytics, trackPageView } from "./utils/analytics.ts";
-
-const BASE_URL = "https://arpitsharma2010.github.io/portfolio/";
-
-type AnalyticsTrackerProps = {
-  children: React.ReactNode;
-};
-
-const AnalyticsTracker: React.FC<AnalyticsTrackerProps> = ({ children }) => {
-  const location = useLocation();
-
-  useEffect(() => {
-    const path = `${location.pathname}${location.search}${location.hash}`;
-    initAnalytics();
-    trackPageView(path || "/");
-  }, [location.pathname, location.search, location.hash]);
-
-  return <>{children}</>;
-};
-
-const Divider = () => (
-  <div className="w-full flex justify-center py-16 lg:py-24 opacity-60">
-    <div className="h-px w-full max-w-4xl bg-gradient-to-r from-transparent via-brand-sapphire/40 to-transparent" />
-  </div>
-);
-
-const PortfolioSPA = ({ url }: { url: string }) => {
-  return (
-    <div className="flex flex-col w-full scroll-smooth">
-      <section id="home" className="scroll-mt-24 min-h-[90vh] flex flex-col justify-center">
-        <Home url={url} />
-      </section>
-      <Divider />
-      
-      <section id="skills" className="scroll-mt-24 min-h-[80vh] flex flex-col justify-center">
-        <Skills url={url} />
-      </section>
-      <Divider />
-      
-      <section id="projects" className="scroll-mt-24 min-h-[80vh]">
-        <Projects url={url} />
-      </section>
-      <Divider />
-      
-      <section id="education" className="scroll-mt-24 min-h-[60vh] flex flex-col justify-center">
-        <Education url={url} />
-      </section>
-      <Divider />
-      
-      <section id="experience" className="scroll-mt-24 min-h-[80vh]">
-        <Experience url={url} />
-      </section>
-      <Divider />
-      
-      <section id="certifications" className="scroll-mt-24 min-h-[60vh] flex flex-col justify-center">
-        <Certifications url={url} />
-      </section>
-      <Divider />
-      
-      <section id="contact" className="scroll-mt-24 min-h-[70vh] flex flex-col justify-center">
-        <Contact url={url} />
-      </section>
-    </div>
-  );
-};
+import { initAnalytics } from "./utils/analytics.ts";
 
 const App: React.FC = () => {
   const { theme, toggleTheme, transitionOrigin } = usePreferredTheme();
 
+  useEffect(() => {
+    initAnalytics();
+  }, []);
+
   return (
-    <div className={theme}>
-      <Router>
-        <AnalyticsTracker>
-          <MainLayout url={BASE_URL} theme={theme} onThemeToggle={toggleTheme} transitionOrigin={transitionOrigin ?? undefined}>
-            <Routes>
-              <Route path="*" element={<PortfolioSPA url={BASE_URL} />} />
-            </Routes>
-          </MainLayout>
-        </AnalyticsTracker>
-      </Router>
-    </div>
+    <MainLayout
+      theme={theme}
+      onThemeToggle={toggleTheme}
+      transitionOrigin={transitionOrigin ?? undefined}
+    >
+      <div className="flex flex-col gap-20 sm:gap-28">
+        <section id="home" className="scroll-mt-20">
+          <Home />
+        </section>
+        <section id="experience" className="scroll-mt-20">
+          <Experience />
+        </section>
+        <section id="projects" className="scroll-mt-20">
+          <Projects />
+        </section>
+        <section id="skills" className="scroll-mt-20">
+          <Skills />
+        </section>
+        <section id="about" className="scroll-mt-20">
+          <About />
+        </section>
+        <section id="education" className="scroll-mt-20">
+          <Education />
+        </section>
+        <section id="contact" className="scroll-mt-20">
+          <Contact />
+        </section>
+      </div>
+    </MainLayout>
   );
 };
 

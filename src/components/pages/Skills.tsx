@@ -1,138 +1,104 @@
 import React from "react";
 import PageSection from "../common/PageSection.tsx";
-import SEO from "../utils/SEO.tsx";
 
-const skillGroups = [
+const groups = [
   {
-    title: "Languages & Systems",
-    description:
-      "C#, Java, Go, Python, JavaScript (ES6+), C, C++, SQL, PHP, HTML5/CSS3 and Verilog form the backbone of my .NET Core, gRPC and WebSocket services, browser interfaces, data engineering utilities and FPGA designs.",
-    tools: ["C#", "Java", "Go", "Python", "JavaScript (ES6+)", "C", "C++", "SQL", "PHP", "HTML5/CSS3", "Verilog"],
+    title: "Languages",
+    items: ["C#", "Python", "TypeScript", "JavaScript", "Java", "C++"],
   },
   {
-    title: "Frameworks & Libraries",
-    description:
-      ".NET Core with Entity Framework powers savings and investment services, while gRPC, WebSocket servers, Spring Boot, ReactJS, Flask, FastAPI, PyTorch and Bootstrap help me deliver realtime APIs, ML prototypes and internal portals with consistent coding standards.",
-    tools: [".NET Core", "Entity Framework", "gRPC", "WebSocket", "Spring Boot", "ReactJS", "Flask", "FastAPI", "PyTorch", "Bootstrap"],
+    title: "Backend & Full Stack",
+    items: [
+      ".NET Core",
+      "Entity Framework",
+      "Flask",
+      "Node.js",
+      "Next.js",
+      "React",
+      "REST APIs",
+      "Microservices",
+    ],
+  },
+  {
+    title: "Data & AI",
+    items: [
+      "PostgreSQL",
+      "DynamoDB",
+      "Supabase",
+      "pgvector",
+      "Neo4j",
+      "LangGraph",
+      "RAG",
+      "OpenAI APIs",
+      "Embeddings",
+    ],
   },
   {
     title: "Cloud & DevOps",
-    description:
-      "AWS Lambda, API Gateway, DynamoDB, S3 and CloudWatch host production workloads; Terraform, Docker, Jenkins and GitLab CI/CD automate the path from pull request to deployment with controlled rollbacks and observability baked in.",
-    tools: [
-      "AWS Lambda",
-      "API Gateway",
-      "DynamoDB",
+    items: [
+      "AWS",
+      "ECS",
       "S3",
+      "Lambda",
+      "SQS",
+      "SNS",
       "CloudWatch",
-      "Terraform",
       "Docker",
-      "Jenkins",
+      "Kubernetes",
+      "Terraform",
       "GitLab CI/CD",
     ],
   },
   {
-    title: "Testing, Security & Data",
-    description:
-      "JUnit, NUnit and Moq keep business logic regression-free; Swagger/OpenAPI, OAuth2, Postman, SonarQube, MySQL, Pandas, PySpark and Scikit-learn ensure every API contract, data pipeline and ML model is traceable and validated.",
-    tools: [
-      "JUnit",
+    title: "Security & Engineering",
+    items: [
+      "OAuth 2.0",
+      "PKCE",
+      "JWT",
+      "RBAC",
+      "Rate Limiting",
+      "Caching",
+      "Contract Testing",
       "NUnit",
-      "Moq",
-      "Swagger/OpenAPI",
-      "OAuth2",
-      "Postman",
-      "SonarQube",
-      "MySQL",
-      "Pandas",
-      "PySpark",
-      "Scikit-learn",
+      "Pytest",
+      "Git",
     ],
   },
   {
-    title: "Workflow & Collaboration",
-    description:
-      "Git (distributed), Jira, Confluence, Agile/Scrum cadences and RESTful API design templates keep cross-functional teams aligned from planning through QA handoff.",
-    tools: ["Git", "Jira", "Confluence", "Agile/Scrum", "RESTful API Design"],
+    title: "AI-Assisted Development",
+    items: ["Claude Code", "Codex"],
   },
 ];
 
-interface SkillsProps {
-  url: string;
-}
-
-const Skills: React.FC<SkillsProps> = ({ url }) => {
-  const pageUrl = `${url}skills/`;
-  const description =
-    "Technical skill matrix covering languages, frameworks, cloud platforms and collaboration tooling Arpit Sharma uses to deliver banking and research software.";
-  const keywords = [
-    "Arpit Sharma skills",
-    ".NET Core skills",
-    "AWS expertise",
-    "GitLab CI/CD skills",
-    "Terraform automation skills",
-    "Software engineer resume skills",
-  ];
-
-  return (
-    <>
-      <SEO
-        title="Skills | Arpit Sharma"
-        description={description}
-        keywords={keywords}
-        image={`${url}arpit-sharma.jpg`}
-        url={pageUrl}
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "ItemList",
-          name: "Skillset - Arpit Sharma",
-          numberOfItems: skillGroups.length,
-          itemListElement: skillGroups.map((group, index) => ({
-            "@type": "ListItem",
-            position: index + 1,
-            item: {
-              "@type": "DefinedTerm",
-              name: group.title,
-              description: group.description,
-              alternateName: group.tools.join(", "),
-            },
-          })),
-        }}
-      />
-      <section className="flex flex-col gap-10 text-white">
-      <PageSection
-        eyebrow="Capability stack"
-        title="Skills from my resume"
-        description="Everything here is in my resume, pairing years of regulated delivery with the research and prototypes I’m actively building."
-      >
-        <div className="grid gap-6 md:grid-cols-2">
-          {skillGroups.map((group) => (
-            <article
-              key={group.title}
-              className="relative flex h-full flex-col gap-4 overflow-hidden rounded-[1.8rem] border border-white/10 bg-white/[0.04] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.45)]"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-plasma/10 via-transparent to-ion/10 opacity-60" aria-hidden />
-              <div className="relative">
-                <h3 className="mt-2 text-2xl font-semibold text-white">{group.title}</h3>
-                <p className="mt-2 text-sm text-slate-200">{group.description}</p>
-              </div>
-              <div className="relative flex flex-wrap gap-2">
-                {group.tools.map((tool) => (
-                  <span
-                    key={tool}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-text-mute"
-                  >
-                    {tool}
-                  </span>
-                ))}
-              </div>
-            </article>
-          ))}
+const Skills: React.FC = () => (
+  <PageSection
+    eyebrow="Capabilities"
+    title="Technical capabilities"
+    description="Grouped by what I use them for. The stack has changed with each role — C# and .NET at a bank, Python and Flask on a research platform, Node and TypeScript at a startup — because the fundamentals transfer."
+  >
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      {groups.map((group) => (
+        <div
+          key={group.title}
+          className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40"
+        >
+          <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-blue-700 dark:text-sky-400">
+            {group.title}
+          </h3>
+          <ul className="mt-4 flex flex-wrap gap-2">
+            {group.items.map((item) => (
+              <li
+                key={item}
+                className="rounded border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-300"
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
-      </PageSection>
-    </section>
-    </>
-  );
-};
+      ))}
+    </div>
+  </PageSection>
+);
 
 export default Skills;

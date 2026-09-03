@@ -1,234 +1,168 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
 import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
 import { FaMoon, FaSun } from "react-icons/fa";
-import { FiDownload } from "react-icons/fi";
-import SocialLinks from "../utils/SocialLinks.tsx";
+import { FiExternalLink } from "react-icons/fi";
+import { RESUME_URL, SHORT_NAME } from "../../utils/constants";
 import { trackPageView } from "../../utils/analytics.ts";
-import { RESUME_URL } from "../../utils/constants";
 
 interface HeaderProps {
-  url: string;
   theme: string;
   onThemeToggle: (origin?: { x: number; y: number }) => void;
 }
 
 const navLinks = [
-  { to: "home", label: "Home" },
-  { to: "skills", label: "Skills" },
-  { to: "projects", label: "Projects" },
-  { to: "education", label: "Education" },
-  { to: "experience", label: "Experience" },
-  { to: "certifications", label: "Certifications" },
-  { to: "contact", label: "Contact" },
+  { id: "home", label: "Home" },
+  { id: "experience", label: "Experience" },
+  { id: "projects", label: "Projects" },
+  { id: "skills", label: "Skills" },
+  { id: "about", label: "About" },
+  { id: "education", label: "Education" },
+  { id: "contact", label: "Contact" },
 ];
 
-const Header: React.FC<HeaderProps> = ({ url, theme, onThemeToggle }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const location = useLocation();
-  const isDarkMode = theme === "dark";
-  const resumePDF = RESUME_URL;
-
-  const [activeAttr, setActiveAttr] = useState("home");
+/** Marks the section currently closest to the top of the viewport. */
+const useActiveSection = () => {
+  const [active, setActive] = useState("home");
 
   useEffect(() => {
-    const handleScroll = () => {
-      // 1. Calculate overall scroll progress for the top bar
-      const totalHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = window.scrollY;
-      if (totalHeight > 0) {
-        setScrollProgress((scrolled / totalHeight) * 100);
-      }
+    const sections = navLinks
+      .map((link) => document.getElementById(link.id))
+      .filter((el): el is HTMLElement => el !== null);
 
-      // 2. Active nav link scroll spy
-      // Triggers as soon as a section enters the bottom 30% of the viewport.
-      const sections = document.querySelectorAll("section[id]");
-      let currentActiveId = "home";
-      
-      sections.forEach((section) => {
-        const sectionTop = (section as HTMLElement).offsetTop;
-        if (scrollY >= sectionTop - window.innerHeight * 0.7) {
-          currentActiveId = section.id;
+    if (!sections.length || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+        if (visible) {
+          setActive(visible.target.id);
         }
-      });
-      
-      setActiveAttr(currentActiveId);
-    };
+      },
+      { rootMargin: "-20% 0px -70% 0px" },
+    );
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // init
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
   }, []);
 
-  // Track SPA page views when section changes
-  useEffect(() => {
-    if (activeAttr) {
-      trackPageView(`/portfolio/#${activeAttr}`);
-    }
-  }, [activeAttr]);
+  return active;
+};
 
-  const ThemeButton = ({ className = "" }: { className?: string }) => (
+const Header: React.FC<HeaderProps> = ({ theme, onThemeToggle }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const active = useActiveSection();
+  const isDark = theme === "dark";
+
+  useEffect(() => {
+    trackPageView(`/portfolio/#${active}`);
+  }, [active]);
+
+  const handleNavClick = (event: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    event.preventDefault();
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.history.replaceState(null, "", `#${id}`);
+    setMenuOpen(false);
+  };
+
+  const navLinkClass = (id: string) =>
+    `rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+      active === id
+        ? "bg-blue-50 text-blue-700 dark:bg-sky-400/10 dark:text-sky-300"
+        : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+    }`;
+
+  const themeButton = (
     <button
+      type="button"
       onClick={(event) => {
         const rect = event.currentTarget.getBoundingClientRect();
-        const origin = {
-          x: rect.left + rect.width / 2 + window.scrollX,
-          y: rect.top + rect.height / 2 + window.scrollY,
-        };
-        onThemeToggle(origin);
+        onThemeToggle({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
         setMenuOpen(false);
       }}
-      className={`group flex items-center justify-center gap-3 rounded-xl border border-slate-700 bg-white/[0.02] px-4 py-3 text-sm font-semibold tracking-wide text-slate-300 transition-all hover:bg-white/[0.05] hover:text-white ${className}`}
-      aria-label={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
+      className="rounded-md border border-slate-200 p-2 text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+      aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
     >
-      {isDarkMode ? <FaSun className="text-amber-400 text-lg" /> : <FaMoon className="text-brand-sapphire text-lg" />}
-      <span className="hidden lg:block">{isDarkMode ? "Light Mode" : "Dark Mode"}</span>
+      {isDark ? <FaSun aria-hidden /> : <FaMoon aria-hidden />}
     </button>
   );
 
-  const renderNavLink = (
-    link: (typeof navLinks)[number],
-    onClick?: () => void,
-  ) => {
-    const isActive = activeAttr === link.to;
-
-    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-      e.preventDefault();
-      const target = document.getElementById(link.to);
-      if (target) {
-        window.scrollTo({
-          top: target.offsetTop - 40,
-          behavior: 'smooth'
-        });
-      }
-      if (onClick) onClick();
-      window.history.pushState(null, "", `#${link.to}`);
-    };
-
-    return (
-      <a
-        key={link.to}
-        href={`#${link.to}`}
-        onClick={handleClick}
-        className={`flex items-center w-full rounded-xl px-4 py-3 text-sm font-bold tracking-wider transition-all border-l-4 ${
-          isActive
-            ? "border-brand-sapphire bg-brand-sapphire/10 text-brand-sapphire"
-            : "border-transparent text-slate-400 hover:bg-white/[0.04] hover:text-slate-200 hover:border-slate-500"
-        }`}
-      >
-        <span className="relative z-10">{link.label}</span>
-      </a>
-    );
-  };
+  const resumeButton = (className = "") => (
+    <a
+      href={RESUME_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`inline-flex items-center justify-center gap-2 rounded-md bg-blue-700 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-800 ${className}`}
+    >
+      Resume <FiExternalLink aria-hidden />
+    </a>
+  );
 
   return (
-    <>
-      <div
-        className="fixed top-0 left-0 z-[60] h-1 bg-gradient-to-r from-brand-amber via-brand-emerald to-brand-sapphire lg:hidden"
-        style={{ width: `${scrollProgress}%`, transition: "width 80ms ease-out" }}
-        aria-hidden
-      />
+    <header className="sticky top-0 z-40 border-b border-slate-200 bg-slate-50/90 backdrop-blur dark:border-slate-800 dark:bg-[#0b1120]/90">
+      <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 px-5 py-3 sm:px-8">
+        <a
+          href="#home"
+          onClick={(event) => handleNavClick(event, "home")}
+          className="text-sm font-bold tracking-tight text-slate-900 dark:text-slate-100"
+        >
+          {SHORT_NAME}
+        </a>
 
-      {/* Desktop sidebar */}
-      <aside className="fixed left-6 top-6 hidden h-[calc(100vh-3rem)] w-72 flex-col justify-between overflow-y-auto overflow-x-hidden rounded-3xl border border-slate-800 bg-white/[0.02] p-6 text-slate-100 shadow-2xl backdrop-blur-3xl lg:flex z-40 theme-aware-panel [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-slate-700/50 hover:[&::-webkit-scrollbar-thumb]:bg-brand-sapphire/50">
-        <div className="flex flex-col items-center text-center gap-4 shrink-0 mt-2">
-          <div className="relative group">
-            <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-brand-amber to-brand-sapphire opacity-20 blur transition duration-500 group-hover:opacity-60" aria-hidden />
-            <img
-              src={`${url}arpit-sharma.jpg`}
-              alt="Arpit Sharma"
-              className="relative h-24 w-24 rounded-full border-2 border-slate-700 object-cover shadow-lg"
-              loading="lazy"
-            />
-          </div>
-          <div>
-            <h2 className="text-xl font-extrabold tracking-tight text-slate-100">Arpit Sharma</h2>
-            <p className="mt-1 text-[11px] font-mono uppercase tracking-widest text-brand-sapphire font-semibold">Software Development Engineer</p>
-          </div>
-        </div>
-
-        <nav className="flex flex-col gap-1.5 flex-1 min-h-[220px] justify-center my-6">
-          {navLinks.map((link) => renderNavLink(link))}
+        <nav aria-label="Sections" className="hidden items-center gap-1 lg:flex">
+          {navLinks.map((link) => (
+            <a
+              key={link.id}
+              href={`#${link.id}`}
+              onClick={(event) => handleNavClick(event, link.id)}
+              aria-current={active === link.id ? "true" : undefined}
+              className={navLinkClass(link.id)}
+            >
+              {link.label}
+            </a>
+          ))}
         </nav>
 
-        <div className="flex flex-col gap-4 shrink-0 mb-2">
-          <a
-            href={resumePDF}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex w-full items-center justify-center gap-3 rounded-xl bg-brand-sapphire px-4 py-3 text-sm font-bold tracking-widest uppercase text-white shadow-md transition-all hover:bg-blue-700 hover:shadow-lg active:scale-95"
+        <div className="flex items-center gap-2">
+          {themeButton}
+          <div className="hidden sm:block">{resumeButton()}</div>
+          <button
+            type="button"
+            onClick={() => setMenuOpen((open) => !open)}
+            className="rounded-md border border-slate-200 p-2 text-slate-600 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 lg:hidden"
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
           >
-            <FiDownload className="text-lg" /> Download Resume
-          </a>
-          <ThemeButton className="w-full !py-3" />
-          <SocialLinks />
+            {menuOpen ? <HiOutlineX aria-hidden /> : <HiOutlineMenuAlt3 aria-hidden />}
+          </button>
         </div>
-      </aside>
+      </div>
 
-      {/* Mobile header */}
-      <header className="fixed top-0 left-0 z-50 w-full lg:hidden bg-slate-950/80 border-b border-slate-800/60 backdrop-blur-2xl theme-aware-panel shadow-sm">
-        <div className="mx-auto flex w-full items-center justify-between px-5 py-3.5">
-          <Link to="/portfolio/" className="flex items-center gap-3">
-            <div className="relative">
-              <img
-                src={`${url}developer_image.jpg`}
-                alt="Arpit Sharma"
-                className="h-11 w-11 rounded-full border border-slate-700 object-cover shadow-sm"
-                loading="lazy"
-              />
-            </div>
-            <div className="flex flex-col leading-tight">
-              <span className="text-sm font-bold text-slate-100 uppercase tracking-wide">Arpit Sharma</span>
-              <span className="text-[10px] font-mono tracking-widest text-brand-sapphire uppercase font-semibold mt-0.5">Software Development Engineer</span>
-            </div>
-          </Link>
-
-          <div className="flex items-center gap-1.5 sm:gap-3">
-            <a
-              href={resumePDF}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:flex items-center gap-2 rounded-xl bg-brand-sapphire px-4 py-2 text-xs font-bold tracking-widest uppercase text-white shadow-sm transition hover:bg-blue-700"
-            >
-              <FiDownload /> Resume
-            </a>
-            <ThemeButton className="!px-3 !py-2 !w-auto !border-transparent !bg-transparent hover:!bg-white/[0.05] !gap-0" />
-            <button
-              onClick={() => setMenuOpen((prev) => !prev)}
-              className="rounded-xl border border-transparent p-2 text-slate-300 hover:bg-white/[0.1] hover:text-white transition-all active:scale-95"
-              aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
-            >
-              {menuOpen ? <HiOutlineX className="text-2xl" /> : <HiOutlineMenuAlt3 className="text-2xl" />}
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Mobile Menu Dropdown */}
       {menuOpen && (
-        <div className="fixed top-[70px] left-0 z-40 w-full px-4 pb-6 lg:hidden">
-          <div className="mx-auto flex w-full flex-col gap-6 rounded-2xl border border-slate-800 bg-slate-900 px-6 py-8 shadow-2xl backdrop-blur-3xl theme-aware-panel animate-in slide-in-from-top-4 fade-in duration-200">
-            <nav className="flex flex-col gap-2">
-              {navLinks.map((link) => renderNavLink(link, () => setMenuOpen(false)))}
-            </nav>
-            <div className="h-px w-full bg-slate-800" />
-            <a
-              href={resumePDF}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex sm:hidden w-full items-center justify-center gap-3 rounded-xl bg-brand-sapphire px-4 py-3.5 text-sm font-bold tracking-widest uppercase text-white shadow-md transition-all hover:bg-blue-700 active:scale-95"
-            >
-              <FiDownload className="text-lg" /> Download Resume
-            </a>
-            <SocialLinks />
-          </div>
-        </div>
+        <nav
+          aria-label="Sections"
+          className="border-t border-slate-200 bg-slate-50 px-5 pb-4 dark:border-slate-800 dark:bg-[#0b1120] lg:hidden"
+        >
+          <ul className="flex flex-col py-2">
+            {navLinks.map((link) => (
+              <li key={link.id}>
+                <a
+                  href={`#${link.id}`}
+                  onClick={(event) => handleNavClick(event, link.id)}
+                  className={`block ${navLinkClass(link.id)}`}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          {resumeButton("w-full sm:hidden")}
+        </nav>
       )}
-    </>
+    </header>
   );
 };
 

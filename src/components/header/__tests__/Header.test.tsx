@@ -1,44 +1,32 @@
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
 import { vi } from "vitest";
 import Header from "../Header";
 
 describe("Header", () => {
-  const renderHeader = () =>
-    render(
-      <MemoryRouter initialEntries={["/portfolio/"]}>
-        <Header url="/" theme="light" onThemeToggle={vi.fn()} />
-      </MemoryRouter>,
+  it("renders the section navigation", () => {
+    render(<Header theme="light" onThemeToggle={vi.fn()} />);
+
+    expect(screen.getAllByRole("link", { name: "Experience" }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: "Projects" }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: /resume/i })[0]).toHaveAttribute(
+      "href",
+      expect.stringContaining("drive.google.com"),
     );
-
-  it("renders navigation links and avatar info", () => {
-    renderHeader();
-
-    expect(screen.getAllByText("Arpit Sharma").length).toBeGreaterThan(0);
-    expect(screen.getByRole("link", { name: /Projects/i })).toBeInTheDocument();
   });
 
-  it("invokes theme toggle handler", () => {
+  it("invokes the theme toggle", () => {
     const onThemeToggle = vi.fn();
-    render(
-      <MemoryRouter>
-        <Header url="/" theme="light" onThemeToggle={onThemeToggle} />
-      </MemoryRouter>,
-    );
+    render(<Header theme="light" onThemeToggle={onThemeToggle} />);
 
-    const themeButton = screen.getAllByRole("button", { name: /switch to dark mode/i })[0];
-    fireEvent.click(themeButton);
+    fireEvent.click(screen.getByRole("button", { name: /switch to dark mode/i }));
     expect(onThemeToggle).toHaveBeenCalledTimes(1);
   });
 
-  it("opens the mobile menu when toggle button is clicked", () => {
-    renderHeader();
+  it("opens and closes the mobile menu", () => {
+    render(<Header theme="dark" onThemeToggle={vi.fn()} />);
 
-    const menuButton = screen.getByRole("button", { name: /open navigation menu/i });
-    fireEvent.click(menuButton);
-
+    fireEvent.click(screen.getByRole("button", { name: /open navigation menu/i }));
     expect(screen.getByRole("button", { name: /close navigation menu/i })).toBeInTheDocument();
-    expect(screen.getAllByText(/Resume/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: "Contact" }).length).toBeGreaterThan(0);
   });
 });
