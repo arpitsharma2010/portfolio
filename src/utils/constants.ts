@@ -2,7 +2,7 @@ export const NAME = "Arpit Dilip Sharma";
 export const SHORT_NAME = "Arpit Sharma";
 export const TITLE =
   "Software Engineer | Full-Stack & Cloud-Native Engineering | Distributed Systems | Agentic AI";
-export const LOCATION = "Buffalo, NY";
+export const LOCATION = "New York";
 
 export const SITE_URL = "https://arpitsharma2010.github.io/portfolio/";
 

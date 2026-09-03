@@ -44,7 +44,7 @@ const roles: Role[] = [
     company: "University at Buffalo — Tesserae",
     position: "Software Engineer, Part-time",
     duration: "Nov 2025 – Present",
-    location: "Buffalo, NY",
+    location: "Remote",
     website: "https://tesserae.caset.buffalo.edu/",
     summary:
       "Tesserae is a research platform for intertextual analysis of classical corpora, used by scholars and run in production. My work is API performance, access control and making an inherited codebase safe to change.",
