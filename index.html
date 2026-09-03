@@ -3,84 +3,115 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Arpit Sharma | Portfolio</title>
+
+    <title>Arpit Sharma | Software Engineer</title>
     <meta
       name="description"
-      content="Portfolio of Arpit Sharma, Senior Software Developer specializing in .NET Core, REST APIs, cloud platforms and DevOps automation across finance and health tech."
+      content="Software Engineer specializing in backend systems, full-stack development, cloud-native architecture, distributed systems, and AI-powered applications."
     />
-    <meta
-      name="keywords"
-      content="Arpit Sharma, Senior Software Developer, .NET Core engineer, AWS, GitLab CI/CD, Terraform, REST API, portfolio"
-    />
-    <meta name="author" content="Arpit Sharma" />
+    <meta name="author" content="Arpit Dilip Sharma" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="theme-color" content="#020617" />
+    <meta name="theme-color" content="#0b1120" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
     <link rel="canonical" href="https://arpitsharma2010.github.io/portfolio/" />
-    <meta property="og:title" content="Arpit Sharma | Senior Software Developer Portfolio" />
+    <link rel="icon" type="image/svg+xml" href="/portfolio/favicon.svg" />
+    <link rel="apple-touch-icon" href="/portfolio/arpit-sharma.jpg" />
+
+    <meta property="og:site_name" content="Arpit Sharma" />
+    <meta property="og:title" content="Arpit Sharma | Software Engineer" />
     <meta
       property="og:description"
-      content="Explore Arpit Sharma's work building .NET Core services, cloud-native architectures, DevOps pipelines and ML-driven prototypes."
+      content="Software Engineer specializing in backend systems, full-stack development, cloud-native architecture, distributed systems, and AI-powered applications."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://arpitsharma2010.github.io/portfolio/" />
-    <meta property="og:image" content="https://arpitsharma2010.github.io/portfolio/arpit-sharma.jpg" />
+    <meta
+      property="og:image"
+      content="https://arpitsharma2010.github.io/portfolio/arpit-sharma.jpg"
+    />
+    <meta property="og:image:alt" content="Arpit Dilip Sharma" />
     <meta property="og:locale" content="en_US" />
+
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Arpit Sharma | Senior Software Developer Portfolio" />
+    <meta name="twitter:title" content="Arpit Sharma | Software Engineer" />
     <meta
       name="twitter:description"
-      content="Full-stack engineer shipping resilient APIs, CI/CD automation and research-backed solutions."
+      content="Software Engineer specializing in backend systems, full-stack development, cloud-native architecture, distributed systems, and AI-powered applications."
     />
-    <meta name="twitter:image" content="https://arpitsharma2010.github.io/portfolio/arpit-sharma.jpg" />
+    <meta
+      name="twitter:image"
+      content="https://arpitsharma2010.github.io/portfolio/arpit-sharma.jpg"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+
     <script>
+      // Apply the stored/system theme before first paint to avoid a flash.
       const theme = localStorage.getItem("theme");
-      if (theme === "dark" || (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.add("light");
-      }
+      const dark =
+        theme === "dark" ||
+        (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      document.documentElement.classList.add(dark ? "dark" : "light");
     </script>
+
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Person",
-        "name": "Arpit Sharma",
-        "jobTitle": "Senior Software Developer",
+        "name": "Arpit Dilip Sharma",
+        "alternateName": "Arpit Sharma",
+        "jobTitle": "Software Engineer",
         "url": "https://arpitsharma2010.github.io/portfolio/",
         "image": "https://arpitsharma2010.github.io/portfolio/arpit-sharma.jpg",
         "sameAs": [
-          "https://www.linkedin.com/in/arpitsharma2010",
+          "https://www.linkedin.com/in/arpitsharma2010/",
           "https://github.com/arpitsharma2010"
         ],
-        "knowsAbout": [".NET Core", "AWS", "GitLab CI/CD", "Terraform", "REST APIs"],
+        "knowsAbout": [
+          "Backend Engineering",
+          "REST APIs",
+          "Microservices",
+          "Distributed Systems",
+          "Cloud-Native Architecture",
+          "AWS",
+          "PostgreSQL",
+          "TypeScript",
+          "Node.js",
+          "C#",
+          ".NET Core",
+          "Python",
+          "React",
+          "Retrieval-Augmented Generation",
+          "Agentic AI"
+        ],
+        "alumniOf": [
+          {
+            "@type": "CollegeOrUniversity",
+            "name": "University at Buffalo, The State University of New York"
+          },
+          {
+            "@type": "CollegeOrUniversity",
+            "name": "Sant Gadge Baba Amravati University"
+          }
+        ],
         "address": {
           "@type": "PostalAddress",
-          "addressLocality": "Buffalo",
+          "addressLocality": "New York",
           "addressRegion": "NY",
           "addressCountry": "USA"
         },
-        "description": "Engineer focusing on regulated banking platforms, CI/CD automation and documentation-first delivery."
+        "description": "Software Engineer building production backend services, cloud-native infrastructure on AWS, full-stack applications and AI/RAG systems."
       }
     </script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMCVBN18ZK"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-FMCVBN18ZK');
-    </script>
-    <script type="module" crossorigin src="/portfolio/assets/index-CrUXzfF0.js"></script>
-    <link rel="stylesheet" crossorigin href="/portfolio/assets/index-CYDtlWU_.css">
+    <script type="module" crossorigin src="/portfolio/assets/index-PP9m2vzB.js"></script>
+    <link rel="stylesheet" crossorigin href="/portfolio/assets/index-CeIMPpyJ.css">
   </head>
   <body>
     <div id="root"></div>
-    <script
-      src="https://platform.linkedin.com/badges/js/profile.js"
-      async
-      defer
-      type="text/javascript"
-    ></script>
   </body>
 </html>
