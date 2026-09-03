@@ -17,14 +17,21 @@ const App: React.FC = () => {
     initAnalytics();
   }, []);
 
-  // The browser resolves a load-time #hash before React has rendered the
-  // sections, so a shared deep link lands at the wrong offset. Re-apply it once
-  // the sections exist.
+  // The browser resolves a load-time #hash before React renders the sections,
+  // so a shared deep link lands at the wrong offset. Re-apply it after render,
+  // and again on load because webfonts and images shift the offsets.
   useEffect(() => {
     const id = window.location.hash.slice(1);
     if (!id) return;
-    const target = document.getElementById(id);
-    target?.scrollIntoView({ behavior: "instant", block: "start" });
+
+    const scrollToTarget = () =>
+      document.getElementById(id)?.scrollIntoView({ behavior: "instant", block: "start" });
+
+    scrollToTarget();
+    if (document.readyState === "complete") return;
+
+    window.addEventListener("load", scrollToTarget, { once: true });
+    return () => window.removeEventListener("load", scrollToTarget);
   }, []);
 
   return (
