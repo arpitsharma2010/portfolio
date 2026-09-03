@@ -39,7 +39,7 @@ const Home: React.FC = () => (
           <span className="text-slate-400 dark:text-slate-600">|</span> Agentic AI
         </p>
         <p className="max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400">
-          I build and own production software end to end — backend services and REST APIs,
+          I build and own production software end-to-end: backend services and REST APIs,
           cloud-native infrastructure on AWS, full-stack React front ends, and LLM/RAG systems that
           have to be correct, not just impressive. Four-plus years across a Norwegian bank&rsquo;s
           wealth-management platform, a research web platform at the University at Buffalo, and a

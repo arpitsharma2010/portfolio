@@ -19,12 +19,12 @@ const roles: Role[] = [
     duration: "May 2026 – Present",
     location: "Remote",
     summary:
-      "Founding engineer on an AI product with no existing backend. I own the service end to end — I authored roughly 99% of a 13K+ source-line codebase, and every architectural call in it is mine.",
+      "Founding engineer on an AI product with no existing backend. I own the service end-to-end. I authored roughly 99% of a 13K+ source-line codebase, and every architectural call in it is mine.",
     points: [
       "Built and own an 8-endpoint AI/RAG service: semantic retrieval over pgvector, grounded analysis so answers stay tied to source material, intent routing to pick the right pipeline per request, and caching plus fallback workflows so a slow or failing model call degrades instead of breaking the product.",
       "Enforce strict validation on every LLM response before it reaches a caller, which is what makes a probabilistic model safe to put behind a typed API contract.",
-      "Implemented Google OAuth end to end — OAuth 2.0 with PKCE, token handling and session security — rather than delegating auth to a drop-in widget.",
-      "Cover the API surface with contract testing so the Next.js/React front end and the service can move independently, and integrate the two myself across the full stack.",
+      "Implemented Google OAuth end-to-end (OAuth 2.0 with PKCE, token handling and session security) rather than delegating auth to a drop-in widget.",
+      "Cover the API surface with contract testing so the Next.js/React front end and the service can move independently and integrate the two myself across the full stack.",
     ],
     stack: [
       "Node.js",
@@ -41,7 +41,7 @@ const roles: Role[] = [
     ],
   },
   {
-    company: "University at Buffalo — Tesserae",
+    company: "University at Buffalo (Tesserae)",
     position: "Software Engineer, Part-time",
     duration: "Nov 2025 – Present",
     location: "Remote",
@@ -49,7 +49,7 @@ const roles: Role[] = [
     summary:
       "Tesserae is a research platform for intertextual analysis of classical corpora, used by scholars and run in production. My work is API performance, access control and making an inherited codebase safe to change.",
     points: [
-      "Cut a rare-word API response from roughly 50,000 records to 50 per request. The endpoint was returning an entire result set to a client that only ever rendered a page of it — the fix was moving selection into the query rather than the browser.",
+      "Cut a rare-word API response from roughly 50,000 records to 50 per request. The endpoint was returning an entire result set to a client that only ever rendered a page of it; the fix was moving selection into the query rather than the browser.",
       "Added role-based access control and rate limiting, securing 57+ admin endpoints that were previously reachable by any authenticated caller.",
       "Debugged and refactored existing Flask and React code, and backed the changes with automated tests so the research team can deploy without manual verification.",
       "Work AI-assisted with Claude Code and Codex for exploration and refactoring, with review and tests as the gate on anything that ships.",
@@ -64,7 +64,7 @@ const roles: Role[] = [
       "DNB's merger with Sbanken required integrating a savings and investment microservice that had no documentation and no original authors available. I was assigned to make it understandable, then to own its releases.",
     points: [
       "Reverse-engineered the undocumented Sbanken microservice: mapped 15+ endpoints, recovered their API contracts, traced every downstream dependency and produced the data-flow documentation the merger integration was planned against.",
-      "Owned 20+ production releases across four environments — backend development, testing, AWS deployment and release validation — as the engineer accountable for each one reaching production intact.",
+      "Owned 20+ production releases across four environments, covering backend development, testing, AWS deployment and release validation, as the engineer accountable for each one reaching production intact.",
       "Built and maintained the delivery path with GitLab CI/CD and Terraform, using CloudWatch for observability.",
       "Diagnosed production 4xx/5xx failures across service boundaries, where the reported symptom and the actual fault were usually in different services.",
     ],
@@ -87,7 +87,7 @@ const roles: Role[] = [
     summary:
       "Backend and API engineering on a wealth-management platform, plus the full-stack work to put those APIs in front of customers.",
     points: [
-      "Reduced API latency from roughly 800 ms to 500 ms by executing independent downstream calls concurrently instead of sequentially — the endpoint was waiting on calls that had no dependency on each other.",
+      "Reduced API latency from roughly 800 ms to 500 ms by executing independent downstream calls concurrently instead of sequentially; the endpoint was waiting on calls that had no dependency on each other.",
       "Decomposed a 25+ endpoint service into two independently deployable microservices, so the two halves could ship on their own schedules and a fault in one stopped taking the other down with it.",
       "Automated investment-processing workflows and customer notifications on AWS S3 and ECS, replacing steps that had been run by hand.",
       "Built 25+ reusable React and TypeScript components across 10+ responsive screens, and integrated them against the APIs I had written on the backend.",
@@ -110,7 +110,7 @@ const Experience: React.FC = () => (
   <PageSection
     eyebrow="Experience"
     title="Engineering experience"
-    description="Four roles across a bank, a university research platform and an AI startup. In each one the work was owning a service — understanding it, changing it safely and being accountable for it in production."
+    description="Four roles across a bank, a university research platform and an AI startup. In each one the work was owning a service: understanding it, changing it safely and being accountable for it in production."
   >
     <ol className="relative flex flex-col gap-10 border-l border-slate-200 pl-6 dark:border-slate-800 sm:pl-8">
       {roles.map((role) => (

@@ -26,7 +26,7 @@ const featured: Featured[] = [
     architecture:
       "Three specialised agents coordinated with LangGraph, orchestrating four external tools and APIs across multi-step workflows. Retrieval is hybrid: pgvector for semantic similarity over embeddings, Neo4j for the relationships between places, combined with live external travel data before any recommendation is generated. Packaged with Docker and deployed on AWS.",
     challenge:
-      "Multi-agent graphs fail by looping — one agent hands work to another and the pair never terminates. Constraining the graph so each step either makes progress or hands back a deterministic fallback was the real engineering problem, not the prompting.",
+      "Multi-agent graphs fail by looping: one agent hands work to another and the pair never terminates. Constraining the graph so each step either makes progress or hands back a deterministic fallback was the real engineering problem, not the prompting.",
     stack: [
       "Python",
       "LangGraph",
@@ -47,7 +47,7 @@ const featured: Featured[] = [
     title: "Taco-DB",
     tagline: "Relational database system in C++",
     built:
-      "A working relational database engine written from scratch in C++ — storage, indexing and query execution, not a wrapper over an existing one.",
+      "A working relational database engine written from scratch in C++: storage, indexing and query execution, not a wrapper over an existing one.",
     architecture:
       "Disk-based storage with a buffer pool for caching pages in memory, a B+ Tree index for record retrieval and updates, and a Volcano-style iterator execution engine. Ordering and joins are handled by external merge sort and hash joins, so datasets larger than memory still process.",
     challenge:
@@ -76,7 +76,7 @@ const alsoBuilt = [
   {
     title: "16-bit RISC-style CPU",
     description:
-      "A single-cycle 16-bit processor in Verilog — custom ISA, ALU, register file and control unit — validated in simulation and then flashed to a Basys3 FPGA.",
+      "A single-cycle 16-bit processor in Verilog with a custom ISA, ALU, register file and control unit, validated in simulation and then flashed to a Basys3 FPGA.",
     stack: ["Verilog", "Vivado", "FPGA"],
     links: [{ label: "GitHub", url: "https://github.com/arpitsharma2010/micro16-fpga-core" }],
   },

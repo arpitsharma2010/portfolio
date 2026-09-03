@@ -74,7 +74,7 @@ const Skills: React.FC = () => (
   <PageSection
     eyebrow="Capabilities"
     title="Technical capabilities"
-    description="Grouped by what I use them for. The stack has changed with each role — C# and .NET at a bank, Python and Flask on a research platform, Node and TypeScript at a startup — because the fundamentals transfer."
+    description="Grouped by what I use them for. The stack has changed with each role: C# and .NET at a bank, Python and Flask on a research platform, Node and TypeScript at a startup. The fundamentals transfer."
   >
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       {groups.map((group) => (

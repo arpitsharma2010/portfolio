@@ -10,7 +10,7 @@ export const SITE_URL = "https://arpitsharma2010.github.io/portfolio/";
  *  resolve correctly on GitHub Pages without hardcoding the production origin. */
 export const ASSET_BASE = import.meta.env.BASE_URL;
 export const RESUME_URL =
-  "https://drive.google.com/file/d/1uLSrhbPgGdm8HI_l6vwQOolMpGcECTnS/view?usp=sharing";
+  "https://drive.google.com/file/d/19V3w4XkgKDMzZh3uAwgYrmuWBTB6IRsa/view?usp=sharing";
 export const EMAIL = "arpeet.sharma.1998@gmail.com";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/arpitsharma2010/";
 export const GITHUB_URL = "https://github.com/arpitsharma2010";
