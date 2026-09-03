@@ -10,6 +10,9 @@ import Contact from "./components/pages/Contact.tsx";
 import usePreferredTheme from "./hooks/usePreferredTheme.ts";
 import { initAnalytics } from "./utils/analytics.ts";
 
+/** Sticky header height plus the sections' scroll-margin. */
+const HEADER_OFFSET = 72;
+
 const App: React.FC = () => {
   const { theme, toggleTheme, transitionOrigin } = usePreferredTheme();
 
@@ -17,21 +20,32 @@ const App: React.FC = () => {
     initAnalytics();
   }, []);
 
-  // The browser resolves a load-time #hash before React renders the sections,
-  // so a shared deep link lands at the wrong offset. Re-apply it after render,
-  // and again on load because webfonts and images shift the offsets.
+  // A load-time #hash is resolved before React renders the sections, and the
+  // global `scroll-behavior: smooth` turns the correction into an animation
+  // that later layout shifts cancel. Jump explicitly with smooth scrolling
+  // suspended, repeat once webfonts and images have settled the offsets, and
+  // cover hash changes that do not remount the app (URL edits, back/forward).
   useEffect(() => {
-    const id = window.location.hash.slice(1);
-    if (!id) return;
+    const jumpToHash = () => {
+      const target = document.getElementById(window.location.hash.slice(1));
+      if (!target) return;
+      const root = document.documentElement;
+      const previousBehavior = root.style.scrollBehavior;
+      root.style.scrollBehavior = "auto";
+      window.scrollTo(0, target.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET);
+      root.style.scrollBehavior = previousBehavior;
+    };
 
-    const scrollToTarget = () =>
-      document.getElementById(id)?.scrollIntoView({ behavior: "instant", block: "start" });
+    const frame = requestAnimationFrame(jumpToHash);
+    window.addEventListener("load", jumpToHash);
+    window.addEventListener("hashchange", jumpToHash);
+    void document.fonts?.ready.then(jumpToHash);
 
-    scrollToTarget();
-    if (document.readyState === "complete") return;
-
-    window.addEventListener("load", scrollToTarget, { once: true });
-    return () => window.removeEventListener("load", scrollToTarget);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("load", jumpToHash);
+      window.removeEventListener("hashchange", jumpToHash);
+    };
   }, []);
 
   return (
