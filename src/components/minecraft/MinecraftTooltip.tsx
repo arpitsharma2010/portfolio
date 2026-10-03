@@ -24,6 +24,11 @@ const MinecraftTooltip = ({ id, item, anchorRef, visible }: MinecraftTooltipProp
       if (!anchor || !tooltip) return;
       const anchorRect = anchor.getBoundingClientRect();
       const tooltipRect = tooltip.getBoundingClientRect();
+      // A focused slot scrolled out of view must not leave its lore clamped over other content.
+      if (anchorRect.bottom < 0 || anchorRect.top > window.innerHeight) {
+        setPosition((current) => ({ ...current, ready: false }));
+        return;
+      }
       const preferredTop = anchorRect.top - tooltipRect.height - EDGE_GAP;
       const top = preferredTop >= EDGE_GAP
         ? preferredTop

@@ -12,6 +12,9 @@ interface MinecraftInventoryGridProps {
   onActivate?: (item: MinecraftItem) => void;
   ariaLabel?: string;
   className?: string;
+  /** Inline inventories should not pin a tooltip open for the persistent selection. */
+  showTooltipWhenSelected?: boolean;
+  getSlotLabel?: (item: MinecraftItem) => string;
 }
 
 const MinecraftInventoryGrid = ({
@@ -24,6 +27,8 @@ const MinecraftInventoryGrid = ({
   onActivate,
   ariaLabel = "Inventory",
   className = "",
+  showTooltipWhenSelected,
+  getSlotLabel = (item) => item.name,
 }: MinecraftInventoryGridProps) => {
   const gridRef = useRef<HTMLDivElement>(null);
   const slotCount = rows * columns;
@@ -100,7 +105,8 @@ const MinecraftInventoryGrid = ({
             onActivate={onActivate}
             data-slot-index={index}
             tabIndex={index === (selectedIndex >= 0 ? selectedIndex : Math.max(0, firstEnabledIndex)) ? 0 : -1}
-            slotLabel={item?.name ?? `Empty slot ${index + 1}`}
+            showTooltipWhenSelected={showTooltipWhenSelected}
+            slotLabel={item ? getSlotLabel(item) : `Empty slot ${index + 1}`}
           />
         </div>
       ))}

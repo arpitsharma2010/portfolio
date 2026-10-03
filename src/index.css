@@ -201,18 +201,6 @@ main { width: 100%; }
 .mc-section__description { margin: 1rem 0 0; color: var(--muted); line-height: 1.7; }
 .mc-section--deepslate .mc-section__description, .mc-section--nether .mc-section__description { color: #b8c2b8; }
 
-.profile-layout { display: grid; grid-template-columns: minmax(240px, .45fr) 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
-.profile-card { padding: 1rem; background: #292d27; border: 4px solid #11130f; box-shadow: inset 4px 4px #4d5348, inset -4px -4px #10120f; color: #f5f3e9; }
-.profile-card__portrait { padding: 7px; background: #72776e; border: 3px solid #111; }
-.profile-card__portrait img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
-.profile-card h3 { margin: 1.1rem 0 .25rem; font: 800 1rem var(--pixel); }
-.profile-card > p { margin: 0 0 1.2rem; color: #9fd17c; font: 600 .7rem var(--pixel); }
-.profile-card dl { margin: 0; }
-.profile-card dl > div { padding: .8rem 0; border-top: 2px solid #484d45; }
-.profile-card dt { display: flex; align-items: center; gap: .5rem; color: #aeb5a9; font: 700 .59rem var(--pixel); text-transform: uppercase; }
-.profile-card dd { margin: .35rem 0 0 1.35rem; font-size: .8rem; }
-.profile-lore { display: grid; gap: 1rem; }
-.profile-lore p { margin: 0; padding: 1.1rem 1.2rem; color: var(--muted); background: color-mix(in srgb, var(--surface) 60%, transparent); border-left: 6px solid var(--grass); line-height: 1.75; }
 
 .inventory { color: #f1f0e6; background: #373934; border: 5px solid #11130f; box-shadow: inset 5px 5px #5b5f56, inset -5px -5px #1d1f1c; padding: clamp(1rem, 3vw, 2rem); }
 .inventory__top { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: 1.2rem; color: #d7d8cf; font: 700 .68rem var(--pixel); text-transform: uppercase; }
@@ -370,8 +358,6 @@ main { width: 100%; }
   .hero__facts { gap: .6rem; }
   .mc-section { padding: 1.1rem; border-width: 3px; box-shadow: 5px 5px var(--shadow); }
   .mc-section__header { margin-bottom: 1.6rem; }
-  .profile-layout { grid-template-columns: 1fr; }
-  .profile-card { max-width: 350px; width: 100%; margin: auto; }
   .inventory { padding: .75rem; }
   .inventory__groups { gap: 1.2rem; }
   .inventory-group ul { grid-template-columns: repeat(3, minmax(0, 1fr)); }

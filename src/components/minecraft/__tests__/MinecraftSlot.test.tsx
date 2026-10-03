@@ -60,4 +60,15 @@ describe("MinecraftSlot", () => {
     fireEvent.mouseEnter(slot);
     expect(screen.getByRole("tooltip", { hidden: true })).toHaveTextContent("enterprise banking systems");
   });
+
+  it("hides the tooltip when its focused slot scrolls out of view", () => {
+    render(<MinecraftSlot item={pickaxe} />);
+    const slot = screen.getByRole("button", { name: "Diamond Pickaxe" });
+    fireEvent.focus(slot);
+    expect(screen.getByRole("tooltip", { hidden: true })).toHaveStyle({ visibility: "visible" });
+
+    vi.spyOn(slot, "getBoundingClientRect").mockReturnValue(new DOMRect(0, -500, 44, 44));
+    fireEvent.scroll(window);
+    expect(screen.getByRole("tooltip", { hidden: true })).toHaveStyle({ visibility: "hidden" });
+  });
 });

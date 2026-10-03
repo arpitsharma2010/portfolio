@@ -1,0 +1,167 @@
+.player-inventory { display: grid; gap: clamp(1.25rem, 3vw, 2rem); min-width: 0; }
+
+/* DOM order is the mobile reading order: identity, figure, crafting, inventory, detail, actions. */
+.pi-panel {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "identity" "figure" "crafting" "inventory" "detail" "actions";
+  gap: 1.1rem;
+  padding: clamp(10px, 2.4vw, 22px);
+  color: #2c2c2c;
+  background: var(--mc-panel);
+  border: 4px solid #1f1f1f;
+  border-top-color: var(--mc-panel-light);
+  border-left-color: var(--mc-panel-light);
+  box-shadow: inset 4px 4px rgba(255, 255, 255, .45), inset -4px -4px var(--mc-panel-shadow), 8px 9px rgba(0, 0, 0, .3);
+}
+
+.pi-identity { grid-area: identity; min-width: 0; }
+.pi-figure { grid-area: figure; display: flex; align-items: flex-end; gap: .75rem; min-width: 0; }
+.pi-crafting { grid-area: crafting; min-width: 0; }
+.pi-inventory { grid-area: inventory; min-width: 0; }
+.pi-detail { grid-area: detail; min-width: 0; }
+.pi-actions { grid-area: actions; min-width: 0; }
+
+.pi-label {
+  margin: 0 0 .45rem;
+  color: #3a3a3a;
+  font: 800 .66rem/1.3 var(--pixel);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.pi-identity dl {
+  margin: 0;
+  display: grid;
+  gap: 2px;
+  padding: 6px;
+  background: #8b8b8b;
+  box-shadow: inset 3px 3px var(--mc-slot-dark), inset -3px -3px var(--mc-slot-light);
+}
+.pi-identity dl > div { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: .2rem .75rem; padding: .45rem .55rem; background: #262626; }
+.pi-identity dt { color: #a8a8a8; font: 700 .58rem/1.6 var(--pixel); text-transform: uppercase; }
+.pi-identity dd { margin: 0; color: #f4f4f4; font-size: .82rem; line-height: 1.45; overflow-wrap: anywhere; }
+.pi-identity dl > div:first-child dd { color: #ffe14c; font: 800 .82rem/1.45 var(--pixel); }
+
+.player-inventory .pi-fixed-grid { width: fit-content; grid-template-columns: repeat(var(--mc-grid-columns), 52px); }
+
+.pi-player {
+  flex: 1 1 auto;
+  max-width: 190px;
+  min-height: 230px;
+  align-self: stretch;
+  display: grid;
+  place-items: end center;
+  padding: 12px 10px 8px;
+  background: radial-gradient(circle at 50% 70%, #262c2a, #050606 75%);
+  border: 3px solid #373737;
+  border-right-color: #f1f1f1;
+  border-bottom-color: #f1f1f1;
+}
+.pi-player svg { width: min(100%, 118px); height: auto; animation: pi-idle 3.2s ease-in-out infinite; }
+
+.pi-crafting__recipe { display: flex; align-items: center; gap: .75rem; }
+.pi-crafting__arrow { position: relative; width: 34px; height: 22px; flex: 0 0 34px; }
+.pi-crafting__arrow::before { content: ""; position: absolute; top: 7px; left: 0; width: 20px; height: 8px; background: #8b8b8b; }
+.pi-crafting__arrow::after { content: ""; position: absolute; top: 0; right: 0; border-left: 14px solid #8b8b8b; border-block: 11px solid transparent; }
+.pi-crafting__result { width: 72px; }
+.pi-crafting__result .mc-slot { box-shadow: inset 3px 3px var(--mc-slot-dark), inset -3px -3px var(--mc-slot-light), 0 0 0 3px #6c6c6c; }
+.pi-crafting__result .mc-slot.is-selected { box-shadow: inset 3px 3px #fff, inset -3px -3px #8a8a8a, 0 0 0 3px #fff, 0 0 0 5px #292929; }
+.pi-crafting__note { margin: .5rem 0 0; color: #4a4a4a; font-size: .72rem; line-height: 1.4; }
+
+/* Pickup: the selected item lifts a few pixels while its slot stays highlighted. */
+.player-inventory .mc-slot .mc-item-icon { transition: transform 120ms ease-out; }
+.player-inventory .mc-slot.is-selected .mc-item-icon { transform: translateY(-4px); }
+
+.pi-detail {
+  min-height: 15.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+  padding: .85rem .95rem;
+  color: #f0f0f0;
+  background: var(--mc-tooltip);
+  border: 3px solid var(--mc-tooltip-border);
+  box-shadow: inset 0 0 0 2px rgba(28, 8, 48, .88), 4px 4px rgba(0, 0, 0, .4);
+}
+.pi-detail .pi-label { margin: 0; color: #b9a6cc; }
+.pi-detail__head { display: flex; align-items: center; gap: .7rem; }
+.pi-detail__icon { width: 52px; height: 52px; flex: 0 0 52px; display: grid; place-items: center; background: var(--mc-slot); box-shadow: inset 3px 3px var(--mc-slot-dark), inset -3px -3px var(--mc-slot-light); }
+.pi-detail__name { margin: 0; color: #c9b7da; font: 700 .64rem/1.4 var(--pixel); }
+.pi-detail h3 { margin: .15rem 0 0; color: #fff; font: 800 clamp(.82rem, 2.2vw, .98rem)/1.3 var(--pixel); }
+.pi-detail__summary { margin: 0; color: #e2e2e2; font-size: .86rem; line-height: 1.6; }
+.pi-detail__lore { margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .35rem; list-style: none; }
+.pi-detail__lore li { padding: .25rem .45rem; color: #d7c4ea; background: rgba(91, 45, 136, .35); border: 1px solid #5b2d88; font: 600 .62rem/1.4 var(--pixel); }
+
+.pi-actions ul { margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; }
+.pi-actions a {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  padding: 4px .8rem 4px 4px;
+  color: #232323;
+  background: #b4b4b4;
+  border: 2px solid #1f1f1f;
+  box-shadow: inset 2px 2px #e6e6e6, inset -2px -2px #6f6f6f;
+  font: 800 .66rem/1 var(--pixel);
+  text-decoration: none;
+}
+.pi-actions a:hover { filter: brightness(1.08); }
+.pi-actions a:active { transform: translate(2px, 2px); }
+.pi-actions a:focus-visible { outline: 3px solid var(--mc-focus); outline-offset: 3px; }
+.pi-actions__slot { width: 42px; height: 42px; display: grid; place-items: center; background: var(--mc-slot); box-shadow: inset 2px 2px var(--mc-slot-dark), inset -2px -2px var(--mc-slot-light); }
+
+.pi-lore { display: grid; gap: 1rem; }
+.pi-lore p { margin: 0; padding: 1.1rem 1.2rem; color: var(--muted); background: color-mix(in srgb, var(--surface) 60%, transparent); border-left: 6px solid var(--grass); line-height: 1.75; }
+
+@media (max-width: 520px) {
+  .pi-identity dl > div { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (min-width: 768px) {
+  .pi-panel {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      "figure crafting"
+      "identity identity"
+      "inventory inventory"
+      "detail detail"
+      "actions actions";
+    gap: 1.25rem 1.75rem;
+  }
+  .pi-crafting { align-self: center; }
+  .pi-lore { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1024px) {
+  .pi-panel {
+    grid-template-areas:
+      "figure crafting"
+      "figure identity"
+      "inventory inventory"
+      "detail detail"
+      "actions actions";
+    align-items: start;
+  }
+  .pi-crafting { align-self: start; }
+  .pi-detail { min-height: 12rem; }
+}
+
+/* The inventory becomes active as it scrolls in. Unsupported browsers render it static. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .pi-panel { animation: pi-open linear both; animation-timeline: view(); animation-range: entry 0% entry 55%; }
+    .pi-panel .mc-slot.has-item { animation: pi-slot-in linear both; animation-timeline: view(); animation-range: entry 10% entry 70%; }
+  }
+}
+
+@keyframes pi-open { from { opacity: .35; transform: scale(.965) translateY(14px); } }
+@keyframes pi-slot-in { from { opacity: 0; transform: translateY(6px); } }
+@keyframes pi-idle { 50% { transform: translateY(-3px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .pi-player svg,
+  .player-inventory .mc-slot .mc-item-icon { animation: none; transition: none; }
+}
