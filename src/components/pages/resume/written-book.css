@@ -1,0 +1,110 @@
+/* Written book: original CSS art. Parchment and leather are fixed colours, so contrast holds in both themes. */
+.wbook {
+  --wbook-leather: #63362b;
+  --wbook-leather-hi: #915449;
+  --wbook-leather-lo: #3d211b;
+  --wbook-edge: #2c1712;
+  --wbook-paper: #f5ebcb;
+  --wbook-paper-lo: #e6d7aa;
+  --wbook-ink: #322b20;
+  --wbook-muted: #5c4d36;
+  --wbook-title: #3f2a8c;
+  display: grid;
+  gap: 1rem;
+  max-width: 900px;
+  min-width: 0;
+  margin: auto;
+}
+
+/* Binding: a leather block frame around one page, or two pages with a spine between them. */
+.wbook__spread {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  padding: 10px;
+  background: var(--wbook-leather);
+  border: 5px solid var(--wbook-edge);
+  box-shadow: inset 5px 5px var(--wbook-leather-hi), inset -5px -5px var(--wbook-leather-lo), 10px 12px 0 var(--shadow);
+}
+.wbook__spread.is-pair { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.wbook__spine { display: none; }
+.is-pair > .wbook__spine {
+  position: absolute; z-index: 1; top: 10px; bottom: 10px; left: calc(50% - 4px); display: block; width: 8px;
+  background: linear-gradient(90deg, rgba(60, 40, 20, .35), rgba(60, 40, 20, .05) 50%, rgba(60, 40, 20, .35));
+  pointer-events: none;
+}
+
+.wbook__page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+  min-height: 340px;
+  padding: clamp(1.1rem, 3.5vw, 2.25rem) clamp(1rem, 3.5vw, 2.25rem) 2.5rem;
+  color: var(--wbook-ink);
+  background:
+    repeating-linear-gradient(transparent 0 30px, rgba(91, 72, 42, .12) 30px 31px),
+    linear-gradient(90deg, var(--wbook-paper-lo), var(--wbook-paper) 12%, var(--wbook-paper) 88%, var(--wbook-paper-lo));
+  border: 3px solid #3a2b1c;
+}
+.wbook__page[hidden] { display: none; }
+.wbook__page > p { margin: 0; line-height: 1.75; }
+.wbook__page .mc-kicker { color: #376f2e; }
+.wbook__title { margin: 0; padding-right: 1.75rem; color: var(--wbook-title); font: 800 1.05rem/1.4 var(--pixel); overflow-wrap: break-word; }
+.wbook__folio { position: absolute; right: 1rem; bottom: .7rem; color: var(--wbook-muted); font: 700 .7rem var(--pixel); }
+
+/* Cover art: the pre-redesign cover, now drawn on the first page. */
+.wbook-cover {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .6rem; flex: 1;
+  padding: 1.5rem 1rem; color: #ffe9af; text-align: center;
+  background: var(--wbook-leather); border: 5px solid var(--wbook-edge);
+  box-shadow: inset 6px 0 var(--wbook-leather-hi), inset -6px 0 var(--wbook-leather-lo);
+}
+.wbook-cover .mc-item-icon { width: 64px; height: 64px; }
+.wbook-cover__gem { color: #aaf8fa; font-size: 1.6rem; text-shadow: 0 0 12px #62e3ed; animation: wbook-shimmer 3.2s ease-in-out infinite; }
+.wbook-cover__name { font: 800 .9rem var(--pixel); }
+.wbook-cover small { color: #d9bb86; font: 600 .62rem var(--pixel); }
+
+/* Contents: plain anchors to the existing sections, each with a hotbar-style item slot. */
+.wbook-contents { display: grid; gap: .5rem; margin: 0; padding: 0; list-style: none; }
+.wbook-contents a {
+  display: flex; align-items: center; gap: .75rem; min-height: 44px; padding: .25rem .5rem;
+  color: var(--wbook-ink); font: 700 .8rem var(--pixel); text-decoration: none;
+  border-bottom: 2px dotted rgba(91, 72, 42, .4);
+}
+.wbook-contents a:hover { color: var(--wbook-title); background: rgba(255, 255, 255, .45); }
+.wbook-contents__icon { display: grid; place-items: center; width: 34px; height: 34px; flex: 0 0 34px;
+  background: var(--mc-slot); border: 2px solid; border-color: var(--mc-slot-dark) #fff #fff var(--mc-slot-dark); }
+
+/* Endpaper with a drawn quill: decoration only, shown opposite the last page of a spread. */
+.wbook__page--endpaper { align-items: center; justify-content: center;
+  background: repeating-linear-gradient(45deg, var(--wbook-paper) 0 10px, var(--wbook-paper-lo) 10px 12px); }
+.wbook__quill { width: 12px; height: 120px; background: linear-gradient(#fff 0 70%, #d9d1bd 70% 92%, #222 92%);
+  border: 3px solid #3a2b1c; transform: rotate(28deg); box-shadow: -8px 0 0 -2px #ece4cf; }
+.wbook__ribbon { position: absolute; z-index: 2; top: -5px; right: 18%; width: 14px; height: 54px; background: #a3262a;
+  border: 3px solid #4d0f12; border-top: 0; clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%); pointer-events: none; }
+
+/* Turn controls: real buttons, 44px targets, never hover-only. */
+.wbook__controls { display: flex; align-items: center; justify-content: center; gap: .75rem; }
+.wbook__turn {
+  display: grid; place-items: center; width: 44px; height: 44px; padding: 0;
+  color: #fff; background: #6b4425; border: 3px solid #2b1a0e; box-shadow: inset 3px 3px #94643a, inset -3px -3px #3f2713;
+  font-size: 1.3rem; cursor: pointer;
+}
+.wbook__turn[aria-disabled="true"] { opacity: .45; cursor: default; }
+.wbook__status { min-width: 9.5rem; margin: 0; text-align: center; font: 700 .72rem var(--pixel); }
+
+.wbook__action { display: flex; justify-content: center; }
+.wbook__action-icon { display: grid; place-items: center; width: 22px; height: 22px; }
+
+/* Page turn: a short hinge from the spine plus fade. Content is never delayed or gated. */
+.wbook__spread--next > .wbook__page:not([hidden]) { transform-origin: left center; animation: wbook-turn 220ms ease-out; }
+.wbook__spread--prev > .wbook__page:not([hidden]) { transform-origin: right center; animation: wbook-turn-back 220ms ease-out; }
+@keyframes wbook-turn { from { opacity: .3; transform: perspective(1200px) rotateY(-10deg); } }
+@keyframes wbook-turn-back { from { opacity: .3; transform: perspective(1200px) rotateY(10deg); } }
+@keyframes wbook-shimmer { 50% { opacity: .55; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .wbook__spread > .wbook__page, .wbook-cover__gem { animation: none !important; }
+}

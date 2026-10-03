@@ -211,15 +211,6 @@ main { width: 100%; }
 .project-link { display: inline-flex; align-items: center; gap: .35rem; color: #356c2f; font: 700 .72rem var(--pixel); }
 
 
-.resume-book { display: grid; grid-template-columns: minmax(210px, .75fr) 1.25fr; max-width: 880px; margin: auto; filter: drop-shadow(12px 14px 0 var(--shadow)); }
-.resume-book__cover { min-height: 330px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 2rem; color: #ffe9af; background: #63362b; border: 6px solid #2c1712; box-shadow: inset 8px 0 #915449, inset -8px 0 #3d211b; text-align: center; }
-.resume-book__cover svg { font-size: 4rem; }
-.resume-book__cover > span:not(.resume-book__gem) { font: 800 .9rem var(--pixel); }
-.resume-book__cover small { color: #d9bb86; font: 600 .62rem var(--pixel); }
-.resume-book__gem { color: #aaf8fa; font-size: 1.8rem; text-shadow: 0 0 12px #62e3ed; }
-.resume-book__page { min-height: 330px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: clamp(1.5rem, 4vw, 3rem); color: #322b20; background: #f5ebcb; border: 5px solid #3a2b1c; border-left-width: 12px; background-image: repeating-linear-gradient(transparent 0 30px, rgba(91,72,42,.12) 30px 31px); }
-.resume-book__page h3 { margin: 0; font: 800 1.25rem/1.4 var(--pixel); }
-.resume-book__page > p:not(.mc-kicker) { margin: 1rem 0 1.5rem; line-height: 1.75; }
 
 .portal-room { display: grid; grid-template-columns: .7fr 1.3fr; gap: clamp(1.5rem, 5vw, 4rem); align-items: center; }
 .nether-portal { width: min(280px, 100%); aspect-ratio: .7; margin: auto; padding: 28px; background: #241429; border: 14px solid #08050b; box-shadow: inset 9px 9px #4e275b, inset -9px -9px #130b17, 0 0 35px rgba(168,62,199,.3); }
@@ -287,8 +278,6 @@ main { width: 100%; }
   .hero__facts { gap: .6rem; }
   .mc-section { padding: 1.1rem; border-width: 3px; box-shadow: 5px 5px var(--shadow); }
   .mc-section__header { margin-bottom: 1.6rem; }
-  .resume-book { grid-template-columns: 1fr; }
-  .resume-book__cover { min-height: 260px; }
   .portal-room { grid-template-columns: 1fr; }
   .nether-portal { width: 180px; padding: 18px; border-width: 10px; }
   .contact-console ul { grid-template-columns: 1fr; }
