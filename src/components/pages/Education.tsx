@@ -4,15 +4,13 @@ import PageSection from "../common/PageSection.tsx";
 import { MinecraftItemIcon, useMinecraftSelection } from "../minecraft";
 import { certifications, education, type Certification, type Degree } from "./education/educationData";
 import "./education/enchanting-room.css";
+import { revealIfOffscreen } from "../../utils/motion";
 
 const DETAIL_ID = "education-detail";
 
 type Selection = { kind: "degree"; item: Degree } | { kind: "certification"; item: Certification };
 
 const titleOf = (selection: Selection) => (selection.kind === "degree" ? selection.item.degree : selection.item.name);
-
-const isReducedMotion = () =>
-  typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /** Decorative spines: no text, no hover, hidden from assistive technology. */
 const ShelfSpines = ({ count }: { count: number }) => (
@@ -180,11 +178,8 @@ const Education: React.FC = () => {
   const choose = (next: Selection) => {
     select(next.item.id);
     setAnnouncement(`Showing ${next.kind}: ${titleOf(next)}`);
-    // On narrow screens the detail can sit off-screen: bring it into view after an explicit pick; focus stays put.
-    const rect = detailRef.current?.getBoundingClientRect();
-    if (rect && (rect.top > window.innerHeight * .75 || rect.bottom < 0)) {
-      detailRef.current!.scrollIntoView?.({ behavior: isReducedMotion() ? "auto" : "smooth", block: "start" });
-    }
+    // On narrow screens the detail can sit off-screen.
+    revealIfOffscreen(detailRef.current, .75);
   };
 
   return (

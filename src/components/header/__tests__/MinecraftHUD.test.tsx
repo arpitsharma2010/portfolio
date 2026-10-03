@@ -263,6 +263,13 @@ describe("MinecraftHUD hotbar", () => {
     expect(screen.getByRole("button", { name: "Chest — Projects" })).toHaveAttribute("aria-current", "location");
   });
 
+  it("settles an initial hash instantly so CSS smooth scrolling can't lag behind late layout", () => {
+    window.history.replaceState(null, "", "#education");
+    render(<TestPage />);
+    fireEvent(window, new Event("load"));
+    expect(document.getElementById("education")!.scrollIntoView).toHaveBeenCalledWith({ behavior: "instant", block: "start" });
+  });
+
   it("uses immediate section movement for reduced-motion visitors", () => {
     vi.mocked(window.matchMedia).mockReturnValue({ matches: true } as MediaQueryList);
     render(<TestPage />);

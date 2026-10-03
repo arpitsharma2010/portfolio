@@ -81,7 +81,6 @@
   border-top-color: var(--mc-panel-light);
   border-left-color: var(--mc-panel-light);
   box-shadow: inset 4px 4px rgba(255, 255, 255, .45), inset -4px -4px var(--mc-panel-shadow), 8px 9px rgba(0, 0, 0, .3);
-  scroll-margin-top: calc(var(--header-height) + 18px);
 }
 .pc-panel__head { display: flex; align-items: center; gap: 1rem; padding: .8rem 1rem; color: #f4f4f4; background: var(--pc-pattern), var(--pc-env); border: 3px solid #111; }
 .pc-panel__head > div { min-width: 0; }
@@ -109,7 +108,8 @@
   text-decoration: none;
 }
 .pc-link:hover { background: #5c5c5c; }
-.pc-image { width: 100%; max-height: 220px; object-fit: cover; border: 3px solid #1f1f1f; }
+/* Reserve the screenshot box (WanderGenie, 800×414) before the lazy image loads, so it can't shift later sections. */
+.pc-image { width: 100%; aspect-ratio: 800 / 414; max-height: 220px; object-fit: cover; border: 3px solid #1f1f1f; }
 
 .pc-architecture { min-width: 0; display: grid; gap: .8rem; align-content: start; }
 .pc-grid .mc-inventory-grid { padding: 4px; background: #9a9a9a; box-shadow: inset 2px 2px #6a6a6a, inset -2px -2px #d8d8d8; }

@@ -33,8 +33,10 @@ const MinecraftTooltip = ({ id, item, anchorRef, visible }: MinecraftTooltipProp
       const top = preferredTop >= EDGE_GAP
         ? preferredTop
         : Math.min(window.innerHeight - tooltipRect.height - EDGE_GAP, anchorRect.bottom + EDGE_GAP);
+      // clientWidth excludes a classic scrollbar; jsdom reports 0, so fall back to innerWidth.
+      const viewportWidth = document.documentElement.clientWidth || window.innerWidth;
       const left = Math.min(
-        window.innerWidth - tooltipRect.width - EDGE_GAP,
+        viewportWidth - tooltipRect.width - EDGE_GAP,
         Math.max(EDGE_GAP, anchorRect.left + anchorRect.width / 2 - tooltipRect.width / 2),
       );
       setPosition({ left, top: Math.max(EDGE_GAP, top), ready: true });

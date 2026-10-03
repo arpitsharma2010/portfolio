@@ -11,6 +11,7 @@ import {
   type ExperienceEntry,
 } from "./experience/experienceData";
 import "./experience/advancements.css";
+import { revealIfOffscreen } from "../../utils/motion";
 
 const DETAIL_ID = "experience-detail";
 
@@ -29,9 +30,6 @@ const TYPE_LABEL: Record<AdvancementType, string> = {
   milestone: "Milestone · Promotion",
   current: "Current role",
 };
-
-const isReducedMotion = () =>
-  typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const point = (id: string) => `${MAP_LAYOUT[id].x} ${MAP_LAYOUT[id].y}`;
 
@@ -171,13 +169,8 @@ const Experience: React.FC = () => {
   const select = (entry: ExperienceEntry) => {
     setSelectedId(entry.id);
     setAnnouncement(`Showing ${entry.title}, ${employerName(entry)}, ${formatDates(entry)}`);
-    // On narrow screens the detail sits below the path: bring it into view after an explicit pick; focus stays put.
-    const detail = detailRef.current;
-    if (!detail) return;
-    const rect = detail.getBoundingClientRect();
-    if (rect.top > window.innerHeight * .75 || rect.bottom < 0) {
-      detail.scrollIntoView?.({ behavior: isReducedMotion() ? "auto" : "smooth", block: "start" });
-    }
+    // On narrow screens the detail sits below the path.
+    revealIfOffscreen(detailRef.current, .75);
   };
 
   /** Chronological, not geometric: next/previous role, Home/End for the ends. Scoped to this list. */

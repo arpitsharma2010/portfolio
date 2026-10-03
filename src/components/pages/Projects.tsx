@@ -5,12 +5,10 @@ import { MinecraftInventoryGrid, MinecraftItemIcon, useMinecraftSelection } from
 import type { MinecraftItem } from "../minecraft";
 import { DEFAULT_PROJECT_ID, projects, type ArchitectureItem, type ProjectDefinition } from "./projects/projectData";
 import "./projects/project-chests.css";
+import { revealIfOffscreen } from "../../utils/motion";
 
 const GRID_COLUMNS = 9;
 const PANEL_ID = "project-chest-panel";
-
-const isReducedMotion = () =>
-  typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const slotLabel = (item: MinecraftItem) => `${(item as ArchitectureItem).label}, ${item.name}`;
 
@@ -75,13 +73,8 @@ const Projects: React.FC = () => {
   const openProject = (next: ProjectDefinition) => {
     setProjectId(next.id);
     select(next.defaultItemId);
-    // When the panel sits below the selector, bring it into view after an explicit pick; focus stays put.
-    const panel = panelRef.current;
-    if (!panel) return;
-    const rect = panel.getBoundingClientRect();
-    if (rect.top > window.innerHeight * .6 || rect.bottom < 0) {
-      panel.scrollIntoView?.({ behavior: isReducedMotion() ? "auto" : "smooth", block: "start" });
-    }
+    // When the panel sits below the selector.
+    revealIfOffscreen(panelRef.current, .6);
   };
 
   return (

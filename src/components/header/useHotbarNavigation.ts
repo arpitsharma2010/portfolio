@@ -7,10 +7,7 @@ import {
 } from "./hotbarItems";
 import type { SelectedItemAnnouncement } from "./MinecraftSelectedItemLabel";
 import { calculatePortfolioProgress } from "./usePortfolioExploration";
-
-const isReducedMotion = () =>
-  typeof window.matchMedia === "function"
-  && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+import { prefersReducedMotion } from "../../utils/motion";
 
 export const isTypingTarget = (target: EventTarget | null) => {
   if (!(target instanceof HTMLElement)) return false;
@@ -68,7 +65,7 @@ const useHotbarNavigation = ({ entries, onThemeToggle, navRef }: UseHotbarNaviga
   const revealSlot = useCallback((index: number, moveFocus: boolean) => {
     const button = navRef.current?.querySelector<HTMLButtonElement>(`[data-hotbar-index="${index}"]`);
     if (moveFocus) button?.focus({ preventScroll: true });
-    button?.scrollIntoView?.({ behavior: isReducedMotion() ? "auto" : "smooth", block: "nearest", inline: "nearest" });
+    button?.scrollIntoView?.({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "nearest", inline: "nearest" });
   }, [navRef]);
 
   const previewIndex = useCallback((index: number, moveFocus = false) => {
@@ -99,7 +96,7 @@ const useHotbarNavigation = ({ entries, onThemeToggle, navRef }: UseHotbarNaviga
 
     const sectionId = entry.sectionId;
     if (!sectionId) return;
-    const behavior: ScrollBehavior = isReducedMotion() ? "auto" : "smooth";
+    const behavior: ScrollBehavior = prefersReducedMotion() ? "auto" : "smooth";
     selectionLockUntil.current = Date.now() + (behavior === "smooth" ? 1100 : 200);
     applyActiveSection(sectionId);
     if (window.location.hash !== `#${sectionId}`) {
@@ -180,7 +177,8 @@ const useHotbarNavigation = ({ entries, onThemeToggle, navRef }: UseHotbarNaviga
   useEffect(() => {
     const sectionId = getSectionFromHash(window.location.hash);
     if (!sectionId) return;
-    const settleHash = () => scrollToSection(sectionId, "auto");
+    // "instant", not "auto": auto inherits CSS smooth scrolling, which lags behind late layout shifts on load.
+    const settleHash = () => scrollToSection(sectionId, "instant");
     const frame = requestAnimationFrame(settleHash);
     window.addEventListener("load", settleHash);
     void document.fonts?.ready.then(settleHash);

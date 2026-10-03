@@ -28,28 +28,28 @@ const App: React.FC = () => {
         transitionOrigin={transitionOrigin ?? undefined}
       >
       <div className="world-sections">
-        <section id="home" className="scroll-mt-20">
+        <section id="home">
           <Home />
         </section>
-        <section id="about" className="scroll-mt-20">
+        <section id="about">
           <About />
         </section>
-        <section id="skills" className="scroll-mt-20">
+        <section id="skills">
           <Skills />
         </section>
-        <section id="experience" className="scroll-mt-20">
+        <section id="experience">
           <Experience />
         </section>
-        <section id="projects" className="scroll-mt-20">
+        <section id="projects">
           <Projects />
         </section>
-        <section id="education" className="scroll-mt-20">
+        <section id="education">
           <Education />
         </section>
-        <section id="resume" className="scroll-mt-20">
+        <section id="resume">
           <Resume />
         </section>
-        <section id="contact" className="scroll-mt-20">
+        <section id="contact">
           <Contact />
         </section>
       </div>

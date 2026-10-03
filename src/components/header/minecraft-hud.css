@@ -1,13 +1,12 @@
 .minecraft-hud {
   position: fixed;
   z-index: 85;
-  left: 50%;
+  /* Inset from the scrollbar-free viewport edges; 100vw would include a classic scrollbar. */
+  left: max(6px, env(safe-area-inset-left));
+  right: max(6px, env(safe-area-inset-right));
   bottom: max(8px, env(safe-area-inset-bottom));
-  width: min-content;
-  max-width: calc(100vw - 12px);
   display: grid;
   justify-items: center;
-  transform: translateX(-50%);
   pointer-events: none;
 }
 
@@ -42,7 +41,7 @@
 
 .minecraft-exploration {
   position: relative;
-  width: min(520px, calc(100vw - 24px));
+  width: min(520px, 100% - 12px);
   height: 15px;
   margin-bottom: 5px;
   pointer-events: auto;
@@ -75,7 +74,7 @@
 }
 
 .minecraft-hotbar {
-  max-width: calc(100vw - 12px);
+  max-width: 100%;
   padding: 5px;
   overflow-x: auto;
   overflow-y: hidden;
@@ -147,8 +146,8 @@
 
 @media (max-width: 520px) {
   .minecraft-hud { justify-items: stretch; }
-  .minecraft-selected-label { width: max-content; max-width: calc(100vw - 24px); justify-self: center; }
-  .minecraft-hotbar { width: calc(100vw - 12px); }
+  .minecraft-selected-label { width: max-content; max-width: calc(100% - 12px); justify-self: center; }
+  .minecraft-exploration { justify-self: center; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -13,14 +13,12 @@ import {
   type SkillItem,
 } from "./skills/skillItems";
 import "./skills/skills-chest.css";
+import { revealIfOffscreen } from "../../utils/motion";
 
 const CHEST_COLUMNS = 9;
 const CHEST_ROWS = Math.ceil(skillItems.length / CHEST_COLUMNS);
 
 const slotLabel = (item: MinecraftItem) => `${(item as SkillItem).technology}, ${item.category}`;
-
-const isReducedMotion = () =>
-  typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const EvidenceChips = ({ label, sources }: { label: string; sources: string[] }) => sources.length > 0 && (
   <div className="sc-detail__evidence">
@@ -63,13 +61,9 @@ const Skills: React.FC = () => {
 
   const selectSkill = (item: MinecraftItem) => {
     select(item);
-    // Stacked layouts put the detail below the chest; bring it into view after an explicit pick only.
-    const detail = detailRef.current;
-    if (!detail || typeof window.matchMedia !== "function" || !window.matchMedia("(max-width: 1199px)").matches) return;
-    const rect = detail.getBoundingClientRect();
-    if (rect.top > window.innerHeight * .6 || rect.bottom < 0) {
-      detail.scrollIntoView?.({ behavior: isReducedMotion() ? "auto" : "smooth", block: "nearest" });
-    }
+    // Stacked layouts put the detail below the chest.
+    if (typeof window.matchMedia !== "function" || !window.matchMedia("(max-width: 1199px)").matches) return;
+    revealIfOffscreen(detailRef.current, .6, "nearest");
   };
 
   const filters = [{ id: "all" as const, label: "All", icon: "chest" as const }, ...SKILL_CATEGORIES];

@@ -100,7 +100,7 @@
   position: fixed;
   z-index: 1000;
   width: max-content;
-  max-width: min(300px, calc(100vw - 16px));
+  max-width: min(300px, calc(100% - 16px));
   max-height: calc(100dvh - 16px);
   display: grid;
   gap: .28rem;
@@ -150,7 +150,7 @@
 
 .mc-container-host { max-width: 100%; }
 .mc-container {
-  width: min(680px, calc(100vw - 16px));
+  width: min(680px, 100%);
   max-height: min(88dvh, 820px);
   display: flex;
   flex-direction: column;
@@ -207,7 +207,7 @@
   z-index: 1100;
   top: max(12px, env(safe-area-inset-top));
   right: max(12px, env(safe-area-inset-right));
-  width: min(350px, calc(100vw - 24px));
+  width: min(350px, calc(100% - 24px));
   pointer-events: none;
 }
 .mc-toast {
@@ -242,16 +242,12 @@
 }
 
 .mc-button-press:active { transform: translate(2px, 2px); filter: brightness(.9); }
-.mc-item-pickup { animation: mc-item-pickup 140ms ease-out; }
-.mc-container-closing { animation: mc-container-close 100ms ease-in both; }
 
 @keyframes mc-tooltip-in { from { opacity: 0; transform: translateY(4px); } }
 @keyframes mc-item-selected { 50% { transform: translateY(-3px) scale(1.05); } }
-@keyframes mc-item-pickup { 50% { transform: translateY(-6px) scale(1.08); } }
 @keyframes mc-enchant-shimmer { to { background-position: -250% 0; } }
 @keyframes mc-backdrop-in { from { opacity: 0; } }
 @keyframes mc-container-open { from { opacity: 0; transform: scale(.94) translateY(4px); } }
-@keyframes mc-container-close { to { opacity: 0; transform: scale(.96); } }
 @keyframes mc-toast-arrive { from { opacity: 0; transform: translateX(calc(100% + 20px)); } }
 
 @media (max-width: 768px) {
@@ -272,8 +268,6 @@
   .mc-screen-backdrop,
   .mc-container,
   .mc-toast,
-  .mc-item-pickup,
-  .mc-container-closing,
   .mc-icon__shimmer,
   .mc-slot__enchant {
     animation: none !important;
