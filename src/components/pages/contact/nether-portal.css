@@ -1,0 +1,140 @@
+/* Nether portal: original CSS art. Fixed colours on the always-dark nether section, so contrast holds in both themes. */
+.portal-room {
+  --nportal-block: 26px;
+  display: grid;
+  grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  align-items: center;
+  min-width: 0;
+}
+
+/* Obsidian frame: block seams drawn with gradients, one block thick on every side. */
+.nportal {
+  position: relative;
+  width: min(280px, 100%);
+  aspect-ratio: .7;
+  margin: auto;
+  padding: var(--nportal-block);
+  background:
+    repeating-linear-gradient(90deg, transparent 0 calc(var(--nportal-block) - 2px), #000 0 var(--nportal-block)),
+    repeating-linear-gradient(transparent 0 calc(var(--nportal-block) - 2px), #000 0 var(--nportal-block)),
+    linear-gradient(135deg, #2b1838 0 20%, #120a19 20% 45%, #24132f 45% 70%, #0c0710 70%);
+  border: 4px solid #050307;
+  box-shadow: inset 4px 4px #4e2d60, inset -4px -4px #07040a, 0 0 32px rgba(168, 62, 199, .3);
+  animation: nportal-glow 4s ease-in-out infinite;
+}
+
+/* Field: two slowly scrolling purple layers, a faint sideways wobble, and drifting square particles. */
+.nportal__field {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(90deg, rgba(232, 128, 255, .45) 0 8px, rgba(92, 30, 128, .55) 8px 17px),
+    repeating-linear-gradient(rgba(255, 190, 255, .18) 0 6px, transparent 6px 22px),
+    linear-gradient(#6c2393, #b558d0 50%, #6c2393);
+  background-size: 100% 100%, 100% 88px, 100% 200%;
+  box-shadow: inset 0 0 26px #3d0e52;
+  filter: hue-rotate(var(--nportal-tint, 0deg));
+  transition: filter .35s ease;
+  animation: nportal-flow 6s linear infinite;
+}
+.nportal__field::after {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  background: repeating-linear-gradient(75deg, transparent 0 14px, rgba(255, 220, 255, .12) 14px 18px);
+  animation: nportal-wobble 3.5s ease-in-out infinite alternate;
+}
+.nportal__field i {
+  position: absolute;
+  bottom: 0;
+  left: 12%;
+  width: 6px;
+  height: 6px;
+  background: #f6c4ff;
+  box-shadow: 16px -40px #e57aff, -10px -90px #c06ae0;
+  animation: nportal-particle 3.4s linear infinite;
+}
+.nportal__field i:nth-child(2) { left: 38%; animation-delay: -.9s; }
+.nportal__field i:nth-child(3) { left: 64%; animation-delay: -1.9s; }
+.nportal__field i:nth-child(4) { left: 82%; animation-delay: -2.6s; }
+.nportal__field i:nth-child(5) { left: 24%; animation-delay: -1.4s; animation-duration: 4.2s; }
+.nportal__field i:nth-child(6) { left: 54%; animation-delay: -3s; animation-duration: 4.6s; }
+
+/* Click burst: a short brighten plus square sparks; it runs while the link opens, never before it. */
+.nportal__burst {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255, 230, 255, .75), rgba(214, 120, 255, .25) 55%, transparent 75%);
+  box-shadow: inset 0 0 0 4px rgba(255, 220, 255, .6);
+  opacity: 0;
+  pointer-events: none;
+  animation: nportal-burst 420ms ease-out;
+}
+
+/* Destinations: server-list rows, each an item slot plus its visible professional label. */
+.contact-console { min-width: 0; }
+.contact-console__prompt { margin: 0 0 .8rem; color: #e6a5f4; font: 700 .7rem var(--pixel); text-transform: uppercase; }
+.contact-console ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; margin: 0; padding: 0; list-style: none; }
+.contact-console li { min-width: 0; }
+.contact-console li a {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  min-height: 76px;
+  padding: .7rem;
+  color: #f5eff6;
+  background: #30232f;
+  border: 3px solid #100a12;
+  box-shadow: inset 3px 3px #523a51, inset -3px -3px #1a121a;
+  text-decoration: none;
+  transition: background .15s ease, border-color .15s ease;
+}
+.contact-console li a:hover, .contact-console li a.is-aimed { background: #412d41; border-color: #e6a5f4; }
+.contact-console li a:active .contact-console__slot { animation: nportal-slot-pulse 260ms ease-out; }
+.contact-console__slot {
+  display: grid;
+  place-items: center;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  background: var(--mc-slot);
+  box-shadow: inset 3px 3px var(--mc-slot-dark), inset -3px -3px var(--mc-slot-light);
+}
+.contact-console__slot .mc-item-icon { width: 30px; height: 30px; }
+.is-aimed .contact-console__slot { box-shadow: inset 0 0 0 3px #fff, inset 3px 3px 0 3px var(--mc-slot-dark); }
+.contact-console li a > span:nth-child(2) { min-width: 0; overflow-wrap: anywhere; font: 700 .7rem var(--pixel); }
+.contact-console li a small { display: flex; align-items: center; gap: .4rem; margin-bottom: .35rem; color: #c9bcc9; font: 500 .58rem var(--pixel); text-transform: uppercase; }
+.contact-console li a small svg { flex: 0 0 auto; color: #de79ee; font-size: .85rem; }
+.contact-console li a > svg:last-child { flex: 0 0 auto; margin-left: auto; }
+.contact-console__actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.2rem; }
+.contact-console__location { display: flex; align-items: center; gap: .5rem; margin: 1.2rem 0 0; color: #bbaebd; font-size: .8rem; }
+
+@keyframes nportal-flow { to { background-position: 0 0, 0 88px, 0 -200%; } }
+@keyframes nportal-wobble { from { transform: translateX(-4%) skewX(-3deg); } to { transform: translateX(4%) skewX(3deg); } }
+@keyframes nportal-particle { from { transform: translateY(20px); opacity: 0; } 20% { opacity: 1; } to { transform: translateY(-260px); opacity: 0; } }
+@keyframes nportal-glow { 50% { box-shadow: inset 4px 4px #4e2d60, inset -4px -4px #07040a, 0 0 44px rgba(190, 80, 220, .45); } }
+@keyframes nportal-burst { from { opacity: 1; } }
+@keyframes nportal-slot-pulse { 50% { transform: scale(1.12); } }
+
+/* Tablet: compact two columns, one channel per row. */
+@media (max-width: 1023px) {
+  .portal-room { --nportal-block: 20px; grid-template-columns: minmax(0, .55fr) minmax(0, 1fr); gap: 1.5rem; }
+  .contact-console ul { grid-template-columns: 1fr; }
+}
+
+/* Phone: channels first so they are reachable immediately; the portal follows as a smaller decoration. */
+@media (max-width: 767px) {
+  .portal-room { --nportal-block: 16px; grid-template-columns: minmax(0, 1fr); }
+  .nportal { order: 1; width: 170px; }
+  .contact-console li a { min-height: 64px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nportal, .nportal__field, .nportal__field::after, .nportal__field i, .nportal__burst, .contact-console li a:active .contact-console__slot { animation: none !important; }
+  .nportal__burst { display: none; }
+  .nportal__field, .contact-console li a { transition: none; }
+}

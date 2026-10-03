@@ -212,27 +212,6 @@ main { width: 100%; }
 
 
 
-.portal-room { display: grid; grid-template-columns: .7fr 1.3fr; gap: clamp(1.5rem, 5vw, 4rem); align-items: center; }
-.nether-portal { width: min(280px, 100%); aspect-ratio: .7; margin: auto; padding: 28px; background: #241429; border: 14px solid #08050b; box-shadow: inset 9px 9px #4e275b, inset -9px -9px #130b17, 0 0 35px rgba(168,62,199,.3); }
-.nether-portal__inside { position: relative; width: 100%; height: 100%; overflow: hidden; background: repeating-linear-gradient(90deg, rgba(220,105,255,.6) 0 8px, rgba(102,36,139,.7) 8px 17px), linear-gradient(#7b2da1,#bb5fd1); box-shadow: 0 0 30px #ba5eda, inset 0 0 30px #5e1874; }
-.nether-portal__inside i { position: absolute; width: 8px; height: 8px; background: #f4b8ff; box-shadow: 18px 32px #e57aff, -14px 67px #b85ddd, 30px 102px #fff; animation: portal-particle 3s linear infinite; }
-.nether-portal__inside i:nth-child(2) { left: 40%; animation-delay: -.8s; }
-.nether-portal__inside i:nth-child(3) { left: 70%; animation-delay: -1.8s; }
-.nether-portal__inside i:nth-child(4) { left: 85%; animation-delay: -2.4s; }
-.nether-portal__inside i:nth-child(5) { left: 20%; animation-delay: -1.3s; }
-@keyframes portal-particle { from { transform: translateY(250px); opacity: 0; } 20% { opacity: 1; } to { transform: translateY(-40px); opacity: 0; } }
-.contact-console { min-width: 0; }
-.contact-console__prompt { margin: 0 0 .8rem; color: #e6a5f4; font: 700 .7rem var(--pixel); text-transform: uppercase; }
-.contact-console ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; margin: 0; padding: 0; list-style: none; }
-.contact-console li { min-width: 0; }
-.contact-console li a { min-height: 76px; display: flex; align-items: center; gap: .8rem; padding: .8rem; color: #f5eff6; background: #30232f; border: 3px solid #100a12; box-shadow: inset 3px 3px #523a51, inset -3px -3px #1a121a; text-decoration: none; }
-.contact-console li a:hover { background: #412d41; }
-.contact-console li a > svg:first-child { flex: 0 0 auto; color: #de79ee; font-size: 1.3rem; }
-.contact-console li a > svg:last-child { flex: 0 0 auto; }
-.contact-console li a span { min-width: 0; overflow-wrap: anywhere; font: 700 .7rem var(--pixel); }
-.contact-console li a small { display: block; margin-bottom: .35rem; color: #b3a4b3; font: 500 .58rem var(--pixel); text-transform: uppercase; }
-.contact-console__actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.2rem; }
-.contact-console__location { display: flex; align-items: center; gap: .5rem; margin: 1.2rem 0 0; color: #bbaebd; font-size: .8rem; }
 
 .world-footer { display: flex; align-items: center; justify-content: center; gap: .65rem; padding: 3rem 1rem calc(var(--hud-clearance) + env(safe-area-inset-bottom)); color: #9fa69e; background: #171a17; border-top: 5px solid #080a08; font: 600 .62rem var(--pixel); text-align: center; }
 .world-footer > span:first-child { color: #69ad50; }
@@ -261,7 +240,6 @@ main { width: 100%; }
   .hero__content { max-width: none; }
   .hero__player-card { width: min(300px, 78vw); justify-self: center; }
   .hero__facts { grid-template-columns: 1fr; }
-  .portal-room { grid-template-columns: .6fr 1fr; }
 }
 
 @media (max-width: 680px) {
@@ -278,9 +256,6 @@ main { width: 100%; }
   .hero__facts { gap: .6rem; }
   .mc-section { padding: 1.1rem; border-width: 3px; box-shadow: 5px 5px var(--shadow); }
   .mc-section__header { margin-bottom: 1.6rem; }
-  .portal-room { grid-template-columns: 1fr; }
-  .nether-portal { width: 180px; padding: 18px; border-width: 10px; }
-  .contact-console ul { grid-template-columns: 1fr; }
   .world-footer { flex-wrap: wrap; font-size: .52rem; }
 }
 
