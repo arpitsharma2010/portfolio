@@ -117,7 +117,7 @@ export const inventoryItems: AboutItem[] = [
     category: "Frontend & Full Stack",
     lore: ["React · TypeScript", "Next.js", "25+ reusable components"],
     summary:
-      "I build the front end for the APIs I write when the work needs it: 25+ reusable React and TypeScript components across 10+ responsive screens at DNB, and the Next.js/React front end at Skopus AI.",
+      "I build the front end for the APIs I write when the work needs it: 25+ reusable React and TypeScript components across 10+ responsive screens at TCS (DNB), and the Next.js/React front end at Skopus AI.",
   },
   {
     id: "security",
@@ -135,7 +135,7 @@ export const inventoryItems: AboutItem[] = [
     category: "Inherited Codebases",
     lore: ["15+ undocumented endpoints mapped", "API contracts recovered", "Data-flow documentation"],
     summary:
-      "I read systems before I change them. The Sbanken service had no documentation and no original authors, so I traced its endpoints and downstream calls until the data flow the DNB merger was planned against was written down.",
+      "I read systems before I change them. For the Sbanken merger, I reverse-engineered 15+ microservices on a savings and investment platform until their API specifications and system documentation were written down.",
   },
   {
     id: "open",

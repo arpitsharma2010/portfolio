@@ -9,6 +9,15 @@ const detail = () => screen.getByText("Selected item").closest("section")!;
 const detailHeading = () => within(detail()).getByRole("heading", { level: 3 });
 
 describe("About player inventory", () => {
+  it("credits DNB work to Tata Consultancy Services, not DNB directly", () => {
+    const { container } = render(<About />);
+    const prose = [container.textContent!, ...aboutItems.flatMap((item) => [item.summary, ...(item.lore ?? [])])].join(" ");
+    expect(prose).not.toMatch(/\bat DNB\b/);
+    expect(prose).toMatch(/Tata\s+Consultancy Services supporting DNB/);
+    expect(prose).toMatch(/at TCS \(DNB\)/);
+  });
+
+
   it("renders the semantic About heading and inventory", () => {
     render(<About />);
     expect(screen.getByRole("heading", { level: 2, name: "About Arpit" })).toBeInTheDocument();

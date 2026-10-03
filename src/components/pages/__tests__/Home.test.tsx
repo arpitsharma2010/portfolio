@@ -10,6 +10,16 @@ describe("Home hero", () => {
     expect(screen.getByText(/Agentic AI/)).toBeInTheDocument();
   });
 
+  it("does not present the whole TCS span as banking or the years as a game level", () => {
+    const { container } = render(<Home />);
+    const intro = container.querySelector(".hero__intro")!.textContent!;
+    expect(intro).toMatch(/4\+ years building production software across\s+enterprise banking, backend platforms, cloud systems and full-stack applications/);
+    expect(intro).not.toMatch(/Norwegian bank|Four-plus/);
+    expect(intro).toMatch(/Tata\s+Consultancy Services supporting DNB/);
+    expect(screen.queryByText(/LVL/)).toBeNull();
+    expect(screen.getByLabelText("4+ years of professional experience")).toHaveTextContent("4+ YRS");
+  });
+
   it("exposes resume, linkedin, github and contact actions", () => {
     render(<Home />);
 

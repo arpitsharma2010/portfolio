@@ -36,9 +36,10 @@ const Home: React.FC = () => (
       <p className="hero__intro">
         I build and own production software end-to-end: backend services and REST APIs,
         cloud-native infrastructure on AWS, full-stack React front ends, and LLM/RAG systems that
-        have to be correct, not just impressive. Four-plus years across a Norwegian bank&rsquo;s
-        wealth-management platform, a research web platform at the University at Buffalo, and a
-        founding-engineer seat at an AI startup.
+        have to be correct, not just impressive. 4+ years building production software across
+        enterprise banking, backend platforms, cloud systems and full-stack applications, from Tata
+        Consultancy Services supporting DNB to a research web platform at the University at Buffalo
+        and a founding-engineer seat at an AI startup.
       </p>
       <div className="hero__actions">
         <a href="#experience" className="pixel-button pixel-button--primary">
@@ -61,7 +62,7 @@ const Home: React.FC = () => (
 
     <div className="hero__player-card">
       <div className="player-frame">
-        <span className="player-frame__level">LVL 4+</span>
+        <span className="player-frame__level" aria-label="4+ years of professional experience">4+ YRS</span>
         <img src={`${ASSET_BASE}arpit-sharma.jpg`} alt={`Portrait of ${NAME}`} width="512" height="512" />
         <span className="player-frame__name">Arpit</span>
       </div>

@@ -62,10 +62,8 @@ export const experience: ExperienceEntry[] = [
     summary:
       "The TCS onboarding engineering program: a full-stack Hospital Management System, built across a React front end, a Java backend and a MySQL data model.",
     bullets: [
-      "Built a full-stack Hospital Management System during the TCS onboarding engineering program, with a React and TypeScript front end and a Java and Spring Boot backend.",
-      "Built 10+ REST APIs for the system.",
-      "Designed the MySQL data model for 5,000+ patient records and 10K+ billing/inventory transactions, with a 30% reduction in data retrieval time.",
-      "Developed with JUnit and Test Driven Development.",
+      "Developed 10+ REST APIs supporting 5,000+ patient records by building a full-stack Hospital Management System during the TCS onboarding engineering program using React, TypeScript, Java and Spring Boot.",
+      "Reduced data retrieval time by 30% by designing optimized MySQL schemas and tuning SQL queries, processing 10K+ billing and inventory transactions with JUnit-based Test Driven Development.",
     ],
     technologies: ["React", "TypeScript", "Java", "Spring Boot", "REST APIs", "MySQL", "JUnit", "TDD"],
     advancementType: "standard",
@@ -73,9 +71,9 @@ export const experience: ExperienceEntry[] = [
     evidenceItems: [
       { icon: "crafting-table", label: "Hospital Management System", summary: "A full-stack system built in the onboarding program.", supportingBulletIndex: 0 },
       { icon: "iron-pickaxe", label: "Java / Spring Boot backend", summary: "The server side of the system.", supportingBulletIndex: 0 },
-      { icon: "map", label: "API surface", summary: "10+ REST APIs for the system.", supportingBulletIndex: 1 },
-      { icon: "chest", label: "MySQL data model", summary: "5,000+ patient records and 10K+ billing/inventory transactions.", supportingBulletIndex: 2 },
-      { icon: "book", label: "JUnit / TDD", summary: "Test Driven Development with JUnit.", supportingBulletIndex: 3 },
+      { icon: "map", label: "REST API surface", summary: "10+ REST APIs supporting 5,000+ patient records.", supportingBulletIndex: 0 },
+      { icon: "chest", label: "MySQL data model", summary: "Optimized schemas and SQL tuning: 30% faster data retrieval.", supportingBulletIndex: 1 },
+      { icon: "book", label: "JUnit / TDD", summary: "10K+ billing and inventory transactions, built test-first with JUnit.", supportingBulletIndex: 1 },
     ],
     metrics: ["10+ REST APIs", "5,000+ patient records", "30% reduction in data retrieval time", "10K+ billing/inventory transactions"],
   },
@@ -115,9 +113,9 @@ export const experience: ExperienceEntry[] = [
     endDate: "2024-07",
     focus: "Merger integration and release ownership for an inherited banking service.",
     summary:
-      "DNB's merger with Sbanken required integrating a savings and investment microservice that had no documentation and no original authors available. I was assigned to make it understandable, then to own its releases.",
+      "DNB's merger with Sbanken required integrating Sbanken's savings and investment platform, whose microservices lacked the API specifications and system documentation the integration needed. I reverse-engineered them, then owned releases.",
     bullets: [
-      "Reverse-engineered the undocumented Sbanken microservice: mapped 15+ endpoints, recovered their API contracts, traced every downstream dependency and produced the data-flow documentation the merger integration was planned against.",
+      "Reverse-engineered 15+ microservices for Sbanken's savings and investment platform, which processes 500K+ daily transactions, producing API specifications and system documentation to enable seamless DNB merger integration.",
       "Owned 20+ production releases across four environments, covering backend development, testing, AWS deployment and release validation, as the engineer accountable for each one reaching production intact.",
       "Built and maintained the delivery path with GitLab CI/CD and Terraform, using CloudWatch for observability.",
       "Diagnosed production 4xx/5xx failures across service boundaries, where the reported symptom and the actual fault were usually in different services.",
@@ -126,7 +124,7 @@ export const experience: ExperienceEntry[] = [
     advancementType: "milestone",
     icon: "compass",
     evidenceItems: [
-      { icon: "map", label: "Service mapping", summary: "15+ undocumented endpoints and their contracts recovered.", supportingBulletIndex: 0 },
+      { icon: "map", label: "Service mapping", summary: "15+ microservices reverse-engineered into API specs and docs.", supportingBulletIndex: 0 },
       { icon: "shield", label: "Release ownership", summary: "20+ production releases across four environments.", supportingBulletIndex: 1 },
       { icon: "command-cube", label: "Delivery pipeline", summary: "GitLab CI/CD and Terraform, observed with CloudWatch.", supportingBulletIndex: 2 },
       { icon: "redstone-torch", label: "Production diagnosis", summary: "4xx/5xx failures traced across service boundaries.", supportingBulletIndex: 3 },

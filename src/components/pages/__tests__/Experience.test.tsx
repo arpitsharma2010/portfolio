@@ -56,6 +56,16 @@ describe("experience data", () => {
     expect(trainee.bullets.join(" ")).not.toMatch(/DNB|bank|wealth/i);
   });
 
+  it("states the trainee and Sbanken facts as the authoritative resume does", () => {
+    expect(entry("tcs-ase-trainee").bullets).toEqual([
+      "Developed 10+ REST APIs supporting 5,000+ patient records by building a full-stack Hospital Management System during the TCS onboarding engineering program using React, TypeScript, Java and Spring Boot.",
+      "Reduced data retrieval time by 30% by designing optimized MySQL schemas and tuning SQL queries, processing 10K+ billing and inventory transactions with JUnit-based Test Driven Development.",
+    ]);
+    const se2 = entry("tcs-dnb-se2");
+    expect(se2.bullets[0]).toMatch(/^Reverse-engineered 15\+ microservices .*500K\+ daily transactions, producing API specifications and system documentation/);
+    expect(JSON.stringify(experience)).not.toMatch(/15\+ (undocumented )?endpoints/);
+  });
+
   it("credits the DNB roles to Tata Consultancy Services with the authoritative resume dates", () => {
     const se1 = entry("tcs-dnb-se1");
     const se2 = entry("tcs-dnb-se2");
@@ -209,7 +219,7 @@ describe("Experience advancements", () => {
     render(<Experience />);
     const metricsFor = {
       "Software Engineer I": [/800 ms to 500 ms/, /25\+ endpoint service/, /25\+ reusable React/],
-      "Software Engineer II": [/15\+ endpoints/, /20\+ production releases/],
+      "Software Engineer II": [/15\+ microservices/, /20\+ production releases/],
       "Software Engineer, Part-time": [/50,000 records to 50/, /57\+ admin endpoints/],
       "Founding Engineer, Part-time": [/13K\+ source-line/, /8-endpoint/],
     };

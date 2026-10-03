@@ -12,6 +12,14 @@ const tab = (name: string) => within(screen.getByRole("group", { name: /category
 const slot = (technology: string) => within(chest()).getByRole("button", { name: new RegExp(`^${technology.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")},`) });
 
 describe("skills data", () => {
+  it("attributes DNB work to TCS in skill prose", () => {
+    const prose = skillItems.flatMap((item) => [item.summary, ...item.uses]).join(" ");
+    expect(prose).not.toMatch(/\b(at|my) DNB\b/);
+    expect(prose).not.toMatch(/Sbanken (service|endpoints|microservice)\b/);
+    expect(prose).toMatch(/at TCS \(DNB\)/);
+  });
+
+
   it("gives every skill a unique id, valid category, technology and evidence", () => {
     const categoryIds = SKILL_CATEGORIES.map((category) => category.id) as string[];
     const sources = [...ROLE_SOURCES, ...PROJECT_SOURCES] as string[];

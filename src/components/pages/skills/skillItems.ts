@@ -46,7 +46,7 @@ export interface SkillItem extends MinecraftItem, Omit<SkillSeed, "icon"> {
 const seeds: SkillSeed[] = [
   {
     id: "csharp", technology: "C#", itemName: "Diamond", icon: "diamond", categoryId: "languages",
-    summary: "My main production language at DNB, where I wrote and owned .NET Core services on a wealth-management platform from Apr 2021 to Jul 2024.",
+    summary: "My main production language at TCS (DNB), where I wrote and owned .NET Core services on a wealth-management platform from Apr 2021 to Jul 2024.",
     uses: ["Backend services and REST APIs", "Microservice decomposition", "Unit tests with NUnit"],
     evidence: ["TCS (DNB)"],
   },
@@ -58,7 +58,7 @@ const seeds: SkillSeed[] = [
   },
   {
     id: "typescript", technology: "TypeScript", itemName: "Lapis Gem", icon: "lapis-gem", categoryId: "languages",
-    summary: "Typed code across the stack: the Node.js service and Next.js front end at Skopus AI, and 25+ reusable React components at DNB.",
+    summary: "Typed code across the stack: the Node.js service and Next.js front end at Skopus AI, and 25+ reusable React components at TCS (DNB).",
     uses: ["Node.js AI/RAG service", "Next.js and React front end", "Reusable React components"],
     evidence: ["Skopus AI", "TCS (DNB)"],
   },
@@ -76,7 +76,7 @@ const seeds: SkillSeed[] = [
   },
   {
     id: "dotnet", technology: ".NET Core", itemName: "Diamond Pickaxe", icon: "diamond-pickaxe", categoryId: "backend",
-    summary: "The backend framework behind my DNB work: REST APIs and microservices on a wealth-management platform, including the undocumented Sbanken service I reverse-engineered and released.",
+    summary: "The backend framework behind my TCS (DNB) work: REST APIs and microservices on a wealth-management platform, including the 15+ Sbanken microservices I reverse-engineered.",
     uses: ["REST APIs and microservices", "Latency cut from ~800 ms to 500 ms", "20+ production releases"],
     evidence: ["TCS (DNB)"],
   },
@@ -100,14 +100,14 @@ const seeds: SkillSeed[] = [
   },
   {
     id: "rest-apis", technology: "REST APIs", itemName: "Sword", icon: "sword", categoryId: "backend",
-    summary: "REST API work at Tata Consultancy Services: 30+ RESTful APIs on the DNB account as Software Engineer I, the undocumented Sbanken endpoints I mapped as Software Engineer II, and 10+ REST APIs in the ASE-Trainee program.",
+    summary: "REST API work at Tata Consultancy Services: 30+ RESTful APIs on the DNB account as Software Engineer I, the 15+ Sbanken microservices I reverse-engineered as Software Engineer II, and 10+ REST APIs in the ASE-Trainee program.",
     uses: ["30+ RESTful APIs", "15+ undocumented endpoints mapped", "10+ REST APIs as ASE-Trainee"],
     evidence: ["TCS (DNB)", "TCS (Trainee)"],
   },
   {
     id: "microservices", technology: "Microservices", itemName: "Server Network", icon: "server-network", categoryId: "backend",
-    summary: "Service boundaries at DNB: splitting a 25+ endpoint service into two independently deployable microservices and integrating the Sbanken microservice in the merger.",
-    uses: ["25+ endpoint service split in two", "Sbanken service reverse-engineered", "Cross-service 4xx/5xx debugging"],
+    summary: "Service boundaries at TCS (DNB): splitting a 25+ endpoint service into two independently deployable microservices and reverse-engineering 15+ Sbanken microservices for the merger.",
+    uses: ["25+ endpoint service split in two", "15+ Sbanken microservices reverse-engineered", "Cross-service 4xx/5xx debugging"],
     evidence: ["TCS (DNB)"],
   },
   {
@@ -118,7 +118,7 @@ const seeds: SkillSeed[] = [
   },
   {
     id: "react", technology: "React", itemName: "Crafting Table", icon: "crafting-table", categoryId: "frontend",
-    summary: "The front end I build for my own APIs: 25+ reusable components at DNB, the Skopus AI front end, Tesserae fixes and the Library Management System dashboards.",
+    summary: "The front end I build for my own APIs: 25+ reusable components at TCS (DNB), the Skopus AI front end, Tesserae fixes and the Library Management System dashboards.",
     uses: ["25+ components across 10+ responsive screens", "Refactoring Tesserae's React code", "Role-based dashboards"],
     evidence: ["TCS (DNB)", "Skopus AI", "Tesserae", "Library Management System"],
   },
@@ -130,19 +130,19 @@ const seeds: SkillSeed[] = [
   },
   {
     id: "aws", technology: "AWS", itemName: "Command Block", icon: "command-cube", categoryId: "cloud",
-    summary: "Where my services run: AWS deployment and release validation at DNB, the Skopus AI service on ECS and WanderGenie's deployment. AWS Certified Solutions Architect, Associate.",
+    summary: "Where my services run: AWS deployment and release validation at TCS (DNB), the Skopus AI service on ECS and WanderGenie's deployment. AWS Certified Solutions Architect, Associate.",
     uses: ["Deployments across four environments", "ECS, S3 and CloudWatch", "Solutions Architect, Associate"],
     evidence: ["TCS (DNB)", "Skopus AI", "WanderGenie"],
   },
   {
     id: "ecs", technology: "AWS ECS", itemName: "Furnace", icon: "furnace", categoryId: "cloud",
-    summary: "Runs the investment-processing automation I built at DNB and the current Skopus AI service.",
+    summary: "Runs the investment-processing automation I built at TCS (DNB) and the current Skopus AI service.",
     uses: ["Automated investment processing", "AI service hosting"],
     evidence: ["TCS (DNB)", "Skopus AI"],
   },
   {
     id: "s3", technology: "AWS S3", itemName: "Chest", icon: "chest", categoryId: "cloud",
-    summary: "Storage behind the investment-processing and customer-notification automation I built at DNB.",
+    summary: "Storage behind the investment-processing and customer-notification automation I built at TCS (DNB).",
     uses: ["Investment-processing workflows", "Customer notifications"],
     evidence: ["TCS (DNB)"],
   },
@@ -166,13 +166,13 @@ const seeds: SkillSeed[] = [
   },
   {
     id: "gitlab-ci", technology: "GitLab CI/CD", itemName: "Redstone Torch", icon: "redstone-torch", categoryId: "cloud",
-    summary: "The pipeline I built and maintained at DNB for 20+ production releases across four environments.",
+    summary: "The pipeline I built and maintained at TCS (DNB) for 20+ production releases across four environments.",
     uses: ["20+ releases, four environments", "Testing and release validation"],
     evidence: ["TCS (DNB)"],
   },
   {
     id: "postgresql", technology: "PostgreSQL", itemName: "Lapis Ore", icon: "lapis-ore", categoryId: "databases",
-    summary: "Relational storage at Skopus AI, on the Tesserae research platform and at DNB.",
+    summary: "Relational storage at Skopus AI, on the Tesserae research platform and at TCS (DNB).",
     uses: ["Semantic retrieval with pgvector", "Selection moved into the query", "Wealth-management platform data"],
     evidence: ["Skopus AI", "Tesserae", "TCS (DNB)"],
   },
@@ -250,7 +250,7 @@ const seeds: SkillSeed[] = [
   },
   {
     id: "nunit", technology: "NUnit", itemName: "Book", icon: "book", categoryId: "testing",
-    summary: "Testing for the .NET Core services I released at DNB.",
+    summary: "Testing for the .NET Core services I released at TCS (DNB).",
     uses: ["Backend tests before release"],
     evidence: ["TCS (DNB)"],
   },

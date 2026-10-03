@@ -143,15 +143,15 @@ const About: React.FC = () => {
         <div className="pi-lore">
           <p>
             Most of what I have shipped, I have owned rather than contributed to: the service, its
-            design, and its releases. At Skopus AI that means a codebase I wrote almost all of; at DNB
-            it meant being the engineer accountable for a microservice reaching production intact across
-            four environments, and for diagnosing it when a release did not. That is the level I work at
-            best.
+            design, and its releases. At Skopus AI that means a codebase I wrote almost all of; at Tata
+            Consultancy Services supporting DNB it meant being the engineer accountable for releases
+            reaching production intact across four environments, and for diagnosing what broke when one
+            did not. That is the level I work at best.
           </p>
           <p>
-            I read systems before I change them. The Sbanken service had no documentation and no
-            original authors left, so the work started with tracing endpoints and downstream calls until
-            the data flow was written down. The Tesserae fix that took an API response from ~50,000
+            I read systems before I change them. For the Sbanken merger, that meant
+            reverse-engineering 15+ microservices on a savings and investment platform until their API
+            specifications and system documentation were written down. The Tesserae fix that took an API response from ~50,000
             records to 50 came from the same place. The interesting question was not how to paginate;
             it was why an endpoint was returning a result set nobody rendered.
           </p>
