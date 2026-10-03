@@ -1,186 +1,227 @@
-import React from "react";
+import React, { useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 import PageSection from "../common/PageSection.tsx";
+import { MinecraftItemIcon } from "../minecraft";
+import {
+  DEFAULT_EXPERIENCE_ID,
+  employerName,
+  experience,
+  formatDates,
+  isCurrent,
+  type AdvancementType,
+  type ExperienceEntry,
+} from "./experience/experienceData";
+import "./experience/advancements.css";
 
-type Role = {
-  company: string;
-  position: string;
-  duration: string;
-  location?: string;
-  website?: string;
-  summary: string;
-  points: string[];
-  stack: string[];
+const DETAIL_ID = "experience-detail";
+
+/** Desktop map coordinates, in % of the map box. The two ongoing roles branch from the DNB line because they overlap. */
+const MAP_LAYOUT: Record<string, { x: number; y: number }> = {
+  "tcs-dnb-se1": { x: 11, y: 44 },
+  "tcs-dnb-se2": { x: 36, y: 44 },
+  "ub-tesserae": { x: 66, y: 16 },
+  "skopus-ai": { x: 88, y: 70 },
+};
+const BRANCH_X = 52;
+
+const TYPE_LABEL: Record<AdvancementType, string> = {
+  standard: "Role",
+  milestone: "Milestone · Promotion",
+  current: "Current role",
 };
 
-const roles: Role[] = [
-  {
-    company: "Skopus AI",
-    position: "Founding Engineer, Part-time",
-    duration: "May 2026 – Present",
-    location: "Remote",
-    summary:
-      "Founding engineer on an AI product with no existing backend. I own the service end-to-end. I authored roughly 99% of a 13K+ source-line codebase, and every architectural call in it is mine.",
-    points: [
-      "Built and own an 8-endpoint AI/RAG service: semantic retrieval over pgvector, grounded analysis so answers stay tied to source material, intent routing to pick the right pipeline per request, and caching plus fallback workflows so a slow or failing model call degrades instead of breaking the product.",
-      "Enforce strict validation on every LLM response before it reaches a caller, which is what makes a probabilistic model safe to put behind a typed API contract.",
-      "Implemented Google OAuth end-to-end (OAuth 2.0 with PKCE, token handling and session security) rather than delegating auth to a drop-in widget.",
-      "Cover the API surface with contract testing so the Next.js/React front end and the service can move independently and integrate the two myself across the full stack.",
-    ],
-    stack: [
-      "Node.js",
-      "TypeScript",
-      "PostgreSQL",
-      "pgvector",
-      "Supabase",
-      "AWS ECS",
-      "OpenAI APIs",
-      "Next.js",
-      "React",
-      "OAuth 2.0",
-      "PKCE",
-    ],
-  },
-  {
-    company: "University at Buffalo (Tesserae)",
-    position: "Software Engineer, Part-time",
-    duration: "Nov 2025 – Present",
-    location: "Remote",
-    website: "https://tesserae.caset.buffalo.edu/",
-    summary:
-      "Tesserae is a research platform for intertextual analysis of classical corpora, used by scholars and run in production. My work is API performance, access control and making an inherited codebase safe to change.",
-    points: [
-      "Cut a rare-word API response from roughly 50,000 records to 50 per request. The endpoint was returning an entire result set to a client that only ever rendered a page of it; the fix was moving selection into the query rather than the browser.",
-      "Added role-based access control and rate limiting, securing 57+ admin endpoints that were previously reachable by any authenticated caller.",
-      "Debugged and refactored existing Flask and React code, and backed the changes with automated tests so the research team can deploy without manual verification.",
-      "Work AI-assisted with Claude Code and Codex for exploration and refactoring, with review and tests as the gate on anything that ships.",
-    ],
-    stack: ["Python", "Flask", "React", "PostgreSQL", "RBAC", "Rate Limiting", "Pytest"],
-  },
-  {
-    company: "DNB",
-    position: "Software Engineer II",
-    duration: "Apr 2023 – Jul 2024",
-    summary:
-      "DNB's merger with Sbanken required integrating a savings and investment microservice that had no documentation and no original authors available. I was assigned to make it understandable, then to own its releases.",
-    points: [
-      "Reverse-engineered the undocumented Sbanken microservice: mapped 15+ endpoints, recovered their API contracts, traced every downstream dependency and produced the data-flow documentation the merger integration was planned against.",
-      "Owned 20+ production releases across four environments, covering backend development, testing, AWS deployment and release validation, as the engineer accountable for each one reaching production intact.",
-      "Built and maintained the delivery path with GitLab CI/CD and Terraform, using CloudWatch for observability.",
-      "Diagnosed production 4xx/5xx failures across service boundaries, where the reported symptom and the actual fault were usually in different services.",
-    ],
-    stack: [
-      "C#",
-      ".NET Core",
-      "AWS",
-      "GitLab CI/CD",
-      "Terraform",
-      "CloudWatch",
-      "REST APIs",
-      "Microservices",
-      "NUnit",
-    ],
-  },
-  {
-    company: "DNB",
-    position: "Software Engineer I",
-    duration: "Nov 2020 – Mar 2023",
-    summary:
-      "Backend and API engineering on a wealth-management platform, plus the full-stack work to put those APIs in front of customers.",
-    points: [
-      "Reduced API latency from roughly 800 ms to 500 ms by executing independent downstream calls concurrently instead of sequentially; the endpoint was waiting on calls that had no dependency on each other.",
-      "Decomposed a 25+ endpoint service into two independently deployable microservices, so the two halves could ship on their own schedules and a fault in one stopped taking the other down with it.",
-      "Automated investment-processing workflows and customer notifications on AWS S3 and ECS, replacing steps that had been run by hand.",
-      "Built 25+ reusable React and TypeScript components across 10+ responsive screens, and integrated them against the APIs I had written on the backend.",
-    ],
-    stack: [
-      "C#",
-      ".NET Core",
-      "DynamoDB",
-      "PostgreSQL",
-      "AWS S3",
-      "AWS ECS",
-      "React",
-      "TypeScript",
-      "REST APIs",
-    ],
-  },
-];
+const isReducedMotion = () =>
+  typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-const Experience: React.FC = () => (
-  <PageSection
-    eyebrow="Quest Log"
-    title="Completed & active quests"
-    description="Four roles across a bank, a university research platform and an AI startup. In each one the work was owning a service: understanding it, changing it safely and being accountable for it in production."
-    variant="deepslate"
-  >
-    <ol className="quest-log">
-      {roles.map((role) => (
-        <li key={`${role.company}-${role.position}`} className="quest">
-          <span
-            className="quest__marker"
-            aria-hidden
-          />
-          <article className="quest-card">
-            <div className="quest-card__heading">
-              <div>
-                <h3>
-                  {role.position}
-                </h3>
-                <p className="quest-card__company">
-                  {role.website ? (
-                    <a
-                      href={role.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-link"
-                    >
-                      {role.company}
-                    </a>
-                  ) : (
-                    role.company
-                  )}
-                </p>
-              </div>
-              <div className="quest-card__meta">
-                <p>
-                  {role.duration}
-                </p>
-                {role.location && (
-                  <p>
-                    {role.location}
-                  </p>
-                )}
-              </div>
-            </div>
+const point = (id: string) => `${MAP_LAYOUT[id].x} ${MAP_LAYOUT[id].y}`;
 
-            <p className="quest-card__summary">
-              {role.summary}
-            </p>
+const Connectors = () => {
+  const trunkY = MAP_LAYOUT["tcs-dnb-se2"].y;
+  const paths = [
+    `M${point("tcs-dnb-se1")} L${point("tcs-dnb-se2")} L${BRANCH_X} ${trunkY}`,
+    ...["ub-tesserae", "skopus-ai"].map((id) => `M${BRANCH_X} ${trunkY} L${BRANCH_X} ${MAP_LAYOUT[id].y} L${point(id)}`),
+  ];
+  return (
+    <svg className="xp-connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden focusable="false">
+      {paths.map((d) => <path key={d} className="xp-connectors__edge" d={d} vectorEffect="non-scaling-stroke" />)}
+      {paths.map((d) => <path key={`${d}-core`} className="xp-connectors__core" d={d} vectorEffect="non-scaling-stroke" />)}
+    </svg>
+  );
+};
 
-            <ul className="quest-card__objectives">
-              {role.points.map((point) => (
-                <li key={point}>
-                  <span aria-hidden>✓</span>
-                  <span>{point}</span>
-                </li>
-              ))}
-            </ul>
+const AdvancementNode = ({ entry, step, selected, onSelect }: {
+  entry: ExperienceEntry;
+  step: number;
+  selected: boolean;
+  onSelect: () => void;
+}) => {
+  const current = isCurrent(entry);
+  const focusId = `xp-focus-${entry.id}`;
+  const layout = MAP_LAYOUT[entry.id];
+  return (
+    <li
+      className={`xp-node xp-node--${entry.advancementType}${selected ? " is-selected" : ""}`}
+      style={{ "--x": `${layout.x}%`, "--y": `${layout.y}%` } as CSSProperties}
+    >
+      <span className="xp-node__frame" aria-hidden>
+        <MinecraftItemIcon name={entry.icon} />
+        <span className="xp-node__step">{step}</span>
+        {current && <span className="xp-node__beacon" />}
+      </span>
+      <div className="xp-node__text">
+        <h3 className="xp-node__title">{entry.title}</h3>
+        <p className="xp-node__org">{employerName(entry)}</p>
+        <p className="xp-node__dates">{formatDates(entry)}</p>
+        {current && <p className="xp-node__current">Current</p>}
+        <p className="xp-node__focus" id={focusId}>{entry.focus}</p>
+      </div>
+      {/* Stretched over the whole node, so one click or tap anywhere selects it. */}
+      <button
+        type="button"
+        className="xp-node__select"
+        data-experience-id={entry.id}
+        aria-pressed={selected}
+        aria-controls={DETAIL_ID}
+        aria-describedby={focusId}
+        onClick={onSelect}
+      >
+        <span className="mc-visually-hidden">
+          {entry.title}, {employerName(entry)}, {formatDates(entry)}{current ? ", current role" : ""}
+        </span>
+      </button>
+    </li>
+  );
+};
 
-            <ul className="loot-list" aria-label="Technologies used">
-              {role.stack.map((tech) => (
-                <li
-                  key={tech}
-                  className="loot-tag"
-                >
-                  {tech}
-                </li>
-              ))}
-            </ul>
-          </article>
-        </li>
-      ))}
-    </ol>
-  </PageSection>
+const ExperienceDetail = ({ entry }: { entry: ExperienceEntry }) => (
+  <div key={entry.id} className="xp-detail__body">
+    <header className="xp-detail__head">
+      <span className={`xp-node__frame xp-node--${entry.advancementType}`} aria-hidden>
+        <MinecraftItemIcon name={entry.icon} />
+      </span>
+      <div>
+        <p className="xp-kicker">{TYPE_LABEL[entry.advancementType]}</p>
+        <h3 id="xp-detail-title">{entry.title}</h3>
+      </div>
+    </header>
+
+    <dl className="xp-facts">
+      <div>
+        <dt>Organization</dt>
+        <dd>
+          {entry.website ? (
+            <a href={entry.website} target="_blank" rel="noopener noreferrer" className="text-link">
+              {employerName(entry)}<span className="mc-visually-hidden"> (opens in a new tab)</span>
+            </a>
+          ) : employerName(entry)}
+        </dd>
+      </div>
+      <div><dt>Role</dt><dd>{entry.title}</dd></div>
+      <div><dt>Dates</dt><dd>{formatDates(entry)}</dd></div>
+      {entry.location && <div><dt>Location</dt><dd>{entry.location}</dd></div>}
+    </dl>
+
+    <div className="xp-detail__columns">
+      <div>
+        <h4 className="xp-label">Focus</h4>
+        <p className="xp-detail__summary">{entry.summary}</p>
+        <h4 className="xp-label">Impact</h4>
+        <ul className="xp-impact">
+          {entry.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
+        </ul>
+      </div>
+      <div>
+        <h4 className="xp-label">Evidence</h4>
+        <ul className="xp-evidence" aria-label={`${entry.title} evidence`}>
+          {entry.evidenceItems.map((item) => (
+            <li key={item.label} className="xp-evidence__item">
+              <span className="xp-evidence__icon" aria-hidden><MinecraftItemIcon name={item.icon} /></span>
+              <span>
+                <strong>{item.label}</strong>
+                <span>{item.summary}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+        <h4 className="xp-label">Systems / Tools</h4>
+        <ul className="loot-list xp-tools" aria-label={`${entry.title} technologies`}>
+          {entry.technologies.map((tech) => <li key={tech} className="loot-tag">{tech}</li>)}
+        </ul>
+      </div>
+    </div>
+  </div>
 );
+
+const Experience: React.FC = () => {
+  const [selectedId, setSelectedId] = useState(DEFAULT_EXPERIENCE_ID);
+  const [announcement, setAnnouncement] = useState("");
+  const listRef = useRef<HTMLOListElement>(null);
+  const detailRef = useRef<HTMLElement>(null);
+  const selected = experience.find((entry) => entry.id === selectedId)!;
+  const concurrent = experience.filter(isCurrent).map(employerName);
+
+  const select = (entry: ExperienceEntry) => {
+    setSelectedId(entry.id);
+    setAnnouncement(`Showing ${entry.title}, ${employerName(entry)}, ${formatDates(entry)}`);
+    // On narrow screens the detail sits below the path: bring it into view after an explicit pick; focus stays put.
+    const detail = detailRef.current;
+    if (!detail) return;
+    const rect = detail.getBoundingClientRect();
+    if (rect.top > window.innerHeight * .75 || rect.bottom < 0) {
+      detail.scrollIntoView?.({ behavior: isReducedMotion() ? "auto" : "smooth", block: "start" });
+    }
+  };
+
+  /** Chronological, not geometric: next/previous role, Home/End for the ends. Scoped to this list. */
+  const handleKeyDown = (event: KeyboardEvent<HTMLOListElement>) => {
+    const buttons = [...(listRef.current?.querySelectorAll<HTMLButtonElement>(".xp-node__select") ?? [])];
+    const index = buttons.indexOf(event.target as HTMLButtonElement);
+    if (index < 0) return;
+    let next: number | null = null;
+    if (event.key === "ArrowRight" || event.key === "ArrowDown") next = Math.min(index + 1, buttons.length - 1);
+    if (event.key === "ArrowLeft" || event.key === "ArrowUp") next = Math.max(index - 1, 0);
+    if (event.key === "Home") next = 0;
+    if (event.key === "End") next = buttons.length - 1;
+    if (next === null) return;
+    event.preventDefault();
+    buttons[next].focus();
+  };
+
+  return (
+    <PageSection
+      eyebrow="Advancements"
+      title="Professional Experience"
+      description="A progression through the systems, products and teams I've worked on."
+      variant="deepslate"
+    >
+      <div className="xp-advancements">
+        <div className="xp-map">
+          <Connectors />
+          <ol ref={listRef} className="xp-path" aria-label="Roles, oldest to newest" onKeyDown={handleKeyDown}>
+            {experience.map((entry, index) => (
+              <AdvancementNode
+                key={entry.id}
+                entry={entry}
+                step={index + 1}
+                selected={entry.id === selectedId}
+                onSelect={() => select(entry)}
+              />
+            ))}
+          </ol>
+        </div>
+        <p className="xp-legend">
+          <span className="xp-legend__item xp-legend__item--standard">Role</span>
+          <span className="xp-legend__item xp-legend__item--milestone">Promotion</span>
+          <span className="xp-legend__item xp-legend__item--current">Current</span>
+          <span className="xp-legend__note">{concurrent.join(" and ")} are concurrent, ongoing roles.</span>
+        </p>
+
+        <section ref={detailRef} id={DETAIL_ID} className="xp-detail" aria-labelledby="xp-detail-title">
+          <ExperienceDetail entry={selected} />
+        </section>
+        <p className="mc-visually-hidden" aria-live="polite">{announcement}</p>
+      </div>
+    </PageSection>
+  );
+};
 
 export default Experience;
