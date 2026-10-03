@@ -1,0 +1,176 @@
+/* Enchanting room: a dark library in both themes, so its colours are fixed rather than themed. */
+.ench-room {
+  --ench-bg: #1b1622;
+  --ench-panel: #2a2233;
+  --ench-edge: #0d0a12;
+  --ench-hi: #3d3249;
+  --ench-ink: #f1ecf7;
+  --ench-muted: #c5b9d6;
+  --ench-label: #c9b3ef;
+  --ench-title: #f3d98a;
+  --ench-glow: #c58bff;
+  --ench-wood: #6b4425;
+  --ench-wood-hi: #94643a;
+  display: grid;
+  grid-template-areas: "shelf" "altar" "detail" "certs";
+  gap: 1.25rem;
+  min-width: 0;
+  padding: clamp(.75rem, 2.5vw, 1.5rem);
+  color: var(--ench-ink);
+  background:
+    repeating-linear-gradient(90deg, transparent 0 46px, rgba(255, 255, 255, .025) 46px 48px),
+    repeating-linear-gradient(0deg, transparent 0 46px, rgba(255, 255, 255, .025) 46px 48px),
+    var(--ench-bg);
+  border: 4px solid var(--ench-edge);
+  box-shadow: inset 4px 4px #2e2638, inset -4px -4px #110d17;
+}
+.ench-room > * { min-width: 0; }
+.ench-room .text-link { color: var(--ench-ink); }
+.ench-room .project-link { color: #a8e57f; }
+.ench-room .text-link:hover, .ench-room .project-link:hover { color: var(--ench-title); }
+.ench-room .loot-list { margin-top: .6rem; padding-top: .6rem; }
+
+/* Bookshelf: a wooden frame holding the degree books. Side spines are decoration only. */
+.ench-shelf { grid-area: shelf; display: grid; gap: .75rem; padding: .75rem; background: var(--ench-wood); border: 4px solid #2b1a0e;
+  box-shadow: inset 4px 4px var(--ench-wood-hi), inset -4px -4px #3f2713; }
+.ench-spines { display: none; pointer-events: none; }
+.ench-spines i { width: 11px; height: 54px; background: #7a2e2a; border: 2px solid #150d09; box-shadow: inset 2px 0 rgba(255, 255, 255, .18); }
+.ench-spines i:nth-child(3n + 2) { height: 46px; background: #2f5a74; }
+.ench-spines i:nth-child(3n) { height: 60px; background: #4d6b2c; }
+.ench-spines i:nth-child(4n) { height: 50px; background: #8a6a2a; }
+
+.ench-books { display: grid; gap: .75rem; margin: 0; padding: 0; list-style: none; }
+
+/* Books: every degree and certification gets the same frame; no rarity, no ranking. */
+.ench-book { position: relative; display: grid; grid-template-columns: 48px minmax(0, 1fr); align-content: start; gap: .5rem .85rem; padding: .9rem;
+  background: var(--ench-panel); border: 4px solid var(--ench-edge); box-shadow: inset 3px 3px var(--ench-hi), inset -3px -3px #19131f;
+  transition: transform 120ms ease-out, border-color 120ms ease-out; }
+.ench-book__cover { display: grid; place-items: center; width: 48px; height: 48px; background: #3a2f45; border: 3px solid var(--ench-edge); }
+.ench-book__cover .mc-item-icon { width: 32px; height: 32px; }
+.ench-book__body { display: flex; gap: .75rem; align-items: flex-start; min-width: 0; }
+.ench-book__logo { width: 44px; height: 44px; flex: 0 0 44px; object-fit: cover; background: #fffdf5; border: 3px solid var(--ench-edge); }
+.ench-book__text { min-width: 0; }
+.ench-book h3 { margin: 0; color: var(--ench-title); font: 800 .82rem/1.45 var(--pixel); overflow-wrap: break-word; }
+.ench-book__institution { margin: .1rem 0 0; font-weight: 700; font-size: .88rem; }
+.ench-book__institution a { display: inline-flex; align-items: center; min-height: 44px; }
+.ench-book__meta { margin: .1rem 0 0; color: var(--ench-muted); font: 600 .64rem/1.6 var(--pixel); text-transform: uppercase; }
+.ench-book__name { margin: 0; color: var(--ench-title); font: 800 .74rem/1.5 var(--pixel); overflow-wrap: break-word; }
+.ench-book__issuer { margin: .3rem 0 0; color: var(--ench-muted); font-size: .82rem; line-height: 1.5; }
+.ench-book .project-link { min-height: 44px; }
+.ench-book .coursework { grid-column: 1 / -1; margin: 0; padding-top: .2rem; border-top: 2px dashed rgba(255, 255, 255, .16); }
+.ench-book .coursework summary { display: flex; align-items: center; gap: .35rem; width: fit-content; min-height: 44px; cursor: pointer; color: #b9e57a; font: 700 .68rem var(--pixel); }
+.ench-book .coursework summary span { color: var(--ench-muted); font-weight: 500; }
+
+/* The selection hit area covers the book; real links and the coursework disclosure stay above it. */
+.ench-select { position: absolute; inset: 0; z-index: 1; min-height: 44px; padding: 0; background: transparent; border: 0; cursor: pointer; }
+.ench-select:focus-visible { outline: 3px solid var(--mc-focus); outline-offset: 3px; }
+.ench-above { position: relative; z-index: 2; }
+.ench-book:hover { border-color: #6d5590; transform: translateY(-2px); }
+.ench-book.is-selected { border-color: var(--ench-glow); box-shadow: inset 3px 3px var(--ench-hi), inset -3px -3px #19131f, 0 0 0 3px rgba(197, 139, 255, .35); }
+.ench-book.is-selected .ench-book__cover { border-color: var(--ench-glow); }
+.ench-book.is-selected::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(110deg, transparent 35%, rgba(214, 170, 255, .16) 50%, transparent 65%) 0 0 / 250% 100%;
+  animation: ench-shimmer 3.2s linear infinite; }
+@keyframes ench-shimmer { from { background-position: 100% 0; } to { background-position: -150% 0; } }
+
+/* Altar: the enchanting table between two small bookshelves. */
+.ench-altar { grid-area: altar; display: grid; grid-template-columns: 1fr; justify-items: center; align-items: end; align-content: end; gap: 1rem; padding: 1rem .5rem .75rem;
+  background: #1f1928; box-shadow: inset 0 -46px #120e18; border: 4px solid var(--ench-edge); }
+.ench-altar .ench-spines { margin-bottom: 33px; padding: .35rem .4rem 0; background: var(--ench-wood); border: 3px solid #2b1a0e; box-shadow: inset 0 -6px #3f2713; }
+
+.ench-table { position: relative; display: grid; justify-items: center; align-content: end; width: 190px; height: 215px; }
+.ench-table__block { position: relative; width: 150px; height: 66px;
+  background: linear-gradient(#a3262f 0 14px, #6e1820 14px 18px, #1d1027 18px); border: 4px solid #07040a;
+  box-shadow: inset 4px -4px #301a3d; }
+.ench-table__block::before, .ench-table__block::after { content: ""; position: absolute; top: 18px; width: 12px; height: 12px; background: #5ee0d8; border: 2px solid #07040a; }
+.ench-table__block::before { left: 6px; }
+.ench-table__block::after { right: 6px; }
+.ench-table__lapis { position: absolute; right: 2px; bottom: 30px; }
+.ench-table__lapis .mc-item-icon { width: 26px; height: 26px; }
+.ench-table__caption { width: 100%; min-height: 2.6em; margin: .5rem 0 0; color: var(--ench-label); font: 700 .6rem/1.4 var(--pixel); text-align: center; overflow-wrap: break-word; }
+
+/* Floating book: covers coloured by kind (plain book or enchanted book), never by rank. */
+.ench-table__book { --cover: #8b4a38; position: absolute; left: 50%; bottom: 128px; display: flex; width: 96px; height: 50px; margin-left: -48px;
+  perspective: 300px; animation: ench-float 3s ease-in-out infinite alternate; }
+.ench-table--certification .ench-table__book { --cover: #68408e; }
+.ench-table__page { flex: 1; background: repeating-linear-gradient(#efe3bd 0 6px, #c9b98c 6px 7px); border: 3px solid var(--cover); }
+.ench-table__page--left { border-right-width: 1px; transform-origin: right center; transform: rotateY(-14deg); animation: ench-open 420ms ease-out; }
+.ench-table__page--right { border-left-width: 1px; transform-origin: left center; transform: rotateY(14deg); }
+.ench-table__book::after { content: ""; position: absolute; inset: -6px; pointer-events: none; box-shadow: 0 0 18px 4px rgba(197, 139, 255, .45); }
+@keyframes ench-float { from { transform: translateY(0); } to { transform: translateY(-8px); } }
+@keyframes ench-open { from { transform: rotateY(-170deg); } }
+
+/* Pseudo-glyphs: original line shapes, not characters, so nothing reads as text. */
+.ench-table__glyphs, .ench-table__orbs { position: absolute; inset: 0; pointer-events: none; }
+.ench-glyph { position: absolute; width: 9px; height: 11px; border: 0 solid #d2b4ff; opacity: .8; animation: ench-drift 4s ease-in-out infinite; }
+.ench-glyph--1 { left: 8%; top: 52%; border-width: 2px 0 0 2px; }
+.ench-glyph--2 { left: 18%; top: 22%; border-width: 0 2px 2px 0; animation-delay: -.7s; }
+.ench-glyph--3 { right: 10%; top: 48%; border-width: 2px 2px 0 0; animation-delay: -1.4s; }
+.ench-glyph--4 { right: 20%; top: 18%; border-width: 0 0 2px 2px; animation-delay: -2.1s; }
+.ench-glyph--5 { left: 30%; top: 4%; border-width: 2px 0 2px 0; animation-delay: -2.8s; }
+.ench-glyph--6 { right: 32%; top: 2%; border-width: 0 2px 0 2px; animation-delay: -3.5s; }
+@keyframes ench-drift { 0%, 100% { opacity: .25; transform: translateY(6px); } 50% { opacity: .9; transform: translateY(-4px); } }
+.ench-table__orbs i { position: absolute; bottom: 70px; width: 8px; height: 8px; background: #b5f05f; border: 2px solid #2f5d12; border-radius: 50%;
+  box-shadow: 0 0 8px #9be35a; animation: ench-orb 3.6s ease-in infinite; }
+.ench-table__orbs i:nth-child(1) { left: 14%; }
+.ench-table__orbs i:nth-child(2) { left: 50%; animation-delay: -1.2s; }
+.ench-table__orbs i:nth-child(3) { right: 12%; animation-delay: -2.4s; }
+@keyframes ench-orb { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: .9; } 100% { opacity: 0; transform: translateY(-70px); } }
+
+/* Selected detail. */
+.ench-detail { grid-area: detail; padding: clamp(1rem, 3vw, 1.5rem); background: var(--ench-panel); border: 4px solid var(--ench-edge);
+  box-shadow: inset 4px 4px var(--ench-hi), inset -4px -4px #19131f; }
+.ench-detail__body { animation: ench-detail-in 160ms ease-out; }
+@keyframes ench-detail-in { from { opacity: 0; transform: translateY(6px); } }
+.ench-detail__head { display: flex; align-items: center; gap: .85rem; }
+.ench-detail__icon { display: grid; place-items: center; width: 52px; height: 52px; flex: 0 0 52px; background: #3a2f45; border: 3px solid var(--ench-glow); }
+.ench-detail__icon .mc-item-icon { width: 34px; height: 34px; }
+.ench-label { margin: 0 0 .3rem; color: var(--ench-label); font: 800 .6rem/1.3 var(--pixel); letter-spacing: .04em; text-transform: uppercase; }
+.ench-detail__type { margin: 0; font: 700 .78rem var(--pixel); }
+.ench-detail h3 { margin: 1rem 0 0; color: var(--ench-title); font: 800 1rem/1.4 var(--pixel); overflow-wrap: break-word; }
+.ench-detail h4.ench-label { margin-top: 1.1rem; }
+.ench-facts { display: grid; gap: .75rem; margin: 1rem 0 0; padding: .9rem; background: #211a29; border: 3px solid var(--ench-edge); }
+.ench-facts dt { color: var(--ench-label); font: 800 .58rem/1.3 var(--pixel); text-transform: uppercase; }
+.ench-facts dd { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin: .2rem 0 0; font-weight: 700; font-size: .92rem; line-height: 1.45; }
+.ench-facts dd a { display: inline-flex; align-items: center; gap: .35rem; min-height: 44px; }
+.ench-facts__logo { width: 32px; height: 32px; object-fit: cover; background: #fffdf5; border: 2px solid var(--ench-edge); }
+
+/* Certifications. */
+.ench-certs { grid-area: certs; }
+.ench-certs > h3 { margin: 0 0 .75rem; color: var(--ench-ink); font: 800 .72rem var(--pixel); text-transform: uppercase; }
+
+/* Phones: drop the decorative cover and one layer of padding so text gets the width. */
+@media (max-width: 479px) {
+  .ench-room { padding: .5rem; border-width: 3px; }
+  .ench-shelf { padding: .5rem; border-width: 3px; }
+  .ench-book { grid-template-columns: minmax(0, 1fr); padding: .75rem; }
+  .ench-book__cover { display: none; }
+}
+
+@media (min-width: 480px) {
+  .ench-altar { grid-template-columns: auto 1fr auto; }
+  .ench-altar .ench-spines { display: flex; align-items: flex-end; gap: 2px; }
+}
+
+@media (min-width: 768px) {
+  .ench-room { grid-template-areas: "shelf shelf" "altar detail" "certs certs"; grid-template-columns: minmax(220px, 240px) minmax(0, 1fr); }
+  .ench-books--degrees { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ench-books--certs { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .ench-altar { grid-template-columns: 1fr; align-self: start; }
+  .ench-altar .ench-spines { display: none; }
+}
+
+@media (min-width: 1024px) {
+  .ench-room { grid-template-columns: minmax(360px, 380px) minmax(0, 1fr); }
+  .ench-shelf { grid-template-columns: auto minmax(0, 1fr) auto; align-items: end; }
+  .ench-shelf > .ench-spines { display: flex; align-items: flex-end; gap: 2px; padding-bottom: 2px; }
+  .ench-altar { grid-template-columns: auto 1fr auto; }
+  .ench-altar .ench-spines { display: flex; align-items: flex-end; gap: 2px; }
+  .ench-books--certs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ench-book, .ench-book:hover { transition: none; transform: none; }
+  .ench-book.is-selected::after, .ench-table__book, .ench-table__page--left, .ench-glyph, .ench-table__orbs i, .ench-detail__body { animation: none; }
+  .ench-table__orbs i { opacity: .7; }
+}

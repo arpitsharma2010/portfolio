@@ -209,26 +209,7 @@ main { width: 100%; }
 .loot-tag { padding: .36rem .5rem; color: var(--ink); background: var(--surface); border: 2px solid var(--line); font: 600 .62rem var(--pixel); }
 
 .project-link { display: inline-flex; align-items: center; gap: .35rem; color: #356c2f; font: 700 .72rem var(--pixel); }
-.certifications > h3 { margin: 0 0 1rem; font: 800 .72rem var(--pixel); text-transform: uppercase; }
 
-.advancements { display: grid; grid-template-columns: 1.2fr .8fr; gap: 2rem; }
-.advancement-path { position: relative; display: grid; gap: 1.2rem; }
-.advancement-path::before { content: ""; position: absolute; left: 34px; top: 50px; bottom: 50px; width: 5px; background: #bd8e35; }
-.advancement { position: relative; background: var(--surface); border: 4px solid var(--line); box-shadow: 5px 5px var(--shadow); }
-.advancement--degree { padding: 1.1rem; }
-.advancement__main { position: relative; z-index: 1; display: flex; gap: 1rem; align-items: flex-start; }
-.advancement__icon { width: 58px; height: 58px; flex: 0 0 58px; object-fit: cover; background: var(--surface-2); border: 4px solid var(--line); }
-.advancement__content { width: 100%; display: flex; justify-content: space-between; gap: 1rem; }
-.advancement__content h3 { margin: 0; font: 800 .82rem/1.5 var(--pixel); }
-.advancement__content p { margin: .35rem 0 0; color: var(--muted); font-size: .8rem; }
-.advancement__meta { flex-shrink: 0; text-align: right; font: 600 .58rem/1.6 var(--pixel); text-transform: uppercase; }
-.coursework { margin: 1rem 0 0 74px; border-top: 2px dashed color-mix(in srgb, var(--ink) 20%, transparent); padding-top: .8rem; }
-.coursework summary { width: fit-content; cursor: pointer; color: #47712f; font: 700 .68rem var(--pixel); }
-.coursework summary span { color: var(--muted); font-weight: 500; }
-.certifications > ul { display: grid; gap: .8rem; margin: 0; padding: 0; list-style: none; }
-.advancement--cert { padding: 1rem; border-left: 9px solid var(--gold); display: flex; justify-content: space-between; gap: .8rem; align-items: center; }
-.advancement--cert p { margin: 0; font: 700 .69rem/1.5 var(--pixel); }
-.advancement--cert p + p { margin-top: .3rem; color: var(--muted); font: 500 .65rem/1.5 Inter, sans-serif; }
 
 .resume-book { display: grid; grid-template-columns: minmax(210px, .75fr) 1.25fr; max-width: 880px; margin: auto; filter: drop-shadow(12px 14px 0 var(--shadow)); }
 .resume-book__cover { min-height: 330px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 2rem; color: #ffe9af; background: #63362b; border: 6px solid #2c1712; box-shadow: inset 8px 0 #915449, inset -8px 0 #3d211b; text-align: center; }
@@ -289,7 +270,6 @@ main { width: 100%; }
   .hero__content { max-width: none; }
   .hero__player-card { width: min(300px, 78vw); justify-self: center; }
   .hero__facts { grid-template-columns: 1fr; }
-  .advancements { grid-template-columns: 1fr; }
   .portal-room { grid-template-columns: .6fr 1fr; }
 }
 
@@ -307,9 +287,6 @@ main { width: 100%; }
   .hero__facts { gap: .6rem; }
   .mc-section { padding: 1.1rem; border-width: 3px; box-shadow: 5px 5px var(--shadow); }
   .mc-section__header { margin-bottom: 1.6rem; }
-  .advancement__content { flex-direction: column; }
-  .advancement__meta { text-align: left; }
-  .coursework { margin-left: 0; }
   .resume-book { grid-template-columns: 1fr; }
   .resume-book__cover { min-height: 260px; }
   .portal-room { grid-template-columns: 1fr; }
@@ -320,9 +297,6 @@ main { width: 100%; }
 
 @media (max-width: 380px) {
   .hero__actions .pixel-button:not(.pixel-button--icon) { width: 100%; }
-  .advancement__main { flex-direction: column; }
-  .advancement-path::before { display: none; }
-  .advancement--cert { align-items: flex-start; flex-direction: column; }
 }
 
 @media (prefers-reduced-motion: reduce) {
