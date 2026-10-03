@@ -37,7 +37,7 @@ const MinecraftInventoryGrid = ({
     [items, slotCount],
   );
   const selectedIndex = slots.findIndex((item) => item?.id === selectedItemId);
-  const firstEnabledIndex = slots.findIndex((item) => !item?.disabled);
+  const firstEnabledIndex = slots.findIndex((item) => item && !item.disabled);
 
   const getVisualColumns = () => {
     if (typeof window === "undefined") return columns;
@@ -46,16 +46,15 @@ const MinecraftInventoryGrid = ({
     return columns;
   };
 
-  const focusSlot = (index: number) => {
+  /** Empty and disabled slots are skipped in the direction of travel; past the last item, focus stays put. */
+  const focusSlot = (index: number, step: 1 | -1) => {
     const buttons = gridRef.current?.querySelectorAll<HTMLButtonElement>(".mc-slot");
     if (!buttons?.length) return;
-    let candidate = (index + buttons.length) % buttons.length;
-    for (let checked = 0; checked < buttons.length; checked += 1) {
+    for (let candidate = (index + buttons.length) % buttons.length; candidate >= 0 && candidate < buttons.length; candidate += step) {
       if (!buttons[candidate].disabled) {
         buttons[candidate].focus();
         return;
       }
-      candidate = (candidate + 1) % buttons.length;
     }
   };
 
@@ -73,7 +72,7 @@ const MinecraftInventoryGrid = ({
     if (event.key === "End") nextIndex = slotCount - 1;
     if (nextIndex === null) return;
     event.preventDefault();
-    focusSlot(nextIndex);
+    focusSlot(nextIndex, event.key === "End" || nextIndex < currentIndex ? -1 : 1);
   };
 
   return (
@@ -103,6 +102,8 @@ const MinecraftInventoryGrid = ({
             selected={Boolean(item && item.id === selectedItemId)}
             onSelect={onSelect}
             onActivate={onActivate}
+            disabled={item ? undefined : true}
+            aria-hidden={item ? undefined : true}
             data-slot-index={index}
             tabIndex={index === (selectedIndex >= 0 ? selectedIndex : Math.max(0, firstEnabledIndex)) ? 0 : -1}
             showTooltipWhenSelected={showTooltipWhenSelected}

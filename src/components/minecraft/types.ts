@@ -56,7 +56,12 @@ export type MinecraftIconName =
   | "command-cube"
   | "server-network"
   | "scroll"
-  | "name-tag";
+  | "name-tag"
+  | "barrel"
+  | "lapis-ore"
+  | "emerald-ore"
+  | "hopper"
+  | "repeater";
 
 export interface MinecraftItemAction {
   label: string;

@@ -63,6 +63,11 @@ const MinecraftItemIcon = ({ name, title, className = "", ...props }: MinecraftI
       case "server-network": art = <><path fill="#596361" d="M4 5h32v10H4zm0 20h32v10H4z" /><path fill="#9ca5a0" d="M8 8h16v4H8zm0 20h16v4H8z" /><path fill="#68d05a" d="M29 8h4v4h-4zm0 20h4v4h-4z" /><path stroke="#d6b14a" strokeWidth="3" d="M20 15v10" /></>; break;
       case "scroll": art = <><path fill="#8e693c" d="M5 5h27v6H9v21h23v6H5z" /><path fill="#ead9aa" d="M9 8h25v27H9z" /><path fill="#9b8157" d="M14 15h15v3H14zm0 7h12v3H14z" /></>; break;
       case "name-tag": art = <><path fill="#d6c9a8" d="M3 13L14 4h22v22L25 37z" /><circle cx="28" cy="12" r="4" fill="#615b50" /><path fill="#8f856e" d="M11 17h13v4H11z" /></>; break;
+      case "barrel": art = <><path fill="#6b4425" d="M6 3h28v34H6z" /><path fill="#a86e3b" d="M9 3h5v34H9zm8 0h6v34h-6zm9 0h5v34h-5z" /><path fill="#4d4f4c" d="M6 9h28v3H6zm0 19h28v3H6z" /></>; break;
+      case "lapis-ore":
+      case "emerald-ore": art = <><path fill="#7d807b" d="M3 3h34v34H3z" /><path fill="#5f625e" d="M3 15h9v6H3zm19 13h15v9H22zM25 3h12v7H25z" /><path fill={name === "lapis-ore" ? "#3a63c4" : "#2fbf5f"} d="M8 7h6v5H8zm15 6h6v5h-6zM10 24h7v6h-7zm17 6h5v4h-5z" /><path fill={name === "lapis-ore" ? "#9bbcff" : "#a6f2b9"} d="M8 7h3v2H8zm15 6h3v2h-3zm-13 11h3v2h-3z" /></>; break;
+      case "hopper": art = <><path fill="#3c3f3d" d="M3 5h34v10l-8 8v5h-5v8h-8v-8h-5v-5l-8-8z" /><path fill="#6f7471" d="M7 8h26v5H7zm6 9h14l-3 3H16z" /><path fill="#232524" d="M10 9h20v3H10z" /></>; break;
+      case "repeater": art = <><path fill="#8f8e88" d="M2 22h36v12H2z" /><path fill="#bcbab1" d="M2 22h36v4H2z" /><path fill="#6d1416" d="M5 27h30v3H5z" /><path fill="#77482c" d="M9 12h5v13H9zm17 4h5v9h-5z" /><path fill="#ff4b3e" d="M8 8h7v6H8zm17 4h7v6h-7z" /></>; break;
       default: art = <Gem color="#8fa3a0" shade="#4f5d5b" />;
     }
   }

@@ -71,6 +71,8 @@
   filter: grayscale(.75) brightness(.66);
 }
 .mc-slot:disabled .mc-item-icon { opacity: .66; }
+/* Empty slots are decorative: disabled for focus, but drawn like any other slot. */
+.mc-slot.is-empty:disabled { cursor: default; filter: none; }
 
 .mc-slot__count {
   position: absolute;
