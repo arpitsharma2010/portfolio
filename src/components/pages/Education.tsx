@@ -72,60 +72,60 @@ const certifications = [
 ];
 
 const Education: React.FC = () => (
-  <PageSection eyebrow="Education" title="Education & certifications">
-    <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-4">
+  <PageSection eyebrow="Advancements" title="Education & certifications" variant="stone">
+    <div className="advancements">
+      <div className="advancement-path">
         {education.map((item) => (
           <article
             key={item.institution}
-            className="rounded-xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900/40"
+            className="advancement advancement--degree"
           >
-            <div className="flex items-start gap-4">
+            <div className="advancement__main">
               <img
                 src={item.logo}
-                alt=""
-                className="h-12 w-12 shrink-0 rounded-lg border border-slate-200 object-cover dark:border-slate-700"
+                alt={`${item.institution} logo`}
+                className="advancement__icon"
                 loading="lazy"
               />
-              <div className="flex w-full flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+              <div className="advancement__content">
                 <div>
-                  <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
+                  <h3>
                     {item.degree}
                   </h3>
-                  <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                  <p>
                     <a
                       href={item.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 dark:decoration-slate-600 dark:hover:text-sky-400"
+                      className="text-link"
                     >
                       {item.institution}
                     </a>
                   </p>
                 </div>
-                <div className="shrink-0 text-left sm:text-right">
-                  <p className="font-mono text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400">
+                <div className="advancement__meta">
+                  <p>
                     {item.period}
                   </p>
-                  <p className="font-mono text-xs uppercase tracking-wider text-slate-500 dark:text-slate-500">
+                  <p>
                     {item.detail}
                   </p>
                 </div>
               </div>
             </div>
 
-            <details className="group mt-5 border-t border-slate-200 pt-4 dark:border-slate-800">
-              <summary className="cursor-pointer text-sm font-semibold text-blue-700 marker:content-none dark:text-sky-400">
+            <details className="coursework">
+              <summary>
                 Coursework
-                <span className="ml-1 font-normal text-slate-500 group-open:hidden">
+                <span>
                   ({item.courses.length})
                 </span>
               </summary>
-              <ul className="mt-3 flex flex-wrap gap-2">
+              <ul className="loot-list">
                 {item.courses.map((course) => (
                   <li
                     key={course}
-                    className="rounded border border-slate-200 bg-slate-50 px-2 py-1 text-xs text-slate-600 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-400"
+                    className="loot-tag"
                   >
                     {course}
                   </li>
@@ -136,21 +136,21 @@ const Education: React.FC = () => (
         ))}
       </div>
 
-      <div className="flex flex-col gap-3">
-        <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500">
+      <div className="certifications">
+        <h3>
           Certifications
         </h3>
-        <ul className="divide-y divide-slate-200 overflow-hidden rounded-xl border border-slate-200 bg-white dark:divide-slate-800 dark:border-slate-800 dark:bg-slate-900/40">
+        <ul>
           {certifications.map((cert) => (
             <li
               key={cert.name}
-              className="flex flex-col gap-2 p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-5"
+              className="advancement advancement--cert"
             >
               <div>
-                <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                <p>
                   {cert.name}
                 </p>
-                <p className="text-xs text-slate-600 dark:text-slate-400">
+                <p>
                   {cert.issuer} · {cert.date}
                 </p>
               </div>
@@ -158,7 +158,7 @@ const Education: React.FC = () => (
                 href={cert.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-blue-700 underline-offset-4 hover:underline dark:text-sky-400"
+                className="project-link"
               >
                 Verify <FiExternalLink aria-hidden />
               </a>

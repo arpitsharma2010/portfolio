@@ -8,16 +8,11 @@ interface LayoutProps {
   transitionOrigin?: { x: number; y: number } | null;
 }
 
-const MainLayout: React.FC<LayoutProps> = ({
-  children,
-  theme,
-  onThemeToggle,
-  transitionOrigin,
-}) => (
+const MainLayout: React.FC<LayoutProps> = ({ children, theme, onThemeToggle, transitionOrigin }) => (
   <div
-    className={`relative min-h-screen bg-slate-50 text-slate-900 antialiased dark:bg-[#0b1120] dark:text-slate-100 theme-transition ${
-      theme === "light" ? "theme-light" : "theme-dark"
-    } ${transitionOrigin ? "theme-transition-active" : ""}`}
+    className={`world theme-transition ${theme === "light" ? "theme-light" : "theme-dark"} ${
+      transitionOrigin ? "theme-transition-active" : ""
+    }`}
     style={
       transitionOrigin
         ? ({
@@ -27,18 +22,13 @@ const MainLayout: React.FC<LayoutProps> = ({
         : undefined
     }
   >
-    <a
-      href="#main"
-      className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-blue-700 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
-    >
-      Skip to content
-    </a>
-
+    <a href="#main" className="skip-link">Skip to content</a>
     <Header theme={theme} onThemeToggle={onThemeToggle} />
-
-    <main id="main" className="mx-auto w-full max-w-5xl px-5 pb-24 pt-10 sm:px-8 lg:pt-16">
-      {children}
-    </main>
+    <main id="main">{children}</main>
+    <footer className="world-footer">
+      <span aria-hidden>◆</span> Built block by block by Arpit Dilip Sharma
+      <span className="world-footer__status">World saved · 2026</span>
+    </footer>
   </div>
 );
 

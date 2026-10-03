@@ -8,10 +8,7 @@ describe("Header", () => {
 
     expect(screen.getAllByRole("link", { name: "Experience" }).length).toBeGreaterThan(0);
     expect(screen.getAllByRole("link", { name: "Projects" }).length).toBeGreaterThan(0);
-    expect(screen.getAllByRole("link", { name: /resume/i })[0]).toHaveAttribute(
-      "href",
-      expect.stringContaining("drive.google.com"),
-    );
+    expect(screen.getByRole("link", { name: "Resume" })).toHaveAttribute("href", "#resume");
   });
 
   it("invokes the theme toggle", () => {
@@ -22,11 +19,11 @@ describe("Header", () => {
     expect(onThemeToggle).toHaveBeenCalledTimes(1);
   });
 
-  it("opens and closes the mobile menu", () => {
+  it("keeps every section available in the responsive hotbar", () => {
     render(<Header theme="dark" onThemeToggle={vi.fn()} />);
 
-    fireEvent.click(screen.getByRole("button", { name: /open navigation menu/i }));
-    expect(screen.getByRole("button", { name: /close navigation menu/i })).toBeInTheDocument();
-    expect(screen.getAllByRole("link", { name: "Contact" }).length).toBeGreaterThan(0);
+    expect(screen.getByRole("navigation", { name: /portfolio sections/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute("href", "#contact");
+    expect(screen.getByRole("link", { name: "Skills" })).toHaveAttribute("href", "#skills");
   });
 });

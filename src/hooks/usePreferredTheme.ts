@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type ThemeMode = "light" | "dark";
 
@@ -26,6 +26,11 @@ const usePreferredTheme = () => {
     const stored = window.localStorage.getItem(STORAGE_KEY);
     return stored === "light" || stored === "dark";
   });
+  const transitionTimer = useRef<number | null>(null);
+
+  useEffect(() => () => {
+    if (transitionTimer.current !== null) window.clearTimeout(transitionTimer.current);
+  }, []);
 
   useEffect(() => {
     if (typeof document === "undefined") return;
@@ -64,7 +69,8 @@ const usePreferredTheme = () => {
     setIsUserChoice(true);
 
     if (origin) {
-      setTimeout(() => setTransitionOrigin(null), 800);
+      if (transitionTimer.current !== null) window.clearTimeout(transitionTimer.current);
+      transitionTimer.current = window.setTimeout(() => setTransitionOrigin(null), 800);
     }
   }, []);
 

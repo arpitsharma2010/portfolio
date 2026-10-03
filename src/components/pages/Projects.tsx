@@ -100,14 +100,14 @@ const alsoBuilt = [
 ];
 
 const linkClass =
-  "inline-flex items-center gap-1.5 text-sm font-semibold text-blue-700 underline-offset-4 hover:underline dark:text-sky-400";
+  "project-link";
 
 const stackList = (stack: string[]) => (
-  <ul className="flex flex-wrap gap-2">
+  <ul className="loot-list">
     {stack.map((tech) => (
       <li
         key={tech}
-        className="rounded border border-slate-200 bg-slate-50 px-2 py-1 font-mono text-xs text-slate-600 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-400"
+        className="loot-tag"
       >
         {tech}
       </li>
@@ -116,48 +116,48 @@ const stackList = (stack: string[]) => (
 );
 
 const Detail: React.FC<{ label: string; children: React.ReactNode }> = ({ label, children }) => (
-  <div>
-    <p className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500">
-      {label}
-    </p>
-    <p className="mt-1.5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">{children}</p>
+  <div className="build-detail">
+    <p>{label}</p>
+    <p>{children}</p>
   </div>
 );
 
 const Projects: React.FC = () => (
   <PageSection
-    eyebrow="Projects"
-    title="Selected projects"
+    eyebrow="Build Showcase"
+    title="Engineered worlds"
     description="Two builds that show how I approach architecture, plus the systems and ML work behind them."
+    variant="grass"
   >
-    <div className="flex flex-col gap-8">
+    <div className="build-showcase">
       {featured.map((project) => (
         <article
           key={project.title}
-          className="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900/40"
+          className={`build-card build-card--${project.title === "WanderGenie" ? "cartographer" : "vault"}`}
         >
           {project.image && (
             <img
               src={project.image}
               alt={`${project.title} interface`}
-              className="h-44 w-full border-b border-slate-200 object-cover dark:border-slate-800 sm:h-56"
+              className="build-card__image"
               loading="lazy"
             />
           )}
-          <div className="flex flex-col gap-5 p-6 sm:p-7">
+          <div className="build-card__body">
             <div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100">
+              <p className="build-card__biome">{project.title === "WanderGenie" ? "Cartographer's Room · Exploration Biome" : "Redstone Storage Vault"}</p>
+              <h3>
                 {project.title}
               </h3>
-              <p className="mt-1 text-sm font-medium text-blue-700 dark:text-sky-400">
+              <p className="build-card__tagline">
                 {project.tagline}
               </p>
-              <p className="mt-3 text-base leading-relaxed text-slate-600 dark:text-slate-400">
+              <p className="build-card__intro">
                 {project.built}
               </p>
             </div>
 
-            <div className="flex flex-col gap-4 border-t border-slate-200 pt-5 dark:border-slate-800">
+            <div className="build-card__details">
               <Detail label="Architecture">{project.architecture}</Detail>
               <Detail label="Engineering challenge">{project.challenge}</Detail>
             </div>
@@ -165,7 +165,7 @@ const Projects: React.FC = () => (
             {stackList(project.stack)}
 
             {project.links.length > 0 && (
-              <div className="flex flex-wrap gap-5">
+              <div className="build-card__links">
                 {project.links.map((link) => (
                   <a
                     key={link.url}
@@ -183,25 +183,26 @@ const Projects: React.FC = () => (
         </article>
       ))}
 
-      <div className="flex flex-col gap-4">
-        <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500">
-          Also built
+      <div className="secondary-builds">
+        <h3>
+          Additional builds
         </h3>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="secondary-builds__grid">
           {alsoBuilt.map((project) => (
             <article
               key={project.title}
-              className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40"
+              className={`mini-build mini-build--${project.title === "Pintos Kernel" ? "redstone" : project.title === "Crop Yield Prediction" ? "farming" : "workshop"}`}
             >
-              <h4 className="text-base font-bold text-slate-900 dark:text-slate-100">
+              <p className="mini-build__type">{project.title === "Pintos Kernel" ? "Redstone Engineering Lab" : project.title === "Crop Yield Prediction" ? "Farming Biome" : "Workshop Build"}</p>
+              <h4>
                 {project.title}
               </h4>
-              <p className="flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              <p className="mini-build__description">
                 {project.description}
               </p>
               {stackList(project.stack)}
               {project.links.length > 0 && (
-                <div className="flex flex-wrap gap-4">
+                <div className="build-card__links">
                   {project.links.map((link) => (
                     <a
                       key={link.url}

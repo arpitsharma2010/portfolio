@@ -108,30 +108,31 @@ const roles: Role[] = [
 
 const Experience: React.FC = () => (
   <PageSection
-    eyebrow="Experience"
-    title="Engineering experience"
+    eyebrow="Quest Log"
+    title="Completed & active quests"
     description="Four roles across a bank, a university research platform and an AI startup. In each one the work was owning a service: understanding it, changing it safely and being accountable for it in production."
+    variant="deepslate"
   >
-    <ol className="relative flex flex-col gap-10 border-l border-slate-200 pl-6 dark:border-slate-800 sm:pl-8">
+    <ol className="quest-log">
       {roles.map((role) => (
-        <li key={`${role.company}-${role.position}`} className="relative">
+        <li key={`${role.company}-${role.position}`} className="quest">
           <span
-            className="absolute -left-[1.85rem] top-2 h-2.5 w-2.5 rounded-full bg-blue-700 ring-4 ring-slate-50 dark:bg-sky-400 dark:ring-[#0b1120] sm:-left-[2.35rem]"
+            className="quest__marker"
             aria-hidden
           />
-          <article className="rounded-xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900/40 sm:p-7">
-            <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+          <article className="quest-card">
+            <div className="quest-card__heading">
               <div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">
+                <h3>
                   {role.position}
                 </h3>
-                <p className="text-base font-medium text-slate-700 dark:text-slate-300">
+                <p className="quest-card__company">
                   {role.website ? (
                     <a
                       href={role.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 dark:decoration-slate-600 dark:hover:text-sky-400"
+                      className="text-link"
                     >
                       {role.company}
                     </a>
@@ -140,39 +141,36 @@ const Experience: React.FC = () => (
                   )}
                 </p>
               </div>
-              <div className="shrink-0 text-left sm:text-right">
-                <p className="font-mono text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400">
+              <div className="quest-card__meta">
+                <p>
                   {role.duration}
                 </p>
                 {role.location && (
-                  <p className="font-mono text-xs uppercase tracking-wider text-slate-500 dark:text-slate-500">
+                  <p>
                     {role.location}
                   </p>
                 )}
               </div>
             </div>
 
-            <p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+            <p className="quest-card__summary">
               {role.summary}
             </p>
 
-            <ul className="mt-5 flex flex-col gap-3">
+            <ul className="quest-card__objectives">
               {role.points.map((point) => (
-                <li key={point} className="flex gap-3 text-sm leading-relaxed">
-                  <span
-                    className="mt-[0.45rem] h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400 dark:bg-slate-600"
-                    aria-hidden
-                  />
-                  <span className="text-slate-700 dark:text-slate-300">{point}</span>
+                <li key={point}>
+                  <span aria-hidden>✓</span>
+                  <span>{point}</span>
                 </li>
               ))}
             </ul>
 
-            <ul className="mt-6 flex flex-wrap gap-2 border-t border-slate-200 pt-5 dark:border-slate-800">
+            <ul className="loot-list" aria-label="Technologies used">
               {role.stack.map((tech) => (
                 <li
                   key={tech}
-                  className="rounded border border-slate-200 bg-slate-50 px-2 py-1 font-mono text-xs text-slate-600 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-400"
+                  className="loot-tag"
                 >
                   {tech}
                 </li>

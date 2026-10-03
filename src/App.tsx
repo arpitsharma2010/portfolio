@@ -7,6 +7,8 @@ import Skills from "./components/pages/Skills.tsx";
 import About from "./components/pages/About.tsx";
 import Education from "./components/pages/Education.tsx";
 import Contact from "./components/pages/Contact.tsx";
+import Resume from "./components/pages/Resume.tsx";
+import WorldLoader from "./components/common/WorldLoader.tsx";
 import usePreferredTheme from "./hooks/usePreferredTheme.ts";
 import { initAnalytics } from "./utils/analytics.ts";
 
@@ -26,7 +28,9 @@ const App: React.FC = () => {
   // suspended, repeat once webfonts and images have settled the offsets, and
   // cover hash changes that do not remount the app (URL edits, back/forward).
   useEffect(() => {
+    let active = true;
     const jumpToHash = () => {
+      if (!active) return;
       const target = document.getElementById(window.location.hash.slice(1));
       if (!target) return;
       const root = document.documentElement;
@@ -39,9 +43,12 @@ const App: React.FC = () => {
     const frame = requestAnimationFrame(jumpToHash);
     window.addEventListener("load", jumpToHash);
     window.addEventListener("hashchange", jumpToHash);
-    void document.fonts?.ready.then(jumpToHash);
+    void document.fonts?.ready.then(() => {
+      if (active) jumpToHash();
+    });
 
     return () => {
+      active = false;
       cancelAnimationFrame(frame);
       window.removeEventListener("load", jumpToHash);
       window.removeEventListener("hashchange", jumpToHash);
@@ -49,14 +56,22 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <MainLayout
-      theme={theme}
-      onThemeToggle={toggleTheme}
-      transitionOrigin={transitionOrigin ?? undefined}
-    >
-      <div className="flex flex-col gap-20 sm:gap-28">
+    <>
+      <WorldLoader />
+      <MainLayout
+        theme={theme}
+        onThemeToggle={toggleTheme}
+        transitionOrigin={transitionOrigin ?? undefined}
+      >
+      <div className="world-sections">
         <section id="home" className="scroll-mt-20">
           <Home />
+        </section>
+        <section id="about" className="scroll-mt-20">
+          <About />
+        </section>
+        <section id="skills" className="scroll-mt-20">
+          <Skills />
         </section>
         <section id="experience" className="scroll-mt-20">
           <Experience />
@@ -64,20 +79,18 @@ const App: React.FC = () => {
         <section id="projects" className="scroll-mt-20">
           <Projects />
         </section>
-        <section id="skills" className="scroll-mt-20">
-          <Skills />
-        </section>
-        <section id="about" className="scroll-mt-20">
-          <About />
-        </section>
         <section id="education" className="scroll-mt-20">
           <Education />
+        </section>
+        <section id="resume" className="scroll-mt-20">
+          <Resume />
         </section>
         <section id="contact" className="scroll-mt-20">
           <Contact />
         </section>
       </div>
-    </MainLayout>
+      </MainLayout>
+    </>
   );
 };
 

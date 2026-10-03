@@ -1,7 +1,8 @@
 # Portfolio
 
-Personal portfolio for Arpit Dilip Sharma — React 19 + TypeScript, built with Vite and styled with
-Tailwind CSS. Single page, hash-anchored sections, light/dark theme.
+Personal portfolio for Arpit Dilip Sharma. It is a Minecraft-inspired, recruiter-friendly single
+page built with React 19, TypeScript, Vite and original CSS voxel art. All content remains semantic
+HTML and works without WebGL.
 
 Live: https://arpitsharma2010.github.io/portfolio/
 
@@ -10,17 +11,18 @@ Live: https://arpitsharma2010.github.io/portfolio/
 | Script | Purpose |
 | --- | --- |
 | `npm start` | Dev server |
-| `npm run typecheck` | `tsc --noEmit` (the project has no ESLint config; strict TS is the gate) |
+| `npm run lint` | ESLint with TypeScript and React Hooks rules |
+| `npm run typecheck` | Strict TypeScript validation with `tsc --noEmit` |
 | `npm test` | Vitest, single run |
 | `npm run test:watch` | Vitest in watch mode |
 | `npm run build` | Production build into `dist/` |
 | `npm run preview` | Serve the production build at `/portfolio/` |
-| `npm run deploy` | Build, then publish `dist/` to the `gh-pages` branch |
 
 ## Deployment
 
-GitHub Pages serves the **`gh-pages`** branch, which `npm run deploy` (`gh-pages -d dist`) writes.
-There is no GitHub Actions workflow for the site build — adding one would compete with this.
+The workflow in `.github/workflows/deploy-pages.yml` validates and builds every update to `main`,
+uploads `dist/` as the official Pages artifact, and deploys it through GitHub Pages. Repository
+Pages settings must use **GitHub Actions** as the source.
 
 The base path is `/portfolio/` and must stay consistent in three places:
 

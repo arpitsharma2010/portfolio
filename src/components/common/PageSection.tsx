@@ -5,25 +5,21 @@ interface PageSectionProps {
   title: string;
   description?: string;
   children: React.ReactNode;
+  variant?: "grass" | "stone" | "wood" | "deepslate" | "nether";
 }
 
-/** Consistent section heading + body wrapper used by every page section. */
-const PageSection: React.FC<PageSectionProps> = ({ eyebrow, title, description, children }) => (
-  <div className="flex flex-col gap-8">
-    <div className="flex flex-col gap-3">
-      {eyebrow && (
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-blue-700 dark:text-sky-400">
-          {eyebrow}
-        </p>
-      )}
-      <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl dark:text-slate-100">
-        {title}
-      </h2>
-      {description && (
-        <p className="max-w-3xl text-base leading-relaxed text-slate-600 dark:text-slate-400">
-          {description}
-        </p>
-      )}
+const PageSection: React.FC<PageSectionProps> = ({
+  eyebrow,
+  title,
+  description,
+  children,
+  variant = "stone",
+}) => (
+  <div className={`mc-section mc-section--${variant}`}>
+    <div className="mc-section__header">
+      {eyebrow && <p className="mc-kicker">{eyebrow}</p>}
+      <h2>{title}</h2>
+      {description && <p className="mc-section__description">{description}</p>}
     </div>
     {children}
   </div>
