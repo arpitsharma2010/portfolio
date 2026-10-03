@@ -30,6 +30,8 @@ export interface ExperienceEntry {
   advancementType: AdvancementType;
   icon: MinecraftIconName;
   evidenceItems: EvidenceItem[];
+  /** Verified figures from the authoritative resume, kept on the role they belong to. */
+  metrics?: string[];
 }
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -48,15 +50,42 @@ export const employerName = (entry: ExperienceEntry) =>
 
 export const isCurrent = (entry: ExperienceEntry) => entry.endDate === null;
 
-/** Oldest first. Dates are the site's existing dates; see the reconciliation notes in the commit. */
+/** Oldest first. TCS roles and dates follow the authoritative resume; Tesserae and Skopus AI follow the current site. */
 export const experience: ExperienceEntry[] = [
+  {
+    id: "tcs-ase-trainee",
+    organization: "Tata Consultancy Services",
+    title: "Assistant Software Engineer (ASE-Trainee)",
+    startDate: "2020-11",
+    endDate: "2021-03",
+    focus: "Full-stack engineering foundation in the TCS onboarding program.",
+    summary:
+      "The TCS onboarding engineering program: a full-stack Hospital Management System, built across a React front end, a Java backend and a MySQL data model.",
+    bullets: [
+      "Built a full-stack Hospital Management System during the TCS onboarding engineering program, with a React and TypeScript front end and a Java and Spring Boot backend.",
+      "Built 10+ REST APIs for the system.",
+      "Designed the MySQL data model for 5,000+ patient records and 10K+ billing/inventory transactions, with a 30% reduction in data retrieval time.",
+      "Developed with JUnit and Test Driven Development.",
+    ],
+    technologies: ["React", "TypeScript", "Java", "Spring Boot", "REST APIs", "MySQL", "JUnit", "TDD"],
+    advancementType: "standard",
+    icon: "crafting-table",
+    evidenceItems: [
+      { icon: "crafting-table", label: "Hospital Management System", summary: "A full-stack system built in the onboarding program.", supportingBulletIndex: 0 },
+      { icon: "iron-pickaxe", label: "Java / Spring Boot backend", summary: "The server side of the system.", supportingBulletIndex: 0 },
+      { icon: "map", label: "API surface", summary: "10+ REST APIs for the system.", supportingBulletIndex: 1 },
+      { icon: "chest", label: "MySQL data model", summary: "5,000+ patient records and 10K+ billing/inventory transactions.", supportingBulletIndex: 2 },
+      { icon: "book", label: "JUnit / TDD", summary: "Test Driven Development with JUnit.", supportingBulletIndex: 3 },
+    ],
+    metrics: ["10+ REST APIs", "5,000+ patient records", "30% reduction in data retrieval time", "10K+ billing/inventory transactions"],
+  },
   {
     id: "tcs-dnb-se1",
     organization: "Tata Consultancy Services",
     clientOrContext: "DNB",
     title: "Software Engineer I",
-    startDate: "2020-11",
-    endDate: "2023-03",
+    startDate: "2021-04",
+    endDate: "2023-08",
     focus: "Backend APIs and full-stack work on a wealth-management platform.",
     summary:
       "Backend and API engineering on a wealth-management platform, plus the full-stack work to put those APIs in front of customers.",
@@ -66,7 +95,7 @@ export const experience: ExperienceEntry[] = [
       "Automated investment-processing workflows and customer notifications on AWS S3 and ECS, replacing steps that had been run by hand.",
       "Built 25+ reusable React and TypeScript components across 10+ responsive screens, and integrated them against the APIs I had written on the backend.",
     ],
-    technologies: ["C#", ".NET Core", "DynamoDB", "PostgreSQL", "AWS S3", "AWS ECS", "React", "TypeScript", "REST APIs"],
+    technologies: ["C#", ".NET Core", "DynamoDB", "PostgreSQL", "AWS S3", "AWS ECS", "AWS Lambda", "API Gateway", "AWS SQS", "AWS SNS", "React", "TypeScript", "REST APIs"],
     advancementType: "standard",
     icon: "iron-pickaxe",
     evidenceItems: [
@@ -75,13 +104,14 @@ export const experience: ExperienceEntry[] = [
       { icon: "hopper", label: "Workflow automation", summary: "Investment processing and notifications on AWS S3 and ECS.", supportingBulletIndex: 2 },
       { icon: "crafting-table", label: "UI components", summary: "25+ reusable React components across 10+ screens.", supportingBulletIndex: 3 },
     ],
+    metrics: ["30+ REST APIs", "100K+ users", "100K+ customer accounts", "35% fewer production incidents", "95%+ sprint delivery rate", "100+ tracked tasks"],
   },
   {
     id: "tcs-dnb-se2",
     organization: "Tata Consultancy Services",
     clientOrContext: "DNB",
     title: "Software Engineer II",
-    startDate: "2023-04",
+    startDate: "2023-09",
     endDate: "2024-07",
     focus: "Merger integration and release ownership for an inherited banking service.",
     summary:
@@ -101,6 +131,7 @@ export const experience: ExperienceEntry[] = [
       { icon: "command-cube", label: "Delivery pipeline", summary: "GitLab CI/CD and Terraform, observed with CloudWatch.", supportingBulletIndex: 2 },
       { icon: "redstone-torch", label: "Production diagnosis", summary: "4xx/5xx failures traced across service boundaries.", supportingBulletIndex: 3 },
     ],
+    metrics: ["15+ microservices", "500K+ daily transactions", "99.8% service availability", "4 environments", "10+ C# .NET Core repositories", "25% reduction in PR rework/review time"],
   },
   {
     id: "ub-tesserae",

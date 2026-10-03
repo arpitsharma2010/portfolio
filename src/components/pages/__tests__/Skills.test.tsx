@@ -27,6 +27,15 @@ describe("skills data", () => {
     }
   });
 
+  it("tags TCS evidence consistently and cites only TCS roles for REST APIs", () => {
+    const sources = skillItems.flatMap((item) => item.evidence) as string[];
+    expect(sources).not.toContain("DNB");
+    const evidence = (id: string) => skillItems.find((item) => item.id === id)!.evidence;
+    expect(evidence("rest-apis")).toEqual(["TCS (DNB)", "TCS (Trainee)"]);
+    expect(evidence("java")).toEqual(["TCS (Trainee)", "Library Management System"]);
+    expect(evidence("spring-boot")).toEqual(["TCS (Trainee)", "Library Management System"]);
+  });
+
   it("never encodes proficiency in rarity and only adds technologies with site evidence", () => {
     expect(skillItems.every((item) => item.rarity === undefined || item.rarity === "enchanted")).toBe(true);
     const technologies = skillItems.map((item) => item.technology);
@@ -53,7 +62,7 @@ describe("Skills chest", () => {
     expect(detailHeading()).toHaveTextContent("C#");
     expect(within(detail()).getByText("Diamond · Languages")).toBeInTheDocument();
     expect(within(detail()).getByText(/wealth-management platform/)).toBeInTheDocument();
-    expect(within(detail()).getByText("DNB")).toBeInTheDocument();
+    expect(within(detail()).getByText("TCS (DNB)")).toBeInTheDocument();
     expect(detail()).toHaveAttribute("aria-live", "polite");
   });
 
@@ -118,7 +127,8 @@ describe("Skills chest", () => {
     expect(detailHeading()).toHaveTextContent("Java");
     expect(within(detail()).getByText("Library Management System")).toBeInTheDocument();
     expect(within(detail()).getByText("Projects")).toBeInTheDocument();
-    expect(within(detail()).queryByText("Experience")).not.toBeInTheDocument();
+    expect(within(detail()).getByText("Experience")).toBeInTheDocument();
+    expect(within(detail()).getByText("TCS (Trainee)")).toBeInTheDocument();
 
     fireEvent.keyDown(slot("AWS"), { key: "Enter" });
     expect(detailHeading()).toHaveTextContent("AWS");

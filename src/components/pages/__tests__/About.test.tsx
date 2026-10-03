@@ -2,6 +2,7 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import About from "../About";
 import MinecraftHUD from "../../header/MinecraftHUD";
+import { aboutItems } from "../about/aboutInventoryItems";
 import { EMAIL, GITHUB_URL, LINKEDIN_URL, RESUME_URL } from "../../../utils/constants";
 
 const detail = () => screen.getByText("Selected item").closest("section")!;
@@ -94,13 +95,22 @@ describe("About player inventory", () => {
     render(<About />);
     const redstone = screen.getByRole("button", { name: /^Legs slot/ });
     const description = document.getElementById(redstone.getAttribute("aria-describedby")!);
-    expect(description).toHaveTextContent("AWS SQS · SNS");
+    expect(description).toHaveTextContent("AWS SQS · SNS at TCS (DNB)");
 
     const identity = screen.getByText("Player profile").parentElement!;
     for (const fact of ["Arpit Dilip Sharma", "Software Engineer", "Backend · Distributed Systems · Cloud", "University at Buffalo (SUNY) · GPA 3.77 / 4", "AI / LLM Applications"]) {
       expect(within(identity).getByText(fact, { exact: false })).toBeInTheDocument();
     }
     expect(screen.getByText(/My centre of gravity is backend and distributed systems/)).toBeInTheDocument();
+  });
+
+  it("ties Lambda, SQS and SNS to the TCS (DNB) Software Engineer I role", () => {
+    const item = (id: string) => aboutItems.find((entry) => entry.id === id)!;
+    expect(item("cloud").lore).toContain("AWS Lambda at TCS (DNB)");
+    expect(item("cloud").summary).toMatch(/Tata Consultancy Services \(DNB\) I used AWS Lambda with API Gateway, S3, SQS and SNS as Software Engineer I/);
+    expect(item("distributed").summary).toMatch(/Software Engineer I at Tata Consultancy Services \(DNB\).*AWS SQS and SNS/);
+    const mentions = aboutItems.filter((entry) => /Lambda|SQS|SNS/.test([...entry.lore!, entry.summary].join(" ")));
+    mentions.forEach((entry) => expect(entry.summary).toContain("Tata Consultancy Services (DNB)"));
   });
 
   it("does not pin a tooltip open for the default selection", () => {

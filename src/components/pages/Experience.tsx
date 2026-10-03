@@ -14,14 +14,15 @@ import "./experience/advancements.css";
 
 const DETAIL_ID = "experience-detail";
 
-/** Desktop map coordinates, in % of the map box. The two ongoing roles branch from the DNB line because they overlap. */
+/** Desktop map coordinates, in % of the map box. The two ongoing roles branch from the TCS line because they overlap. */
 const MAP_LAYOUT: Record<string, { x: number; y: number }> = {
-  "tcs-dnb-se1": { x: 11, y: 44 },
-  "tcs-dnb-se2": { x: 36, y: 44 },
-  "ub-tesserae": { x: 66, y: 16 },
-  "skopus-ai": { x: 88, y: 70 },
+  "tcs-ase-trainee": { x: 9, y: 44 },
+  "tcs-dnb-se1": { x: 28, y: 44 },
+  "tcs-dnb-se2": { x: 47, y: 44 },
+  "ub-tesserae": { x: 74, y: 16 },
+  "skopus-ai": { x: 90, y: 70 },
 };
-const BRANCH_X = 52;
+const BRANCH_X = 60;
 
 const TYPE_LABEL: Record<AdvancementType, string> = {
   standard: "Role",
@@ -37,7 +38,7 @@ const point = (id: string) => `${MAP_LAYOUT[id].x} ${MAP_LAYOUT[id].y}`;
 const Connectors = () => {
   const trunkY = MAP_LAYOUT["tcs-dnb-se2"].y;
   const paths = [
-    `M${point("tcs-dnb-se1")} L${point("tcs-dnb-se2")} L${BRANCH_X} ${trunkY}`,
+    `M${point("tcs-ase-trainee")} L${point("tcs-dnb-se2")} L${BRANCH_X} ${trunkY}`,
     ...["ub-tesserae", "skopus-ai"].map((id) => `M${BRANCH_X} ${trunkY} L${BRANCH_X} ${MAP_LAYOUT[id].y} L${point(id)}`),
   ];
   return (
@@ -128,6 +129,14 @@ const ExperienceDetail = ({ entry }: { entry: ExperienceEntry }) => (
         <ul className="xp-impact">
           {entry.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
         </ul>
+        {entry.metrics && (
+          <>
+            <h4 className="xp-label">Verified metrics</h4>
+            <ul className="loot-list xp-tools" aria-label={`${entry.title} metrics`}>
+              {entry.metrics.map((metric) => <li key={metric} className="loot-tag">{metric}</li>)}
+            </ul>
+          </>
+        )}
       </div>
       <div>
         <h4 className="xp-label">Evidence</h4>

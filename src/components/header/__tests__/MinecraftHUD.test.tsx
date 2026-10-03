@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import MinecraftHUD from "../MinecraftHUD";
 import usePreferredTheme from "../../../hooks/usePreferredTheme";
 import { clampPercentage, calculatePortfolioProgress } from "../usePortfolioExploration";
-import type { PortfolioSectionId } from "../hotbarItems";
+import { getHotbarEntries, type PortfolioSectionId } from "../hotbarItems";
 
 let observerCallback: IntersectionObserverCallback;
 let observedSections: Element[];
@@ -78,6 +78,14 @@ afterEach(() => {
 });
 
 describe("MinecraftHUD hotbar", () => {
+  it("describes the Experience slot as advancements, not a quest log", () => {
+    for (const isDark of [false, true]) {
+      const experience = getHotbarEntries(isDark).find((slot) => slot.item.id === "hotbar-experience")!;
+      expect(experience.item.lore).toEqual(["View career advancements"]);
+    }
+  });
+
+
   it("exposes the exact item and destination mapping", () => {
     render(<TestPage />);
     const hotbar = screen.getByRole("navigation", { name: "Portfolio hotbar navigation" });

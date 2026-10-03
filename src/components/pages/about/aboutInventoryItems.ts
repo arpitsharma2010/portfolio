@@ -37,9 +37,9 @@ export const equipmentItems: AboutItem[] = [
     name: "Redstone Dust",
     icon: "redstone-dust",
     category: "Distributed & Event-Driven Systems",
-    lore: ["Microservice decomposition", "AWS SQS · SNS", "Concurrent downstream calls", "Cross-service debugging"],
+    lore: ["Microservice decomposition", "AWS SQS · SNS at TCS (DNB)", "Concurrent downstream calls", "Cross-service debugging"],
     summary:
-      "I split services along real boundaries and design for a downstream dependency that is slow instead of down. At DNB I decomposed a 25+ endpoint service into two independently deployable microservices and diagnosed production 4xx/5xx failures across service boundaries.",
+      "I split services along real boundaries and design for a downstream dependency that is slow instead of down. As Software Engineer I at Tata Consultancy Services (DNB) I decomposed a 25+ endpoint service into two independently deployable microservices and worked with AWS SQS and SNS; as Software Engineer II I diagnosed production 4xx/5xx failures across service boundaries.",
   },
   {
     id: "cloud",
@@ -47,9 +47,9 @@ export const equipmentItems: AboutItem[] = [
     name: "Compass",
     icon: "compass",
     category: "Cloud, DevOps & Delivery",
-    lore: ["AWS ECS · S3 · Lambda", "Terraform", "GitLab CI/CD", "Docker · CloudWatch"],
+    lore: ["AWS ECS · S3", "AWS Lambda at TCS (DNB)", "Terraform · GitLab CI/CD", "Docker · CloudWatch"],
     summary:
-      "A service you cannot deploy is not finished. I owned 20+ production releases across four environments at DNB with GitLab CI/CD, Terraform and CloudWatch, and run current work on AWS ECS. AWS Certified Solutions Architect, Associate.",
+      "A service you cannot deploy is not finished. At Tata Consultancy Services (DNB) I used AWS Lambda with API Gateway, S3, SQS and SNS as Software Engineer I, then owned 20+ production releases across four environments with GitLab CI/CD, Terraform and CloudWatch as Software Engineer II. Current work runs on AWS ECS. AWS Certified Solutions Architect, Associate.",
   },
 ];
 
@@ -79,9 +79,9 @@ export const inventoryItems: AboutItem[] = [
     name: "Map",
     icon: "map",
     category: "Career Journey",
-    lore: ["Skopus AI · May 2026 – Present", "University at Buffalo (Tesserae) · Nov 2025 – Present", "DNB · Nov 2020 – Jul 2024"],
+    lore: ["Skopus AI · May 2026 – Present", "University at Buffalo (Tesserae) · Nov 2025 – Present", "Tata Consultancy Services · Nov 2020 – Jul 2024"],
     summary:
-      "Founding Engineer at Skopus AI, Software Engineer on the Tesserae research platform at the University at Buffalo, and Software Engineer I and II on a wealth-management platform at DNB.",
+      "Founding Engineer at Skopus AI, Software Engineer on the Tesserae research platform at the University at Buffalo, and, at Tata Consultancy Services, ASE-Trainee followed by Software Engineer I and II on DNB's wealth-management platform.",
   },
   {
     id: "education",

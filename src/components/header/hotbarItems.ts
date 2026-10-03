@@ -25,7 +25,7 @@ const navigationEntries: Omit<HotbarEntry, "slot">[] = [
   { kind: "navigation", sectionId: "home", displayLabel: "Home / Spawn", item: { id: "hotbar-home", name: "Compass", icon: "compass", category: "Home", lore: ["Return to spawn"] } },
   { kind: "navigation", sectionId: "about", displayLabel: "About", item: { id: "hotbar-about", name: "Name Tag", icon: "name-tag", category: "About", lore: ["Meet the player"] } },
   { kind: "navigation", sectionId: "skills", displayLabel: "Skills", item: { id: "hotbar-skills", name: "Diamond Pickaxe", icon: "diamond-pickaxe", category: "Skills", lore: ["Open technical inventory"], rarity: "rare" } },
-  { kind: "navigation", sectionId: "experience", displayLabel: "Experience", item: { id: "hotbar-experience", name: "Map", icon: "map", category: "Experience", lore: ["Follow the quest log"] } },
+  { kind: "navigation", sectionId: "experience", displayLabel: "Experience", item: { id: "hotbar-experience", name: "Map", icon: "map", category: "Experience", lore: ["View career advancements"] } },
   { kind: "navigation", sectionId: "projects", displayLabel: "Projects", item: { id: "hotbar-projects", name: "Chest", icon: "chest", category: "Projects", lore: ["Browse completed builds"] } },
   { kind: "navigation", sectionId: "education", displayLabel: "Education", item: { id: "hotbar-education", name: "Enchanted Book", icon: "enchanted-book", category: "Education", lore: ["Review learning milestones"], rarity: "enchanted" } },
   { kind: "navigation", sectionId: "resume", displayLabel: "Resume", item: { id: "hotbar-resume", name: "Written Book", icon: "book", category: "Resume", lore: ["Open professional summary"] } },

@@ -95,7 +95,7 @@
     position: absolute;
     left: var(--x);
     top: var(--y);
-    width: 184px;
+    width: 164px;
     display: flex;
     flex-direction: column;
     align-items: center;
