@@ -12,47 +12,11 @@ import WorldLoader from "./components/common/WorldLoader.tsx";
 import usePreferredTheme from "./hooks/usePreferredTheme.ts";
 import { initAnalytics } from "./utils/analytics.ts";
 
-/** Sticky header height plus the sections' scroll-margin. */
-const HEADER_OFFSET = 72;
-
 const App: React.FC = () => {
   const { theme, toggleTheme, transitionOrigin } = usePreferredTheme();
 
   useEffect(() => {
     initAnalytics();
-  }, []);
-
-  // A load-time #hash is resolved before React renders the sections, and the
-  // global `scroll-behavior: smooth` turns the correction into an animation
-  // that later layout shifts cancel. Jump explicitly with smooth scrolling
-  // suspended, repeat once webfonts and images have settled the offsets, and
-  // cover hash changes that do not remount the app (URL edits, back/forward).
-  useEffect(() => {
-    let active = true;
-    const jumpToHash = () => {
-      if (!active) return;
-      const target = document.getElementById(window.location.hash.slice(1));
-      if (!target) return;
-      const root = document.documentElement;
-      const previousBehavior = root.style.scrollBehavior;
-      root.style.scrollBehavior = "auto";
-      window.scrollTo(0, target.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET);
-      root.style.scrollBehavior = previousBehavior;
-    };
-
-    const frame = requestAnimationFrame(jumpToHash);
-    window.addEventListener("load", jumpToHash);
-    window.addEventListener("hashchange", jumpToHash);
-    void document.fonts?.ready.then(() => {
-      if (active) jumpToHash();
-    });
-
-    return () => {
-      active = false;
-      cancelAnimationFrame(frame);
-      window.removeEventListener("load", jumpToHash);
-      window.removeEventListener("hashchange", jumpToHash);
-    };
   }, []);
 
   return (

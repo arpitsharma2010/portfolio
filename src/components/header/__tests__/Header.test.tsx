@@ -1,29 +1,30 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { vi } from "vitest";
 import Header from "../Header";
 
 describe("Header", () => {
-  it("renders the section navigation", () => {
+  it("keeps identity in the top header and primary navigation in the HUD", () => {
     render(<Header theme="light" onThemeToggle={vi.fn()} />);
 
-    expect(screen.getAllByRole("link", { name: "Experience" }).length).toBeGreaterThan(0);
-    expect(screen.getAllByRole("link", { name: "Projects" }).length).toBeGreaterThan(0);
-    expect(screen.getByRole("link", { name: "Resume" })).toHaveAttribute("href", "#resume");
+    expect(screen.getByRole("link", { name: /arpit sharma software engineer/i })).toHaveAttribute("href", "#home");
+    expect(screen.getByLabelText("Player status")).toHaveTextContent("Available for opportunities");
+    expect(screen.getByRole("navigation", { name: "Portfolio hotbar navigation" })).toBeInTheDocument();
   });
 
-  it("invokes the theme toggle", () => {
+  it("renders exactly nine hotbar controls", () => {
+    render(<Header theme="light" onThemeToggle={vi.fn()} />);
+    const hotbar = screen.getByRole("navigation", { name: "Portfolio hotbar navigation" });
+
+    expect(within(hotbar).getAllByRole("button")).toHaveLength(9);
+    expect(within(hotbar).getByRole("button", { name: "Compass — Home" })).toHaveAttribute("data-href", "#home");
+    expect(within(hotbar).getByRole("button", { name: "Portal — Contact" })).toHaveAttribute("data-href", "#contact");
+  });
+
+  it("invokes theme switching from slot nine", () => {
     const onThemeToggle = vi.fn();
     render(<Header theme="light" onThemeToggle={onThemeToggle} />);
 
-    fireEvent.click(screen.getByRole("button", { name: /switch to dark mode/i }));
-    expect(onThemeToggle).toHaveBeenCalledTimes(1);
-  });
-
-  it("keeps every section available in the responsive hotbar", () => {
-    render(<Header theme="dark" onThemeToggle={vi.fn()} />);
-
-    expect(screen.getByRole("navigation", { name: /portfolio sections/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute("href", "#contact");
-    expect(screen.getByRole("link", { name: "Skills" })).toHaveAttribute("href", "#skills");
+    fireEvent.click(screen.getByRole("button", { name: "Clock — Switch to night mode" }));
+    expect(onThemeToggle).toHaveBeenCalledOnce();
   });
 });

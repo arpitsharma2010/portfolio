@@ -41,10 +41,13 @@ const MinecraftItemIcon = ({ name, title, className = "", ...props }: MinecraftI
       case "compass": art = <><circle cx="20" cy="20" r="17" fill="#b8b0a0" /><circle cx="20" cy="20" r="12" fill="#31455b" /><path fill="#f25b4b" d="M22 7l3 14-5-1-5-1z" /><path fill="#eee" d="M18 33l-3-14 5 1 5 1z" /></>; break;
       case "map": art = <><path fill="#dfd4a4" d="M3 7l11-4 12 5 11-4v29l-11 4-12-5-11 4z" /><path fill="#67a65b" d="M8 12h8v7h8v10h8v4l-6 2-12-5-6 2z" /><path fill="#63a9c4" d="M17 6l8 4v9h-6v-7l-2-1z" /></>; break;
       case "clock": art = <><circle cx="20" cy="20" r="17" fill="#d7a62e" /><circle cx="20" cy="20" r="12" fill="#e6ddbd" /><path fill="#443928" d="M18 9h4v10l8 5-2 4-10-6z" /></>; break;
+      case "sun-clock": art = <><circle cx="20" cy="20" r="17" fill="#d49e24" /><circle cx="20" cy="20" r="12" fill="#78bce2" /><circle cx="20" cy="20" r="6" fill="#ffe16a" /><path stroke="#fff0a3" strokeWidth="2" d="M20 9v3m0 16v3M9 20h3m16 0h3M12 12l2 2m12 12 2 2m0-16-2 2M14 26l-2 2" /></>; break;
+      case "moon-clock": art = <><circle cx="20" cy="20" r="17" fill="#a68735" /><circle cx="20" cy="20" r="12" fill="#26375e" /><circle cx="19" cy="19" r="7" fill="#e5e9d8" /><circle cx="23" cy="16" r="7" fill="#26375e" /><path fill="#d3e6ff" d="M10 12h2v2h-2zm18 10h2v2h-2z" /></>; break;
       case "redstone-dust": art = <><path fill="#8d151a" d="M5 25h8l5-8 6 6 7-10 5 4-9 16H14z" /><path fill="#e34a43" d="M4 28h10v6H4zm22-20h7v7h-7z" /></>; break;
       case "redstone-torch": art = <><path fill="#77482c" d="M17 13h6v23h-6z" /><path fill="#b41e25" d="M12 4h16v12H12z" /><path fill="#ff7166" d="M16 6h8v5h-8z" /></>; break;
       case "chest":
       case "ender-chest": art = <><path fill={name === "chest" ? "#9a5f2d" : "#244b4d"} d="M3 8h34v26H3z" /><path fill={name === "chest" ? "#d08a3d" : "#397779"} d="M6 11h28v9H6z" /><path fill="#25251f" d="M3 18h34v5H3z" /><path fill="#e1b94d" d="M17 17h7v9h-7z" /></>; break;
+      case "portal": art = <><path fill="#17131c" d="M5 2h30v36h-8V10H13v28H5z" /><path fill="#563069" d="M9 6h22v28h-4V10H13v24H9z" /><path fill="#a953c3" d="M13 10h14v24H13z" /><path className="mc-icon__shimmer" fill="#e7a2f3" d="M16 13h3v5h-3zm6 8h3v7h-3zm-7 8h3v3h-3z" /></>; break;
       case "crafting-table": art = <><path fill="#8c542f" d="M3 5h34v31H3z" /><path fill="#c98a4b" d="M6 8h28v9H6z" /><path fill="#38251c" d="M18 5h4v31h-4zM3 18h34v4H3z" /></>; break;
       case "furnace": art = <><path fill="#777b76" d="M4 3h32v34H4z" /><path fill="#393d3a" d="M9 8h22v9H9zm0 14h22v11H9z" /><path fill="#f08b2d" d="M14 25h12v6H14z" /></>; break;
       case "anvil": art = <><path fill="#4c514f" d="M3 7h34v8l-8 5h-5v8h7v7H9v-7h7v-8l-6-5H3z" /><path fill="#777d79" d="M7 7h27v4H7z" /></>; break;

@@ -1,0 +1,164 @@
+.minecraft-hud {
+  position: fixed;
+  z-index: 85;
+  left: 50%;
+  bottom: max(8px, env(safe-area-inset-bottom));
+  width: min-content;
+  max-width: calc(100vw - 12px);
+  display: grid;
+  justify-items: center;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.minecraft-selected-label {
+  min-width: 180px;
+  min-height: 45px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  margin-bottom: 5px;
+  padding: .35rem .8rem;
+  color: #fff;
+  background: rgba(13, 15, 13, .88);
+  border: 2px solid rgba(255, 255, 255, .18);
+  box-shadow: 3px 3px rgba(0, 0, 0, .35);
+  font-family: var(--pixel);
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(5px);
+  transition: opacity 130ms ease, transform 130ms ease, visibility 0s linear 130ms;
+  pointer-events: none;
+}
+.minecraft-selected-label.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+.minecraft-selected-label strong { color: #f7f4e8; font-size: .72rem; line-height: 1.25; }
+.minecraft-selected-label span { margin-top: .2rem; color: #b9c2b9; font: 600 .58rem/1.2 var(--pixel); }
+
+.minecraft-exploration {
+  position: relative;
+  width: min(520px, calc(100vw - 24px));
+  height: 15px;
+  margin-bottom: 5px;
+  pointer-events: auto;
+}
+.minecraft-exploration__level {
+  position: absolute;
+  left: 50%;
+  bottom: 9px;
+  color: #9ee75f;
+  font: 800 .58rem/1 var(--pixel);
+  text-shadow: 2px 2px #17220f;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.minecraft-exploration__track {
+  position: absolute;
+  inset: 6px 0 0;
+  height: 9px;
+  padding: 2px;
+  background: #141714;
+  border: 2px solid #050605;
+  box-shadow: inset 1px 1px #353b34;
+}
+.minecraft-exploration__track > span {
+  display: block;
+  height: 100%;
+  background: repeating-linear-gradient(90deg, #78cc39 0 7px, #5dae2c 7px 9px);
+  box-shadow: 0 0 5px rgba(125, 229, 59, .65);
+  transition: width 180ms ease;
+}
+
+.minecraft-hotbar {
+  max-width: calc(100vw - 12px);
+  padding: 5px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: #242722;
+  border: 4px solid #0c0e0c;
+  box-shadow: inset 3px 3px #555a51, inset -3px -3px #101210, 0 6px 20px rgba(0, 0, 0, .45);
+  scrollbar-width: none;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: x proximity;
+  pointer-events: auto;
+}
+.minecraft-hotbar::-webkit-scrollbar { display: none; }
+.minecraft-hotbar ol { width: max-content; display: flex; margin: 0; padding: 0; list-style: none; }
+.minecraft-hotbar li {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+  scroll-snap-align: center;
+}
+.minecraft-hotbar__slot.mc-slot {
+  width: 58px;
+  min-width: 58px;
+  min-height: 58px;
+  aspect-ratio: 1;
+  background: #555951;
+  box-shadow: inset 3px 3px #777d72, inset -3px -3px #30342e;
+}
+.minecraft-hotbar__slot.mc-slot .mc-item-icon { width: 72%; height: 72%; }
+.minecraft-hotbar__slot.mc-slot.is-selected {
+  z-index: 3;
+  background: #62685e;
+  box-shadow: inset 3px 3px #f8f7eb, inset -3px -3px #898b83, 0 0 0 3px #fff, 0 0 0 5px #171917;
+  transform: translateY(-2px);
+}
+.minecraft-hotbar li.is-current-section::after {
+  content: "";
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  bottom: 4px;
+  width: 6px;
+  height: 6px;
+  background: #8bea52;
+  box-shadow: 0 0 0 2px #1d3514, 0 0 6px #87df55;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.minecraft-hotbar__key {
+  position: absolute;
+  z-index: 6;
+  top: 5px;
+  left: 6px;
+  color: #e2e5de;
+  font: 700 .52rem/1 var(--pixel);
+  text-shadow: 1px 1px #151715;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .minecraft-hotbar li,
+  .minecraft-hotbar__slot.mc-slot {
+    width: 52px;
+    min-width: 52px;
+    min-height: 52px;
+  }
+  .minecraft-hotbar li { height: 52px; flex-basis: 52px; }
+}
+
+@media (max-width: 520px) {
+  .minecraft-hud { justify-items: stretch; }
+  .minecraft-selected-label { width: max-content; max-width: calc(100vw - 24px); justify-self: center; }
+  .minecraft-hotbar { width: calc(100vw - 12px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .minecraft-selected-label,
+  .minecraft-exploration__track > span,
+  .minecraft-hotbar,
+  .minecraft-hotbar__slot.mc-slot {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+  .minecraft-selected-label { transform: none; }
+}

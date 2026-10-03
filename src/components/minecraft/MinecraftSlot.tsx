@@ -8,7 +8,10 @@ interface MinecraftSlotProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
   selected?: boolean;
   onSelect?: (item: MinecraftItem) => void;
   onActivate?: (item: MinecraftItem) => void;
+  /** Primary controls such as navigation may activate on the first click/tap. */
+  activateOnClick?: boolean;
   showTooltip?: boolean;
+  showTooltipWhenSelected?: boolean;
   slotLabel?: string;
 }
 
@@ -17,7 +20,9 @@ const MinecraftSlot = ({
   selected = item?.selected ?? false,
   onSelect,
   onActivate,
+  activateOnClick = false,
   showTooltip = true,
+  showTooltipWhenSelected = true,
   slotLabel,
   className = "",
   disabled,
@@ -37,7 +42,7 @@ const MinecraftSlot = ({
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const isDisabled = disabled ?? item?.disabled ?? false;
-  const tooltipVisible = Boolean(item && showTooltip && (hovered || focused || selected));
+  const tooltipVisible = Boolean(item && showTooltip && (hovered || focused || (selected && showTooltipWhenSelected)));
 
   const select = () => {
     if (item && !isDisabled) onSelect?.(item);
@@ -83,6 +88,11 @@ const MinecraftSlot = ({
           if (event.defaultPrevented || !item) return;
           const wasSelected = selected;
           select();
+          if (activateOnClick) {
+            activate();
+            pointerTypeRef.current = "";
+            return;
+          }
           // Touch has no hover: the first tap selects and reveals lore, the next activates.
           if (wasSelected && pointerTypeRef.current === "touch") activate();
           pointerTypeRef.current = "";
