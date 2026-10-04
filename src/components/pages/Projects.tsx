@@ -157,7 +157,6 @@ const Projects: React.FC = () => {
                     ariaLabel={`${project.title} architecture`}
                     selectedItemId={selectedItemId}
                     onSelect={select}
-                    showTooltipWhenSelected={false}
                     getSlotLabel={slotLabel}
                   />
                 </div>

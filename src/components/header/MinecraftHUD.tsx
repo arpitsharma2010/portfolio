@@ -6,14 +6,16 @@ import MinecraftSelectedItemLabel from "./MinecraftSelectedItemLabel";
 import { getHotbarEntries } from "./hotbarItems";
 import useHotbarNavigation from "./useHotbarNavigation";
 import useSectionProgress from "./useSectionProgress";
+import useExplorationReward from "./useExplorationReward";
 import "./minecraft-hud.css";
 
 interface MinecraftHUDProps {
   theme: string;
   onThemeToggle: (origin?: { x: number; y: number }) => void;
+  soundEnabled?: boolean;
 }
 
-const MinecraftHUD = ({ theme, onThemeToggle }: MinecraftHUDProps) => {
+const MinecraftHUD = ({ theme, onThemeToggle, soundEnabled = false }: MinecraftHUDProps) => {
   const isDark = theme === "dark";
   const entries = useMemo(() => getHotbarEntries(isDark), [isDark]);
   const navRef = useRef<HTMLElement>(null);
@@ -25,6 +27,7 @@ const MinecraftHUD = ({ theme, onThemeToggle }: MinecraftHUDProps) => {
     previewIndex,
   } = useHotbarNavigation({ entries, onThemeToggle, navRef });
   const sectionProgress = useSectionProgress(activeSectionId);
+  const { reward, visible: rewardVisible } = useExplorationReward(activeSectionId, sectionProgress, soundEnabled);
 
   useEffect(() => {
     trackPageView(`/portfolio/#${activeSectionId}`);
@@ -51,6 +54,8 @@ const MinecraftHUD = ({ theme, onThemeToggle }: MinecraftHUDProps) => {
       <MinecraftExplorationBar
         sectionProgress={sectionProgress}
         activeSectionId={activeSectionId}
+        reward={reward}
+        rewardVisible={rewardVisible}
       />
       <nav
         ref={navRef}
@@ -70,7 +75,6 @@ const MinecraftHUD = ({ theme, onThemeToggle }: MinecraftHUDProps) => {
                 <MinecraftSlot
                   item={entry.item}
                   selected={selectedIndex === index}
-                  showTooltipWhenSelected={false}
                   activateOnClick
                   onActivate={() => activateIndex(index)}
                   slotLabel={actionLabel}

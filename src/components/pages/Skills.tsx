@@ -128,7 +128,6 @@ const Skills: React.FC = () => {
                 ariaLabel="Large Chest: technical skills"
                 selectedItemId={selectedItemId}
                 onSelect={selectSkill}
-                showTooltipWhenSelected={false}
                 getSlotLabel={slotLabel}
               />
               {visibleItems.length === 0 && <p className="sc-empty">No items match. Try another category or search.</p>}
@@ -147,7 +146,6 @@ const Skills: React.FC = () => {
               ariaLabel="Core Toolkit"
               selectedItemId={selectedItemId}
               onSelect={selectSkill}
-              showTooltipWhenSelected={false}
               getSlotLabel={slotLabel}
             />
           </div>

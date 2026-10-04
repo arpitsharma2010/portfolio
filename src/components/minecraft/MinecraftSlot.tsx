@@ -11,7 +11,6 @@ interface MinecraftSlotProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
   /** Primary controls such as navigation may activate on the first click/tap. */
   activateOnClick?: boolean;
   showTooltip?: boolean;
-  showTooltipWhenSelected?: boolean;
   slotLabel?: string;
 }
 
@@ -22,7 +21,6 @@ const MinecraftSlot = ({
   onActivate,
   activateOnClick = false,
   showTooltip = true,
-  showTooltipWhenSelected = true,
   slotLabel,
   className = "",
   disabled,
@@ -38,11 +36,14 @@ const MinecraftSlot = ({
 }: MinecraftSlotProps) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const pointerTypeRef = useRef("");
+  /** Set between pointerdown and the focus it causes: a clicked slot is focused but not keyboard-focused. */
+  const pointerFocusRef = useRef(false);
   const tooltipId = `mc-tooltip-${useId().replace(/:/g, "")}`;
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const isDisabled = disabled ?? item?.disabled ?? false;
-  const tooltipVisible = Boolean(item && showTooltip && (hovered || focused || (selected && showTooltipWhenSelected)));
+  // Hover or keyboard focus only: selection never keeps the lore open.
+  const tooltipVisible = Boolean(item && showTooltip && (hovered || focused));
 
   const select = () => {
     if (item && !isDisabled) onSelect?.(item);
@@ -58,6 +59,8 @@ const MinecraftSlot = ({
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    // Keyboard use after a click turns the click focus into keyboard focus.
+    setFocused(true);
     onKeyDown?.(event);
     if (event.defaultPrevented || !item || isDisabled) return;
     if (event.key === "Enter" || event.key === " ") {
@@ -81,9 +84,11 @@ const MinecraftSlot = ({
         data-item-id={item?.id}
         onPointerDown={(event: PointerEvent<HTMLButtonElement>) => {
           pointerTypeRef.current = event.pointerType;
+          pointerFocusRef.current = true;
           onPointerDown?.(event);
         }}
         onClick={(event) => {
+          pointerFocusRef.current = false;
           onClick?.(event);
           if (event.defaultPrevented || !item) return;
           const wasSelected = selected;
@@ -102,8 +107,12 @@ const MinecraftSlot = ({
           if (!event.defaultPrevented) activate();
         }}
         onKeyDown={handleKeyDown}
-        onFocus={(event) => { setFocused(true); onFocus?.(event); }}
-        onBlur={(event) => { setFocused(false); onBlur?.(event); }}
+        onFocus={(event) => {
+          setFocused(!pointerFocusRef.current);
+          pointerFocusRef.current = false;
+          onFocus?.(event);
+        }}
+        onBlur={(event) => { setFocused(false); pointerFocusRef.current = false; onBlur?.(event); }}
         onMouseEnter={(event) => { setHovered(true); onMouseEnter?.(event); }}
         onMouseLeave={(event) => { setHovered(false); onMouseLeave?.(event); }}
       >

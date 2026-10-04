@@ -108,6 +108,11 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .world-status__online { display: flex; align-items: center; gap: .45rem; }
 .world-status__online i, .status-dot { display: inline-block; width: 9px; height: 9px; background: #76d45c; box-shadow: 0 0 0 2px #1d4e20, 0 0 10px #76d45c; }
 .world-status__coords { color: #8e9991; }
+.world-sound { min-height: 44px; display: inline-flex; align-items: center; gap: .4rem; padding: 0 .65rem; color: #c6cec8; background: #1b201b; border: 2px solid #0b0e0b; box-shadow: inset 2px 2px #353b34; font: inherit; cursor: pointer; }
+.world-sound[aria-pressed="false"] { color: #8e9991; }
+.world-sound:hover { color: #fff; }
+.world-sound:focus-visible { outline: 3px solid var(--mc-focus, #ffe45c); outline-offset: 2px; }
+.world-sound svg { width: 16px; height: 16px; flex: none; }
 
 .pixel-button {
   min-height: 44px;
@@ -240,6 +245,8 @@ main { width: 100%; }
 @media (max-width: 680px) {
   :root { --header-height: 60px; }
   .world-brand small, .world-status__online { display: none; }
+  .world-sound span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .world-sound { min-width: 44px; justify-content: center; padding: 0; }
   .world-brand { grid-template-columns: 30px auto; font-size: .72rem; }
   .world-brand__cube { width: 28px; height: 28px; }
   .world-sections > section:not(#home) { width: min(100% - 1rem, 1180px); padding: 3.6rem 0; }

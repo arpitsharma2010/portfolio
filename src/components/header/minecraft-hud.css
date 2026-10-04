@@ -56,6 +56,25 @@
   transform: translateX(-50%);
   white-space: nowrap;
 }
+/* Exploration reward: a brief "+5 XP" pop above the right of the bar; decorative, announced separately. */
+.minecraft-exploration__reward {
+  position: absolute;
+  right: 4px;
+  bottom: 11px;
+  color: #c6ff7a;
+  font: 900 .7rem/1 var(--pixel);
+  text-shadow: 2px 2px #17220f, 0 0 8px rgba(125, 229, 59, .8);
+  white-space: nowrap;
+  pointer-events: none;
+  animation: minecraft-xp-reward 2200ms ease-out forwards;
+}
+@keyframes minecraft-xp-reward {
+  0% { opacity: 0; transform: translateY(6px) scale(.8); }
+  12% { opacity: 1; transform: translateY(0) scale(1.15); }
+  22% { transform: scale(1); }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-8px); }
+}
 .minecraft-exploration__track {
   position: absolute;
   inset: 6px 0 0;
@@ -152,6 +171,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .minecraft-selected-label,
+  .minecraft-exploration__reward,
   .minecraft-exploration__track > span,
   .minecraft-hotbar,
   .minecraft-hotbar__slot.mc-slot {

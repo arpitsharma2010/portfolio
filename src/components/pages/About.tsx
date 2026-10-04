@@ -72,7 +72,6 @@ const About: React.FC = () => {
                 ariaLabel="Equipment: core professional domains"
                 selectedItemId={selectedItemId}
                 onSelect={select}
-                showTooltipWhenSelected={false}
                 getSlotLabel={equipmentLabel}
               />
             </div>
@@ -91,7 +90,6 @@ const About: React.FC = () => {
                 ariaLabel="Crafting ingredients"
                 selectedItemId={selectedItemId}
                 onSelect={select}
-                showTooltipWhenSelected={false}
                 getSlotLabel={ingredientLabel}
               />
               <span className="pi-crafting__arrow" aria-hidden />
@@ -100,7 +98,6 @@ const About: React.FC = () => {
                   item={craftingResult}
                   selected={selectedItemId === craftingResult.id}
                   onSelect={select}
-                  showTooltipWhenSelected={false}
                   slotLabel={`Crafting result: ${craftingResult.name}`}
                 />
               </div>
@@ -118,7 +115,6 @@ const About: React.FC = () => {
               ariaLabel="Profile inventory"
               selectedItemId={selectedItemId}
               onSelect={select}
-              showTooltipWhenSelected={false}
               getSlotLabel={itemLabel}
             />
           </div>
