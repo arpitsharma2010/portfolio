@@ -18,7 +18,7 @@ export interface HotbarEntry {
   item: MinecraftItem;
   displayLabel: string;
   sectionId?: PortfolioSectionId;
-  kind: "navigation" | "theme";
+  kind: "navigation" | "theme" | "portal-crystals";
 }
 
 const navigationEntries: Omit<HotbarEntry, "slot">[] = [
@@ -32,7 +32,7 @@ const navigationEntries: Omit<HotbarEntry, "slot">[] = [
   { kind: "navigation", sectionId: "contact", displayLabel: "Contact", item: { id: "hotbar-contact", name: "Portal", icon: "portal", category: "Contact", lore: ["Open a communication portal"], rarity: "epic" } },
 ];
 
-export const getHotbarEntries = (isDark: boolean): HotbarEntry[] => {
+export const getHotbarEntries = (isDark: boolean, portalCrystalCount = 0): HotbarEntry[] => {
   const themeIcon: MinecraftIconName = isDark ? "moon-clock" : "sun-clock";
   const themeAction = isDark ? "Switch to day mode" : "Switch to night mode";
   return [
@@ -47,6 +47,20 @@ export const getHotbarEntries = (isDark: boolean): HotbarEntry[] => {
         icon: themeIcon,
         category: themeAction,
         lore: [isDark ? "Current world state: night" : "Current world state: day"],
+      },
+    },
+    {
+      slot: 0,
+      kind: "portal-crystals",
+      displayLabel: `${portalCrystalCount} / 12 Portal Crystals`,
+      item: {
+        id: "hotbar-portal-crystals",
+        name: "Portal Crystal",
+        icon: "portal-crystal",
+        category: "End Portal",
+        quantity: portalCrystalCount,
+        rarity: "enchanted",
+        lore: [portalCrystalCount === 12 ? "Activate End Portal" : `${portalCrystalCount} of 12 collected`],
       },
     },
   ];

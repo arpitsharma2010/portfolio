@@ -17,13 +17,14 @@ describe("Header", () => {
     expect(screen.getByRole("navigation", { name: "Portfolio hotbar navigation" })).toBeInTheDocument();
   });
 
-  it("renders exactly nine hotbar controls", () => {
+  it("renders ten hotbar controls with Portal Crystals after slot nine", () => {
     render(<Header theme="light" onThemeToggle={vi.fn()} />);
     const hotbar = screen.getByRole("navigation", { name: "Portfolio hotbar navigation" });
 
-    expect(within(hotbar).getAllByRole("button")).toHaveLength(9);
+    expect(within(hotbar).getAllByRole("button")).toHaveLength(10);
     expect(within(hotbar).getByRole("button", { name: "Compass — Home" })).toHaveAttribute("data-href", "#home");
     expect(within(hotbar).getByRole("button", { name: "Portal — Contact" })).toHaveAttribute("data-href", "#contact");
+    expect(within(hotbar).getByRole("button", { name: "Portal Crystals — 0 of 12 collected" })).toHaveAttribute("aria-keyshortcuts", "0");
   });
 
   it("invokes theme switching from slot nine", () => {

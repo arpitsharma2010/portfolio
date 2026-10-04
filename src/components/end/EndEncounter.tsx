@@ -5,10 +5,10 @@ import {
   CRYSTAL_COUNT,
   CRYSTAL_MAX_INTEGRITY,
   DRAGON_MAX_HEALTH,
-  END_UNLOCK_XP,
   endEncounterReducer,
   livingCrystals,
 } from "./endEncounterState";
+import type { PortalState } from "./portalProgress";
 import "./end-encounter.css";
 
 const DragonArt = () => (
@@ -38,15 +38,17 @@ const EndCity = () => (
 );
 
 interface EndEncounterProps {
-  earnedXp: number;
+  portalState: PortalState;
+  filledSockets: number;
+  entryRequest?: number;
   soundEnabled?: boolean;
 }
 
-const EndEncounter = ({ earnedXp, soundEnabled = false }: EndEncounterProps) => {
+const EndEncounter = ({ portalState, filledSockets, entryRequest = 0, soundEnabled = false }: EndEncounterProps) => {
   const [state, dispatch] = useReducer(endEncounterReducer, undefined, createInitialEndEncounterState);
   const handledDefeatSound = useRef(false);
+  const handledEntryRequest = useRef(0);
   const activeCrystalCount = livingCrystals(state.crystals);
-  const unlocked = earnedXp >= END_UNLOCK_XP;
   const regenerating = activeCrystalCount > 0 && state.dragonHealth < DRAGON_MAX_HEALTH && !state.dragonDefeated;
   const activateWithKeyboard = (event: KeyboardEvent<HTMLButtonElement>, action: () => void) => {
     if (event.key !== "Enter" && event.key !== " ") return;
@@ -72,20 +74,41 @@ const EndEncounter = ({ earnedXp, soundEnabled = false }: EndEncounterProps) => 
     if (soundEnabled) playRewardChime();
   }, [soundEnabled, state.dragonDefeated]);
 
+  useEffect(() => {
+    if (portalState !== "active" || entryRequest <= handledEntryRequest.current) return;
+    handledEntryRequest.current = entryRequest;
+    dispatch({ type: "enter" });
+  }, [entryRequest, portalState]);
+
+  const portalLabel = portalState === "active"
+    ? "Enter the End Portal"
+    : portalState === "filling"
+      ? "Filling End Portal"
+      : portalState === "ready"
+        ? "End Portal ready. Use Portal Crystals from slot 0"
+        : "End Portal locked. Collect 12 Portal Crystals";
+
   return (
     <section id="end-encounter" className={`end-encounter${state.endActive ? " is-active" : ""}`} aria-label="Optional End encounter">
       {!state.endActive ? (
-        <div className={`end-gateway${unlocked ? " is-unlocked" : ""}`}>
-          <div className="end-gateway__portal" aria-hidden><i /><i /><i /><i /></div>
+        <div className={`end-gateway is-${portalState}`} data-portal-state={portalState}>
+          <div className="end-gateway__frame" aria-hidden>
+            <div className="end-gateway__sockets">
+              {Array.from({ length: 12 }, (_, index) => (
+                <i key={index} className={index < filledSockets ? "is-filled" : undefined} />
+              ))}
+            </div>
+            <div className="end-gateway__portal"><i /><i /><i /><i /></div>
+          </div>
           <button
             type="button"
             className="end-gateway__button"
-            disabled={!unlocked}
+            disabled={portalState !== "active"}
             onClick={() => dispatch({ type: "enter" })}
-            aria-label={unlocked ? "Enter the End Portal" : `End Portal locked, ${earnedXp} of ${END_UNLOCK_XP} exploration XP`}
+            aria-label={portalLabel}
           >
             <strong>END PORTAL</strong>
-            <span>{unlocked ? "ENTER END" : `${earnedXp} / ${END_UNLOCK_XP} XP`}</span>
+            <span>{portalState === "active" ? "ENTER END" : portalState === "filling" ? `${filledSockets} / 12` : portalState === "ready" ? "PRESS 0 TO FILL" : "0 / 12 SOCKETS"}</span>
           </button>
         </div>
       ) : (

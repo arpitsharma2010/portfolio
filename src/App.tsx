@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import MainLayout from "./MainLayout.tsx";
 import Home from "./components/pages/Home.tsx";
 import Experience from "./components/pages/Experience.tsx";
@@ -13,11 +13,24 @@ import usePreferredTheme from "./hooks/usePreferredTheme.ts";
 import { initAnalytics } from "./utils/analytics.ts";
 import { readSoundPreference } from "./utils/rewardSound.ts";
 import EndEncounter from "./components/end/EndEncounter.tsx";
+import { usePortalProgress } from "./components/end/portalProgress.ts";
+import type { ExplorationState } from "./components/header/useExplorationReward.ts";
+
+const initialExploration: ExplorationState = {
+  completedSections: [],
+  explorationXP: 0,
+  portalCrystalCount: 0,
+};
 
 const App: React.FC = () => {
-  const { theme, toggleTheme, transitionOrigin } = usePreferredTheme();
-  const [explorationXp, setExplorationXp] = useState(0);
+  const { theme, toggleTheme, transitionOrigin, skyTransition } = usePreferredTheme();
+  const [exploration, setExploration] = useState<ExplorationState>(initialExploration);
   const [soundEnabled, setSoundEnabled] = useState(readSoundPreference);
+  const portal = usePortalProgress(exploration.portalCrystalCount);
+
+  const handleExplorationChange = useCallback((next: ExplorationState) => {
+    setExploration((current) => current.completedSections.length === next.completedSections.length ? current : next);
+  }, []);
 
   useEffect(() => {
     initAnalytics();
@@ -32,11 +45,14 @@ const App: React.FC = () => {
         transitionOrigin={transitionOrigin ?? undefined}
         soundEnabled={soundEnabled}
         onSoundEnabledChange={setSoundEnabled}
-        onExplorationXpChange={setExplorationXp}
+        onExplorationChange={handleExplorationChange}
+        portalCrystalCount={portal.inventoryCount}
+        portalState={portal.portalState}
+        onPortalActivate={portal.activatePortal}
       >
       <div className="world-sections">
         <section id="home">
-          <Home />
+          <Home skyTransition={skyTransition} />
         </section>
         <section id="about">
           <About />
@@ -59,7 +75,12 @@ const App: React.FC = () => {
         <section id="contact">
           <Contact />
         </section>
-        <EndEncounter earnedXp={explorationXp} soundEnabled={soundEnabled} />
+        <EndEncounter
+          portalState={portal.portalState}
+          filledSockets={portal.filledSockets}
+          entryRequest={portal.entryRequest}
+          soundEnabled={soundEnabled}
+        />
       </div>
       </MainLayout>
     </>

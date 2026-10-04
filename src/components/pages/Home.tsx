@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FiArrowDown, FiExternalLink, FiMail } from "react-icons/fi";
 import {
@@ -9,6 +9,7 @@ import {
   NAME,
   RESUME_URL,
 } from "../../utils/constants";
+import type { SkyTransitionDirection } from "../../hooks/usePreferredTheme";
 
 const facts = [
   { label: "Spawn point", value: LOCATION, detail: "Open to relocation across the US" },
@@ -16,12 +17,56 @@ const facts = [
   { label: "Primary class", value: "Backend & cloud", detail: "Distributed systems, APIs, agentic AI" },
 ];
 
-const Home: React.FC = () => (
-  <div className="hero">
-    <div className="hero__sky" aria-hidden>
+interface HomeProps {
+  skyTransition?: { direction: SkyTransitionDirection; token: number } | null;
+}
+
+const Home: React.FC<HomeProps> = ({ skyTransition }) => (
+  <HomeContent skyTransition={skyTransition} />
+);
+
+const HomeContent: React.FC<HomeProps> = ({ skyTransition }) => {
+  const sunRef = useRef<HTMLSpanElement>(null);
+  const moonRef = useRef<HTMLSpanElement>(null);
+  const animations = useRef<Animation[]>([]);
+
+  useLayoutEffect(() => {
+    if (!skyTransition || !sunRef.current?.animate || !moonRef.current?.animate) return;
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const horizonDistance = .8 * viewportWidth - 72;
+    const targets = skyTransition.direction === "dayToNight"
+      ? [{ element: sunRef.current, x: -horizonDistance, y: .8 * viewportHeight }, { element: moonRef.current, x: horizonDistance, y: 0 }]
+      : [{ element: moonRef.current, x: 0, y: .8 * viewportHeight }, { element: sunRef.current, x: 0, y: 0 }];
+    const nextAnimations = targets.map(({ element, x, y }) => {
+      element.style.animation = "none";
+      const current = new DOMMatrix(getComputedStyle(element).transform);
+      const startX = current.m41;
+      const startY = current.m42;
+      const midpointX = (startX + x) / 2;
+      const midpointY = Math.min(startY, y) - viewportHeight * .08;
+      return element.animate([
+        { transform: `translate3d(${startX}px, ${startY}px, 0)` },
+        { transform: `translate3d(${midpointX}px, ${midpointY}px, 0)` },
+        { transform: `translate3d(${x}px, ${y}px, 0)` },
+      ], { duration: 1200, easing: "cubic-bezier(.45,0,.3,1)" });
+    });
+    animations.current.forEach((animation) => animation.cancel());
+    animations.current = nextAnimations;
+  }, [skyTransition]);
+
+  useEffect(() => () => animations.current.forEach((animation) => animation.cancel()), []);
+
+  return <div className="hero">
+    <div
+      className={`hero__sky${skyTransition ? ` is-${skyTransition.direction}` : ""}`}
+      data-sky-transition={skyTransition?.direction}
+      aria-hidden
+    >
       <span className="cloud cloud--one" />
       <span className="cloud cloud--two" />
-      <span className="sun-moon" />
+      <span ref={sunRef} className="celestial celestial--sun"><i /></span>
+      <span ref={moonRef} className="celestial celestial--moon"><i /><b /><b /><b /></span>
       <div className="voxel-hills"><i /><i /><i /><i /><i /></div>
       <div className="voxel-ground" />
     </div>
@@ -81,7 +126,7 @@ const Home: React.FC = () => (
         </div>
       ))}
     </dl>
-  </div>
-);
+  </div>;
+};
 
 export default Home;

@@ -46,6 +46,30 @@ export const playRewardChime = () => {
   }
 };
 
+/** A quieter, original two-note pickup tick for Portal Crystals. */
+export const playPortalCrystalTone = () => {
+  if (!context || context.state !== "running") return false;
+  try {
+    const start = context.currentTime + .01;
+    [660, 880].forEach((frequency, index) => {
+      const at = start + index * .055;
+      const oscillator = context!.createOscillator();
+      const gain = context!.createGain();
+      oscillator.type = "sine";
+      oscillator.frequency.setValueAtTime(frequency, at);
+      gain.gain.setValueAtTime(.0001, at);
+      gain.gain.exponentialRampToValueAtTime(.055, at + .008);
+      gain.gain.exponentialRampToValueAtTime(.0001, at + .11);
+      oscillator.connect(gain).connect(context!.destination);
+      oscillator.start(at);
+      oscillator.stop(at + .12);
+    });
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 export const readSoundPreference = () => {
   try {
     return window.localStorage.getItem(STORAGE_KEY) !== "off";

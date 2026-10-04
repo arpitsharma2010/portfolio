@@ -27,6 +27,16 @@ describe("reward sound", () => {
     expect(notes).toEqual([...notes].sort((a, b) => a - b));
   });
 
+  it("plays the smaller two-note Portal Crystal pickup through the same unlocked context", async () => {
+    const frequencies: number[] = [];
+    const node = () => ({ connect: vi.fn((next) => next), start: vi.fn(), stop: vi.fn(), type: "", frequency: { setValueAtTime: vi.fn((hz) => frequencies.push(hz)) }, gain: { setValueAtTime: vi.fn(), exponentialRampToValueAtTime: vi.fn() } });
+    vi.stubGlobal("AudioContext", class { state = "running"; currentTime = 0; destination = {}; createOscillator = node; createGain = node; resume = vi.fn(); });
+    const { playPortalCrystalTone, unlockAudio } = await loadModule();
+    await unlockAudio();
+    expect(playPortalCrystalTone()).toBe(true);
+    expect(frequencies).toEqual([660, 880]);
+  });
+
   it("swallows AudioContext failures", async () => {
     vi.stubGlobal("AudioContext", class { constructor() { throw new Error("blocked"); } });
     const { playRewardChime, unlockAudio } = await loadModule();

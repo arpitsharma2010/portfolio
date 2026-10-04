@@ -37,6 +37,7 @@ export type MinecraftIconName =
   | "clock"
   | "sun-clock"
   | "moon-clock"
+  | "portal-crystal"
   | "redstone-dust"
   | "redstone-torch"
   | "chest"

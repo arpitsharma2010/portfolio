@@ -102,6 +102,7 @@ describe("MinecraftHUD hotbar", () => {
       "Written Book — Resume",
       "Portal — Contact",
       "Clock — Switch to night mode",
+      "Portal Crystals — 0 of 12 collected",
     ]);
   });
 
@@ -128,6 +129,28 @@ describe("MinecraftHUD hotbar", () => {
     expect(window.location.hash).toBe("#contact");
   });
 
+  it("maps key 0 to explicit portal activation only when available", () => {
+    const onPortalActivate = vi.fn();
+    const { rerender } = render(<MinecraftHUD theme="light" onThemeToggle={vi.fn()} onPortalActivate={onPortalActivate} portalCrystalCount={0} portalState="locked" />);
+    fireEvent.keyDown(document, { key: "0" });
+    expect(onPortalActivate).not.toHaveBeenCalled();
+    expect(screen.getByRole("button", { name: "Portal Crystals — 0 of 12 collected" })).toHaveAttribute("aria-disabled", "true");
+    rerender(<MinecraftHUD theme="light" onThemeToggle={vi.fn()} onPortalActivate={onPortalActivate} portalCrystalCount={12} portalState="ready" />);
+    fireEvent.keyDown(document, { key: "0" });
+    expect(onPortalActivate).toHaveBeenCalledOnce();
+    expect(screen.getByRole("button", { name: "Portal Crystals — 12 of 12 collected. Activate End Portal" })).not.toHaveAttribute("aria-disabled");
+  });
+
+  it("requests the full sky cycle only while Home is active", () => {
+    const onThemeToggle = vi.fn();
+    render(<TestPage onThemeToggle={onThemeToggle} />);
+    fireEvent.keyDown(document, { key: "9" });
+    expect(onThemeToggle).toHaveBeenLastCalledWith(expect.any(Object), true);
+    emitSection("about");
+    fireEvent.keyDown(document, { key: "9" });
+    expect(onThemeToggle).toHaveBeenLastCalledWith(expect.any(Object), false);
+  });
+
   it("ignores modified and typing-context number shortcuts", () => {
     render(<TestPage />);
     fireEvent.keyDown(document, { key: "3", ctrlKey: true });
@@ -146,15 +169,15 @@ describe("MinecraftHUD hotbar", () => {
     const home = screen.getByRole("button", { name: "Compass — Home" });
     const about = screen.getByRole("button", { name: "Name Tag — About" });
     const skills = screen.getByRole("button", { name: "Diamond Pickaxe — Skills" });
-    const theme = screen.getByRole("button", { name: "Clock — Switch to night mode" });
+    const portalCrystals = screen.getByRole("button", { name: "Portal Crystals — 0 of 12 collected" });
     home.focus();
 
     fireEvent.keyDown(home, { key: "ArrowRight" });
     expect(about).toHaveFocus();
     expect(about).toHaveAttribute("aria-pressed", "true");
     fireEvent.keyDown(about, { key: "End" });
-    expect(theme).toHaveFocus();
-    fireEvent.keyDown(theme, { key: "Home" });
+    expect(portalCrystals).toHaveFocus();
+    fireEvent.keyDown(portalCrystals, { key: "Home" });
     expect(home).toHaveFocus();
     skills.focus();
     fireEvent.keyDown(skills, { key: "Enter" });
@@ -236,6 +259,7 @@ describe("MinecraftHUD hotbar", () => {
       wheel(100, 20);
       expect(slot("Portal — Contact")).toHaveAttribute("aria-pressed", "true");
       expect(slot("Clock — Switch to night mode")).toHaveAttribute("aria-pressed", "false");
+      expect(slot("Portal Crystals — 0 of 12 collected")).toHaveAttribute("aria-pressed", "false");
       act(() => vi.advanceTimersByTime(WHEEL_SETTLE_MS));
       expect(window.location.hash).toBe("#contact");
       wheel(100, 3);

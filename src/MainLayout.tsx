@@ -1,14 +1,19 @@
 import React from "react";
 import Header from "./components/header/Header.tsx";
+import type { ExplorationState } from "./components/header/useExplorationReward.ts";
+import type { PortalState } from "./components/end/portalProgress.ts";
 
 interface LayoutProps {
   children: React.ReactNode;
   theme: string;
-  onThemeToggle: (origin?: { x: number; y: number }) => void;
+  onThemeToggle: (origin?: { x: number; y: number }, animateSky?: boolean) => void;
   transitionOrigin?: { x: number; y: number } | null;
   soundEnabled?: boolean;
   onSoundEnabledChange?: (enabled: boolean) => void;
-  onExplorationXpChange?: (xp: number) => void;
+  onExplorationChange?: (state: ExplorationState) => void;
+  portalCrystalCount?: number;
+  portalState?: PortalState;
+  onPortalActivate?: () => void;
 }
 
 const MainLayout: React.FC<LayoutProps> = ({
@@ -18,7 +23,10 @@ const MainLayout: React.FC<LayoutProps> = ({
   transitionOrigin,
   soundEnabled,
   onSoundEnabledChange,
-  onExplorationXpChange,
+  onExplorationChange,
+  portalCrystalCount,
+  portalState,
+  onPortalActivate,
 }) => (
   <div
     className={`world theme-transition ${theme === "light" ? "theme-light" : "theme-dark"} ${
@@ -39,7 +47,10 @@ const MainLayout: React.FC<LayoutProps> = ({
       onThemeToggle={onThemeToggle}
       soundEnabled={soundEnabled}
       onSoundEnabledChange={onSoundEnabledChange}
-      onExplorationXpChange={onExplorationXpChange}
+      onExplorationChange={onExplorationChange}
+      portalCrystalCount={portalCrystalCount}
+      portalState={portalState}
+      onPortalActivate={onPortalActivate}
     />
     <main id="main">{children}</main>
     <footer className="world-footer">

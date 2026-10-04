@@ -155,19 +155,44 @@ main { width: 100%; }
 .hero__sky { position: absolute; z-index: -2; inset: 0; overflow: hidden; background: linear-gradient(var(--sky) 0 66%, #679447 66%); transition: background .4s ease; }
 .dark .hero__sky { background: linear-gradient(var(--sky) 0 66%, #263f35 66%); }
 .hero__sky::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 95%, rgba(255,255,255,.08) 95%), linear-gradient(transparent 95%, rgba(255,255,255,.08) 95%); background-size: 64px 64px; opacity: .3; }
-.sun-moon { position: absolute; top: 10%; right: 10%; width: 72px; height: 72px; background: #fff09a; box-shadow: 0 0 50px #fff4a4; }
-.dark .sun-moon { border-radius: 50%; background: #e8edf4; box-shadow: -17px -6px 0 var(--sky), 0 0 38px rgba(210,225,255,.5); }
-.cloud { position: absolute; width: 130px; height: 28px; background: rgba(255,255,255,.74); box-shadow: 28px -22px rgba(255,255,255,.74), 62px -6px rgba(255,255,255,.74); }
+.celestial { position: absolute; z-index: 1; top: 10%; width: 72px; height: 72px; will-change: transform; }
+.celestial--sun { right: 10%; background: #ffe27a; border: 6px solid #f5bd3e; box-shadow: 0 0 0 5px rgba(255, 226, 122, .2), 0 0 48px #fff0a0; }
+.celestial--sun::before,
+.celestial--sun::after { content: ""; position: absolute; background: #ffd45a; }
+.celestial--sun::before { inset: -16px 20px; }
+.celestial--sun::after { inset: 20px -16px; }
+.celestial--sun i { position: absolute; z-index: 1; inset: 9px; border: 5px solid rgba(255,255,255,.22); }
+.celestial--moon { left: 10%; background: #dbe4ef; border: 6px solid #a9b8cb; box-shadow: 0 0 0 5px rgba(198,218,241,.12), 0 0 38px rgba(210,225,255,.48); }
+.celestial--moon i { position: absolute; inset: 8px; border: 4px solid #f2f5f8; }
+.celestial--moon b { position: absolute; width: 11px; height: 11px; background: #9baabd; box-shadow: inset 3px 3px rgba(105,122,145,.35); }
+.celestial--moon b:nth-of-type(1) { left: 12px; top: 12px; }
+.celestial--moon b:nth-of-type(2) { right: 11px; top: 26px; width: 15px; height: 9px; }
+.celestial--moon b:nth-of-type(3) { left: 24px; bottom: 9px; width: 9px; height: 9px; }
+.light .celestial--sun { transform: translate3d(0, 0, 0); }
+.light .celestial--moon { transform: translate3d(0, 80vh, 0); }
+.dark .celestial--sun { transform: translate3d(calc(-80vw + 72px), 80vh, 0); }
+.dark .celestial--moon { transform: translate3d(calc(80vw - 72px), 0, 0); }
+.hero__sky.is-dayToNight .celestial--sun { animation: sun-set-arc 1.2s cubic-bezier(.45,0,.55,1) both; }
+.hero__sky.is-dayToNight .celestial--moon { animation: moon-rise-arc 1.2s cubic-bezier(.45,0,.3,1) both; }
+.hero__sky.is-nightToDay .celestial--moon { animation: moon-set-arc 1.2s cubic-bezier(.45,0,.55,1) both; }
+.hero__sky.is-nightToDay .celestial--sun { animation: sun-rise-arc 1.2s cubic-bezier(.45,0,.3,1) both; }
+.cloud { position: absolute; width: 130px; height: 28px; background: rgba(255,255,255,.74); box-shadow: 28px -22px rgba(255,255,255,.74), 62px -6px rgba(255,255,255,.74); animation: cloud-drift 24s ease-in-out infinite alternate; transition: opacity .4s ease, filter .4s ease; }
 .cloud--one { left: 8%; top: 17%; }
-.cloud--two { left: 52%; top: 28%; transform: scale(.7); opacity: .7; }
-.dark .cloud { opacity: .12; }
-.voxel-hills { position: absolute; left: 0; right: 0; bottom: 24%; height: 230px; display: flex; align-items: end; }
+.cloud--two { left: 52%; top: 28%; opacity: .7; animation-name: cloud-drift-small; animation-delay: -9s; }
+.dark .cloud { opacity: .18; filter: saturate(.55) brightness(.62) hue-rotate(18deg); }
+@keyframes sun-set-arc { 0% { transform: translate3d(0,0,0); } 52% { transform: translate3d(calc(-40vw + 36px),-5vh,0); } 100% { transform: translate3d(calc(-80vw + 72px),80vh,0); } }
+@keyframes moon-rise-arc { 0% { transform: translate3d(0,80vh,0); } 52% { transform: translate3d(calc(40vw - 36px),-5vh,0); } 100% { transform: translate3d(calc(80vw - 72px),0,0); } }
+@keyframes moon-set-arc { 0% { transform: translate3d(calc(80vw - 72px),0,0); } 52% { transform: translate3d(calc(40vw - 36px),-5vh,0); } 100% { transform: translate3d(0,80vh,0); } }
+@keyframes sun-rise-arc { 0% { transform: translate3d(calc(-80vw + 72px),80vh,0); } 52% { transform: translate3d(calc(-40vw + 36px),-5vh,0); } 100% { transform: translate3d(0,0,0); } }
+@keyframes cloud-drift { to { transform: translateX(42px); } }
+@keyframes cloud-drift-small { from { transform: scale(.7) translateX(0); } to { transform: scale(.7) translateX(54px); } }
+.voxel-hills { position: absolute; z-index: 2; left: 0; right: 0; bottom: 24%; height: 230px; display: flex; align-items: end; }
 .voxel-hills i { flex: 1; height: 40%; background: #527c3a; border-top: 12px solid #78a94d; clip-path: polygon(0 80%, 18% 80%, 18% 55%, 38% 55%, 38% 22%, 54% 22%, 54% 48%, 70% 48%, 70% 68%, 86% 68%, 86% 100%, 0 100%); }
 .voxel-hills i:nth-child(2) { height: 74%; opacity: .9; transform: scaleX(1.2); }
 .voxel-hills i:nth-child(3) { height: 55%; opacity: .8; }
 .voxel-hills i:nth-child(4) { height: 90%; opacity: .7; }
 .voxel-hills i:nth-child(5) { height: 48%; opacity: .9; }
-.voxel-ground { position: absolute; inset: 76% 0 0; background: linear-gradient(#70a244 0 16px, #6c4931 16px 58%, #4c362a 58%); box-shadow: inset 0 8px rgba(255,255,255,.1); }
+.voxel-ground { position: absolute; z-index: 2; inset: 76% 0 0; background: linear-gradient(#70a244 0 16px, #6c4931 16px 58%, #4c362a 58%); box-shadow: inset 0 8px rgba(255,255,255,.1); }
 
 .hero__content { position: relative; z-index: 2; max-width: 760px; padding: 2rem; background: color-mix(in srgb, var(--surface-2) 90%, transparent); border: 4px solid var(--line); box-shadow: 10px 10px 0 rgba(26,37,24,.28), inset 0 0 0 3px rgba(255,255,255,.18); }
 .mc-kicker { display: flex; align-items: center; gap: .6rem; margin: 0 0 .8rem; color: #376f2e; font: 800 .7rem var(--pixel); letter-spacing: .1em; text-transform: uppercase; }
@@ -268,4 +293,5 @@ main { width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .cloud { animation: none !important; }
 }

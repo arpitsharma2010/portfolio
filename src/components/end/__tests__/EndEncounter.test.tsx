@@ -22,20 +22,28 @@ describe("EndEncounter", () => {
   });
   afterEach(() => vi.useRealTimers());
 
-  it("stays unavailable below 10 XP and becomes enterable at exactly 10 XP", () => {
-    const { rerender } = render(<EndEncounter earnedXp={5} />);
-    expect(screen.getByRole("button", { name: "End Portal locked, 5 of 10 exploration XP" })).toBeDisabled();
+  it("stays unavailable until activated and becomes enterable only when active", () => {
+    const { rerender } = render(<EndEncounter portalState="locked" filledSockets={0} />);
+    expect(screen.getByRole("button", { name: "End Portal locked. Collect 12 Portal Crystals" })).toBeDisabled();
     expect(screen.queryByRole("progressbar", { name: "End Dragon health" })).not.toBeInTheDocument();
 
-    rerender(<EndEncounter earnedXp={10} />);
+    rerender(<EndEncounter portalState="active" filledSockets={12} />);
     expect(screen.getByRole("button", { name: "Enter the End Portal" })).toBeEnabled();
     enterEnd();
     expect(screen.getByRole("progressbar", { name: "End Dragon health" })).toHaveAttribute("aria-valuenow", "100");
     expect(screen.getByText("Crystals: 5 / 5")).toBeInTheDocument();
   });
 
+  it("enters immediately when a completed fill issues an entry request", () => {
+    const { rerender } = render(<EndEncounter portalState="filling" filledSockets={11} entryRequest={0} />);
+    expect(screen.queryByRole("progressbar", { name: "End Dragon health" })).not.toBeInTheDocument();
+    rerender(<EndEncounter portalState="active" filledSockets={12} entryRequest={1} />);
+    expect(screen.getByRole("progressbar", { name: "End Dragon health" })).toHaveAttribute("aria-valuenow", "100");
+    expect(screen.getByText("Crystals: 5 / 5")).toBeInTheDocument();
+  });
+
   it("uses five named button targets with three integrity states and important announcements", () => {
-    render(<EndEncounter earnedXp={10} />);
+    render(<EndEncounter portalState="active" filledSockets={12} />);
     enterEnd();
     const targets = within(screen.getByLabelText("End Crystal targets")).getAllByRole("button");
     expect(targets).toHaveLength(5);
@@ -50,7 +58,7 @@ describe("EndEncounter", () => {
   });
 
   it("visibly regenerates during continuous attacks and stops after crystals are cleared", () => {
-    render(<EndEncounter earnedXp={10} />);
+    render(<EndEncounter portalState="active" filledSockets={12} />);
     enterEnd();
     attack(dragon(), 8);
     expect(screen.getByRole("progressbar", { name: "End Dragon health" })).toHaveAttribute("aria-valuenow", "60");
@@ -75,7 +83,7 @@ describe("EndEncounter", () => {
   });
 
   it("defeats the vulnerable dragon, disables further interaction, and keeps XP unchanged", () => {
-    render(<EndEncounter earnedXp={10} soundEnabled />);
+    render(<EndEncounter portalState="active" filledSockets={12} soundEnabled />);
     enterEnd();
     destroyAllCrystals();
     attack(dragon(), 20);
@@ -88,7 +96,7 @@ describe("EndEncounter", () => {
   });
 
   it("preserves encounter progress across exit and re-entry without trapping focus", () => {
-    render(<EndEncounter earnedXp={10} />);
+    render(<EndEncounter portalState="active" filledSockets={12} />);
     enterEnd();
     fireEvent.click(crystal(3));
     const returnPortal = screen.getByRole("button", { name: "Return through portal" });

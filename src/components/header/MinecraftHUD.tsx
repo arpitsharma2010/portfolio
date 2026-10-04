@@ -7,18 +7,31 @@ import { getHotbarEntries } from "./hotbarItems";
 import useHotbarNavigation from "./useHotbarNavigation";
 import useSectionProgress from "./useSectionProgress";
 import useExplorationReward from "./useExplorationReward";
+import type { ExplorationState } from "./useExplorationReward";
+import type { PortalState } from "../end/portalProgress";
 import "./minecraft-hud.css";
 
 interface MinecraftHUDProps {
   theme: string;
-  onThemeToggle: (origin?: { x: number; y: number }) => void;
+  onThemeToggle: (origin?: { x: number; y: number }, animateSky?: boolean) => void;
   soundEnabled?: boolean;
-  onExplorationXpChange?: (xp: number) => void;
+  onExplorationChange?: (state: ExplorationState) => void;
+  portalCrystalCount?: number;
+  portalState?: PortalState;
+  onPortalActivate?: () => void;
 }
 
-const MinecraftHUD = ({ theme, onThemeToggle, soundEnabled = false, onExplorationXpChange }: MinecraftHUDProps) => {
+const MinecraftHUD = ({
+  theme,
+  onThemeToggle,
+  soundEnabled = false,
+  onExplorationChange,
+  portalCrystalCount = 0,
+  portalState = "locked",
+  onPortalActivate,
+}: MinecraftHUDProps) => {
   const isDark = theme === "dark";
-  const entries = useMemo(() => getHotbarEntries(isDark), [isDark]);
+  const entries = useMemo(() => getHotbarEntries(isDark, portalCrystalCount), [isDark, portalCrystalCount]);
   const navRef = useRef<HTMLElement>(null);
   const {
     activeSectionId,
@@ -26,13 +39,13 @@ const MinecraftHUD = ({ theme, onThemeToggle, soundEnabled = false, onExploratio
     announcement,
     activateIndex,
     previewIndex,
-  } = useHotbarNavigation({ entries, onThemeToggle, navRef });
+  } = useHotbarNavigation({ entries, onThemeToggle, onPortalActivate: portalState === "ready" ? onPortalActivate : undefined, navRef });
   const sectionProgress = useSectionProgress(activeSectionId);
-  const { reward, visible: rewardVisible, earnedXp } = useExplorationReward(activeSectionId, sectionProgress, soundEnabled);
+  const { reward, visible: rewardVisible, portalAward, portalAwardVisible, exploration } = useExplorationReward(activeSectionId, sectionProgress, soundEnabled);
 
   useEffect(() => {
-    onExplorationXpChange?.(earnedXp);
-  }, [earnedXp, onExplorationXpChange]);
+    onExplorationChange?.(exploration);
+  }, [exploration, onExplorationChange]);
 
   useEffect(() => {
     trackPageView(`/portfolio/#${activeSectionId}`);
@@ -72,8 +85,15 @@ const MinecraftHUD = ({ theme, onThemeToggle, soundEnabled = false, onExploratio
           {entries.map((entry, index) => {
             const actionLabel = entry.kind === "theme"
               ? `Clock — ${entry.displayLabel}`
-              : `${entry.item.name} — ${entry.item.category}`;
+              : entry.kind === "portal-crystals"
+                ? portalState === "filling"
+                  ? "Filling End Portal"
+                  : portalState === "active"
+                    ? "End Portal active"
+                    : `Portal Crystals — ${portalCrystalCount} of 12 collected${portalState === "ready" ? ". Activate End Portal" : ""}`
+                : `${entry.item.name} — ${entry.item.category}`;
             const isCurrentSection = entry.sectionId === activeSectionId;
+            const isPortalSlot = entry.kind === "portal-crystals";
             return (
               <li key={entry.item.id} className={isCurrentSection ? "is-current-section" : undefined}>
                 <span className="minecraft-hotbar__key" aria-hidden>{entry.slot}</span>
@@ -88,12 +108,22 @@ const MinecraftHUD = ({ theme, onThemeToggle, soundEnabled = false, onExploratio
                   data-href={entry.sectionId ? `#${entry.sectionId}` : undefined}
                   aria-current={isCurrentSection ? "location" : undefined}
                   aria-keyshortcuts={String(entry.slot)}
+                  aria-disabled={isPortalSlot && portalState === "locked" ? "true" : undefined}
                 />
+                {isPortalSlot && <span className="minecraft-hotbar__count" aria-hidden>{portalCrystalCount}</span>}
+                {isPortalSlot && portalAwardVisible && (
+                  <span className="minecraft-hotbar__portal-reward" aria-hidden>
+                    <span className="portal-crystal-mini" />+{portalAward}
+                  </span>
+                )}
               </li>
             );
           })}
         </ol>
       </nav>
+      <p className="mc-visually-hidden" aria-live="polite" aria-atomic="true">
+        {portalAwardVisible ? `${portalAward} Portal Crystal${portalAward === 1 ? "" : "s"} collected` : portalState === "active" ? "End Portal active" : ""}
+      </p>
     </div>
   );
 };

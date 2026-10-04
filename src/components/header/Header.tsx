@@ -3,13 +3,18 @@ import { FiVolume2, FiVolumeX } from "react-icons/fi";
 import { SHORT_NAME } from "../../utils/constants";
 import { readSoundPreference, unlockAudio, writeSoundPreference } from "../../utils/rewardSound";
 import MinecraftHUD from "./MinecraftHUD";
+import type { ExplorationState } from "./useExplorationReward";
+import type { PortalState } from "../end/portalProgress";
 
 interface HeaderProps {
   theme: string;
-  onThemeToggle: (origin?: { x: number; y: number }) => void;
+  onThemeToggle: (origin?: { x: number; y: number }, animateSky?: boolean) => void;
   soundEnabled?: boolean;
   onSoundEnabledChange?: (enabled: boolean) => void;
-  onExplorationXpChange?: (xp: number) => void;
+  onExplorationChange?: (state: ExplorationState) => void;
+  portalCrystalCount?: number;
+  portalState?: PortalState;
+  onPortalActivate?: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -17,7 +22,10 @@ const Header: React.FC<HeaderProps> = ({
   onThemeToggle,
   soundEnabled: controlledSoundEnabled,
   onSoundEnabledChange,
-  onExplorationXpChange,
+  onExplorationChange,
+  portalCrystalCount,
+  portalState,
+  onPortalActivate,
 }) => {
   const [localSoundEnabled, setLocalSoundEnabled] = useState(readSoundPreference);
   const soundEnabled = controlledSoundEnabled ?? localSoundEnabled;
@@ -51,7 +59,10 @@ const Header: React.FC<HeaderProps> = ({
         theme={theme}
         onThemeToggle={onThemeToggle}
         soundEnabled={soundEnabled}
-        onExplorationXpChange={onExplorationXpChange}
+        onExplorationChange={onExplorationChange}
+        portalCrystalCount={portalCrystalCount}
+        portalState={portalState}
+        onPortalActivate={onPortalActivate}
       />
     </>
   );

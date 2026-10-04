@@ -17,7 +17,10 @@ describe("responsive layout guards", () => {
   });
 
   it("sizes the fixed HUD from the scrollbar-free viewport, not 100vw", () => {
-    expect(css("../components/header/minecraft-hud.css")).not.toMatch(/100vw/);
+    const hudCss = css("../components/header/minecraft-hud.css");
+    expect(hudCss).not.toMatch(/100vw/);
+    expect(hudCss).toMatch(/\.minecraft-hotbar \{[^}]*overflow-x: auto/);
+    expect(hudCss).toMatch(/@media \(max-width: 768px\)[\s\S]*min-width: 52px/);
   });
 
   it("keeps keyboard-focused content clear of the fixed HUD", () => {

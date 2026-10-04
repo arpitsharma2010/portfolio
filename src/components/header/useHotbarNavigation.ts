@@ -22,11 +22,12 @@ const LAST_NAVIGATION_INDEX = portfolioSectionIds.length - 1;
 
 interface UseHotbarNavigationOptions {
   entries: HotbarEntry[];
-  onThemeToggle: (origin?: { x: number; y: number }) => void;
+  onThemeToggle: (origin?: { x: number; y: number }, animateSky?: boolean) => void;
+  onPortalActivate?: () => void;
   navRef: RefObject<HTMLElement | null>;
 }
 
-const useHotbarNavigation = ({ entries, onThemeToggle, navRef }: UseHotbarNavigationOptions) => {
+const useHotbarNavigation = ({ entries, onThemeToggle, onPortalActivate, navRef }: UseHotbarNavigationOptions) => {
   const initialHashSection = getSectionFromHash(typeof window === "undefined" ? "" : window.location.hash);
   const initialSection = initialHashSection ?? "home";
   const initialIndex = portfolioSectionIds.indexOf(initialSection);
@@ -104,7 +105,12 @@ const useHotbarNavigation = ({ entries, onThemeToggle, navRef }: UseHotbarNaviga
     if (entry.kind === "theme") {
       const trigger = navRef.current?.querySelector<HTMLElement>(`[data-hotbar-index="${index}"]`);
       const rect = trigger?.getBoundingClientRect();
-      onThemeToggle(rect ? { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 } : undefined);
+      onThemeToggle(rect ? { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 } : undefined, activeSectionRef.current === "home");
+      return;
+    }
+
+    if (entry.kind === "portal-crystals") {
+      onPortalActivate?.();
       return;
     }
 
@@ -117,7 +123,7 @@ const useHotbarNavigation = ({ entries, onThemeToggle, navRef }: UseHotbarNaviga
       window.history.pushState({ portfolioSection: sectionId }, "", `#${sectionId}`);
     }
     scrollToSection(sectionId, behavior);
-  }, [cancelWheel, entries, navRef, onThemeToggle, revealSlot, scrollToSection, showSelectedLabel]);
+  }, [cancelWheel, entries, navRef, onPortalActivate, onThemeToggle, revealSlot, scrollToSection, showSelectedLabel]);
 
   useEffect(() => {
     const sectionState = new Map<PortfolioSectionId, { intersecting: boolean; ratio: number; top: number }>();
@@ -206,13 +212,13 @@ const useHotbarNavigation = ({ entries, onThemeToggle, navRef }: UseHotbarNaviga
   useEffect(() => {
     const handleNumberShortcut = (event: KeyboardEvent) => {
       if (event.ctrlKey || event.metaKey || event.altKey || isTypingTarget(event.target)) return;
-      if (!/^[1-9]$/.test(event.key)) return;
+      if (!/^[0-9]$/.test(event.key)) return;
       event.preventDefault();
-      activateIndex(Number(event.key) - 1);
+      activateIndex(event.key === "0" ? entries.length - 1 : Number(event.key) - 1);
     };
     document.addEventListener("keydown", handleNumberShortcut);
     return () => document.removeEventListener("keydown", handleNumberShortcut);
-  }, [activateIndex]);
+  }, [activateIndex, entries.length]);
 
   /**
    * Wheel over the hotbar previews navigation slots 1-8 (clamped, never the theme clock) and keeps the page still;

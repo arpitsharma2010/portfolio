@@ -1,15 +1,25 @@
 import { act, fireEvent, render, renderHook, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import useExplorationReward, { recordCompletion, REWARD_XP } from "../useExplorationReward";
+import useExplorationReward, { collectSection, portalCrystalAwards, recordCompletion, REWARD_XP } from "../useExplorationReward";
 import MinecraftExplorationBar from "../MinecraftExplorationBar";
 import type { PortfolioSectionId } from "../hotbarItems";
-import { playRewardChime, unlockAudio } from "../../../utils/rewardSound";
+import { playPortalCrystalTone, playRewardChime, unlockAudio } from "../../../utils/rewardSound";
 
-vi.mock("../../../utils/rewardSound", () => ({ playRewardChime: vi.fn(), unlockAudio: vi.fn() }));
+vi.mock("../../../utils/rewardSound", () => ({ playPortalCrystalTone: vi.fn(), playRewardChime: vi.fn(), unlockAudio: vi.fn() }));
 
 const sections: PortfolioSectionId[] = ["home", "about", "skills", "experience", "projects", "education", "resume", "contact"];
 
 describe("recordCompletion", () => {
+  it("uses the exact deterministic Portal Crystal awards and totals 12 once", () => {
+    expect(portalCrystalAwards).toEqual({ home: 1, about: 2, skills: 1, experience: 2, projects: 2, education: 1, resume: 1, contact: 2 });
+    const completed = new Set<PortfolioSectionId>();
+    expect(collectSection(completed, "home", 89)).toBe(0);
+    const awards = sections.map((id) => collectSection(completed, id, 90));
+    expect(awards).toEqual([1, 2, 1, 2, 2, 1, 1, 2]);
+    expect(awards.map((_, index) => awards.slice(0, index + 1).reduce((sum, award) => sum + award, 0))).toEqual([1, 3, 4, 6, 8, 9, 10, 12]);
+    expect([...completed].reduce((sum, id) => sum + portalCrystalAwards[id], 0)).toBe(12);
+    expect(collectSection(completed, "about", 100)).toBe(0);
+  });
   it("counts each section once at 90% and rewards every fourth unique section", () => {
     const completed = new Set<PortfolioSectionId>();
     expect(recordCompletion(completed, "home", 89)).toBe(false);
@@ -28,6 +38,7 @@ describe("useExplorationReward", () => {
   beforeEach(() => {
     vi.useFakeTimers();
     vi.mocked(playRewardChime).mockReset();
+    vi.mocked(playPortalCrystalTone).mockReset();
     vi.mocked(unlockAudio).mockReset().mockResolvedValue(true);
   });
   afterEach(() => vi.useRealTimers());
@@ -65,6 +76,7 @@ describe("useExplorationReward", () => {
     complete(hook, ["contact"]);
     expect(hook.result.current).toMatchObject({ reward: 2, visible: true, earnedXp: 10 });
     expect(playRewardChime).toHaveBeenCalledTimes(2);
+    expect(hook.result.current.exploration).toMatchObject({ explorationXP: 10, portalCrystalCount: 12 });
   });
 
   it("stays silent when muted but still shows the reward", () => {

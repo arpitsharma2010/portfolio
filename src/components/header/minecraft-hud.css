@@ -152,6 +152,38 @@
   text-shadow: 1px 1px #151715;
   pointer-events: none;
 }
+.minecraft-hotbar__count {
+  position: absolute;
+  z-index: 7;
+  right: 5px;
+  bottom: 4px;
+  color: #fff;
+  font: 800 .7rem/1 var(--pixel);
+  text-shadow: 2px 2px #111;
+  pointer-events: none;
+}
+.minecraft-hotbar__portal-reward {
+  position: absolute;
+  z-index: 8;
+  left: 50%;
+  bottom: 64px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #e7c3ff;
+  font: 900 .75rem/1 var(--pixel);
+  text-shadow: 2px 2px #23102d, 0 0 8px #a953c3;
+  white-space: nowrap;
+  animation: portal-crystal-pickup 2200ms ease-out forwards;
+  pointer-events: none;
+}
+.portal-crystal-mini { width: 12px; height: 16px; background: #b65be3; border: 2px solid #48205b; transform: rotate(45deg); box-shadow: 0 0 7px #d397f0; }
+@keyframes portal-crystal-pickup {
+  0% { opacity: 0; transform: translate(-50%, 8px) scale(.7); }
+  14% { opacity: 1; transform: translate(-50%, 0) scale(1.1); }
+  78% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -10px); }
+}
 
 @media (max-width: 768px) {
   .minecraft-hotbar li,
@@ -160,6 +192,7 @@
     min-width: 52px;
     min-height: 52px;
   }
+  .minecraft-hotbar__portal-reward { animation: none !important; }
   .minecraft-hotbar li { height: 52px; flex-basis: 52px; }
 }
 

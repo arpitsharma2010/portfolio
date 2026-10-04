@@ -1,4 +1,3 @@
-export const END_UNLOCK_XP = 10;
 export const DRAGON_MAX_HEALTH = 100;
 export const DRAGON_DAMAGE = 5;
 export const CRYSTAL_MAX_INTEGRITY = 3;
