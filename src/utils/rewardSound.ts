@@ -70,6 +70,54 @@ export const playPortalCrystalTone = () => {
   }
 };
 
+/** A short, original glassy cascade for destroying an End Crystal. */
+export const playCrystalBreakSound = () => {
+  if (!context || context.state !== "running") return false;
+  try {
+    const start = context.currentTime + .01;
+    [1680, 1120, 720].forEach((frequency, index) => {
+      const at = start + index * .025;
+      const oscillator = context!.createOscillator();
+      const gain = context!.createGain();
+      oscillator.type = index === 1 ? "triangle" : "square";
+      oscillator.frequency.setValueAtTime(frequency, at);
+      gain.gain.setValueAtTime(.0001, at);
+      gain.gain.exponentialRampToValueAtTime(index === 0 ? .075 : .045, at + .004);
+      gain.gain.exponentialRampToValueAtTime(.0001, at + .1);
+      oscillator.connect(gain).connect(context!.destination);
+      oscillator.start(at);
+      oscillator.stop(at + .11);
+    });
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+/** A separate, original low descending fanfare for defeating the End Dragon. */
+export const playDragonDefeatSound = () => {
+  if (!context || context.state !== "running") return false;
+  try {
+    const start = context.currentTime + .01;
+    [220, 174.61, 130.81, 98].forEach((frequency, index) => {
+      const at = start + index * .12;
+      const oscillator = context!.createOscillator();
+      const gain = context!.createGain();
+      oscillator.type = index % 2 === 0 ? "sawtooth" : "triangle";
+      oscillator.frequency.setValueAtTime(frequency, at);
+      gain.gain.setValueAtTime(.0001, at);
+      gain.gain.exponentialRampToValueAtTime(.09 - index * .012, at + .018);
+      gain.gain.exponentialRampToValueAtTime(.0001, at + .3);
+      oscillator.connect(gain).connect(context!.destination);
+      oscillator.start(at);
+      oscillator.stop(at + .32);
+    });
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 export const readSoundPreference = () => {
   try {
     return window.localStorage.getItem(STORAGE_KEY) !== "off";

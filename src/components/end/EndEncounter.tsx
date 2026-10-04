@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef, type KeyboardEvent } from "react";
-import { playRewardChime } from "../../utils/rewardSound";
+import { playCrystalBreakSound, playDragonDefeatSound } from "../../utils/rewardSound";
 import {
   createInitialEndEncounterState,
   CRYSTAL_COUNT,
@@ -49,6 +49,7 @@ const EndEncounter = ({ portalState, filledSockets, entryRequest = 0, soundEnabl
   const [state, dispatch] = useReducer(endEncounterReducer, undefined, createInitialEndEncounterState);
   const handledDefeatSound = useRef(false);
   const handledEntryRequest = useRef(0);
+  const previousCrystals = useRef(state.crystals);
   const activeCrystalCount = livingCrystals(state.crystals);
   const regenerating = activeCrystalCount > 0 && state.dragonHealth < DRAGON_MAX_HEALTH && !state.dragonDefeated;
   const activateWithKeyboard = (event: KeyboardEvent<HTMLButtonElement>, action: () => void) => {
@@ -70,9 +71,18 @@ const EndEncounter = ({ portalState, filledSockets, entryRequest = 0, soundEnabl
   }, [state.burstCrystal, state.dragonHit, state.hitCrystal]);
 
   useEffect(() => {
+    const destroyedCrystals = state.crystals.filter((integrity, index) => (
+      integrity === 0 && previousCrystals.current[index] > 0
+    ));
+    previousCrystals.current = state.crystals;
+    if (!soundEnabled) return;
+    destroyedCrystals.forEach(() => playCrystalBreakSound());
+  }, [soundEnabled, state.crystals]);
+
+  useEffect(() => {
     if (!state.dragonDefeated || handledDefeatSound.current) return;
     handledDefeatSound.current = true;
-    if (soundEnabled) playRewardChime();
+    if (soundEnabled) playDragonDefeatSound();
   }, [soundEnabled, state.dragonDefeated]);
 
   useEffect(() => {
@@ -149,7 +159,7 @@ const EndEncounter = ({ portalState, filledSockets, entryRequest = 0, soundEnabl
             <div className="end-pillars" aria-label="End Crystal targets">
               {state.crystals.map((integrity, index) => {
                 const destroyed = integrity === 0;
-                const integrityState = integrity === 3 ? "full" : integrity === 2 ? "flickering" : integrity === 1 ? "cracked" : "destroyed";
+                const integrityState = destroyed ? "destroyed" : "full";
                 return (
                   <div
                     className={`end-pillar end-pillar--${index + 1}${state.hitCrystal === index ? " is-targeted" : ""}`}

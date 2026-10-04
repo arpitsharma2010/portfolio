@@ -1,9 +1,12 @@
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import EndEncounter from "../EndEncounter";
-import { playRewardChime } from "../../../utils/rewardSound";
+import { playCrystalBreakSound, playDragonDefeatSound } from "../../../utils/rewardSound";
 
-vi.mock("../../../utils/rewardSound", () => ({ playRewardChime: vi.fn() }));
+vi.mock("../../../utils/rewardSound", () => ({
+  playCrystalBreakSound: vi.fn(),
+  playDragonDefeatSound: vi.fn(),
+}));
 
 const enterEnd = () => fireEvent.click(screen.getByRole("button", { name: "Enter the End Portal" }));
 const dragon = () => screen.getByRole("button", { name: /End Dragon, \d+ percent health/ });
@@ -12,13 +15,14 @@ const attack = (target: HTMLElement, times: number) => {
   for (let index = 0; index < times; index += 1) fireEvent.click(target);
 };
 const destroyAllCrystals = () => {
-  for (let index = 1; index <= 5; index += 1) attack(crystal(index), 3);
+  for (let index = 1; index <= 5; index += 1) fireEvent.click(crystal(index));
 };
 
 describe("EndEncounter", () => {
   beforeEach(() => {
     vi.useFakeTimers();
-    vi.mocked(playRewardChime).mockReset();
+    vi.mocked(playCrystalBreakSound).mockReset();
+    vi.mocked(playDragonDefeatSound).mockReset();
   });
   afterEach(() => vi.useRealTimers());
 
@@ -42,16 +46,13 @@ describe("EndEncounter", () => {
     expect(screen.getByText("Crystals: 5 / 5")).toBeInTheDocument();
   });
 
-  it("uses five named button targets with three integrity states and important announcements", () => {
+  it("uses five named button targets that each break in one hit with important announcements", () => {
     render(<EndEncounter portalState="active" filledSockets={12} />);
     enterEnd();
     const targets = within(screen.getByLabelText("End Crystal targets")).getAllByRole("button");
     expect(targets).toHaveLength(5);
-    expect(crystal(1)).toHaveAccessibleName("End Crystal 1, 3 of 3 integrity");
+    expect(crystal(1)).toHaveAccessibleName("End Crystal 1, 1 of 1 integrity");
     fireEvent.keyDown(crystal(1), { key: "Enter" });
-    expect(crystal(1)).toHaveAccessibleName("End Crystal 1, 2 of 3 integrity");
-    fireEvent.keyDown(crystal(1), { key: " " });
-    fireEvent.click(crystal(1));
     expect(crystal(1)).toBeDisabled();
     expect(screen.getByText("End Crystal 1 destroyed")).toBeInTheDocument();
     expect(screen.getByText("Crystals: 4 / 5")).toBeInTheDocument();
@@ -87,7 +88,7 @@ describe("EndEncounter", () => {
     expect(setIntervalSpy).toHaveBeenCalledTimes(1);
     expect(setIntervalSpy).toHaveBeenLastCalledWith(expect.any(Function), 1);
 
-    attack(crystal(1), 3);
+    fireEvent.click(crystal(1));
     expect(clearIntervalSpy).toHaveBeenCalledTimes(1);
     expect(setIntervalSpy).toHaveBeenCalledTimes(2);
 
@@ -112,7 +113,7 @@ describe("EndEncounter", () => {
     expect(screen.getByRole("progressbar", { name: "End Dragon health" })).toHaveAttribute("aria-valuenow", "0");
     expect(screen.getAllByText("Dragon defeated").length).toBeGreaterThan(0);
     expect(screen.queryByRole("button", { name: /End Dragon,/ })).not.toBeInTheDocument();
-    expect(playRewardChime).toHaveBeenCalledOnce();
+    expect(playDragonDefeatSound).toHaveBeenCalledOnce();
     expect(screen.getByText("Crystals: 0 / 5")).toBeInTheDocument();
   });
 
@@ -126,6 +127,30 @@ describe("EndEncounter", () => {
     expect(returnPortal).not.toHaveAttribute("aria-modal");
     fireEvent.click(returnPortal);
     enterEnd();
-    expect(crystal(3)).toHaveAccessibleName("End Crystal 3, 2 of 3 integrity");
+    expect(crystal(3)).toBeDisabled();
+  });
+
+  it("plays each enabled combat sound exactly once per destruction or defeat", () => {
+    render(<EndEncounter portalState="active" filledSockets={12} soundEnabled />);
+    enterEnd();
+    const firstCrystal = crystal(1);
+    fireEvent.click(firstCrystal);
+    fireEvent.click(firstCrystal);
+    expect(playCrystalBreakSound).toHaveBeenCalledOnce();
+
+    for (let index = 2; index <= 5; index += 1) fireEvent.click(crystal(index));
+    expect(playCrystalBreakSound).toHaveBeenCalledTimes(5);
+    attack(dragon(), 10);
+    expect(playDragonDefeatSound).toHaveBeenCalledOnce();
+  });
+
+  it("does not play combat sounds while the sound preference is off", () => {
+    const { rerender } = render(<EndEncounter portalState="active" filledSockets={12} soundEnabled={false} />);
+    enterEnd();
+    destroyAllCrystals();
+    attack(dragon(), 10);
+    rerender(<EndEncounter portalState="active" filledSockets={12} soundEnabled />);
+    expect(playCrystalBreakSound).not.toHaveBeenCalled();
+    expect(playDragonDefeatSound).not.toHaveBeenCalled();
   });
 });

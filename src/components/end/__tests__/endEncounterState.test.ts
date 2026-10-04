@@ -8,18 +8,19 @@ import {
 const enter = () => endEncounterReducer(createInitialEndEncounterState(), { type: "enter" });
 
 describe("End encounter state", () => {
-  it("initializes one 100 HP dragon and five intact three-hit crystals", () => {
+  it("initializes one 100 HP dragon and five intact one-hit crystals", () => {
     const state = createInitialEndEncounterState();
     expect(state).toMatchObject({ dragonHealth: 100, endActive: false, dragonDefeated: false });
-    expect(state.crystals).toEqual([3, 3, 3, 3, 3]);
+    expect(state.crystals).toEqual([1, 1, 1, 1, 1]);
     expect(livingCrystals(state.crystals)).toBe(5);
   });
 
-  it("destroys a crystal in three hits without going negative", () => {
+  it("destroys a crystal in exactly one hit without going negative", () => {
     let state = enter();
-    for (let hit = 0; hit < 4; hit += 1) state = endEncounterReducer(state, { type: "attack-crystal", index: 0 });
+    state = endEncounterReducer(state, { type: "attack-crystal", index: 0 });
     expect(state.crystals[0]).toBe(0);
     expect(livingCrystals(state.crystals)).toBe(4);
+    expect(endEncounterReducer(state, { type: "attack-crystal", index: 0 })).toBe(state);
   });
 
   it("deals ten damage, regenerates by one HP per living crystal, and clamps health", () => {
@@ -40,10 +41,10 @@ describe("End encounter state", () => {
   });
 
   it("reduces regeneration with destroyed crystals and stops at zero living crystals", () => {
-    let state = { ...enter(), dragonHealth: 50, crystals: [3, 3, 3, 3, 3] };
+    let state = { ...enter(), dragonHealth: 50, crystals: [1, 1, 1, 1, 1] };
     state = endEncounterReducer(state, { type: "regenerate" });
     expect(state.dragonHealth).toBe(55);
-    state = { ...state, crystals: [0, 0, 3, 3, 3] };
+    state = { ...state, crystals: [0, 0, 1, 1, 1] };
     state = endEncounterReducer(state, { type: "regenerate" });
     expect(state.dragonHealth).toBe(58);
     state = { ...state, crystals: [0, 0, 0, 0, 0] };

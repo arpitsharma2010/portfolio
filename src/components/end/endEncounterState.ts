@@ -2,7 +2,7 @@ export const DRAGON_MAX_HEALTH = 100;
 export const DRAGON_DAMAGE = 10;
 export const DRAGON_REGEN_INTERVAL_MS = 1;
 export const DRAGON_REGEN_PER_CRYSTAL = 1;
-export const CRYSTAL_MAX_INTEGRITY = 3;
+export const CRYSTAL_MAX_INTEGRITY = 1;
 export const CRYSTAL_COUNT = 5;
 
 export interface EndEncounterState {
