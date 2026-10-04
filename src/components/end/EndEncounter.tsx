@@ -100,7 +100,7 @@ const EndEncounter = ({ portalState, filledSockets, entryRequest = 0, soundEnabl
         : "End Portal locked. Collect 12 Portal Crystals";
 
   return (
-    <section id="end-encounter" className={`end-encounter${state.endActive ? " is-active" : ""}`} aria-label="Optional End encounter">
+    <section id="end-encounter" data-biome="end" className={`end-encounter${state.endActive ? " is-active" : ""}`} aria-label="Optional End encounter">
       {!state.endActive ? (
         <div className={`end-gateway is-${portalState}`} data-portal-state={portalState}>
           <div className="end-gateway__frame" aria-hidden>

@@ -8,6 +8,7 @@ import About from "./components/pages/About.tsx";
 import Education from "./components/pages/Education.tsx";
 import Contact from "./components/pages/Contact.tsx";
 import Resume from "./components/pages/Resume.tsx";
+import Biome from "./components/biomes/Biome.tsx";
 import WorldLoader from "./components/common/WorldLoader.tsx";
 import usePreferredTheme from "./hooks/usePreferredTheme.ts";
 import { initAnalytics } from "./utils/analytics.ts";
@@ -51,28 +52,35 @@ const App: React.FC = () => {
         onPortalActivate={portal.activatePortal}
       >
       <div className="world-sections">
-        <section id="home">
+        <section id="home" data-biome="plains">
           <Home skyTransition={skyTransition} />
         </section>
-        <section id="about">
+        <section id="about" className="biome-section" data-biome="forest">
+          <Biome kind="forest" />
           <About />
         </section>
-        <section id="skills">
+        <section id="skills" className="biome-section" data-biome="cave">
+          <Biome kind="cave" />
           <Skills />
         </section>
-        <section id="experience">
+        <section id="experience" className="biome-section" data-biome="mountains">
+          <Biome kind="mountains" />
           <Experience />
         </section>
-        <section id="projects">
+        <section id="projects" className="biome-section" data-biome="badlands">
+          <Biome kind="badlands" />
           <Projects />
         </section>
-        <section id="education">
+        <section id="education" className="biome-section" data-biome="cherry">
+          <Biome kind="cherry" />
           <Education />
         </section>
-        <section id="resume">
+        <section id="resume" className="biome-section" data-biome="taiga">
+          <Biome kind="taiga" />
           <Resume />
         </section>
-        <section id="contact">
+        <section id="contact" className="biome-section" data-biome="nether">
+          <Biome kind="nether" />
           <Contact />
         </section>
         <EndEncounter

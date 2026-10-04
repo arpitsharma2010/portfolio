@@ -9,6 +9,7 @@ import {
   NAME,
   RESUME_URL,
 } from "../../utils/constants";
+import Biome from "../biomes/Biome";
 import type { SkyTransitionDirection } from "../../hooks/usePreferredTheme";
 
 const facts = [
@@ -69,6 +70,7 @@ const HomeContent: React.FC<HomeProps> = ({ skyTransition }) => {
       <span ref={moonRef} className="celestial celestial--moon"><i /><b /><b /><b /></span>
       <div className="voxel-hills"><i /><i /><i /><i /><i /></div>
       <div className="voxel-ground" />
+      <Biome kind="plains" />
     </div>
 
     <div className="hero__content">

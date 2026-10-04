@@ -1,0 +1,143 @@
+/* Biome scenery: decorative layers behind each section's (opaque) content card. Section N's bottom colour is
+   section N+1's top colour, so the page reads as one continuous journey. Only transform/opacity animate. */
+
+/* Full-bleed sections: same content width as before, gutters move from margin to padding so scenery can span. */
+.world-sections { background: #120f18; }
+.world-sections > section.biome-section:not(#home) {
+  position: relative;
+  isolation: isolate;
+  width: auto;
+  padding: 5.5rem max(1rem, calc((100% - 1180px) / 2));
+}
+
+.biome { position: absolute; z-index: -1; inset: 0; overflow: hidden; pointer-events: none; background: var(--biome-bg); }
+.biome * { pointer-events: none; }
+.dark .biome:not(.biome--plains)::after { content: ""; position: absolute; inset: 0; background: rgba(6, 10, 24, .48); }
+.dark .biome--nether::after { background: rgba(6, 4, 12, .22); }
+
+.biome__far { position: absolute; left: 0; bottom: -6px; width: 100%; height: clamp(70px, 11vw, 170px); }
+.biome__ground { position: absolute; left: 0; right: 0; bottom: 0; height: 14px; background: var(--biome-ground, #6c4931); box-shadow: inset 0 4px rgba(255, 255, 255, .14); }
+.biome__structure { position: absolute; z-index: 1; right: 4%; bottom: 14px; height: 80px; width: auto; filter: drop-shadow(4px 0 rgba(0, 0, 0, .18)); }
+.biome--forest .biome__structure, .biome--mountains .biome__structure, .biome--cherry .biome__structure { right: auto; left: 4%; }
+
+/* 1 Plains (inside the hero sky, which already owns the sky, sun/moon, clouds, hills and ground). */
+.biome--plains { background: none; z-index: auto; }
+.biome--plains .biome__far { z-index: 1; bottom: 24%; height: 60px; opacity: .55; }
+.biome--plains .biome__structure { z-index: 3; bottom: calc(24% - 2px); right: 3%; height: 74px; }
+.biome--plains .biome__ground { z-index: 3; bottom: 24%; height: 4px; box-shadow: none;
+  background: repeating-linear-gradient(90deg, transparent 0 37px, #f2d24b 37px 41px, transparent 41px 83px, #e0574f 83px 87px, transparent 87px 131px, #f4f1ea 131px 135px, transparent 135px 180px); }
+.biome--plains .biome__ground::before { content: ""; position: absolute; right: 6%; top: 6px; width: 28%; height: 9px; background: repeating-linear-gradient(90deg, #b9a066 0 14px, #9c824f 14px 16px); }
+.dark .biome--plains > * { filter: brightness(.55) saturate(.8); }
+
+/* 2 Forest: dirt edge -> leafy light -> dark floor (darkening into the cave). */
+.biome--forest {
+  --biome-bg: linear-gradient(#4c362a, #5d7d43 5rem, #93b673 32%, #7ca35f 70%, #2c3a2a);
+  --biome-ground: #3b2a1e;
+}
+.biome--forest::before { content: ""; position: absolute; inset: 0 0 auto; height: 42px;
+  background: linear-gradient(90deg, #3f6a2c 0 18%, #4f7d36 18% 30%, transparent 30% 41%, #3f6a2c 41% 58%, #4f7d36 58% 64%, transparent 64% 77%, #3f6a2c 77%);
+  clip-path: polygon(0 0, 100% 0, 100% 60%, 94% 60%, 94% 100%, 82% 100%, 82% 40%, 64% 40%, 64% 80%, 48% 80%, 48% 50%, 30% 50%, 30% 100%, 14% 100%, 14% 60%, 0 60%); }
+.biome--forest .biome__far { opacity: .85; }
+
+/* 3 Deep cave: dark entry -> deepslate strata -> grey-blue opening (into the mountains). */
+.biome--cave {
+  --biome-bg: repeating-linear-gradient(transparent 0 46px, rgba(0, 0, 0, .14) 46px 52px), linear-gradient(#3b2a1e, #4a4f52 5rem, #3a4044 45%, #262b2f 85%, #5c6a78);
+  --biome-ground: #3c4245;
+}
+.biome--cave .biome__far { top: -6px; bottom: auto; height: clamp(46px, 7vw, 90px); }
+.biome--cave .biome__ground::before { content: ""; position: absolute; left: 12%; bottom: 14px; width: 60%; height: 18px; background: linear-gradient(90deg, #2f3538 0 3%, transparent 3% 30%, #2f3538 30% 32%, transparent 32% 70%, #2f3538 70% 73%, transparent 73%); clip-path: polygon(0 100%, 1.5% 0, 3% 100%, 30% 100%, 31% 20%, 32% 100%, 70% 100%, 71.5% 10%, 73% 100%); }
+
+/* 4 Mountains: cave mouth -> open sky -> dusty foothills (into the badlands). */
+.biome--mountains {
+  --biome-bg: linear-gradient(#3c4245, #5c6a78 2rem, #9fc3dc 6rem, #d4e6f1 55%, #dcc7a4 92%, #c9a27a);
+  --biome-ground: #8a7a5c;
+}
+.biome--mountains .biome__ground::before { content: ""; position: absolute; left: 12%; bottom: 14px; width: 54%; height: 14px;
+  background: repeating-linear-gradient(90deg, #6b4a2c 0 3px, transparent 3px 22%); }
+.biome--mountains .biome__ground::after { content: ""; position: absolute; left: 12%; bottom: 25px; width: 54%; height: 4px;
+  background: repeating-linear-gradient(90deg, #d9433a 0 5px, transparent 5px 22%); margin-left: -1px; }
+
+/* 5 Badlands: terracotta strata, softening to pink at the bottom (into the cherry grove). */
+.biome--badlands {
+  --biome-bg: linear-gradient(#8a7a5c, #c9a27a 2rem, transparent 6rem, transparent calc(100% - 7rem), #e8b7c4),
+    repeating-linear-gradient(#cf8457 0 44px, #dfa26c 44px 76px, #b9654a 76px 100px, #e7bd8e 100px 128px);
+  --biome-ground: #c97a45;
+}
+
+/* 6 Cherry grove: terracotta -> pink -> blossom white -> cool grey (into the taiga). */
+.biome--cherry {
+  --biome-bg: linear-gradient(#c97a45, #e8b7c4 4rem, #f8e3ea 9rem, #fbeff2 70%, #c9d8dc);
+  --biome-ground: #6f9a58;
+}
+
+/* 7 Taiga: grove grass -> cool grey -> spruce green with snow -> dusk red (into the Nether). */
+.biome--taiga {
+  --biome-bg: linear-gradient(#6f9a58, #c9d8dc 4rem, #b3c6be 8rem, #9fb5ab 70%, #6b3a33 92%, #4a1d1a);
+  --biome-ground: #5a4636;
+}
+.biome--taiga .biome__ground { box-shadow: inset 0 5px #f3f7fa; }
+.biome--taiga .biome__ground::before { content: ""; position: absolute; left: 0; right: 0; bottom: 14px; height: 6px;
+  background: repeating-linear-gradient(90deg, #f3f7fa 0 46px, transparent 46px 90px, #e6edf0 90px 120px, transparent 120px 170px); }
+
+/* 8 Nether: taiga soil -> dusk -> blackstone -> End void. */
+.biome--nether {
+  --biome-bg: linear-gradient(#5a4636, #4a1d1a 3rem, #2b0f10 7rem, #240c0d 80%, #120f18);
+  --biome-ground: linear-gradient(#ffb347, #e8531c);
+}
+.biome--nether .biome__ground { height: 18px; box-shadow: none; }
+.biome--nether .biome__ground::before { content: ""; position: absolute; inset: -70px 0 0; background: linear-gradient(transparent, rgba(255, 110, 30, .42)); animation: biome-flicker 4s ease-in-out infinite alternate; }
+.biome--nether .biome__structure { bottom: 18px; height: 72px; }
+
+/* Warm light accents. */
+.biome__lantern, .biome__enchant-glow, .biome__ore-glow, .biome__lava-light { animation: biome-flicker 3.2s steps(3) infinite alternate; }
+
+/* Particles: spread by index; each drifts from its spawn point and fades, so frozen frames still show it. */
+.biome__particles { position: absolute; inset: 0; }
+.biome__particles i { position: absolute; left: calc(var(--i) * 8.1% + 2%); top: 14%; width: 8px; height: 8px; opacity: .85;
+  animation: biome-fall 12s linear infinite; animation-delay: calc(var(--i) * -1.37s); }
+.biome__particles i:nth-child(3n + 1) { top: 44%; }
+.biome__particles i:nth-child(3n + 2) { top: 72%; }
+.biome__particles i:nth-child(even) { animation-duration: 15s; }
+.biome__particles--leaf i { background: #5f8f3a; box-shadow: inset 2px 2px #7fb04d; }
+.biome__particles--petal i { width: 7px; height: 5px; background: #f3a9c4; box-shadow: inset 2px 1px #fbd3e1; animation-name: biome-flutter; }
+.biome__particles--dust i { width: 3px; height: 3px; background: #c8d0d6; opacity: .45; animation-name: biome-drip; }
+.biome__particles--sand i { width: 7px; height: 3px; background: #f6dcaa; opacity: .75; animation: biome-drift 9s linear infinite; animation-delay: calc(var(--i) * -.83s); }
+.biome__particles--ash i { width: 3px; height: 3px; background: #a39b96; opacity: .6; animation-name: biome-rise; }
+.biome__particles--pop i { top: auto; bottom: 8px; left: calc(var(--i) * 15% + 9%); width: 8px; height: 8px; background: #ffc24a; box-shadow: 0 0 6px #ff8a2a; opacity: .9;
+  animation: biome-pop 3.4s ease-out infinite; animation-delay: calc(var(--i) * -.71s); }
+
+@keyframes biome-fall { 0% { opacity: 0; transform: translate(0, -12vh) rotate(0); } 12%, 85% { opacity: .85; } 100% { opacity: 0; transform: translate(5vw, 34vh) rotate(220deg); } }
+@keyframes biome-flutter { 0% { opacity: 0; transform: translate(0, -12vh) rotate(0); } 15% { opacity: .9; } 50% { transform: translate(-3vw, 10vh) rotate(140deg); } 85% { opacity: .9; } 100% { opacity: 0; transform: translate(4vw, 32vh) rotate(300deg); } }
+@keyframes biome-drip { 0% { opacity: 0; transform: translateY(-6vh); } 30%, 70% { opacity: .45; } 100% { opacity: 0; transform: translateY(18vh); } }
+@keyframes biome-drift { 0% { opacity: 0; transform: translate(-12vw, 0); } 15%, 80% { opacity: .7; } 100% { opacity: 0; transform: translate(34vw, -3vh); } }
+@keyframes biome-rise { 0% { opacity: 0; transform: translate(0, 12vh); } 15%, 80% { opacity: .6; } 100% { opacity: 0; transform: translate(3vw, -30vh); } }
+@keyframes biome-pop { 0%, 40% { opacity: 0; transform: translateY(0) scale(.3); } 55% { opacity: .95; transform: translateY(-6px) scale(1); } 80% { opacity: .7; transform: translateY(-22px) scale(1.15); } 100% { opacity: 0; transform: translateY(-28px) scale(.3); } }
+@keyframes biome-flicker { from { opacity: .72; } to { opacity: 1; } }
+
+/* Optional parallax: far silhouettes drift a few px with scroll, compositor-driven, no JS. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .biome__far { animation: biome-parallax linear both; animation-timeline: view(); }
+  }
+}
+@keyframes biome-parallax { from { transform: translateY(-8px); } to { transform: translateY(8px); } }
+
+@media (min-width: 1500px) {
+  .biome__structure { height: 120px; right: calc((100% - 1180px) / 4 - 70px); }
+  .biome--forest .biome__structure, .biome--mountains .biome__structure, .biome--cherry .biome__structure { left: calc((100% - 1180px) / 4 - 70px); }
+}
+
+@media (max-width: 680px) {
+  .world-sections > section.biome-section:not(#home) { padding: 3.6rem .5rem; }
+  .biome__far { height: 60px; }
+  .biome--mountains .biome__far path:first-child, .biome--forest::before { display: none; }
+  .biome__structure, .biome--nether .biome__structure { height: 48px; }
+  .biome--plains .biome__structure { height: 54px; }
+  .biome__particles i:nth-child(n + 6), .biome__particles--pop i:nth-child(n + 4) { display: none; }
+  .biome__particles i { left: calc(var(--i) * 19% + 4%); }
+  .biome__particles--pop i { left: calc(var(--i) * 30% + 10%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .biome, .biome *, .biome::before, .biome *::before { animation: none !important; }
+}
