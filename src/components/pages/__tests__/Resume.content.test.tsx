@@ -20,13 +20,20 @@ describe("Resume content lock", () => {
     [KICKER, PAGE_HEADING, PAGE_COPY].forEach((value) => expect(text).toContain(value));
   });
 
-  it("keeps exactly one resume link with the original href, label and new-tab attributes", () => {
+  it("keeps exactly two identical resume links: below the book and on the printable edition page", () => {
     const { container } = render(<Resume />);
     expect(RESUME_URL).toBe(RESUME_HREF);
     const links = [...container.querySelectorAll("a")].filter((a) => a.getAttribute("href") === RESUME_HREF);
-    expect(links).toHaveLength(1);
-    expect(links[0]).toHaveTextContent(ACTION_LABEL);
-    expect(links[0]).toHaveAttribute("target", RESUME_TARGET);
-    expect(links[0]).toHaveAttribute("rel", RESUME_REL);
+    expect(links).toHaveLength(2);
+    links.forEach((link) => {
+      expect(link).toHaveTextContent(ACTION_LABEL);
+      expect(link).toHaveAttribute("target", RESUME_TARGET);
+      expect(link).toHaveAttribute("rel", RESUME_REL);
+      expect(link).toHaveClass("pixel-button", "pixel-button--primary");
+    });
+    expect(links[0].closest("section")).toHaveAttribute("aria-labelledby", "wbook-page-edition");
+    expect(links[1].closest(".wbook__page")).toBeNull();
+    // No other link anywhere in the book points off-site.
+    expect([...container.querySelectorAll("a[href^='http']")]).toEqual(links);
   });
 });

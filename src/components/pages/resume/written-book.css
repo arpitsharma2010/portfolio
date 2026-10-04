@@ -61,6 +61,7 @@
   background: var(--wbook-leather); border: 5px solid var(--wbook-edge);
   box-shadow: inset 6px 0 var(--wbook-leather-hi), inset -6px 0 var(--wbook-leather-lo);
 }
+.wbook__page:has(> .wbook-cover) { cursor: pointer; }
 .wbook-cover .mc-item-icon { width: 64px; height: 64px; }
 .wbook-cover__gem { color: #aaf8fa; font-size: 1.6rem; text-shadow: 0 0 12px #62e3ed; animation: wbook-shimmer 3.2s ease-in-out infinite; }
 .wbook-cover__name { font: 800 .9rem var(--pixel); }

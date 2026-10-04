@@ -85,14 +85,25 @@ describe("Resume written book (single page)", () => {
     ]);
   });
 
-  it("keeps the resume link visible on every page", () => {
+  it("keeps the resume link visible on every page and adds one on the printable edition page", () => {
     render(<Resume />);
     for (let page = 0; page < 3; page += 1) {
-      const link = screen.getByRole("link", { name: ACTION_LABEL });
-      expect(link).toHaveAttribute("href", RESUME_HREF);
-      expect(link.closest("[hidden]")).toBeNull();
+      const links = screen.getAllByRole("link", { name: ACTION_LABEL });
+      expect(links).toHaveLength(page === 2 ? 2 : 1);
+      links.forEach((link) => expect(link).toHaveAttribute("href", RESUME_HREF));
       fireEvent.click(next());
     }
+    const edition = screen.getByRole("region", { name: PAGE_HEADING });
+    expect(within(edition).getByRole("link", { name: ACTION_LABEL })).toHaveAttribute("href", RESUME_HREF);
+  });
+
+  it("turns the page when the cover is clicked and never navigates away", () => {
+    const { container } = render(<Resume />);
+    const cover = container.querySelector(".wbook-cover")!;
+    expect(cover.closest("a")).toBeNull();
+    expect(fireEvent.click(cover)).toBe(true);
+    expect(status()).toHaveTextContent("Page 2 of 3");
+    expect(window.location.href).not.toContain("drive.google.com");
   });
 });
 

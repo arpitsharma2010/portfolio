@@ -17,6 +17,14 @@ const subscribeSpread = (onChange: () => void) => {
 };
 const getSpread = () => typeof window.matchMedia === "function" && window.matchMedia(SPREAD_QUERY).matches;
 
+/** One resume link, rendered below the book and again on its last page so neither reads as the book itself. */
+const resumeLink = (
+  <a className="pixel-button pixel-button--primary" href={RESUME_URL} target="_blank" rel="noopener noreferrer">
+    <span className="wbook__action-icon" aria-hidden><MinecraftItemIcon name="book" /></span>
+    Open resume <FiExternalLink aria-hidden />
+  </a>
+);
+
 /** Navigation labels only: they point at the existing sections, they don't summarise them. */
 const contents: { id: string; label: string; icon: MinecraftIconName }[] = [
   { id: "experience", label: "Experience", icon: "map" },
@@ -64,10 +72,13 @@ const pages: { id: string; title: string; body: React.ReactNode }[] = [
     id: "edition",
     title: "Want the printable edition?",
     body: (
-      <p>
-        Open the full resume in Google Drive. It includes the same verified work history and
-        engineering background presented throughout this world.
-      </p>
+      <>
+        <p>
+          Open the full resume in Google Drive. It includes the same verified work history and
+          engineering background presented throughout this world.
+        </p>
+        <div className="wbook__action">{resumeLink}</div>
+      </>
     ),
   },
 ];
@@ -123,6 +134,8 @@ const Resume: React.FC = () => {
               className="wbook__page"
               aria-labelledby={`wbook-page-${entry.id}`}
               hidden={!visible.includes(index)}
+              // The cover only turns the page; the resume itself opens from the links.
+              onClick={entry.id === "cover" ? () => turnTo(first + perView) : undefined}
             >
               <h3 id={`wbook-page-${entry.id}`} className="wbook__title">{entry.title}</h3>
               {entry.body}
@@ -160,13 +173,8 @@ const Resume: React.FC = () => {
           </button>
         </nav>
 
-        {/* The only resume link stays outside page state: always visible, always in the HTML. */}
-        <div className="wbook__action">
-          <a className="pixel-button pixel-button--primary" href={RESUME_URL} target="_blank" rel="noopener noreferrer">
-            <span className="wbook__action-icon" aria-hidden><MinecraftItemIcon name="book" /></span>
-            Open resume <FiExternalLink aria-hidden />
-          </a>
-        </div>
+        {/* This copy stays outside page state: always visible, always in the HTML. */}
+        <div className="wbook__action">{resumeLink}</div>
       </article>
     </PageSection>
   );
