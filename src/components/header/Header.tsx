@@ -7,14 +7,25 @@ import MinecraftHUD from "./MinecraftHUD";
 interface HeaderProps {
   theme: string;
   onThemeToggle: (origin?: { x: number; y: number }) => void;
+  soundEnabled?: boolean;
+  onSoundEnabledChange?: (enabled: boolean) => void;
+  onExplorationXpChange?: (xp: number) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ theme, onThemeToggle }) => {
-  const [soundEnabled, setSoundEnabled] = useState(readSoundPreference);
+const Header: React.FC<HeaderProps> = ({
+  theme,
+  onThemeToggle,
+  soundEnabled: controlledSoundEnabled,
+  onSoundEnabledChange,
+  onExplorationXpChange,
+}) => {
+  const [localSoundEnabled, setLocalSoundEnabled] = useState(readSoundPreference);
+  const soundEnabled = controlledSoundEnabled ?? localSoundEnabled;
 
   const toggleSound = () => {
     const next = !soundEnabled;
-    setSoundEnabled(next);
+    setLocalSoundEnabled(next);
+    onSoundEnabledChange?.(next);
     writeSoundPreference(next);
     if (next) void unlockAudio();
   };
@@ -36,7 +47,12 @@ const Header: React.FC<HeaderProps> = ({ theme, onThemeToggle }) => {
           </button>
         </div>
       </header>
-      <MinecraftHUD theme={theme} onThemeToggle={onThemeToggle} soundEnabled={soundEnabled} />
+      <MinecraftHUD
+        theme={theme}
+        onThemeToggle={onThemeToggle}
+        soundEnabled={soundEnabled}
+        onExplorationXpChange={onExplorationXpChange}
+      />
     </>
   );
 };

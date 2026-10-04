@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import MainLayout from "./MainLayout.tsx";
 import Home from "./components/pages/Home.tsx";
 import Experience from "./components/pages/Experience.tsx";
@@ -11,9 +11,13 @@ import Resume from "./components/pages/Resume.tsx";
 import WorldLoader from "./components/common/WorldLoader.tsx";
 import usePreferredTheme from "./hooks/usePreferredTheme.ts";
 import { initAnalytics } from "./utils/analytics.ts";
+import { readSoundPreference } from "./utils/rewardSound.ts";
+import EndEncounter from "./components/end/EndEncounter.tsx";
 
 const App: React.FC = () => {
   const { theme, toggleTheme, transitionOrigin } = usePreferredTheme();
+  const [explorationXp, setExplorationXp] = useState(0);
+  const [soundEnabled, setSoundEnabled] = useState(readSoundPreference);
 
   useEffect(() => {
     initAnalytics();
@@ -26,6 +30,9 @@ const App: React.FC = () => {
         theme={theme}
         onThemeToggle={toggleTheme}
         transitionOrigin={transitionOrigin ?? undefined}
+        soundEnabled={soundEnabled}
+        onSoundEnabledChange={setSoundEnabled}
+        onExplorationXpChange={setExplorationXp}
       >
       <div className="world-sections">
         <section id="home">
@@ -52,6 +59,7 @@ const App: React.FC = () => {
         <section id="contact">
           <Contact />
         </section>
+        <EndEncounter earnedXp={explorationXp} soundEnabled={soundEnabled} />
       </div>
       </MainLayout>
     </>

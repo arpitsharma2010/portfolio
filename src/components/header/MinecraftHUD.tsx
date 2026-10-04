@@ -13,9 +13,10 @@ interface MinecraftHUDProps {
   theme: string;
   onThemeToggle: (origin?: { x: number; y: number }) => void;
   soundEnabled?: boolean;
+  onExplorationXpChange?: (xp: number) => void;
 }
 
-const MinecraftHUD = ({ theme, onThemeToggle, soundEnabled = false }: MinecraftHUDProps) => {
+const MinecraftHUD = ({ theme, onThemeToggle, soundEnabled = false, onExplorationXpChange }: MinecraftHUDProps) => {
   const isDark = theme === "dark";
   const entries = useMemo(() => getHotbarEntries(isDark), [isDark]);
   const navRef = useRef<HTMLElement>(null);
@@ -27,7 +28,11 @@ const MinecraftHUD = ({ theme, onThemeToggle, soundEnabled = false }: MinecraftH
     previewIndex,
   } = useHotbarNavigation({ entries, onThemeToggle, navRef });
   const sectionProgress = useSectionProgress(activeSectionId);
-  const { reward, visible: rewardVisible } = useExplorationReward(activeSectionId, sectionProgress, soundEnabled);
+  const { reward, visible: rewardVisible, earnedXp } = useExplorationReward(activeSectionId, sectionProgress, soundEnabled);
+
+  useEffect(() => {
+    onExplorationXpChange?.(earnedXp);
+  }, [earnedXp, onExplorationXpChange]);
 
   useEffect(() => {
     trackPageView(`/portfolio/#${activeSectionId}`);

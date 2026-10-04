@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 // Raw glob rather than node:fs (no @types/node); comments stripped so prose can't trip the guards.
-const sheets = import.meta.glob(["../index.css", "../components/header/minecraft-hud.css"], {
+const sheets = import.meta.glob(["../index.css", "../components/header/minecraft-hud.css", "../components/end/end-encounter.css"], {
   query: "?raw",
   import: "default",
   eager: true,
@@ -22,5 +22,13 @@ describe("responsive layout guards", () => {
 
   it("keeps keyboard-focused content clear of the fixed HUD", () => {
     expect(css("../index.css")).toMatch(/html \{[^}]*scroll-padding-bottom: var\(--hud-clearance\)/);
+  });
+
+  it("keeps the End arena contained and every mobile crystal target at least 44px", () => {
+    const endCss = css("../components/end/end-encounter.css");
+    expect(endCss).not.toMatch(/100vw/);
+    expect(endCss).toMatch(/\.end-arena__scene \{[^}]*overflow: hidden/);
+    expect(endCss).toMatch(/\.end-crystal \{[^}]*width: 54px;[^}]*height: 54px/);
+    expect(endCss).not.toMatch(/\.end-pillar \{[^}]*scale\(/);
   });
 });

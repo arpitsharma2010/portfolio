@@ -6,9 +6,20 @@ interface LayoutProps {
   theme: string;
   onThemeToggle: (origin?: { x: number; y: number }) => void;
   transitionOrigin?: { x: number; y: number } | null;
+  soundEnabled?: boolean;
+  onSoundEnabledChange?: (enabled: boolean) => void;
+  onExplorationXpChange?: (xp: number) => void;
 }
 
-const MainLayout: React.FC<LayoutProps> = ({ children, theme, onThemeToggle, transitionOrigin }) => (
+const MainLayout: React.FC<LayoutProps> = ({
+  children,
+  theme,
+  onThemeToggle,
+  transitionOrigin,
+  soundEnabled,
+  onSoundEnabledChange,
+  onExplorationXpChange,
+}) => (
   <div
     className={`world theme-transition ${theme === "light" ? "theme-light" : "theme-dark"} ${
       transitionOrigin ? "theme-transition-active" : ""
@@ -23,7 +34,13 @@ const MainLayout: React.FC<LayoutProps> = ({ children, theme, onThemeToggle, tra
     }
   >
     <a href="#main" className="skip-link">Skip to content</a>
-    <Header theme={theme} onThemeToggle={onThemeToggle} />
+    <Header
+      theme={theme}
+      onThemeToggle={onThemeToggle}
+      soundEnabled={soundEnabled}
+      onSoundEnabledChange={onSoundEnabledChange}
+      onExplorationXpChange={onExplorationXpChange}
+    />
     <main id="main">{children}</main>
     <footer className="world-footer">
       <span aria-hidden>◆</span> Built block by block by Arpit Dilip Sharma
