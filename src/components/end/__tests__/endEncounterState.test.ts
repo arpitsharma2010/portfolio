@@ -22,15 +22,21 @@ describe("End encounter state", () => {
     expect(livingCrystals(state.crystals)).toBe(4);
   });
 
-  it("deals five damage, regenerates deterministically, and clamps health", () => {
+  it("deals ten damage, regenerates by one HP per living crystal, and clamps health", () => {
     let state = enter();
     state = endEncounterReducer(state, { type: "attack-dragon" });
-    expect(state.dragonHealth).toBe(95);
+    expect(state.dragonHealth).toBe(90);
     state = { ...state, dragonHealth: 50 };
     state = endEncounterReducer(state, { type: "regenerate" });
     expect(state.dragonHealth).toBe(55);
     state = endEncounterReducer({ ...state, dragonHealth: 99 }, { type: "regenerate" });
     expect(state.dragonHealth).toBe(100);
+
+    const defeated = endEncounterReducer(
+      { ...state, crystals: [0, 0, 0, 0, 0], dragonHealth: 4 },
+      { type: "attack-dragon" },
+    );
+    expect(defeated.dragonHealth).toBe(0);
   });
 
   it("reduces regeneration with destroyed crystals and stops at zero living crystals", () => {

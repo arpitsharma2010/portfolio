@@ -1,5 +1,7 @@
 export const DRAGON_MAX_HEALTH = 100;
-export const DRAGON_DAMAGE = 5;
+export const DRAGON_DAMAGE = 10;
+export const DRAGON_REGEN_INTERVAL_MS = 1;
+export const DRAGON_REGEN_PER_CRYSTAL = 1;
 export const CRYSTAL_MAX_INTEGRITY = 3;
 export const CRYSTAL_COUNT = 5;
 
@@ -35,6 +37,8 @@ export const createInitialEndEncounterState = (): EndEncounterState => ({
 
 export const livingCrystals = (crystals: number[]) => crystals.filter((integrity) => integrity > 0).length;
 
+const clampDragonHealth = (health: number) => Math.min(DRAGON_MAX_HEALTH, Math.max(0, health));
+
 export const endEncounterReducer = (state: EndEncounterState, action: EndEncounterAction): EndEncounterState => {
   switch (action.type) {
     case "enter":
@@ -61,7 +65,7 @@ export const endEncounterReducer = (state: EndEncounterState, action: EndEncount
       if (!state.endActive || state.dragonDefeated) return state;
       const crystalsRemain = livingCrystals(state.crystals) > 0;
       const floor = crystalsRemain ? 1 : 0;
-      const dragonHealth = Math.max(floor, state.dragonHealth - DRAGON_DAMAGE);
+      const dragonHealth = Math.max(floor, clampDragonHealth(state.dragonHealth - DRAGON_DAMAGE));
       const dragonDefeated = dragonHealth === 0 && !crystalsRemain;
       return {
         ...state,
@@ -72,9 +76,9 @@ export const endEncounterReducer = (state: EndEncounterState, action: EndEncount
       };
     }
     case "regenerate": {
-      const regenRate = livingCrystals(state.crystals);
+      const regenRate = livingCrystals(state.crystals) * DRAGON_REGEN_PER_CRYSTAL;
       if (!state.endActive || state.dragonDefeated || regenRate === 0 || state.dragonHealth >= DRAGON_MAX_HEALTH) return state;
-      return { ...state, dragonHealth: Math.min(DRAGON_MAX_HEALTH, state.dragonHealth + regenRate), dragonHit: false };
+      return { ...state, dragonHealth: clampDragonHealth(state.dragonHealth + regenRate), dragonHit: false };
     }
     case "clear-effects":
       return { ...state, hitCrystal: null, burstCrystal: null, dragonHit: false };

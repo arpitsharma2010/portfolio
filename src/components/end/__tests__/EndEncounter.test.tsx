@@ -60,18 +60,14 @@ describe("EndEncounter", () => {
   it("visibly regenerates during continuous attacks and stops after crystals are cleared", () => {
     render(<EndEncounter portalState="active" filledSockets={12} />);
     enterEnd();
-    attack(dragon(), 8);
+    attack(dragon(), 4);
     expect(screen.getByRole("progressbar", { name: "End Dragon health" })).toHaveAttribute("aria-valuenow", "60");
     expect(screen.getByText("Regenerating")).toBeInTheDocument();
 
-    act(() => vi.advanceTimersByTime(900));
-    fireEvent.click(dragon());
-    expect(screen.getByRole("progressbar", { name: "End Dragon health" })).toHaveAttribute("aria-valuenow", "55");
-    act(() => vi.advanceTimersByTime(100));
-    expect(screen.getByRole("progressbar", { name: "End Dragon health" })).toHaveAttribute("aria-valuenow", "60");
-    attack(dragon(), 2);
-    act(() => vi.advanceTimersByTime(1000));
-    expect(screen.getByRole("progressbar", { name: "End Dragon health" })).toHaveAttribute("aria-valuenow", "55");
+    act(() => vi.advanceTimersByTime(1));
+    expect(screen.getByRole("progressbar", { name: "End Dragon health" })).toHaveAttribute("aria-valuenow", "65");
+    act(() => vi.advanceTimersByTime(7));
+    expect(screen.getByRole("progressbar", { name: "End Dragon health" })).toHaveAttribute("aria-valuenow", "100");
 
     destroyAllCrystals();
     expect(screen.getByText("All End Crystals destroyed")).toBeInTheDocument();
@@ -82,11 +78,36 @@ describe("EndEncounter", () => {
     expect(screen.queryByText("Regenerating")).not.toBeInTheDocument();
   });
 
+  it("keeps exactly one healing interval and clears it on exit and unmount", () => {
+    const setIntervalSpy = vi.spyOn(window, "setInterval");
+    const clearIntervalSpy = vi.spyOn(window, "clearInterval");
+    const { unmount } = render(<EndEncounter portalState="active" filledSockets={12} />);
+
+    enterEnd();
+    expect(setIntervalSpy).toHaveBeenCalledTimes(1);
+    expect(setIntervalSpy).toHaveBeenLastCalledWith(expect.any(Function), 1);
+
+    attack(crystal(1), 3);
+    expect(clearIntervalSpy).toHaveBeenCalledTimes(1);
+    expect(setIntervalSpy).toHaveBeenCalledTimes(2);
+
+    fireEvent.click(screen.getByRole("button", { name: "Return through portal" }));
+    expect(clearIntervalSpy).toHaveBeenCalledTimes(2);
+
+    enterEnd();
+    expect(setIntervalSpy).toHaveBeenCalledTimes(3);
+    unmount();
+    expect(clearIntervalSpy).toHaveBeenCalledTimes(3);
+
+    setIntervalSpy.mockRestore();
+    clearIntervalSpy.mockRestore();
+  });
+
   it("defeats the vulnerable dragon, disables further interaction, and keeps XP unchanged", () => {
     render(<EndEncounter portalState="active" filledSockets={12} soundEnabled />);
     enterEnd();
     destroyAllCrystals();
-    attack(dragon(), 20);
+    attack(dragon(), 10);
 
     expect(screen.getByRole("progressbar", { name: "End Dragon health" })).toHaveAttribute("aria-valuenow", "0");
     expect(screen.getAllByText("Dragon defeated").length).toBeGreaterThan(0);

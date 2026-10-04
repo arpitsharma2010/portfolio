@@ -5,6 +5,7 @@ import {
   CRYSTAL_COUNT,
   CRYSTAL_MAX_INTEGRITY,
   DRAGON_MAX_HEALTH,
+  DRAGON_REGEN_INTERVAL_MS,
   endEncounterReducer,
   livingCrystals,
 } from "./endEncounterState";
@@ -58,7 +59,7 @@ const EndEncounter = ({ portalState, filledSockets, entryRequest = 0, soundEnabl
 
   useEffect(() => {
     if (!state.endActive || state.dragonDefeated || activeCrystalCount === 0) return;
-    const timer = window.setInterval(() => dispatch({ type: "regenerate" }), 1000);
+    const timer = window.setInterval(() => dispatch({ type: "regenerate" }), DRAGON_REGEN_INTERVAL_MS);
     return () => window.clearInterval(timer);
   }, [activeCrystalCount, state.dragonDefeated, state.endActive]);
 
