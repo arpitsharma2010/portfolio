@@ -1,4 +1,5 @@
 import React, { useRef, useState, type KeyboardEvent } from "react";
+import { flushSync } from "react-dom";
 import { FiExternalLink } from "react-icons/fi";
 import PageSection from "../common/PageSection.tsx";
 import { MinecraftItemIcon, useMinecraftSelection } from "../minecraft";
@@ -80,9 +81,9 @@ const CertificationBook = ({ item, selected, onSelect }: { item: Certification; 
   </li>
 );
 
-/** Original CSS art: obsidian block, cloth top, a floating book and drifting glyphs. Purely decorative. */
-const EnchantingTable = ({ selection }: { selection: Selection }) => (
-  <div className={`ench-table ench-table--${selection.kind}`} aria-hidden>
+/** Original CSS art: obsidian block, cloth top, a floating book and drifting glyphs. Purely decorative; no book until one is picked. */
+const EnchantingTable = ({ selection }: { selection?: Selection }) => (
+  <div className={`ench-table${selection ? ` ench-table--${selection.kind}` : ""}`} aria-hidden>
     <span className="ench-table__glyphs">
       {Array.from({ length: 6 }, (_, index) => <i key={index} className={`ench-glyph ench-glyph--${index + 1}`} />)}
     </span>
@@ -90,13 +91,15 @@ const EnchantingTable = ({ selection }: { selection: Selection }) => (
       {Array.from({ length: 3 }, (_, index) => <i key={index} />)}
     </span>
     {/* Keyed by selection so the cover opens again for each new book. */}
-    <span key={selection.item.id} className="ench-table__book">
-      <span className="ench-table__page ench-table__page--left" />
-      <span className="ench-table__page ench-table__page--right" />
-    </span>
+    {selection && (
+      <span key={selection.item.id} className="ench-table__book">
+        <span className="ench-table__page ench-table__page--left" />
+        <span className="ench-table__page ench-table__page--right" />
+      </span>
+    )}
     <span className="ench-table__block" />
     <span className="ench-table__lapis"><MinecraftItemIcon name="lapis-gem" /></span>
-    <p className="ench-table__caption">{titleOf(selection)}</p>
+    <p className="ench-table__caption">{selection && titleOf(selection)}</p>
   </div>
 );
 
@@ -166,18 +169,22 @@ const handleShelfKeys = (event: KeyboardEvent<HTMLUListElement>) => {
 };
 
 const Education: React.FC = () => {
-  const { selectedItemId, select } = useMinecraftSelection({ initialSelectedId: education[0].id });
+  const { selectedItemId, select } = useMinecraftSelection();
   const [announcement, setAnnouncement] = useState("");
   const detailRef = useRef<HTMLElement>(null);
 
   const degree = education.find((item) => item.id === selectedItemId);
-  const selection: Selection = degree
+  const certification = certifications.find((item) => item.id === selectedItemId);
+  const selection: Selection | undefined = degree
     ? { kind: "degree", item: degree }
-    : { kind: "certification", item: certifications.find((item) => item.id === selectedItemId)! };
+    : certification && { kind: "certification", item: certification };
 
   const choose = (next: Selection) => {
-    select(next.item.id);
-    setAnnouncement(`Showing ${next.kind}: ${titleOf(next)}`);
+    // Flushed so the detail is unhidden (on the first pick) before measuring it.
+    flushSync(() => {
+      select(next.item.id);
+      setAnnouncement(`Showing ${next.kind}: ${titleOf(next)}`);
+    });
     // On narrow screens the detail can sit off-screen.
     revealIfOffscreen(detailRef.current, .75);
   };
@@ -206,8 +213,8 @@ const Education: React.FC = () => {
           <ShelfSpines count={3} />
         </div>
 
-        <section ref={detailRef} id={DETAIL_ID} className="ench-detail" aria-labelledby="ench-detail-title">
-          <EducationDetail selection={selection} />
+        <section ref={detailRef} id={DETAIL_ID} className="ench-detail" aria-labelledby="ench-detail-title" hidden={!selection}>
+          {selection && <EducationDetail selection={selection} />}
         </section>
 
         <div className="ench-certs">

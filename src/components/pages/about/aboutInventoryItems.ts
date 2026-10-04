@@ -149,8 +149,6 @@ export const inventoryItems: AboutItem[] = [
 
 export const aboutItems: readonly AboutItem[] = [...equipmentItems, craftingResult, ...inventoryItems];
 
-export const DEFAULT_ABOUT_ITEM_ID = "backend";
-
 export interface ProfileAction {
   label: string;
   item: string;

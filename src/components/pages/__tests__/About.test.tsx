@@ -25,8 +25,13 @@ describe("About player inventory", () => {
     expect(within(screen.getByRole("grid", { name: "Profile inventory" })).getAllByRole("button")).toHaveLength(9);
   });
 
-  it("preselects Backend Engineering with a populated detail panel", () => {
-    render(<About />);
+  it("starts with nothing selected and an empty detail panel, then fills it on the first pick", () => {
+    const { container } = render(<About />);
+    expect(container.querySelector("[aria-pressed='true']")).toBeNull();
+    expect(within(detail()).queryByRole("heading")).not.toBeInTheDocument();
+    expect(detail()).toHaveTextContent(/^Selected item$/);
+
+    fireEvent.click(screen.getByRole("button", { name: /^Chest slot: Diamond Pickaxe/ }));
     expect(screen.getByRole("button", { name: /^Chest slot: Diamond Pickaxe/ })).toHaveAttribute("aria-pressed", "true");
     expect(detailHeading()).toHaveTextContent("Backend Engineering");
     expect(within(detail()).getByText("C# · .NET Core")).toBeInTheDocument();

@@ -1,8 +1,8 @@
 import React, { useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
+import { flushSync } from "react-dom";
 import PageSection from "../common/PageSection.tsx";
 import { MinecraftItemIcon } from "../minecraft";
 import {
-  DEFAULT_EXPERIENCE_ID,
   employerName,
   experience,
   formatDates,
@@ -159,16 +159,19 @@ const ExperienceDetail = ({ entry }: { entry: ExperienceEntry }) => (
 );
 
 const Experience: React.FC = () => {
-  const [selectedId, setSelectedId] = useState(DEFAULT_EXPERIENCE_ID);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [announcement, setAnnouncement] = useState("");
   const listRef = useRef<HTMLOListElement>(null);
   const detailRef = useRef<HTMLElement>(null);
-  const selected = experience.find((entry) => entry.id === selectedId)!;
+  const selected = experience.find((entry) => entry.id === selectedId);
   const concurrent = experience.filter(isCurrent).map(employerName);
 
   const select = (entry: ExperienceEntry) => {
-    setSelectedId(entry.id);
-    setAnnouncement(`Showing ${entry.title}, ${employerName(entry)}, ${formatDates(entry)}`);
+    // Flushed so the detail is unhidden (on the first pick) before measuring it.
+    flushSync(() => {
+      setSelectedId(entry.id);
+      setAnnouncement(`Showing ${entry.title}, ${employerName(entry)}, ${formatDates(entry)}`);
+    });
     // On narrow screens the detail sits below the path.
     revealIfOffscreen(detailRef.current, .75);
   };
@@ -217,8 +220,8 @@ const Experience: React.FC = () => {
           <span className="xp-legend__note">{concurrent.join(" and ")} are concurrent, ongoing roles.</span>
         </p>
 
-        <section ref={detailRef} id={DETAIL_ID} className="xp-detail" aria-labelledby="xp-detail-title">
-          <ExperienceDetail entry={selected} />
+        <section ref={detailRef} id={DETAIL_ID} className="xp-detail" aria-labelledby="xp-detail-title" hidden={!selected}>
+          {selected && <ExperienceDetail entry={selected} />}
         </section>
         <p className="mc-visually-hidden" aria-live="polite">{announcement}</p>
       </div>

@@ -186,6 +186,3 @@ export const experience: ExperienceEntry[] = [
     ],
   },
 ];
-
-/** Recruiters land on the most recent work: the role with the latest start date. */
-export const DEFAULT_EXPERIENCE_ID = experience[experience.length - 1].id;

@@ -38,6 +38,17 @@ describe("Contact Nether portal", () => {
     expect(linkedIn).not.toHaveClass("is-aimed");
   });
 
+  it("keeps the aim transient: leaving or blurring a destination leaves nothing selected", () => {
+    const { container } = render(<Contact />);
+    const [email, linkedIn] = channelLinks();
+    fireEvent.mouseEnter(linkedIn);
+    fireEvent.mouseLeave(linkedIn);
+    fireEvent.focus(email);
+    fireEvent.blur(email);
+    expect(container.querySelector(".is-aimed")).toBeNull();
+    expect((container.querySelector(".nportal") as HTMLElement).style.getPropertyValue("--nportal-tint")).toBe("0deg");
+  });
+
   it("activates in one click without blocking navigation and plays a burst", () => {
     const { container } = render(<Contact />);
     const [email] = channelLinks();

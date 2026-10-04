@@ -64,8 +64,21 @@ describe("Skills chest", () => {
     expect(screen.getByRole("status")).toHaveTextContent(`Showing ${skillItems.length} of ${skillItems.length} items`);
   });
 
-  it("preselects C# with factual evidence in the detail panel", () => {
+  it("starts with no skill selected, filters immediately and never auto-selects a search result", () => {
+    const { container } = render(<Skills />);
+    const pressedSlots = () => container.querySelectorAll(".mc-slot[aria-pressed='true']");
+    expect(pressedSlots()).toHaveLength(0);
+    expect(within(detail()).queryByRole("heading")).not.toBeInTheDocument();
+
+    fireEvent.click(tab("Backend"));
+    fireEvent.change(screen.getByRole("searchbox", { name: /Search skills/ }), { target: { value: "terraform" } });
+    expect(pressedSlots()).toHaveLength(0);
+    expect(within(detail()).queryByRole("heading")).not.toBeInTheDocument();
+  });
+
+  it("shows factual evidence for C# once it is selected", () => {
     render(<Skills />);
+    fireEvent.click(slot("C#"));
     expect(slot("C#")).toHaveAttribute("aria-pressed", "true");
     expect(detailHeading()).toHaveTextContent("C#");
     expect(within(detail()).getByText("Diamond · Languages")).toBeInTheDocument();
@@ -101,6 +114,7 @@ describe("Skills chest", () => {
 
   it("keeps the selected detail when a filter hides the selected item", () => {
     render(<Skills />);
+    fireEvent.click(slot("C#"));
     fireEvent.click(tab("Databases"));
     expect(detailHeading()).toHaveTextContent("C#");
   });
@@ -235,6 +249,6 @@ describe("Skills coexisting with the hotbar", () => {
     java.focus();
     fireEvent.keyDown(java, { key: "4" });
     expect(window.location.hash).toBe("#experience");
-    expect(detailHeading()).toHaveTextContent("C#");
+    expect(within(detail()).queryByRole("heading")).not.toBeInTheDocument();
   });
 });

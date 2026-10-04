@@ -1,33 +1,28 @@
-import { portfolioSectionIds, type PortfolioSectionId } from "./hotbarItems";
+import type { PortfolioSectionId } from "./hotbarItems";
 
 interface MinecraftExplorationBarProps {
-  explorationProgress: number;
+  sectionProgress: number;
   activeSectionId: PortfolioSectionId;
 }
 
-const MinecraftExplorationBar = ({
-  explorationProgress,
-  activeSectionId,
-}: MinecraftExplorationBarProps) => {
-  const level = portfolioSectionIds.indexOf(activeSectionId) + 1;
-  const currentName = activeSectionId === "home"
-    ? "Spawn"
-    : `${activeSectionId.charAt(0).toUpperCase()}${activeSectionId.slice(1)}`;
-  const valueText = `Portfolio exploration: ${explorationProgress}%`;
+const MinecraftExplorationBar = ({ sectionProgress, activeSectionId }: MinecraftExplorationBarProps) => {
+  const sectionName = `${activeSectionId.charAt(0).toUpperCase()}${activeSectionId.slice(1)}`;
+  const visibleName = activeSectionId === "home" ? "Spawn" : sectionName;
 
   return (
     <div className="minecraft-exploration">
-      <span className="minecraft-exploration__level" aria-hidden>{level} {currentName}</span>
+      <span className="minecraft-exploration__level" aria-hidden>{visibleName}</span>
       <div
         className="minecraft-exploration__track"
         role="progressbar"
-        aria-label="Portfolio exploration progress"
+        aria-label={`${sectionName} section progress`}
         aria-valuemin={0}
         aria-valuemax={100}
-        aria-valuenow={explorationProgress}
-        aria-valuetext={valueText}
+        aria-valuenow={sectionProgress}
+        aria-valuetext={`${sectionName} section progress: ${sectionProgress}%`}
       >
-        <span style={{ width: `${explorationProgress}%` }} />
+        {/* Keyed by section: a new section's fill starts at its own value instead of animating back from the last one. */}
+        <span key={activeSectionId} style={{ width: `${sectionProgress}%` }} />
       </div>
     </div>
   );

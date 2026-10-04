@@ -2,7 +2,7 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import Projects from "../Projects";
 import MinecraftHUD from "../../header/MinecraftHUD";
-import { DEFAULT_PROJECT_ID, projects } from "../projects/projectData";
+import { projects } from "../projects/projectData";
 import { PROJECT_SOURCES } from "../skills/skillItems";
 
 const project = (id: string) => projects.find((entry) => entry.id === id)!;
@@ -17,22 +17,17 @@ const slot = (label: string) => within(grid()).getByRole("button", { name: new R
 describe("project data", () => {
   it("has unique ids, required copy, architecture items and valid links", () => {
     expect(new Set(projects.map((entry) => entry.id)).size).toBe(projects.length);
-    expect(projects.map((entry) => entry.id)).toContain(DEFAULT_PROJECT_ID);
     for (const entry of projects) {
       expect(entry.title.trim()).not.toBe("");
       expect(entry.summary.trim()).not.toBe("");
       expect(entry.stack.length).toBeGreaterThan(0);
       expect(entry.items.length).toBeGreaterThan(0);
       expect(new Set(entry.items.map((item) => item.id)).size).toBe(entry.items.length);
-      expect(entry.items.map((item) => item.id)).toContain(entry.defaultItemId);
       for (const link of entry.links) {
         expect(link.label.trim()).not.toBe("");
         expect(new URL(link.url).protocol).toBe("https:");
       }
     }
-    // Defaults are per project, not one universal icon.
-    const defaultIcons = projects.map((entry) => entry.items.find((item) => item.id === entry.defaultItemId)!.icon);
-    expect(new Set(defaultIcons).size).toBe(projects.length);
   });
 
   it("covers every project that Skills cites as evidence", () => {
@@ -54,8 +49,17 @@ describe("Projects storage room", () => {
     }
   });
 
-  it("opens WanderGenie by default with its summary, stack and links", () => {
+  it("starts with every chest closed and no architecture inventory", () => {
     render(<Projects />);
+    for (const entry of projects) expect(opener(entry.title)).toHaveAttribute("aria-pressed", "false");
+    expect(document.getElementById("project-chest-panel")).toBeNull();
+    expect(screen.queryByRole("grid")).not.toBeInTheDocument();
+    expect(screen.queryByText("Selected item")).not.toBeInTheDocument();
+  });
+
+  it("opens WanderGenie with its summary, stack and links", () => {
+    render(<Projects />);
+    fireEvent.click(opener("WanderGenie"));
     expect(opener("WanderGenie")).toHaveAttribute("aria-pressed", "true");
     expect(opener("Taco-DB")).toHaveAttribute("aria-pressed", "false");
     expect(panelHeading()).toHaveTextContent("WanderGenie");
@@ -72,6 +76,7 @@ describe("Projects storage room", () => {
 
   it("switches projects by click and shows the outcome metric", () => {
     render(<Projects />);
+    fireEvent.click(opener("WanderGenie"));
     fireEvent.click(opener("Taco-DB"));
     expect(opener("Taco-DB")).toHaveAttribute("aria-pressed", "true");
     expect(opener("WanderGenie")).toHaveAttribute("aria-pressed", "false");
@@ -102,26 +107,27 @@ describe("Projects storage room", () => {
     expect(crop).toHaveFocus();
   });
 
-  it("selects each project's default architecture item and resets it on switch", () => {
+  it("opens each project with no architecture item selected and clears the pick on switch", () => {
     render(<Projects />);
-    expect(slot("Trip Planner")).toHaveAttribute("aria-pressed", "true");
-    expect(detailHeading()).toHaveTextContent("Trip Planner");
-    expect(within(detail()).getByText("WanderGenie")).toBeInTheDocument();
+    const pressedSlots = () => within(grid()).queryAllByRole("button", { pressed: true });
+    fireEvent.click(opener("WanderGenie"));
+    expect(pressedSlots()).toHaveLength(0);
+    expect(within(detail()).queryByRole("heading")).not.toBeInTheDocument();
 
     fireEvent.click(slot("Place Graph"));
+    expect(slot("Place Graph")).toHaveAttribute("aria-pressed", "true");
     expect(detailHeading()).toHaveTextContent("Place Graph");
     expect(within(detail()).getByText("Neo4j")).toBeInTheDocument();
+    expect(within(detail()).getByText("WanderGenie")).toBeInTheDocument();
 
     for (const entry of projects) {
       fireEvent.click(opener(entry.title));
-      const expected = entry.items.find((item) => item.id === entry.defaultItemId)!;
-      expect(detailHeading()).toHaveTextContent(expected.label);
+      expect(pressedSlots()).toHaveLength(0);
+      expect(within(detail()).queryByRole("heading")).not.toBeInTheDocument();
       expect(grid()).toHaveAccessibleName(`${entry.title} architecture`);
       expect(within(grid()).getAllByRole("button")).toHaveLength(entry.items.length);
+      expect(screen.getAllByRole("button", { pressed: true })).toEqual([opener(entry.title)]);
     }
-
-    fireEvent.click(opener("WanderGenie"));
-    expect(detailHeading()).toHaveTextContent("Trip Planner");
   });
 
   it("changes the detail by keyboard and single touch tap", () => {
@@ -194,6 +200,7 @@ describe("Projects coexisting with the hotbar", () => {
 
   it("keeps architecture arrow keys inside the grid", () => {
     renderPage();
+    fireEvent.click(opener("WanderGenie"));
     const first = slot("Trip Planner");
     first.focus();
     fireEvent.keyDown(first, { key: "ArrowRight" });
@@ -203,10 +210,12 @@ describe("Projects coexisting with the hotbar", () => {
 
   it("keeps number shortcuts working from the architecture grid", () => {
     renderPage();
+    fireEvent.click(opener("WanderGenie"));
     const item = slot("Hybrid RAG");
+    fireEvent.click(item);
     item.focus();
     fireEvent.keyDown(item, { key: "4" });
     expect(window.location.hash).toBe("#experience");
-    expect(detailHeading()).toHaveTextContent("Trip Planner");
+    expect(detailHeading()).toHaveTextContent("Hybrid RAG");
   });
 });

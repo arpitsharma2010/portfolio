@@ -67,6 +67,8 @@ const Contact: React.FC = () => {
                     className={aimed === label ? "is-aimed" : undefined}
                     onFocus={() => setAimed(label)}
                     onMouseEnter={() => setAimed(label)}
+                    onBlur={() => setAimed(null)}
+                    onMouseLeave={() => setAimed(null)}
                     onClick={() => setPulse((count) => count + 1)}
                     {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                   >

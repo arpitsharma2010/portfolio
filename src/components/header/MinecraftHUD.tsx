@@ -5,6 +5,7 @@ import MinecraftExplorationBar from "./MinecraftExplorationBar";
 import MinecraftSelectedItemLabel from "./MinecraftSelectedItemLabel";
 import { getHotbarEntries } from "./hotbarItems";
 import useHotbarNavigation from "./useHotbarNavigation";
+import useSectionProgress from "./useSectionProgress";
 import "./minecraft-hud.css";
 
 interface MinecraftHUDProps {
@@ -20,10 +21,10 @@ const MinecraftHUD = ({ theme, onThemeToggle }: MinecraftHUDProps) => {
     activeSectionId,
     selectedIndex,
     announcement,
-    explorationProgress,
     activateIndex,
     previewIndex,
   } = useHotbarNavigation({ entries, onThemeToggle, navRef });
+  const sectionProgress = useSectionProgress(activeSectionId);
 
   useEffect(() => {
     trackPageView(`/portfolio/#${activeSectionId}`);
@@ -48,7 +49,7 @@ const MinecraftHUD = ({ theme, onThemeToggle }: MinecraftHUDProps) => {
     <div className="minecraft-hud" data-testid="minecraft-hud">
       <MinecraftSelectedItemLabel announcement={announcement} />
       <MinecraftExplorationBar
-        explorationProgress={explorationProgress}
+        sectionProgress={sectionProgress}
         activeSectionId={activeSectionId}
       />
       <nav

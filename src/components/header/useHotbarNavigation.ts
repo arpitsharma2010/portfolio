@@ -6,7 +6,6 @@ import {
   type PortfolioSectionId,
 } from "./hotbarItems";
 import type { SelectedItemAnnouncement } from "./MinecraftSelectedItemLabel";
-import { calculatePortfolioProgress } from "./usePortfolioExploration";
 import { prefersReducedMotion } from "../../utils/motion";
 
 export const isTypingTarget = (target: EventTarget | null) => {
@@ -14,6 +13,12 @@ export const isTypingTarget = (target: EventTarget | null) => {
   if (["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName)) return true;
   return target.isContentEditable || Boolean(target.closest("[contenteditable='true'], [contenteditable='']"));
 };
+
+/** How long the wheel must rest over the hotbar before the previewed slot navigates. */
+export const WHEEL_SETTLE_MS = 250;
+/** Accumulated wheel delta per slot step, so a trackpad swipe doesn't race to the end. */
+const WHEEL_STEP_DELTA = 40;
+const LAST_NAVIGATION_INDEX = portfolioSectionIds.length - 1;
 
 interface UseHotbarNavigationOptions {
   entries: HotbarEntry[];
@@ -28,25 +33,32 @@ const useHotbarNavigation = ({ entries, onThemeToggle, navRef }: UseHotbarNaviga
   const [activeSectionId, setActiveSectionId] = useState<PortfolioSectionId>(initialSection);
   const [selectedIndex, setSelectedIndex] = useState(initialIndex);
   const [announcement, setAnnouncement] = useState<SelectedItemAnnouncement | null>(null);
-  const [sectionsVisited, setSectionsVisited] = useState<ReadonlySet<PortfolioSectionId>>(() => new Set([initialSection]));
   const announcementToken = useRef(0);
   const announcementTimer = useRef<number | null>(null);
-  const selectedIndexRef = useRef(selectedIndex);
   const selectionLockUntil = useRef(0);
   const pendingObservedSection = useRef<PortfolioSectionId | null>(null);
   const observerReleaseTimer = useRef<number | null>(null);
+  const activeSectionRef = useRef(activeSectionId);
+  const wheelPreview = useRef<number | null>(null);
+  const wheelTimer = useRef<number | null>(null);
+  const wheelDelta = useRef(0);
 
-  useEffect(() => { selectedIndexRef.current = selectedIndex; }, [selectedIndex]);
+  useEffect(() => { activeSectionRef.current = activeSectionId; }, [activeSectionId]);
   useEffect(() => {
     if (initialHashSection) selectionLockUntil.current = Date.now() + 1200;
   }, [initialHashSection]);
   useEffect(() => () => {
     if (announcementTimer.current !== null) window.clearTimeout(announcementTimer.current);
+    if (wheelTimer.current !== null) window.clearTimeout(wheelTimer.current);
   }, []);
 
-  const applyActiveSection = useCallback((sectionId: PortfolioSectionId) => {
-    setActiveSectionId(sectionId);
-    setSectionsVisited((current) => current.has(sectionId) ? current : new Set([...current, sectionId]));
+
+  /** Drops a pending wheel navigation, so it can never fire after another action. */
+  const cancelWheel = useCallback(() => {
+    if (wheelTimer.current !== null) window.clearTimeout(wheelTimer.current);
+    wheelTimer.current = null;
+    wheelPreview.current = null;
+    wheelDelta.current = 0;
   }, []);
 
   const showSelectedLabel = useCallback((index: number) => {
@@ -69,12 +81,13 @@ const useHotbarNavigation = ({ entries, onThemeToggle, navRef }: UseHotbarNaviga
   }, [navRef]);
 
   const previewIndex = useCallback((index: number, moveFocus = false) => {
+    cancelWheel();
     const normalized = (index + entries.length) % entries.length;
     selectionLockUntil.current = Date.now() + 900;
     setSelectedIndex(normalized);
     showSelectedLabel(normalized);
     revealSlot(normalized, moveFocus);
-  }, [entries.length, revealSlot, showSelectedLabel]);
+  }, [cancelWheel, entries.length, revealSlot, showSelectedLabel]);
 
   const scrollToSection = useCallback((sectionId: PortfolioSectionId, behavior: ScrollBehavior) => {
     document.getElementById(sectionId)?.scrollIntoView?.({ behavior, block: "start" });
@@ -83,6 +96,7 @@ const useHotbarNavigation = ({ entries, onThemeToggle, navRef }: UseHotbarNaviga
   const activateIndex = useCallback((index: number) => {
     const entry = entries[index];
     if (!entry) return;
+    cancelWheel();
     setSelectedIndex(index);
     showSelectedLabel(index);
     revealSlot(index, false);
@@ -98,17 +112,17 @@ const useHotbarNavigation = ({ entries, onThemeToggle, navRef }: UseHotbarNaviga
     if (!sectionId) return;
     const behavior: ScrollBehavior = prefersReducedMotion() ? "auto" : "smooth";
     selectionLockUntil.current = Date.now() + (behavior === "smooth" ? 1100 : 200);
-    applyActiveSection(sectionId);
+    setActiveSectionId(sectionId);
     if (window.location.hash !== `#${sectionId}`) {
       window.history.pushState({ portfolioSection: sectionId }, "", `#${sectionId}`);
     }
     scrollToSection(sectionId, behavior);
-  }, [applyActiveSection, entries, navRef, onThemeToggle, revealSlot, scrollToSection, showSelectedLabel]);
+  }, [cancelWheel, entries, navRef, onThemeToggle, revealSlot, scrollToSection, showSelectedLabel]);
 
   useEffect(() => {
     const sectionState = new Map<PortfolioSectionId, { intersecting: boolean; ratio: number; top: number }>();
     const applyObservedSection = (sectionId: PortfolioSectionId) => {
-      applyActiveSection(sectionId);
+      setActiveSectionId(sectionId);
       setSelectedIndex(portfolioSectionIds.indexOf(sectionId));
     };
     const observer = new IntersectionObserver((observedEntries) => {
@@ -155,14 +169,15 @@ const useHotbarNavigation = ({ entries, onThemeToggle, navRef }: UseHotbarNaviga
       observer.disconnect();
       if (observerReleaseTimer.current !== null) window.clearTimeout(observerReleaseTimer.current);
     };
-  }, [applyActiveSection]);
+  }, []);
 
   useEffect(() => {
     const handleHistoryNavigation = () => {
       const sectionId = getSectionFromHash(window.location.hash);
       if (!sectionId) return;
+      cancelWheel();
       selectionLockUntil.current = Date.now() + 250;
-      applyActiveSection(sectionId);
+      setActiveSectionId(sectionId);
       setSelectedIndex(portfolioSectionIds.indexOf(sectionId));
       scrollToSection(sectionId, "auto");
     };
@@ -172,7 +187,7 @@ const useHotbarNavigation = ({ entries, onThemeToggle, navRef }: UseHotbarNaviga
       window.removeEventListener("popstate", handleHistoryNavigation);
       window.removeEventListener("hashchange", handleHistoryNavigation);
     };
-  }, [applyActiveSection, scrollToSection]);
+  }, [cancelWheel, scrollToSection]);
 
   useEffect(() => {
     const sectionId = getSectionFromHash(window.location.hash);
@@ -199,26 +214,45 @@ const useHotbarNavigation = ({ entries, onThemeToggle, navRef }: UseHotbarNaviga
     return () => document.removeEventListener("keydown", handleNumberShortcut);
   }, [activateIndex]);
 
+  /**
+   * Wheel over the hotbar previews navigation slots 1-8 (clamped, never the theme clock) and keeps the page still;
+   * once the wheel rests for WHEEL_SETTLE_MS the last previewed section is opened.
+   */
   useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
     const handleWheel = (event: WheelEvent) => {
-      const nav = navRef.current;
-      if (!nav || event.deltaY === 0) return;
-      const targetInside = event.target instanceof Node && nav.contains(event.target);
-      const focusInside = document.activeElement instanceof Node && nav.contains(document.activeElement);
-      if (!targetInside && !focusInside) return;
+      if (event.deltaY === 0) return;
       event.preventDefault();
-      previewIndex(selectedIndexRef.current + (event.deltaY > 0 ? 1 : -1));
+      wheelDelta.current += event.deltaMode === WheelEvent.DOM_DELTA_PIXEL ? event.deltaY : Math.sign(event.deltaY) * WHEEL_STEP_DELTA;
+      if (Math.abs(wheelDelta.current) < WHEEL_STEP_DELTA) return;
+      const activeIndex = portfolioSectionIds.indexOf(activeSectionRef.current);
+      const next = Math.min(LAST_NAVIGATION_INDEX, Math.max(0, (wheelPreview.current ?? activeIndex) + Math.sign(wheelDelta.current)));
+      wheelDelta.current = 0;
+      if (wheelTimer.current !== null) window.clearTimeout(wheelTimer.current);
+      wheelPreview.current = next;
+      // Hold the observer off the highlight while previewing; navigation sets its own lock.
+      selectionLockUntil.current = Date.now() + WHEEL_SETTLE_MS + 100;
+      setSelectedIndex(next);
+      showSelectedLabel(next);
+      revealSlot(next, false);
+      wheelTimer.current = window.setTimeout(() => {
+        const target = wheelPreview.current;
+        cancelWheel();
+        if (target === null) return;
+        // Wheeling back to the current section is a cancel, not a jump to its top.
+        if (target === portfolioSectionIds.indexOf(activeSectionRef.current)) setSelectedIndex(target);
+        else activateIndex(target);
+      }, WHEEL_SETTLE_MS);
     };
-    document.addEventListener("wheel", handleWheel, { passive: false });
-    return () => document.removeEventListener("wheel", handleWheel);
-  }, [navRef, previewIndex]);
+    nav.addEventListener("wheel", handleWheel, { passive: false });
+    return () => nav.removeEventListener("wheel", handleWheel);
+  }, [activateIndex, cancelWheel, navRef, revealSlot, showSelectedLabel]);
 
   return {
     activeSectionId,
     selectedIndex,
     announcement,
-    explorationProgress: calculatePortfolioProgress(sectionsVisited),
-    sectionsVisited,
     activateIndex,
     previewIndex,
   } as const;

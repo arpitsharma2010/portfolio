@@ -286,8 +286,6 @@ export const skillItems: readonly SkillItem[] = seeds.map((seed) => ({
   rarity: seed.enchanted ? "enchanted" : undefined,
 }));
 
-export const DEFAULT_SKILL_ID = "csharp";
-
 /** Broadest evidence across the site, in no ranked order. */
 export const CORE_TOOLKIT_IDS = ["csharp", "python", "typescript", "rest-apis", "microservices", "react", "aws", "postgresql", "rag"];
 

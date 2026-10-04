@@ -6,7 +6,6 @@ import PlayerPreview from "./about/PlayerPreview.tsx";
 import {
   aboutItems,
   craftingResult,
-  DEFAULT_ABOUT_ITEM_ID,
   equipmentItems,
   inventoryItems,
   profileActions,
@@ -19,26 +18,31 @@ const itemLabel = (item: MinecraftItem) => `${item.name}, ${item.category}`;
 const equipmentLabel = (item: MinecraftItem) => `${(item as AboutItem).slot} slot: ${itemLabel(item)}`;
 const ingredientLabel = (item: MinecraftItem) => `Crafting ingredient: ${itemLabel(item)}`;
 
-const SelectedItemDetail = ({ item }: { item: AboutItem }) => (
-  <section className="pi-detail" aria-labelledby="pi-detail-title" aria-live="polite">
+/** Stays mounted while empty so the live region exists before the first pick; empty = label and a blank slot only. */
+const SelectedItemDetail = ({ item }: { item?: AboutItem }) => (
+  <section className="pi-detail" aria-labelledby={item ? "pi-detail-title" : undefined} aria-live="polite">
     <p className="pi-label">Selected item</p>
-    <div className="pi-detail__head">
-      <span className="pi-detail__icon"><MinecraftItemIcon name={item.icon} /></span>
-      <div>
-        <p className="pi-detail__name">{item.name}{item.slot && ` · ${item.slot} slot`}</p>
-        <h3 id="pi-detail-title">{item.category}</h3>
-      </div>
-    </div>
-    <p className="pi-detail__summary">{item.summary}</p>
-    <ul className="pi-detail__lore">
-      {item.lore?.map((line) => <li key={line}>{line}</li>)}
-    </ul>
+    {item ? (
+      <>
+        <div className="pi-detail__head">
+          <span className="pi-detail__icon"><MinecraftItemIcon name={item.icon} /></span>
+          <div>
+            <p className="pi-detail__name">{item.name}{item.slot && ` · ${item.slot} slot`}</p>
+            <h3 id="pi-detail-title">{item.category}</h3>
+          </div>
+        </div>
+        <p className="pi-detail__summary">{item.summary}</p>
+        <ul className="pi-detail__lore">
+          {item.lore?.map((line) => <li key={line}>{line}</li>)}
+        </ul>
+      </>
+    ) : <span className="pi-detail__icon" aria-hidden />}
   </section>
 );
 
 const About: React.FC = () => {
-  const { selectedItemId, select } = useMinecraftSelection({ initialSelectedId: DEFAULT_ABOUT_ITEM_ID });
-  const selectedItem = aboutItems.find((item) => item.id === selectedItemId) ?? aboutItems[0];
+  const { selectedItemId, select } = useMinecraftSelection();
+  const selectedItem = aboutItems.find((item) => item.id === selectedItemId);
 
   return (
     <PageSection eyebrow="Player Inventory" title="About Arpit" variant="grass">

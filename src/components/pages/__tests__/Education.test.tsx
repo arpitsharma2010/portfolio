@@ -45,9 +45,21 @@ describe("Education enchanting room", () => {
     summaries.forEach((summary) => expect(summary.closest("details")).not.toHaveAttribute("open"));
   });
 
-  it("selects the first degree by default and fills the detail panel with its exact content", () => {
+  it("starts with no book selected and an empty, hidden detail panel", () => {
+    const { container } = render(<Education />);
+    expect(screen.queryAllByRole("button", { pressed: true })).toHaveLength(0);
+    expect(container.querySelector(".ench-book.is-selected")).toBeNull();
+    expect(detail()).not.toBeVisible();
+    expect(detail()).toBeEmptyDOMElement();
+    expect(container.querySelector(".ench-table__book")).toBeNull();
+    expect(container.querySelector(".ench-table__caption")).toBeEmptyDOMElement();
+  });
+
+  it("fills the detail panel with the exact content of the selected degree", () => {
     render(<Education />);
     const [first] = DEGREES;
+    fireEvent.click(book(first.degree));
+    expect(detail()).toBeVisible();
     expect(book(first.degree)).toHaveAttribute("aria-pressed", "true");
     expect(screen.getAllByRole("button", { pressed: true })).toHaveLength(1);
     expect(detailTitle()).toHaveTextContent(first.degree);

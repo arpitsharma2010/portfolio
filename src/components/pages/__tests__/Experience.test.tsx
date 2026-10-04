@@ -2,7 +2,7 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import Experience from "../Experience";
 import MinecraftHUD from "../../header/MinecraftHUD";
-import { DEFAULT_EXPERIENCE_ID, employerName, experience, formatDates } from "../experience/experienceData";
+import { employerName, experience, formatDates } from "../experience/experienceData";
 import { ROLE_SOURCES, skillItems } from "../skills/skillItems";
 
 const entry = (id: string) => experience.find((role) => role.id === id)!;
@@ -43,8 +43,7 @@ describe("experience data", () => {
     expect(starts).toEqual([...starts].sort());
   });
 
-  it("defaults to the latest role and marks only ongoing roles as current", () => {
-    expect(DEFAULT_EXPERIENCE_ID).toBe("skopus-ai");
+  it("marks only ongoing roles as current", () => {
     experience.forEach((role) => expect(role.advancementType === "current").toBe(role.endDate === null));
   });
 
@@ -137,8 +136,15 @@ describe("Experience advancements", () => {
     expect(within(path()).getAllByText("Tata Consultancy Services")).toHaveLength(1);
   });
 
-  it("selects the latest role by default and exposes the selected state", () => {
+  it("starts with no role selected and the whole path visible, then exposes the selected state", () => {
     render(<Experience />);
+    for (const role of experience) expect(node(role.title)).toHaveAttribute("aria-pressed", "false");
+    expect(detail()).not.toBeVisible();
+    expect(detail()).toBeEmptyDOMElement();
+    expect(document.querySelector("[aria-live='polite']")).toBeEmptyDOMElement();
+
+    fireEvent.click(node("Founding Engineer, Part-time"));
+    expect(detail()).toBeVisible();
     expect(detailHeading()).toHaveTextContent("Founding Engineer, Part-time");
     expect(node("Founding Engineer, Part-time")).toHaveAttribute("aria-pressed", "true");
     expect(node("Software Engineer I")).toHaveAttribute("aria-pressed", "false");
@@ -194,7 +200,7 @@ describe("Experience advancements", () => {
     expect(first).toHaveFocus();
     fireEvent.keyDown(first, { key: "ArrowLeft" });
     expect(first).toHaveFocus();
-    expect(detailHeading()).toHaveTextContent("Founding Engineer, Part-time");
+    expect(detail()).toBeEmptyDOMElement();
   });
 
   it("shows organization, role, dates, focus, impact, evidence and tools for the selected role", () => {

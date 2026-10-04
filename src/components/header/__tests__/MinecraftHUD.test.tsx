@@ -3,7 +3,8 @@ import { useState } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import MinecraftHUD from "../MinecraftHUD";
 import usePreferredTheme from "../../../hooks/usePreferredTheme";
-import { clampPercentage, calculatePortfolioProgress } from "../usePortfolioExploration";
+import { calculateSectionProgress, clampPercentage } from "../useSectionProgress";
+import { WHEEL_SETTLE_MS } from "../useHotbarNavigation";
 import { getHotbarEntries, type PortfolioSectionId } from "../hotbarItems";
 
 let observerCallback: IntersectionObserverCallback;
@@ -162,23 +163,107 @@ describe("MinecraftHUD hotbar", () => {
     expect(window.location.hash).toBe("#about");
   });
 
-  it("limits wheel selection to the hotbar and never toggles a merely selected theme slot", () => {
-    const onThemeToggle = vi.fn();
-    render(<TestPage onThemeToggle={onThemeToggle} />);
-    const hotbar = screen.getByRole("navigation", { name: "Portfolio hotbar navigation" });
-    const about = screen.getByRole("button", { name: "Name Tag — About" });
-    const theme = screen.getByRole("button", { name: "Clock — Switch to night mode" });
+  describe("wheel over the hotbar", () => {
+    const hotbar = () => screen.getByRole("navigation", { name: "Portfolio hotbar navigation" });
+    const slot = (name: string) => screen.getByRole("button", { name });
+    const wheel = (deltaY: number, times = 1) => {
+      let prevented = false;
+      for (let i = 0; i < times; i += 1) prevented = !fireEvent.wheel(hotbar(), { deltaY });
+      return prevented;
+    };
 
-    fireEvent.wheel(hotbar, { deltaY: 100 });
-    expect(about).toHaveAttribute("aria-pressed", "true");
-    fireEvent.wheel(hotbar, { deltaY: -100 });
-    fireEvent.wheel(hotbar, { deltaY: -100 });
-    expect(theme).toHaveAttribute("aria-pressed", "true");
-    expect(onThemeToggle).not.toHaveBeenCalled();
-    (document.activeElement as HTMLElement | null)?.blur();
-    const outsideWheel = new WheelEvent("wheel", { deltaY: 100, cancelable: true, bubbles: true });
-    document.body.dispatchEvent(outsideWheel);
-    expect(outsideWheel.defaultPrevented).toBe(false);
+    beforeEach(() => { vi.useFakeTimers(); });
+
+    it("previews a slot immediately, keeps the page still, and navigates only after the wheel rests", () => {
+      render(<TestPage />);
+      expect(wheel(100)).toBe(true);
+      expect(slot("Name Tag — About")).toHaveAttribute("aria-pressed", "true");
+      expect(screen.getByRole("status")).toHaveTextContent("Name Tag");
+      expect(Element.prototype.scrollIntoView).not.toHaveBeenCalledWith({ behavior: "smooth", block: "start" });
+      act(() => vi.advanceTimersByTime(WHEEL_SETTLE_MS - 1));
+      expect(window.location.hash).toBe("");
+      act(() => vi.advanceTimersByTime(1));
+      expect(window.location.hash).toBe("#about");
+      expect(slot("Name Tag — About")).toHaveAttribute("aria-current", "location");
+      expect(screen.getByRole("status")).toHaveTextContent("Name Tag");
+    });
+
+    it("navigates once, to the final slot, after several wheel steps", () => {
+      const pushState = vi.spyOn(window.history, "pushState");
+      render(<TestPage />);
+      wheel(100, 4);
+      expect(slot("Chest — Projects")).toHaveAttribute("aria-pressed", "true");
+      act(() => vi.advanceTimersByTime(WHEEL_SETTLE_MS));
+      expect(pushState).toHaveBeenCalledOnce();
+      expect(window.location.hash).toBe("#projects");
+      pushState.mockRestore();
+    });
+
+    it("restarts the settle timer on every wheel step", () => {
+      render(<TestPage />);
+      wheel(100);
+      act(() => vi.advanceTimersByTime(WHEEL_SETTLE_MS - 50));
+      wheel(100);
+      act(() => vi.advanceTimersByTime(WHEEL_SETTLE_MS - 50));
+      expect(window.location.hash).toBe("");
+      act(() => vi.advanceTimersByTime(50));
+      expect(window.location.hash).toBe("#skills");
+    });
+
+    it("cancels a pending wheel navigation on click, number key or arrow key", () => {
+      render(<TestPage />);
+      wheel(100, 2);
+      fireEvent.click(slot("Map — Experience"));
+      act(() => vi.advanceTimersByTime(WHEEL_SETTLE_MS * 2));
+      expect(window.location.hash).toBe("#experience");
+
+      wheel(100);
+      fireEvent.keyDown(document, { key: "6" });
+      act(() => vi.advanceTimersByTime(WHEEL_SETTLE_MS * 2));
+      expect(window.location.hash).toBe("#education");
+
+      wheel(-100);
+      fireEvent.keyDown(slot("Enchanted Book — Education"), { key: "ArrowRight" });
+      act(() => vi.advanceTimersByTime(WHEEL_SETTLE_MS * 2));
+      expect(window.location.hash).toBe("#education");
+    });
+
+    it("clamps to slots 1-8 and never previews or toggles the theme clock", () => {
+      const onThemeToggle = vi.fn();
+      render(<TestPage onThemeToggle={onThemeToggle} />);
+      wheel(-100, 3);
+      expect(slot("Compass — Home")).toHaveAttribute("aria-pressed", "true");
+      wheel(100, 20);
+      expect(slot("Portal — Contact")).toHaveAttribute("aria-pressed", "true");
+      expect(slot("Clock — Switch to night mode")).toHaveAttribute("aria-pressed", "false");
+      act(() => vi.advanceTimersByTime(WHEEL_SETTLE_MS));
+      expect(window.location.hash).toBe("#contact");
+      wheel(100, 3);
+      act(() => vi.advanceTimersByTime(WHEEL_SETTLE_MS));
+      expect(onThemeToggle).not.toHaveBeenCalled();
+      expect(slot("Clock — Switch to night mode")).toHaveAttribute("aria-pressed", "false");
+    });
+
+    it("treats wheeling back to the current section as a cancel", () => {
+      const pushState = vi.spyOn(window.history, "pushState");
+      render(<TestPage />);
+      wheel(100);
+      wheel(-100);
+      act(() => vi.advanceTimersByTime(WHEEL_SETTLE_MS));
+      expect(pushState).not.toHaveBeenCalled();
+      expect(slot("Compass — Home")).toHaveAttribute("aria-pressed", "true");
+      pushState.mockRestore();
+    });
+
+    it("leaves wheel scrolling outside the hotbar alone, even with a hotbar slot focused", () => {
+      render(<TestPage />);
+      slot("Name Tag — About").focus();
+      const outsideWheel = new WheelEvent("wheel", { deltaY: 100, cancelable: true, bubbles: true });
+      document.body.dispatchEvent(outsideWheel);
+      expect(outsideWheel.defaultPrevented).toBe(false);
+      act(() => vi.advanceTimersByTime(WHEEL_SETTLE_MS));
+      expect(window.location.hash).toBe("");
+    });
   });
 
   it("keeps active section separate from a focused slot", () => {
@@ -205,17 +290,44 @@ describe("MinecraftHUD hotbar", () => {
     expect(screen.getByRole("button", { name: "Chest — Projects" })).toHaveAttribute("aria-current", "location");
   });
 
-  it("tracks non-decreasing exploration and gives Contact 100 percent", () => {
+  it("shows progress through the active section and resets when the section changes", async () => {
+    const scrollTo = (y: number) => Object.defineProperty(window, "scrollY", { configurable: true, value: y });
+    // Sections 1000px tall, stacked from 0; viewport is jsdom's 768px, so the reading line is at 230px.
+    Object.defineProperty(document.documentElement, "scrollHeight", { configurable: true, value: 8000 });
+    const rect = vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(function (this: Element) {
+      const index = sectionIds.indexOf(this.id as PortfolioSectionId);
+      return index < 0 ? new DOMRect() : new DOMRect(0, index * 1000 - window.scrollY, 100, 1000);
+    });
+    const nextFrame = () => act(() => new Promise((resolve) => requestAnimationFrame(resolve)));
+    scrollTo(0);
     render(<TestPage />);
-    const progress = screen.getByRole("progressbar", { name: "Portfolio exploration progress" });
-    expect(progress).toHaveAttribute("aria-valuenow", "13");
-    expect(progress).toHaveAttribute("aria-valuetext", "Portfolio exploration: 13%");
+    const progress = () => screen.getByRole("progressbar");
+    expect(progress()).toHaveAccessibleName("Home section progress");
+    expect(progress()).toHaveAttribute("aria-valuenow", "0");
+
+    scrollTo(385);
+    fireEvent.scroll(window);
+    await nextFrame();
+    expect(progress()).toHaveAttribute("aria-valuenow", "50");
+
+    scrollTo(770);
     emitSection("about");
-    expect(progress).toHaveAttribute("aria-valuenow", "25");
-    emitSection("home");
-    expect(progress).toHaveAttribute("aria-valuenow", "25");
-    emitSection("contact", window.innerHeight * .3);
-    expect(progress).toHaveAttribute("aria-valuenow", "100");
+    expect(progress()).toHaveAccessibleName("About section progress");
+    expect(progress()).toHaveAttribute("aria-valuenow", "0");
+    expect(progress()).toHaveAttribute("aria-valuetext", "About section progress: 0%");
+
+    scrollTo(1770);
+    fireEvent.scroll(window);
+    await nextFrame();
+    expect(progress()).toHaveAttribute("aria-valuenow", "100");
+    rect.mockRestore();
+    scrollTo(0);
+  });
+
+  it("names the progress bar after a section restored from the hash", () => {
+    window.history.replaceState(null, "", "#projects");
+    render(<TestPage />);
+    expect(screen.getByRole("progressbar")).toHaveAccessibleName("Projects section progress");
   });
 
   it("announces and automatically clears the selected item label", () => {
@@ -278,11 +390,35 @@ describe("MinecraftHUD hotbar", () => {
   });
 });
 
-describe("portfolio progress helpers", () => {
-  it("clamps percentages and calculates visited-section progress", () => {
+describe("section progress helper", () => {
+  // Reading line at 30% of an 800px viewport = 240px.
+  const section = { top: 1000, height: 2000, viewportHeight: 800, maxScroll: 10000 };
+
+  it("runs from the section top to its bottom crossing the reading line", () => {
+    expect(calculateSectionProgress({ ...section, scrollY: 760 })).toBe(0);
+    expect(calculateSectionProgress({ ...section, scrollY: 1760 })).toBe(50);
+    expect(calculateSectionProgress({ ...section, scrollY: 2760 })).toBe(100);
+  });
+
+  it("clamps before and after the section", () => {
+    expect(calculateSectionProgress({ ...section, scrollY: 0 })).toBe(0);
+    expect(calculateSectionProgress({ ...section, scrollY: 9000 })).toBe(100);
     expect(clampPercentage(-5)).toBe(0);
     expect(clampPercentage(105)).toBe(100);
-    expect(calculatePortfolioProgress(new Set(["home", "about"]))).toBe(25);
-    expect(calculatePortfolioProgress(new Set(["contact"]))).toBe(100);
+  });
+
+  it("spreads a short section over its own height and never divides by zero", () => {
+    const short = { ...section, height: 300 };
+    expect(calculateSectionProgress({ ...short, scrollY: 760 + 150 })).toBe(50);
+    expect(calculateSectionProgress({ ...short, height: 0, scrollY: 759 })).toBe(0);
+    expect(calculateSectionProgress({ ...short, height: 0, scrollY: 760 })).toBe(100);
+  });
+
+  it("starts the first section at 0 and lets the last one reach 100 at the page bottom", () => {
+    expect(calculateSectionProgress({ ...section, top: 60, scrollY: 0 })).toBe(0);
+    const last = { top: 5000, height: 900, viewportHeight: 800, maxScroll: 5300 };
+    expect(calculateSectionProgress({ ...last, scrollY: 4760 })).toBe(0);
+    expect(calculateSectionProgress({ ...last, scrollY: 5030 })).toBe(50);
+    expect(calculateSectionProgress({ ...last, scrollY: 5300 })).toBe(100);
   });
 });

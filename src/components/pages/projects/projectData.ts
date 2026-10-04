@@ -38,7 +38,6 @@ interface ProjectSeed {
   outcome?: string;
   stack: string[];
   links: ProjectLink[];
-  defaultItemId: string;
   items: ArchitectureSeed[];
 }
 
@@ -63,7 +62,6 @@ const seeds: ProjectSeed[] = [
       { label: "GitHub", url: "https://github.com/arpitsharma2010/WanderGenie-ai-travel-assistant" },
       { label: "DevPost", url: "https://devpost.com/software/wandergenie-ai-travel-assistant" },
     ],
-    defaultItemId: "wg-planner",
     items: [
       { id: "wg-planner", itemName: "Compass", icon: "compass", label: "Trip Planner", tip: "Plans trips from real data", technologies: ["Python", "OpenAI APIs"],
         details: "Plans a trip by reasoning over real data instead of improvising an answer from the model's weights alone." },
@@ -98,7 +96,6 @@ const seeds: ProjectSeed[] = [
     outcome: "Up to a 10x query-processing improvement on large datasets, from replacing nested-loop joins with hash joins and sorting externally rather than in memory.",
     stack: ["C++", "B+ Tree", "Buffer Pool", "Volcano Model", "External Merge Sort", "Hash Joins", "POSIX I/O"],
     links: [],
-    defaultItemId: "tdb-storage",
     items: [
       { id: "tdb-storage", itemName: "Chest", icon: "chest", label: "Disk Storage", tip: "Disk-based record storage", technologies: ["C++", "POSIX I/O"],
         details: "Disk-based storage written from scratch in C++, not a wrapper over an existing engine." },
@@ -127,7 +124,6 @@ const seeds: ProjectSeed[] = [
     built: "A priority scheduler with donation, a system-call interface with user-memory validation, and semaphore-based process synchronisation.",
     stack: ["C", "x86 Assembly", "GDB"],
     links: [],
-    defaultItemId: "pk-scheduler",
     items: [
       { id: "pk-scheduler", itemName: "Clock", icon: "clock", label: "Priority Scheduler", tip: "Decides which thread runs", technologies: ["C"],
         details: "A priority scheduler for the kernel's threads." },
@@ -155,7 +151,6 @@ const seeds: ProjectSeed[] = [
     outcome: "Validated in simulation and then flashed to a Basys3 FPGA.",
     stack: ["Verilog", "Vivado", "FPGA"],
     links: [{ label: "GitHub", url: "https://github.com/arpitsharma2010/micro16-fpga-core" }],
-    defaultItemId: "cpu-core",
     items: [
       { id: "cpu-core", itemName: "Repeater", icon: "repeater", label: "Single-Cycle Core", tip: "16-bit, one cycle per instruction", technologies: ["Verilog"],
         details: "A single-cycle 16-bit processor written in Verilog." },
@@ -184,7 +179,6 @@ const seeds: ProjectSeed[] = [
     built: "An end-to-end ML pipeline over environmental data, scaled with PySpark and served for real-time inference behind a Flask API.",
     stack: ["Python", "PySpark", "Scikit-learn", "Flask"],
     links: [{ label: "GitHub", url: "https://github.com/arpitsharma2010/Crop-Yield-Prediction" }],
-    defaultItemId: "cy-data",
     items: [
       { id: "cy-data", itemName: "Hoe", icon: "hoe", label: "Environmental Data", tip: "The pipeline's input", technologies: ["Python"],
         details: "The pipeline runs over environmental data." },
@@ -212,7 +206,6 @@ const seeds: ProjectSeed[] = [
       { label: "Frontend on GitHub", url: "https://github.com/arpitsharma2010/react-library-project" },
       { label: "API on GitHub", url: "https://github.com/arpitsharma2010/spring-boot-library" },
     ],
-    defaultItemId: "lib-system",
     items: [
       { id: "lib-system", itemName: "Book", icon: "book", label: "Full-Stack System", tip: "Admins and borrowers", technologies: ["Java", "React"],
         details: "A full-stack library system used by administrators and borrowers." },
@@ -242,5 +235,3 @@ export const projects: readonly ProjectDefinition[] = seeds.map((project) => ({
     description: project.title,
   })),
 }));
-
-export const DEFAULT_PROJECT_ID = "wandergenie";
