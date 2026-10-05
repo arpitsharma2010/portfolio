@@ -16,9 +16,8 @@ export const equipmentItems: AboutItem[] = [
     icon: "enchanted-book",
     category: "AI / LLM Applications",
     rarity: "enchanted",
-    lore: ["RAG over pgvector", "Intent routing and fallbacks", "Validated LLM output", "OpenAI APIs · LangGraph"],
-    summary:
-      "I build the boundary around the model, not just the call to it. At Skopus AI that is an 8-endpoint RAG service with semantic retrieval, grounded analysis, intent routing, caching and fallback workflows, and strict validation on every LLM response before it reaches a caller.",
+    lore: ["RAG · OpenAI APIs", "14 validation schemas", "21 fallback paths"],
+    summary: "Backend and RAG services for resume ingestion, ATS analysis, and career Q&A at Skopus AI. Hardened 8 OpenAI operations with 14 validation schemas, evidence-backed parsing, and 21 fallback paths.",
   },
   {
     id: "backend",
@@ -27,9 +26,8 @@ export const equipmentItems: AboutItem[] = [
     icon: "diamond-pickaxe",
     category: "Backend Engineering",
     rarity: "rare",
-    lore: ["C# · .NET Core", "Python · Flask", "Node.js · TypeScript", "Java · Spring Boot", "REST APIs · Microservices"],
-    summary:
-      "Production APIs and services across enterprise banking, a university research platform and an AI startup: API design, service boundaries, concurrency and caching. That work cut a DNB endpoint from ~800 ms to 500 ms and a Tesserae response from ~50,000 records to 50.",
+    lore: ["REST APIs · Microservices", "Concurrency · Caching", "SQL-backed pagination"],
+    summary: "Backend engineering across banking, research, and applied AI: REST API contracts, query performance, service boundaries, concurrency, and caching. Improved API performance across 5+ DNB services and eliminated an N+1 query pattern in Tesserae.",
   },
   {
     id: "distributed",
@@ -37,9 +35,8 @@ export const equipmentItems: AboutItem[] = [
     name: "Redstone Dust",
     icon: "redstone-dust",
     category: "Distributed & Event-Driven Systems",
-    lore: ["Microservice decomposition", "AWS SQS · SNS at TCS (DNB)", "Concurrent downstream calls", "Cross-service debugging"],
-    summary:
-      "I split services along real boundaries and design for a downstream dependency that is slow instead of down. As Software Engineer I at Tata Consultancy Services (DNB) I decomposed a 25+ endpoint service into two independently deployable microservices and worked with AWS SQS and SNS; as Software Engineer II I diagnosed production 4xx/5xx failures across service boundaries.",
+    lore: ["Event-driven architecture", "AWS ECS · SNS · SQS", "Cross-process cancellation"],
+    summary: "Designed event-driven pricing and investment processing with AWS ECS, SNS, and SQS at TCS (DNB). At Tesserae, implemented cancellation across 7 long-running search pipelines from React through Flask to cross-process workers.",
   },
   {
     id: "cloud",
@@ -47,9 +44,8 @@ export const equipmentItems: AboutItem[] = [
     name: "Compass",
     icon: "compass",
     category: "Cloud, DevOps & Delivery",
-    lore: ["AWS ECS · S3", "AWS Lambda at TCS (DNB)", "Terraform · GitLab CI/CD", "Docker · CloudWatch"],
-    summary:
-      "A service you cannot deploy is not finished. At Tata Consultancy Services (DNB) I used AWS Lambda with API Gateway, S3, SQS and SNS as Software Engineer I, then owned 20+ production releases across four environments with GitLab CI/CD, Terraform and CloudWatch as Software Engineer II. Current work runs on AWS ECS. AWS Certified Solutions Architect, Associate.",
+    lore: ["AWS · Docker · Terraform", "GitLab CI/CD · GitHub Actions", "Health validation · Rollback"],
+    summary: "Delivered 20+ releases through ST, SIT, UAT, and Production using GitLab CI/CD and Terraform at TCS (DNB). At Skopus AI, automated TEST and PROD ECS deployments with GitHub Actions, OIDC, health validation, and rollback controls.",
   },
 ];
 
@@ -71,17 +67,16 @@ export const inventoryItems: AboutItem[] = [
     icon: "name-tag",
     category: "Player Overview",
     lore: [NAME, "Software Engineer", "4+ years in production"],
-    summary:
-      "I build and own production software end to end: backend services and REST APIs, cloud-native infrastructure on AWS, React front ends, and LLM/RAG systems that have to be correct, not just impressive.",
+    summary: "Software Engineer with 4+ years of experience building backend, full-stack, cloud-native, and distributed systems across financial services, research, and applied AI.",
   },
   {
     id: "career",
     name: "Map",
     icon: "map",
     category: "Career Journey",
-    lore: ["Skopus AI · May 2026 – Present", "University at Buffalo (Tesserae) · Nov 2025 – Present", "Tata Consultancy Services · Nov 2020 – Jul 2024"],
+    lore: ["Skopus AI · May 2026 – Present", "University at Buffalo (Tesserae) · Feb 2026 – Present", "Tata Consultancy Services · Nov 2020 – Jul 2024"],
     summary:
-      "Founding Engineer at Skopus AI, Software Engineer on the Tesserae research platform at the University at Buffalo, and, at Tata Consultancy Services, ASE-Trainee followed by Software Engineer I and II on DNB's wealth-management platform.",
+      "Founding Engineer at Skopus AI, Software Engineer on the Tesserae research platform at the University at Buffalo, and, at Tata Consultancy Services, Software Engineer I and II on DNB's wealth-management platform.",
   },
   {
     id: "education",
@@ -106,9 +101,8 @@ export const inventoryItems: AboutItem[] = [
     name: "Chest",
     icon: "chest",
     category: "Projects",
-    lore: ["WanderGenie · multi-agent LLM", "Taco-DB · database engine in C++", "Pintos kernel · OS internals"],
-    summary:
-      "Personal and academic builds that keep the layer underneath the framework from becoming a black box, from a LangGraph travel assistant to a relational database engine written from scratch.",
+    lore: ["Skopus AI · AI career platform", "WanderGenie · multi-agent travel", "Taco-DB · C++ database", "Library system · Java/Spring Boot"],
+    summary: "Applied AI and systems projects spanning Skopus AI, a LangGraph travel assistant, a C++ relational database, and a Java/Spring Boot library system.",
   },
   {
     id: "fullstack",
@@ -124,9 +118,8 @@ export const inventoryItems: AboutItem[] = [
     name: "Shield",
     icon: "shield",
     category: "Security & Access Control",
-    lore: ["OAuth 2.0 with PKCE", "RBAC · Rate limiting", "57+ admin endpoints secured"],
-    summary:
-      "Implemented Google OAuth end to end with PKCE at Skopus AI, and added role-based access control and rate limiting to 57+ Tesserae admin endpoints that any authenticated caller could previously reach.",
+    lore: ["JWT · OAuth 2.0 · PKCE", "HMAC-SHA256 · Session authentication", "Authorization across 57 of 60 admin routes"],
+    summary: "Built secure backend-to-RAG communication with HMAC-SHA256, nonce replay protection, timestamps, and constant-time verification at Skopus AI. At Tesserae, introduced session authentication and database-backed roles, with an authorization model used across 57 of 60 admin routes.",
   },
   {
     id: "inherited",
@@ -134,16 +127,15 @@ export const inventoryItems: AboutItem[] = [
     icon: "anvil",
     category: "Inherited Codebases",
     lore: ["15+ undocumented endpoints mapped", "API contracts recovered", "Data-flow documentation"],
-    summary:
-      "I read systems before I change them. For the Sbanken merger, I reverse-engineered 15+ microservices on a savings and investment platform until their API specifications and system documentation were written down.",
+    summary: "Reverse-engineered 15+ undocumented Sbanken REST endpoints during the DNB merger, documenting API contracts, JWT flows, dependencies, data flows, and business rules for developers and QA.",
   },
   {
     id: "open",
     name: "Emerald",
     icon: "emerald",
     category: "Open to Roles",
-    lore: ["Software Engineer", "Backend · Full-Stack", "Cloud · AI engineering", `${LOCATION} · open to relocation`],
-    summary: "Open to Software Engineer, Backend, Full-Stack, Cloud and AI engineering roles. Email is the fastest way to reach me.",
+    lore: ["Software Engineer", "Backend · Full-Stack", "Platform · Cloud engineering", LOCATION],
+    summary: "Open to Software Engineer, Backend Engineer, Full-Stack Engineer, Platform Engineer, and cloud-focused opportunities anywhere in the United States.",
   },
 ];
 

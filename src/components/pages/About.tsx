@@ -11,7 +11,7 @@ import {
   profileActions,
   type AboutItem,
 } from "./about/aboutInventoryItems";
-import { NAME } from "../../utils/constants";
+import { LOCATION_DETAIL, NAME } from "../../utils/constants";
 import "./about/player-inventory.css";
 
 const itemLabel = (item: MinecraftItem) => `${item.name}, ${item.category}`;
@@ -53,7 +53,7 @@ const About: React.FC = () => {
             <dl>
               <div><dt>Player</dt><dd>{NAME}</dd></div>
               <div><dt>Class</dt><dd>Software Engineer</dd></div>
-              <div><dt>Specialization</dt><dd>Backend · Distributed Systems · Cloud</dd></div>
+              <div><dt>Specialization</dt><dd>Backend · Full-Stack · Distributed Systems · Cloud</dd></div>
               <div><dt>Current build</dt><dd>Cloud-native &amp; AI-powered applications</dd></div>
               <div><dt>Education</dt><dd>M.S. Computer Science &amp; Engineering, University at Buffalo (SUNY) · GPA 3.77 / 4</dd></div>
               <div><dt>Core domains</dt><dd>{equipmentItems.map((item) => item.category).join(" · ")}</dd></div>
@@ -142,33 +142,30 @@ const About: React.FC = () => {
 
         <div className="pi-lore">
           <p>
-            Most of what I have shipped, I have owned rather than contributed to: the service, its
-            design, and its releases. At Skopus AI that means a codebase I wrote almost all of; at Tata
-            Consultancy Services supporting DNB it meant being the engineer accountable for releases
-            reaching production intact across four environments, and for diagnosing what broke when one
-            did not. That is the level I work at best.
+            Software Engineer with 4+ years of experience building backend, full-stack,
+            cloud-native, and distributed systems across fintech, research, and applied AI.
+            My work spans REST APIs, microservices, event-driven architectures, asynchronous
+            processing, frontend development, CI/CD, infrastructure automation, authentication,
+            observability, database systems, and production support.
           </p>
           <p>
-            I read systems before I change them. For the Sbanken merger, that meant
-            reverse-engineering 15+ microservices on a savings and investment platform until their API
-            specifications and system documentation were written down. The Tesserae fix that took an API response from ~50,000
-            records to 50 came from the same place. The interesting question was not how to paginate;
-            it was why an endpoint was returning a result set nobody rendered.
+            At Tata Consultancy Services supporting DNB, I worked on pension, investment,
+            transaction, and merger-integration systems: API performance, event-driven
+            processing, customer-facing workflows, production releases, and troubleshooting.
+            That work combined C#/.NET services with React, TypeScript, DynamoDB, and AWS.
           </p>
           <p>
-            My centre of gravity is backend and distributed systems: API design, service boundaries,
-            concurrency, caching, and what happens when a downstream dependency is slow instead of
-            down. I build the front end for the APIs I write when that is what the work needs, and I
-            run my own infrastructure (ECS, S3, Terraform, CI/CD) because a service you cannot deploy
-            is not finished. Taco-DB and the Pintos kernel are where I go to keep the layer underneath
-            the framework from becoming a black box.
+            More recently, I have optimized Python/Flask research systems at the University
+            at Buffalo and built AI products with RAG, LangGraph, OpenAI APIs, PostgreSQL,
+            pgvector, and Neo4j. At Skopus AI, I own backend services, secure service-to-service
+            communication, concurrency controls, and automated AWS deployments.
+            My broader toolkit includes Java, Spring Boot, Node.js, Docker, Kubernetes,
+            Terraform, GitLab CI/CD, and GitHub Actions.
           </p>
           <p>
-            I work AI-natively, both on AI and with it. Building an 8-endpoint RAG service taught me
-            that the hard part is the boundary around the model: validating its output, routing intent,
-            deciding what happens when it fails. Calling it is the easy part. I use Claude Code and Codex daily
-            as tooling for exploration and refactoring, with review and tests still deciding what
-            merges.
+            I am interested in Software Engineer, Backend Engineer, Full-Stack Engineer,
+            Platform Engineer, and cloud-focused roles.
+            {" "}{LOCATION_DETAIL}
           </p>
         </div>
       </div>

@@ -13,9 +13,9 @@ import Biome from "../biomes/Biome";
 import type { SkyTransitionDirection } from "../../hooks/usePreferredTheme";
 
 const facts = [
-  { label: "Spawn point", value: LOCATION, detail: "Open to relocation across the US" },
+  { label: "Spawn point", value: LOCATION, detail: "Remote, hybrid, onsite & relocation" },
   { label: "Experience", value: "4+ years", detail: "Banking, research and startup teams" },
-  { label: "Primary class", value: "Backend & cloud", detail: "Distributed systems, APIs, agentic AI" },
+  { label: "Primary class", value: "Backend & cloud", detail: "Full-stack, distributed systems, applied AI" },
 ];
 
 interface HomeProps {
@@ -78,15 +78,13 @@ const HomeContent: React.FC<HomeProps> = ({ skyTransition }) => {
       <h1>{NAME}</h1>
       <p className="hero__role">Software Engineer</p>
       <p className="hero__specialties">
-        Full-Stack &amp; Cloud-Native Engineering <span>◆</span> Distributed Systems <span>◆</span> Agentic AI
+        Backend &amp; Full-Stack Engineering <span>◆</span> Cloud &amp; Distributed Systems <span>◆</span> Applied AI
       </p>
       <p className="hero__intro">
-        I build and own production software end-to-end: backend services and REST APIs,
-        cloud-native infrastructure on AWS, full-stack React front ends, and LLM/RAG systems that
-        have to be correct, not just impressive. 4+ years building production software across
-        enterprise banking, backend platforms, cloud systems and full-stack applications, from Tata
-        Consultancy Services supporting DNB to a research web platform at the University at Buffalo
-        and a founding-engineer seat at an AI startup.
+        Software Engineer with 4+ years of experience building backend, full-stack, cloud-native,
+        and distributed systems across financial services, research platforms, and applied AI.
+        I build scalable APIs, microservices, event-driven systems, cloud infrastructure,
+        and production AI applications.
       </p>
       <div className="hero__actions">
         <a href="#experience" className="pixel-button pixel-button--primary">

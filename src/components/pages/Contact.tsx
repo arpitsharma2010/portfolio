@@ -5,7 +5,7 @@ import { FiExternalLink, FiMail, FiMapPin } from "react-icons/fi";
 import PageSection from "../common/PageSection.tsx";
 import { MinecraftItemIcon } from "../minecraft";
 import type { MinecraftIconName } from "../minecraft/types";
-import { EMAIL, GITHUB_URL, LEETCODE_URL, LINKEDIN_URL, LOCATION, RESUME_URL } from "../../utils/constants";
+import { EMAIL, GITHUB_URL, LEETCODE_URL, LINKEDIN_URL, LOCATION_DETAIL, RESUME_URL } from "../../utils/constants";
 import "./contact/nether-portal.css";
 
 /** `item` and `tint` are presentation only: the slot icon and the portal's hue while that channel is aimed at. */
@@ -43,7 +43,7 @@ const Contact: React.FC = () => {
     <PageSection
       eyebrow="Nether Portal"
       title="Open a connection"
-      description="Open to Software Engineer, Backend, Full-Stack, Cloud and AI engineering roles. Email is the fastest way to reach me and I reply to everything."
+      description="Open to Software Engineer, Backend Engineer, Full-Stack Engineer, and Platform Engineer opportunities anywhere in the United States. Email is the fastest way to reach me."
       variant="nether"
     >
       <div className="portal-room">
@@ -84,7 +84,7 @@ const Contact: React.FC = () => {
             <a href={`mailto:${EMAIL}`} className="pixel-button pixel-button--primary"><FiMail aria-hidden /> Send message</a>
             <a href={RESUME_URL} target="_blank" rel="noopener noreferrer" className="pixel-button">Resume <FiExternalLink aria-hidden /></a>
           </div>
-          <p className="contact-console__location"><FiMapPin aria-hidden /> {LOCATION} · open to relocation</p>
+          <p className="contact-console__location"><FiMapPin aria-hidden /> {LOCATION_DETAIL}</p>
         </div>
       </div>
     </PageSection>

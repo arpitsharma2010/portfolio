@@ -22,7 +22,7 @@ describe("skills data", () => {
 
   it("gives every skill a unique id, valid category, technology and evidence", () => {
     const categoryIds = SKILL_CATEGORIES.map((category) => category.id) as string[];
-    const sources = [...ROLE_SOURCES, ...PROJECT_SOURCES] as string[];
+    const sources = [...ROLE_SOURCES, ...PROJECT_SOURCES, "Engineering toolkit"] as string[];
     expect(new Set(skillItems.map((item) => item.id)).size).toBe(skillItems.length);
     for (const item of skillItems) {
       expect(categoryIds).toContain(item.categoryId);
@@ -35,19 +35,19 @@ describe("skills data", () => {
     }
   });
 
-  it("tags TCS evidence consistently and cites only TCS roles for REST APIs", () => {
+  it("tags TCS evidence consistently and cites current role and project evidence", () => {
     const sources = skillItems.flatMap((item) => item.evidence) as string[];
     expect(sources).not.toContain("DNB");
     const evidence = (id: string) => skillItems.find((item) => item.id === id)!.evidence;
-    expect(evidence("rest-apis")).toEqual(["TCS (DNB)", "TCS (Trainee)"]);
-    expect(evidence("java")).toEqual(["TCS (Trainee)", "Library Management System"]);
-    expect(evidence("spring-boot")).toEqual(["TCS (Trainee)", "Library Management System"]);
+    expect(evidence("rest-apis")).toEqual(["TCS (DNB)", "Skopus AI"]);
+    expect(evidence("java")).toEqual(["Library Management System"]);
+    expect(evidence("spring-boot")).toEqual(["Library Management System"]);
   });
 
   it("never encodes proficiency in rarity and only adds technologies with site evidence", () => {
     expect(skillItems.every((item) => item.rarity === undefined || item.rarity === "enchanted")).toBe(true);
     const technologies = skillItems.map((item) => item.technology);
-    for (const unsupported of ["gRPC", "Kubernetes", "JavaScript", "Entity Framework"]) {
+    for (const unsupported of ["gRPC", "Entity Framework"]) {
       expect(technologies).not.toContain(unsupported);
     }
   });
@@ -59,8 +59,7 @@ describe("Skills chest", () => {
     expect(screen.getByRole("heading", { level: 2, name: "Technical Skills" })).toBeInTheDocument();
     expect(screen.getByText("Large Chest")).toBeInTheDocument();
     expect(chestItems()).toHaveLength(skillItems.length);
-    // The tablet layout hides chest slots 43-45 (see skills-chest.css); they must stay empty.
-    expect(skillItems.length).toBeLessThanOrEqual(42);
+    expect(skillItems.length).toBeGreaterThan(42);
     expect(screen.getByRole("status")).toHaveTextContent(`Showing ${skillItems.length} of ${skillItems.length} items`);
   });
 
@@ -82,7 +81,7 @@ describe("Skills chest", () => {
     expect(slot("C#")).toHaveAttribute("aria-pressed", "true");
     expect(detailHeading()).toHaveTextContent("C#");
     expect(within(detail()).getByText("Diamond · Languages")).toBeInTheDocument();
-    expect(within(detail()).getByText(/wealth-management platform/)).toBeInTheDocument();
+    expect(within(detail()).getAllByText(/wealth-management platform/)[0]).toBeInTheDocument();
     expect(within(detail()).getByText("TCS (DNB)")).toBeInTheDocument();
     expect(detail()).toHaveAttribute("aria-live", "polite");
   });
@@ -106,7 +105,7 @@ describe("Skills chest", () => {
     const backend = skillItems.filter((item) => item.categoryId === "backend");
     expect(chestItems().map((button) => button.getAttribute("aria-label"))).toEqual(backend.map((item) => `${item.technology}, Backend`));
     expect(within(chest()).queryByRole("button", { name: /^Python,/ })).not.toBeInTheDocument();
-    expect(chest().querySelectorAll(".mc-slot")).toHaveLength(45);
+    expect(chest().querySelectorAll(".mc-slot")).toHaveLength(Math.ceil(skillItems.length / 9) * 9);
     expect(screen.getByRole("status")).toHaveTextContent(`Showing ${backend.length} of ${skillItems.length} items in Backend`);
     fireEvent.click(tab("All"));
     expect(chestItems()).toHaveLength(skillItems.length);
@@ -135,7 +134,7 @@ describe("Skills chest", () => {
     fireEvent.change(search, { target: { value: "terraform" } });
     expect(chestItems().map((button) => button.getAttribute("aria-label"))).toEqual(["Terraform, Cloud & DevOps"]);
     fireEvent.change(search, { target: { value: "frontend" } });
-    expect(chestItems()).toHaveLength(2);
+    expect(chestItems().map((button) => button.getAttribute("aria-label"))).toEqual(["React, Frontend", "Next.js, Frontend", "TypeScript, Frontend", "Vitest, Testing & Tools"]);
     fireEvent.change(search, { target: { value: "Library Management" } });
     expect(chestItems().map((button) => button.getAttribute("aria-label"))).toEqual(expect.arrayContaining(["Java, Languages", "Spring Boot, Backend"]));
     fireEvent.change(search, { target: { value: "zzz" } });
@@ -147,10 +146,9 @@ describe("Skills chest", () => {
     render(<Skills />);
     fireEvent.click(slot("Java"));
     expect(detailHeading()).toHaveTextContent("Java");
-    expect(within(detail()).getByText("Library Management System")).toBeInTheDocument();
+    expect(within(detail()).getAllByText("Library Management System")[0]).toBeInTheDocument();
     expect(within(detail()).getByText("Projects")).toBeInTheDocument();
-    expect(within(detail()).getByText("Experience")).toBeInTheDocument();
-    expect(within(detail()).getByText("TCS (Trainee)")).toBeInTheDocument();
+    expect(within(detail()).queryByText("Experience")).not.toBeInTheDocument();
 
     fireEvent.keyDown(slot("AWS"), { key: "Enter" });
     expect(detailHeading()).toHaveTextContent("AWS");
@@ -166,7 +164,7 @@ describe("Skills chest", () => {
 
   it("navigates with arrows and never lands on empty slots", () => {
     render(<Skills />);
-    const first = slot("C#");
+    const first = slot("Java");
     first.focus();
     fireEvent.keyDown(first, { key: "ArrowRight" });
     expect(slot("Python")).toHaveFocus();
@@ -176,21 +174,22 @@ describe("Skills chest", () => {
     react.focus();
     fireEvent.keyDown(react, { key: "ArrowRight" });
     const next = slot("Next.js");
+    const last = slot("TypeScript");
     expect(next).toHaveFocus();
     fireEvent.keyDown(next, { key: "ArrowRight" });
-    expect(next).toHaveFocus();
-    fireEvent.keyDown(next, { key: "ArrowDown" });
-    expect(next).toHaveFocus();
-    fireEvent.keyDown(next, { key: "End" });
-    expect(next).toHaveFocus();
-    fireEvent.keyDown(next, { key: "Home" });
+    expect(last).toHaveFocus();
+    fireEvent.keyDown(last, { key: "ArrowDown" });
+    expect(last).toHaveFocus();
+    fireEvent.keyDown(last, { key: "End" });
+    expect(last).toHaveFocus();
+    fireEvent.keyDown(last, { key: "Home" });
     expect(react).toHaveFocus();
   });
 
   it("exposes technology names and lore without interaction", () => {
     render(<Skills />);
     const python = slot("Python");
-    expect(document.getElementById(python.getAttribute("aria-describedby")!)).toHaveTextContent("Used in: Tesserae, WanderGenie, Crop Yield Prediction");
+    expect(document.getElementById(python.getAttribute("aria-describedby")!)).toHaveTextContent("Used in: Tesserae, WanderGenie");
     const contents = screen.getByRole("heading", { name: "Chest contents" }).closest("section")!;
     for (const item of skillItems) expect(contents).toHaveTextContent(item.technology);
     expect(screen.queryByRole("tooltip", { hidden: true })).not.toBeInTheDocument();

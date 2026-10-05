@@ -34,7 +34,7 @@ describe("About player inventory", () => {
     fireEvent.click(screen.getByRole("button", { name: /^Chest slot: Diamond Pickaxe/ }));
     expect(screen.getByRole("button", { name: /^Chest slot: Diamond Pickaxe/ })).toHaveAttribute("aria-pressed", "true");
     expect(detailHeading()).toHaveTextContent("Backend Engineering");
-    expect(within(detail()).getByText("C# · .NET Core")).toBeInTheDocument();
+    expect(within(detail()).getByText("REST APIs · Microservices")).toBeInTheDocument();
   });
 
   it("selects inventory items on click and updates the detail panel", () => {
@@ -109,22 +109,19 @@ describe("About player inventory", () => {
     render(<About />);
     const redstone = screen.getByRole("button", { name: /^Legs slot/ });
     const description = document.getElementById(redstone.getAttribute("aria-describedby")!);
-    expect(description).toHaveTextContent("AWS SQS · SNS at TCS (DNB)");
+    expect(description).toHaveTextContent("AWS ECS · SNS · SQS");
 
     const identity = screen.getByText("Player profile").parentElement!;
-    for (const fact of ["Arpit Dilip Sharma", "Software Engineer", "Backend · Distributed Systems · Cloud", "University at Buffalo (SUNY) · GPA 3.77 / 4", "AI / LLM Applications"]) {
+    for (const fact of ["Arpit Dilip Sharma", "Software Engineer", "Backend · Full-Stack · Distributed Systems · Cloud", "University at Buffalo (SUNY) · GPA 3.77 / 4", "AI / LLM Applications"]) {
       expect(within(identity).getByText(fact, { exact: false })).toBeInTheDocument();
     }
-    expect(screen.getByText(/My centre of gravity is backend and distributed systems/)).toBeInTheDocument();
+    expect(screen.getByText(/Software Engineer with 4\+ years of experience building backend/)).toBeInTheDocument();
   });
 
-  it("ties Lambda, SQS and SNS to the TCS (DNB) Software Engineer I role", () => {
-    const item = (id: string) => aboutItems.find((entry) => entry.id === id)!;
-    expect(item("cloud").lore).toContain("AWS Lambda at TCS (DNB)");
-    expect(item("cloud").summary).toMatch(/Tata Consultancy Services \(DNB\) I used AWS Lambda with API Gateway, S3, SQS and SNS as Software Engineer I/);
-    expect(item("distributed").summary).toMatch(/Software Engineer I at Tata Consultancy Services \(DNB\).*AWS SQS and SNS/);
-    const mentions = aboutItems.filter((entry) => /Lambda|SQS|SNS/.test([...entry.lore!, entry.summary].join(" ")));
-    mentions.forEach((entry) => expect(entry.summary).toContain("Tata Consultancy Services (DNB)"));
+  it("ties event-driven processing and search cancellation to their roles", () => {
+    const item = aboutItems.find((entry) => entry.id === "distributed")!;
+    expect(item.summary).toMatch(/AWS ECS, SNS, and SQS at TCS \(DNB\)/);
+    expect(item.summary).toMatch(/7 long-running search pipelines/);
   });
 
   it("does not pin a tooltip open for the default selection", () => {

@@ -118,11 +118,6 @@
   .sc-contents dl > div { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* 45 chest slots don't split into 6 tablet columns; drop the trailing empties so the last row is whole.
-   ponytail: assumes at most 42 skills (guarded in Skills.test.tsx); grow the chest rows if that changes. */
-@media (min-width: 521px) and (max-width: 768px) {
-  .sc-chest .mc-inventory-grid > :nth-child(n+43) { display: none; }
-}
 
 @media (min-width: 768px) {
   .sc-controls { grid-template-columns: minmax(0, 1fr) minmax(200px, 260px); align-items: start; }

@@ -45,7 +45,8 @@ const SkillDetail = ({ item, detailRef }: { item?: SkillItem; detailRef: React.R
           <ul className="sc-detail__uses">{item.uses.map((use) => <li key={use}>{use}</li>)}</ul>
         </div>
         <EvidenceChips label="Experience" sources={item.evidence.filter(isRoleSource)} />
-        <EvidenceChips label="Projects" sources={item.evidence.filter((source) => !isRoleSource(source))} />
+        <EvidenceChips label="Toolkit" sources={item.evidence.filter((source) => source === "Engineering toolkit")} />
+        <EvidenceChips label="Projects" sources={item.evidence.filter((source) => !isRoleSource(source) && source !== "Engineering toolkit")} />
       </>
     ) : <span className="sc-detail__icon" aria-hidden />}
   </section>
@@ -76,7 +77,7 @@ const Skills: React.FC = () => {
     <PageSection
       eyebrow="Large Chest"
       title="Technical Skills"
-      description="The tools, languages and systems I build with. Each item shows where I used it."
+      description="The tools, languages and systems I build with. Explore engineering capabilities and their role, project, or toolkit context."
       variant="wood"
     >
       <div className="skills-chest">

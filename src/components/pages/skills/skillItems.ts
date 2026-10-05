@@ -1,7 +1,7 @@
 import type { MinecraftIconName, MinecraftItem } from "../../minecraft/types";
 
 /**
- * Every technology here is backed by a role or project shown elsewhere on the site.
+ * Skills follow the supplied technology umbrella; role and project evidence is separate from general toolkit skills.
  * Item metaphors are decoration: icon, item name and rarity never encode proficiency.
  */
 export const SKILL_CATEGORIES = [
@@ -10,6 +10,7 @@ export const SKILL_CATEGORIES = [
   { id: "frontend", label: "Frontend", icon: "crafting-table" },
   { id: "cloud", label: "Cloud & DevOps", icon: "command-cube" },
   { id: "databases", label: "Databases", icon: "barrel" },
+  { id: "distributed", label: "Distributed Systems", icon: "server-network" },
   { id: "ai", label: "AI / LLM", icon: "enchanted-book" },
   { id: "security", label: "Security", icon: "shield" },
   { id: "testing", label: "Testing & Tools", icon: "book" },
@@ -17,7 +18,7 @@ export const SKILL_CATEGORIES = [
 
 export type SkillCategoryId = (typeof SKILL_CATEGORIES)[number]["id"];
 
-export const ROLE_SOURCES = ["Skopus AI", "Tesserae", "TCS (DNB)", "TCS (Trainee)"] as const;
+export const ROLE_SOURCES = ["Skopus AI", "Tesserae", "TCS (DNB)"] as const;
 export const PROJECT_SOURCES = [
   "WanderGenie",
   "Taco-DB",
@@ -25,7 +26,7 @@ export const PROJECT_SOURCES = [
   "Crop Yield Prediction",
   "Library Management System",
 ] as const;
-export type SkillSource = (typeof ROLE_SOURCES)[number] | (typeof PROJECT_SOURCES)[number];
+export type SkillSource = (typeof ROLE_SOURCES)[number] | (typeof PROJECT_SOURCES)[number] | "Engineering toolkit";
 
 interface SkillSeed {
   id: string;
@@ -45,233 +46,555 @@ export interface SkillItem extends MinecraftItem, Omit<SkillSeed, "icon"> {
 
 const seeds: SkillSeed[] = [
   {
-    id: "csharp", technology: "C#", itemName: "Diamond", icon: "diamond", categoryId: "languages",
-    summary: "My main production language at TCS (DNB), where I wrote and owned .NET Core services on a wealth-management platform from Apr 2021 to Jul 2024.",
-    uses: ["Backend services and REST APIs", "Microservice decomposition", "Unit tests with NUnit"],
-    evidence: ["TCS (DNB)"],
+    id: "java",
+    technology: "Java",
+    itemName: "Gold Ingot",
+    icon: "gold-ingot",
+    categoryId: "languages",
+    summary: "Java and Spring Boot APIs in the Library Management System.",
+    uses: ["Library REST API"],
+    evidence: ["Library Management System"]
   },
   {
-    id: "python", technology: "Python", itemName: "Emerald", icon: "emerald", categoryId: "languages",
-    summary: "Backend, AI and data work: Flask code on the Tesserae research platform, the LangGraph agents behind WanderGenie and a PySpark ML pipeline.",
-    uses: ["Flask APIs on Tesserae", "Multi-agent LLM workflows", "ML pipeline served behind Flask"],
-    evidence: ["Tesserae", "WanderGenie", "Crop Yield Prediction"],
+    id: "python",
+    technology: "Python",
+    itemName: "Emerald",
+    icon: "emerald",
+    categoryId: "languages",
+    summary: "Python/Flask research systems and LangGraph travel workflows.",
+    uses: ["Research backend", "Travel agents"],
+    evidence: ["Tesserae", "WanderGenie"]
   },
   {
-    id: "typescript", technology: "TypeScript", itemName: "Lapis Gem", icon: "lapis-gem", categoryId: "languages",
-    summary: "Typed code across the stack: the Node.js service and Next.js front end at Skopus AI, and 25+ reusable React components at TCS (DNB).",
-    uses: ["Node.js AI/RAG service", "Next.js and React front end", "Reusable React components"],
-    evidence: ["Skopus AI", "TCS (DNB)"],
+    id: "csharp",
+    technology: "C#",
+    itemName: "Diamond",
+    icon: "diamond",
+    categoryId: "languages",
+    summary: "Production backend services on the wealth-management platform at TCS (DNB).",
+    uses: ["Banking backend services"],
+    evidence: ["TCS (DNB)"]
   },
   {
-    id: "java", technology: "Java", itemName: "Gold Ingot", icon: "gold-ingot", categoryId: "languages",
-    summary: "The Java and Spring Boot backend of a Hospital Management System in the TCS ASE-Trainee program, and the Spring Boot API behind the Library Management System.",
-    uses: ["Hospital Management System backend", "Spring Boot API", "JWT/OAuth authentication"],
-    evidence: ["TCS (Trainee)", "Library Management System"],
+    id: "typescript",
+    technology: "TypeScript",
+    itemName: "Lapis Gem",
+    icon: "lapis-gem",
+    categoryId: "languages",
+    summary: "Typed backend and frontend development across Skopus AI, DNB, and library projects.",
+    uses: ["Typed API development", "React components"],
+    evidence: ["Skopus AI", "TCS (DNB)", "Library Management System"]
   },
   {
-    id: "c-cpp", technology: "C / C++", itemName: "Iron Ingot", icon: "iron-ingot", categoryId: "languages",
-    summary: "Systems work below the framework: a relational database engine written from scratch in C++ and kernel components for the Pintos instructional OS in C.",
-    uses: ["Buffer pool and B+ Tree index", "Hash joins and external merge sort", "Priority scheduler and system calls"],
-    evidence: ["Taco-DB", "Pintos Kernel"],
+    id: "javascript",
+    technology: "JavaScript",
+    itemName: "Diamond",
+    icon: "diamond",
+    categoryId: "languages",
+    summary: "JavaScript across backend and frontend development.",
+    uses: ["Web development"],
+    evidence: ["Engineering toolkit"]
   },
   {
-    id: "dotnet", technology: ".NET Core", itemName: "Diamond Pickaxe", icon: "diamond-pickaxe", categoryId: "backend",
-    summary: "The backend framework behind my TCS (DNB) work: REST APIs and microservices on a wealth-management platform, including the 15+ Sbanken microservices I reverse-engineered.",
-    uses: ["REST APIs and microservices", "Latency cut from ~800 ms to 500 ms", "20+ production releases"],
-    evidence: ["TCS (DNB)"],
+    id: "c-cpp",
+    technology: "C++",
+    itemName: "Iron Ingot",
+    icon: "iron-ingot",
+    categoryId: "languages",
+    summary: "Disk storage, indexing, and query execution in a relational database engine.",
+    uses: ["Storage engine", "Query execution"],
+    evidence: ["Taco-DB"]
   },
   {
-    id: "nodejs", technology: "Node.js", itemName: "Shovel", icon: "shovel", categoryId: "backend",
-    summary: "Runtime for the 8-endpoint AI/RAG service I built and own at Skopus AI.",
-    uses: ["8-endpoint AI/RAG service", "Validation on every LLM response", "Caching and fallback workflows"],
-    evidence: ["Skopus AI"],
+    id: "sql",
+    technology: "SQL",
+    itemName: "Diamond",
+    icon: "diamond",
+    categoryId: "languages",
+    summary: "SQL-backed pagination, relational data access, and usage accounting.",
+    uses: ["Pagination", "Relational queries"],
+    evidence: ["Tesserae", "Skopus AI", "Library Management System"]
   },
   {
-    id: "flask", technology: "Flask", itemName: "Axe", icon: "axe", categoryId: "backend",
-    summary: "Debugging and refactoring Flask code on the Tesserae research platform, and the real-time inference API for the crop-yield ML pipeline.",
-    uses: ["Refactoring an inherited codebase", "RBAC and rate limiting on admin endpoints", "Real-time ML inference API"],
-    evidence: ["Tesserae", "Crop Yield Prediction"],
+    id: "spring-boot",
+    technology: "Spring Boot",
+    itemName: "Iron Pickaxe",
+    icon: "iron-pickaxe",
+    categoryId: "backend",
+    summary: "Spring Boot 3, MVC, Security, and JPA/Hibernate in the library REST API.",
+    uses: ["Transactional checkout / return / renewal", "Resource-server security"],
+    evidence: ["Library Management System"]
   },
   {
-    id: "spring-boot", technology: "Spring Boot", itemName: "Iron Pickaxe", icon: "iron-pickaxe", categoryId: "backend",
-    summary: "Backend for the Hospital Management System in the TCS ASE-Trainee program and for the Library Management System.",
-    uses: ["Hospital Management System backend", "Library system API", "JWT/OAuth authentication"],
-    evidence: ["TCS (Trainee)", "Library Management System"],
+    id: "flask",
+    technology: "Flask",
+    itemName: "Axe",
+    icon: "axe",
+    categoryId: "backend",
+    summary: "Research APIs, SQL pagination, cancellation, and session authentication.",
+    uses: ["Search cancellation", "Session authentication"],
+    evidence: ["Tesserae"]
   },
   {
-    id: "rest-apis", technology: "REST APIs", itemName: "Sword", icon: "sword", categoryId: "backend",
-    summary: "REST API work at Tata Consultancy Services: 30+ RESTful APIs on the DNB account as Software Engineer I, the 15+ Sbanken microservices I reverse-engineered as Software Engineer II, and 10+ REST APIs in the ASE-Trainee program.",
-    uses: ["30+ RESTful APIs", "15+ undocumented endpoints mapped", "10+ REST APIs as ASE-Trainee"],
-    evidence: ["TCS (DNB)", "TCS (Trainee)"],
+    id: "nodejs",
+    technology: "Node.js",
+    itemName: "Shovel",
+    icon: "shovel",
+    categoryId: "backend",
+    summary: "Backend and separate RAG service for resume ingestion, ATS analysis, and career Q&A.",
+    uses: ["Career platform backend", "RAG service"],
+    evidence: ["Skopus AI"]
   },
   {
-    id: "microservices", technology: "Microservices", itemName: "Server Network", icon: "server-network", categoryId: "backend",
-    summary: "Service boundaries at TCS (DNB): splitting a 25+ endpoint service into two independently deployable microservices and reverse-engineering 15+ Sbanken microservices for the merger.",
-    uses: ["25+ endpoint service split in two", "15+ Sbanken microservices reverse-engineered", "Cross-service 4xx/5xx debugging"],
-    evidence: ["TCS (DNB)"],
+    id: "dotnet",
+    technology: ".NET",
+    itemName: "Diamond Pickaxe",
+    icon: "diamond-pickaxe",
+    categoryId: "backend",
+    summary: "C#/.NET REST APIs and microservices on the wealth-management platform at TCS (DNB).",
+    uses: ["REST API development", "Microservice maintenance"],
+    evidence: ["TCS (DNB)"]
   },
   {
-    id: "caching", technology: "Caching", itemName: "Repeater", icon: "repeater", categoryId: "backend",
-    summary: "Caching plus fallback workflows at Skopus AI, so a slow or failing model call degrades instead of breaking the product, and a buffer pool for pages in Taco-DB.",
-    uses: ["Caching and fallbacks around LLM calls", "Buffer pool page caching"],
-    evidence: ["Skopus AI", "Taco-DB"],
+    id: "rest-apis",
+    technology: "REST APIs",
+    itemName: "Sword",
+    icon: "sword",
+    categoryId: "backend",
+    summary: "API contracts, integration, and transaction services; 50+ backend routes at Skopus AI.",
+    uses: ["API contracts", "Request/response validation"],
+    evidence: ["TCS (DNB)", "Skopus AI"]
   },
   {
-    id: "react", technology: "React", itemName: "Crafting Table", icon: "crafting-table", categoryId: "frontend",
-    summary: "The front end I build for my own APIs: 25+ reusable components at TCS (DNB), the Skopus AI front end, Tesserae fixes and the Library Management System dashboards.",
-    uses: ["25+ components across 10+ responsive screens", "Refactoring Tesserae's React code", "Role-based dashboards"],
-    evidence: ["TCS (DNB)", "Skopus AI", "Tesserae", "Library Management System"],
+    id: "microservices",
+    technology: "Microservices",
+    itemName: "Server Network",
+    icon: "server-network",
+    categoryId: "backend",
+    summary: "Service ownership, enhancements, defect resolution, and cross-service troubleshooting at TCS (DNB).",
+    uses: ["Service boundaries", "Production troubleshooting"],
+    evidence: ["TCS (DNB)"]
   },
   {
-    id: "nextjs", technology: "Next.js", itemName: "Map", icon: "map", categoryId: "frontend",
-    summary: "Front end of the Skopus AI product, integrated against the service I own and kept independent of it through contract testing.",
-    uses: ["Product front end", "Contract-tested API integration"],
-    evidence: ["Skopus AI"],
+    id: "react",
+    technology: "React",
+    itemName: "Crafting Table",
+    icon: "crafting-table",
+    categoryId: "frontend",
+    summary: "25+ components across 10+ DNB screens, plus AI and research interfaces.",
+    uses: ["Pension and investment workflows", "Research UI"],
+    evidence: ["TCS (DNB)", "Skopus AI", "Tesserae", "Library Management System"]
   },
   {
-    id: "aws", technology: "AWS", itemName: "Command Block", icon: "command-cube", categoryId: "cloud",
-    summary: "Where my services run: AWS deployment and release validation at TCS (DNB), the Skopus AI service on ECS and WanderGenie's deployment. AWS Certified Solutions Architect, Associate.",
-    uses: ["Deployments across four environments", "ECS, S3 and CloudWatch", "Solutions Architect, Associate"],
-    evidence: ["TCS (DNB)", "Skopus AI", "WanderGenie"],
+    id: "nextjs",
+    technology: "Next.js",
+    itemName: "Map",
+    icon: "map",
+    categoryId: "frontend",
+    summary: "Frontend development for the Skopus AI career platform.",
+    uses: ["AI product frontend"],
+    evidence: ["Skopus AI"]
   },
   {
-    id: "ecs", technology: "AWS ECS", itemName: "Furnace", icon: "furnace", categoryId: "cloud",
-    summary: "Runs the investment-processing automation I built at TCS (DNB) and the current Skopus AI service.",
-    uses: ["Automated investment processing", "AI service hosting"],
-    evidence: ["TCS (DNB)", "Skopus AI"],
+    id: "frontend-typescript",
+    technology: "TypeScript",
+    itemName: "Crafting Table",
+    icon: "crafting-table",
+    categoryId: "frontend",
+    summary: "Typed React components and customer-facing workflows.",
+    uses: ["Typed UI components"],
+    evidence: ["TCS (DNB)", "Library Management System"]
   },
   {
-    id: "s3", technology: "AWS S3", itemName: "Chest", icon: "chest", categoryId: "cloud",
-    summary: "Storage behind the investment-processing and customer-notification automation I built at TCS (DNB).",
-    uses: ["Investment-processing workflows", "Customer notifications"],
-    evidence: ["TCS (DNB)"],
+    id: "aws",
+    technology: "AWS",
+    itemName: "Command Block",
+    icon: "command-cube",
+    categoryId: "cloud",
+    summary: "Cloud deployment, production troubleshooting, and event-driven processing.",
+    uses: ["Service deployment", "Cloud observability"],
+    evidence: ["TCS (DNB)", "Skopus AI", "WanderGenie"]
   },
   {
-    id: "cloudwatch", technology: "CloudWatch", itemName: "Clock", icon: "clock", categoryId: "cloud",
-    summary: "Observability on the DNB delivery path I built with GitLab CI/CD and Terraform.",
-    uses: ["Production observability"],
-    evidence: ["TCS (DNB)"],
+    id: "docker",
+    technology: "Docker",
+    itemName: "Barrel",
+    icon: "barrel",
+    categoryId: "cloud",
+    summary: "Container packaging for AWS deployments.",
+    uses: ["Container images"],
+    evidence: ["Skopus AI", "WanderGenie"]
   },
   {
-    id: "docker", technology: "Docker", itemName: "Barrel", icon: "barrel", categoryId: "cloud",
-    summary: "Packages WanderGenie for deployment on AWS.",
-    uses: ["Containerised multi-agent service"],
-    evidence: ["WanderGenie"],
+    id: "kubernetes",
+    technology: "Kubernetes",
+    itemName: "Command Block",
+    icon: "command-cube",
+    categoryId: "cloud",
+    summary: "Container orchestration in my cloud engineering toolkit.",
+    uses: ["Container orchestration"],
+    evidence: ["Engineering toolkit"]
   },
   {
-    id: "terraform", technology: "Terraform", itemName: "Anvil", icon: "anvil", categoryId: "cloud",
-    summary: "Infrastructure as code for the DNB delivery path, alongside GitLab CI/CD.",
-    uses: ["Delivery path for 20+ releases"],
-    evidence: ["TCS (DNB)"],
+    id: "terraform",
+    technology: "Terraform",
+    itemName: "Anvil",
+    icon: "anvil",
+    categoryId: "cloud",
+    summary: "Infrastructure automation and repository migration across 4 environments at TCS (DNB).",
+    uses: ["Infrastructure as Code", "Environment migration"],
+    evidence: ["TCS (DNB)"]
   },
   {
-    id: "gitlab-ci", technology: "GitLab CI/CD", itemName: "Redstone Torch", icon: "redstone-torch", categoryId: "cloud",
-    summary: "The pipeline I built and maintained at TCS (DNB) for 20+ production releases across four environments.",
-    uses: ["20+ releases, four environments", "Testing and release validation"],
-    evidence: ["TCS (DNB)"],
+    id: "gitlab-ci",
+    technology: "GitLab CI/CD",
+    itemName: "Redstone Torch",
+    icon: "redstone-torch",
+    categoryId: "cloud",
+    summary: "Delivery of 20+ releases through ST, SIT, UAT, and Production at TCS (DNB).",
+    uses: ["Release pipelines"],
+    evidence: ["TCS (DNB)"]
   },
   {
-    id: "postgresql", technology: "PostgreSQL", itemName: "Lapis Ore", icon: "lapis-ore", categoryId: "databases",
-    summary: "Relational storage at Skopus AI, on the Tesserae research platform and at TCS (DNB).",
-    uses: ["Semantic retrieval with pgvector", "Selection moved into the query", "Wealth-management platform data"],
-    evidence: ["Skopus AI", "Tesserae", "TCS (DNB)"],
+    id: "github-actions",
+    technology: "GitHub Actions",
+    itemName: "Command Block",
+    icon: "command-cube",
+    categoryId: "cloud",
+    summary: "TEST/PROD ECS delivery with OIDC, immutable image digests, health validation, and rollback.",
+    uses: ["OIDC deployments", "Health checks and rollback"],
+    evidence: ["Skopus AI"]
   },
   {
-    id: "dynamodb", technology: "DynamoDB", itemName: "Ender Chest", icon: "ender-chest", categoryId: "databases",
-    summary: "NoSQL storage on the DNB wealth-management platform.",
-    uses: ["Wealth-management platform data"],
-    evidence: ["TCS (DNB)"],
+    id: "jenkins",
+    technology: "Jenkins",
+    itemName: "Command Block",
+    icon: "command-cube",
+    categoryId: "cloud",
+    summary: "Migrated repositories from Bitbucket/Jenkins/CloudFormation to GitLab CI/CD and Terraform.",
+    uses: ["CI/CD migration"],
+    evidence: ["TCS (DNB)"]
   },
   {
-    id: "supabase", technology: "Supabase", itemName: "Emerald Ore", icon: "emerald-ore", categoryId: "databases",
-    summary: "Part of the Skopus AI service stack, alongside PostgreSQL and pgvector.",
-    uses: ["AI/RAG service data"],
-    evidence: ["Skopus AI"],
+    id: "ecs",
+    technology: "AWS ECS",
+    itemName: "Furnace",
+    icon: "furnace",
+    categoryId: "cloud",
+    summary: "Event-driven investment processing and AI service deployment.",
+    uses: ["Container hosting", "Investment processing"],
+    evidence: ["TCS (DNB)", "Skopus AI"]
   },
   {
-    id: "pgvector", technology: "pgvector", itemName: "Compass", icon: "compass", categoryId: "databases",
-    summary: "Semantic retrieval for the Skopus AI RAG service and for WanderGenie's hybrid retrieval.",
-    uses: ["Semantic retrieval over embeddings", "Hybrid RAG with Neo4j"],
-    evidence: ["Skopus AI", "WanderGenie"],
+    id: "sqs",
+    technology: "AWS SQS",
+    itemName: "Command Block",
+    icon: "command-cube",
+    categoryId: "cloud",
+    summary: "Queue-based pricing and investment processing.",
+    uses: ["Queue-based processing"],
+    evidence: ["TCS (DNB)"]
   },
   {
-    id: "neo4j", technology: "Neo4j", itemName: "Redstone Dust", icon: "redstone-dust", categoryId: "databases",
-    summary: "Holds the relationships between places in WanderGenie's hybrid retrieval.",
-    uses: ["Graph of places for hybrid RAG"],
-    evidence: ["WanderGenie"],
+    id: "sns",
+    technology: "AWS SNS",
+    itemName: "Command Block",
+    icon: "command-cube",
+    categoryId: "cloud",
+    summary: "Event-driven pricing and investment workflows.",
+    uses: ["Event distribution"],
+    evidence: ["TCS (DNB)"]
   },
   {
-    id: "openai", technology: "OpenAI APIs", itemName: "Enchanted Book", icon: "enchanted-book", categoryId: "ai", enchanted: true,
-    summary: "Model calls behind the Skopus AI service and WanderGenie, wrapped in validation, intent routing and fallbacks.",
-    uses: ["Validated responses behind a typed API", "Intent routing per request", "Multi-agent travel planning"],
-    evidence: ["Skopus AI", "WanderGenie"],
+    id: "s3",
+    technology: "AWS S3",
+    itemName: "Chest",
+    icon: "chest",
+    categoryId: "cloud",
+    summary: "Object storage in my AWS engineering toolkit.",
+    uses: ["Object storage"],
+    evidence: ["Engineering toolkit"]
   },
   {
-    id: "langgraph", technology: "LangGraph", itemName: "Enchanting Table", icon: "enchanting-table", categoryId: "ai", enchanted: true,
-    summary: "Coordinates WanderGenie's three specialised agents and four external tools, constrained so the graph cannot loop.",
-    uses: ["Three agents, four tools", "Deterministic fallbacks to stop loops"],
-    evidence: ["WanderGenie"],
+    id: "cloudwatch",
+    technology: "CloudWatch",
+    itemName: "Clock",
+    icon: "clock",
+    categoryId: "cloud",
+    summary: "Logs and downstream dependency tracing for AWS-hosted services.",
+    uses: ["Log analysis", "Dependency tracing"],
+    evidence: ["TCS (DNB)"]
   },
   {
-    id: "rag", technology: "RAG", itemName: "Potion", icon: "potion", categoryId: "ai",
-    summary: "Retrieval-augmented generation: grounded analysis at Skopus AI and hybrid pgvector plus Neo4j retrieval in WanderGenie.",
-    uses: ["Answers tied to source material", "Hybrid retrieval"],
-    evidence: ["Skopus AI", "WanderGenie"],
+    id: "postgresql",
+    technology: "PostgreSQL",
+    itemName: "Lapis Ore",
+    icon: "lapis-ore",
+    categoryId: "databases",
+    summary: "Relational data paths and concurrency-safe accounting with advisory locks.",
+    uses: ["Advisory locks", "Usage accounting"],
+    evidence: ["Skopus AI", "Tesserae"]
   },
   {
-    id: "embeddings", technology: "Embeddings", itemName: "Experience Bottle", icon: "experience-bottle", categoryId: "ai",
-    summary: "Vector representations behind WanderGenie's semantic similarity search over pgvector.",
-    uses: ["Semantic similarity search"],
-    evidence: ["WanderGenie"],
+    id: "dynamodb",
+    technology: "DynamoDB",
+    itemName: "Ender Chest",
+    icon: "ender-chest",
+    categoryId: "databases",
+    summary: "Data access and integrations for pension and investment workflows.",
+    uses: ["Workflow data", "API integration"],
+    evidence: ["TCS (DNB)"]
   },
   {
-    id: "oauth", technology: "OAuth 2.0 · PKCE", itemName: "Portal", icon: "portal", categoryId: "security",
-    summary: "Google OAuth implemented end to end at Skopus AI with PKCE, token handling and session security, plus OAuth sign-in for the Library Management System.",
-    uses: ["Google OAuth with PKCE", "Token handling and session security"],
-    evidence: ["Skopus AI", "Library Management System"],
+    id: "mysql",
+    technology: "MySQL",
+    itemName: "Barrel",
+    icon: "barrel",
+    categoryId: "databases",
+    summary: "Relational library storage with Spring Data JPA/Hibernate.",
+    uses: ["Library persistence"],
+    evidence: ["Library Management System"]
   },
   {
-    id: "jwt", technology: "JWT", itemName: "Name Tag", icon: "name-tag", categoryId: "security",
-    summary: "Authentication for the Library Management System.",
-    uses: ["Token-based authentication"],
-    evidence: ["Library Management System"],
+    id: "mongodb",
+    technology: "MongoDB",
+    itemName: "Barrel",
+    icon: "barrel",
+    categoryId: "databases",
+    summary: "Document databases in my database engineering toolkit.",
+    uses: ["Document storage"],
+    evidence: ["Engineering toolkit"]
   },
   {
-    id: "rbac", technology: "RBAC", itemName: "Shield", icon: "shield", categoryId: "security",
-    summary: "Role-based access control on 57+ Tesserae admin endpoints that any authenticated caller could previously reach.",
-    uses: ["57+ admin endpoints secured"],
-    evidence: ["Tesserae"],
+    id: "pgvector",
+    technology: "pgvector",
+    itemName: "Compass",
+    icon: "compass",
+    categoryId: "databases",
+    summary: "Semantic retrieval for RAG applications.",
+    uses: ["Semantic retrieval"],
+    evidence: ["Skopus AI", "WanderGenie"]
   },
   {
-    id: "rate-limiting", technology: "Rate Limiting", itemName: "Hopper", icon: "hopper", categoryId: "security",
-    summary: "Added alongside RBAC to secure the Tesserae admin endpoints.",
-    uses: ["Admin endpoint protection"],
-    evidence: ["Tesserae"],
+    id: "neo4j",
+    technology: "Neo4j",
+    itemName: "Redstone Dust",
+    icon: "redstone-dust",
+    categoryId: "databases",
+    summary: "Graph relationships between places for hybrid travel retrieval.",
+    uses: ["Place relationships"],
+    evidence: ["WanderGenie"]
   },
   {
-    id: "nunit", technology: "NUnit", itemName: "Book", icon: "book", categoryId: "testing",
-    summary: "Testing for the .NET Core services I released at TCS (DNB).",
-    uses: ["Backend tests before release"],
-    evidence: ["TCS (DNB)"],
+    id: "events",
+    technology: "Event-Driven Architecture",
+    itemName: "Server Network",
+    icon: "server-network",
+    categoryId: "distributed",
+    summary: "Pricing and investment processing using ECS, SNS, and SQS.",
+    uses: ["Pricing events", "Investment processing"],
+    evidence: ["TCS (DNB)"]
   },
   {
-    id: "pytest", technology: "Pytest", itemName: "Bow", icon: "bow", categoryId: "testing",
-    summary: "Automated tests behind the Tesserae refactors, so the research team can deploy without manual verification.",
-    uses: ["Tests as the deploy gate"],
-    evidence: ["Tesserae"],
+    id: "async",
+    technology: "Asynchronous Processing",
+    itemName: "Server Network",
+    icon: "server-network",
+    categoryId: "distributed",
+    summary: "Long-running searches and cross-process cancellation.",
+    uses: ["Worker cancellation"],
+    evidence: ["Tesserae"]
   },
   {
-    id: "contract-testing", technology: "Contract Testing", itemName: "Scroll", icon: "scroll", categoryId: "testing",
-    summary: "Covers the Skopus AI API surface so the Next.js/React front end and the service can move independently.",
-    uses: ["Independent front end and service releases"],
-    evidence: ["Skopus AI"],
+    id: "concurrency",
+    technology: "Concurrency",
+    itemName: "Server Network",
+    icon: "server-network",
+    categoryId: "distributed",
+    summary: "Parallel downstream calls and advisory-lock usage accounting.",
+    uses: ["Parallel downstream calls", "Usage reservation"],
+    evidence: ["TCS (DNB)", "Skopus AI"]
   },
   {
-    id: "ai-assisted", technology: "Claude Code · Codex", itemName: "Netherite Pickaxe", icon: "netherite-pickaxe", categoryId: "testing",
-    summary: "AI-assisted exploration and refactoring on Tesserae, with review and tests as the gate on anything that ships.",
-    uses: ["Codebase exploration", "Refactoring with review and tests"],
-    evidence: ["Tesserae"],
+    id: "caching",
+    technology: "Caching",
+    itemName: "Repeater",
+    icon: "repeater",
+    categoryId: "distributed",
+    summary: "Repeated API lookups, per-worker metadata caching, and an LRU buffer pool.",
+    uses: ["API lookups", "Metadata and disk-page caching"],
+    evidence: ["TCS (DNB)", "Tesserae", "Taco-DB"]
   },
+  {
+    id: "integration",
+    technology: "API Integration",
+    itemName: "Server Network",
+    icon: "server-network",
+    categoryId: "distributed",
+    summary: "Pension and investment workflows integrating 4+ internal and external systems.",
+    uses: ["Internal and external services"],
+    evidence: ["TCS (DNB)"]
+  },
+  {
+    id: "langgraph",
+    technology: "LangGraph",
+    itemName: "Enchanting Table",
+    icon: "enchanting-table",
+    categoryId: "ai",
+    summary: "Three travel agents orchestrating four external APIs/tools.",
+    uses: ["Agent orchestration", "External tools"],
+    evidence: ["WanderGenie"]
+  },
+  {
+    id: "rag",
+    technology: "RAG",
+    itemName: "Potion",
+    icon: "potion",
+    categoryId: "ai",
+    summary: "Grounded resume and career analysis and hybrid travel retrieval.",
+    uses: ["Resume and career Q&A", "Grounded travel planning"],
+    evidence: ["Skopus AI", "WanderGenie"]
+  },
+  {
+    id: "openai",
+    technology: "OpenAI APIs",
+    itemName: "Enchanted Book",
+    icon: "enchanted-book",
+    categoryId: "ai",
+    summary: "8 operations hardened with 14 validation schemas and 21 fallback paths.",
+    uses: ["Validated model responses", "Fallback workflows"],
+    evidence: ["Skopus AI", "WanderGenie"]
+  },
+  {
+    id: "agentic",
+    technology: "Agentic AI",
+    itemName: "Enchanted Book",
+    icon: "enchanted-book",
+    categoryId: "ai",
+    summary: "Multi-agent travel planning with LangGraph and OpenAI.",
+    uses: ["Travel planning agents"],
+    evidence: ["WanderGenie"]
+  },
+  {
+    id: "embeddings",
+    technology: "Embeddings",
+    itemName: "Experience Bottle",
+    icon: "experience-bottle",
+    categoryId: "ai",
+    summary: "Vector representations for semantic retrieval.",
+    uses: ["Semantic representations"],
+    evidence: ["WanderGenie"]
+  },
+  {
+    id: "vector-search",
+    technology: "Vector Search",
+    itemName: "Enchanted Book",
+    icon: "enchanted-book",
+    categoryId: "ai",
+    summary: "pgvector similarity search combined with graph relationships.",
+    uses: ["Similarity search"],
+    evidence: ["WanderGenie"]
+  },
+  {
+    id: "jwt",
+    technology: "JWT",
+    itemName: "Name Tag",
+    icon: "name-tag",
+    categoryId: "security",
+    summary: "Documented Sbanken authentication flows and library resource-server security.",
+    uses: ["Token authentication"],
+    evidence: ["TCS (DNB)", "Library Management System"]
+  },
+  {
+    id: "oauth",
+    technology: "OAuth 2.0",
+    itemName: "Portal",
+    icon: "portal",
+    categoryId: "security",
+    summary: "OAuth authentication in the AI career platform and library system.",
+    uses: ["OAuth authentication"],
+    evidence: ["Skopus AI", "Library Management System"]
+  },
+  {
+    id: "pkce",
+    technology: "PKCE",
+    itemName: "Shield",
+    icon: "shield",
+    categoryId: "security",
+    summary: "Proof Key for Code Exchange in Skopus AI authentication.",
+    uses: ["Authorization-code protection"],
+    evidence: ["Skopus AI"]
+  },
+  {
+    id: "rbac",
+    technology: "RBAC",
+    itemName: "Shield",
+    icon: "shield",
+    categoryId: "security",
+    summary: "Database-backed roles with an authorization model used across 57 of 60 admin routes.",
+    uses: ["Database-backed roles"],
+    evidence: ["Tesserae"]
+  },
+  {
+    id: "hmac",
+    technology: "HMAC-SHA256",
+    itemName: "Shield",
+    icon: "shield",
+    categoryId: "security",
+    summary: "Signed backend-to-RAG requests with nonce replay protection and constant-time verification.",
+    uses: ["Request signing", "Replay protection"],
+    evidence: ["Skopus AI"]
+  },
+  {
+    id: "api-security",
+    technology: "API Security",
+    itemName: "Shield",
+    icon: "shield",
+    categoryId: "security",
+    summary: "Authentication flows, authorization, and secure service communication.",
+    uses: ["Authentication", "Authorization"],
+    evidence: ["TCS (DNB)", "Skopus AI", "Tesserae"]
+  },
+  {
+    id: "session",
+    technology: "Session Authentication",
+    itemName: "Shield",
+    icon: "shield",
+    categoryId: "security",
+    summary: "Replaced shared-password admin access with session-based authentication.",
+    uses: ["Admin sign-in"],
+    evidence: ["Tesserae"]
+  },
+  {
+    id: "pytest",
+    technology: "pytest",
+    itemName: "Bow",
+    icon: "bow",
+    categoryId: "testing",
+    summary: "Backend regression coverage for Flask research systems.",
+    uses: ["Backend regression tests"],
+    evidence: ["Tesserae"]
+  },
+  {
+    id: "vitest",
+    technology: "Vitest",
+    itemName: "Book",
+    icon: "book",
+    categoryId: "testing",
+    summary: "Frontend regression coverage alongside React Testing Library.",
+    uses: ["Frontend regression tests"],
+    evidence: ["Tesserae"]
+  },
+  {
+    id: "postman",
+    technology: "Postman / Swagger",
+    itemName: "Book",
+    icon: "book",
+    categoryId: "testing",
+    summary: "Validated transaction API request/response contracts and edge cases.",
+    uses: ["Contract validation", "Edge-case checks"],
+    evidence: ["TCS (DNB)"]
+  }
 ];
 
 const categoryLabel = (id: SkillCategoryId) => SKILL_CATEGORIES.find((category) => category.id === id)!.label;
@@ -287,7 +610,7 @@ export const skillItems: readonly SkillItem[] = seeds.map((seed) => ({
 }));
 
 /** Broadest evidence across the site, in no ranked order. */
-export const CORE_TOOLKIT_IDS = ["csharp", "python", "typescript", "rest-apis", "microservices", "react", "aws", "postgresql", "rag"];
+export const CORE_TOOLKIT_IDS = ["java", "python", "typescript", "rest-apis", "microservices", "react", "aws", "postgresql", "rag"];
 
 export const coreToolkitItems = CORE_TOOLKIT_IDS.map((id) => skillItems.find((item) => item.id === id)!);
 

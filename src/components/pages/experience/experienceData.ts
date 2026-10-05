@@ -50,139 +50,193 @@ export const employerName = (entry: ExperienceEntry) =>
 
 export const isCurrent = (entry: ExperienceEntry) => entry.endDate === null;
 
-/** Oldest first. TCS roles and dates follow the authoritative resume; Tesserae and Skopus AI follow the current site. */
+/** Oldest first; role dates and accomplishments follow the current positioning. */
 export const experience: ExperienceEntry[] = [
-  {
-    id: "tcs-ase-trainee",
-    organization: "Tata Consultancy Services",
-    title: "Assistant Software Engineer (ASE-Trainee)",
-    startDate: "2020-11",
-    endDate: "2021-03",
-    focus: "Full-stack engineering foundation in the TCS onboarding program.",
-    summary:
-      "The TCS onboarding engineering program: a full-stack Hospital Management System, built across a React front end, a Java backend and a MySQL data model.",
-    bullets: [
-      "Developed 10+ REST APIs supporting 5,000+ patient records by building a full-stack Hospital Management System during the TCS onboarding engineering program using React, TypeScript, Java and Spring Boot.",
-      "Reduced data retrieval time by 30% by designing optimized MySQL schemas and tuning SQL queries, processing 10K+ billing and inventory transactions with JUnit-based Test Driven Development.",
-    ],
-    technologies: ["React", "TypeScript", "Java", "Spring Boot", "REST APIs", "MySQL", "JUnit", "TDD"],
-    advancementType: "standard",
-    icon: "crafting-table",
-    evidenceItems: [
-      { icon: "crafting-table", label: "Hospital Management System", summary: "A full-stack system built in the onboarding program.", supportingBulletIndex: 0 },
-      { icon: "iron-pickaxe", label: "Java / Spring Boot backend", summary: "The server side of the system.", supportingBulletIndex: 0 },
-      { icon: "map", label: "REST API surface", summary: "10+ REST APIs supporting 5,000+ patient records.", supportingBulletIndex: 0 },
-      { icon: "chest", label: "MySQL data model", summary: "Optimized schemas and SQL tuning: 30% faster data retrieval.", supportingBulletIndex: 1 },
-      { icon: "book", label: "JUnit / TDD", summary: "10K+ billing and inventory transactions, built test-first with JUnit.", supportingBulletIndex: 1 },
-    ],
-    metrics: ["10+ REST APIs", "5,000+ patient records", "30% reduction in data retrieval time", "10K+ billing/inventory transactions"],
-  },
   {
     id: "tcs-dnb-se1",
     organization: "Tata Consultancy Services",
-    clientOrContext: "DNB",
     title: "Software Engineer I",
-    startDate: "2021-04",
-    endDate: "2023-08",
-    focus: "Backend APIs and full-stack work on a wealth-management platform.",
-    summary:
-      "Backend and API engineering on a wealth-management platform, plus the full-stack work to put those APIs in front of customers.",
-    bullets: [
-      "Reduced API latency from roughly 800 ms to 500 ms by executing independent downstream calls concurrently instead of sequentially; the endpoint was waiting on calls that had no dependency on each other.",
-      "Decomposed a 25+ endpoint service into two independently deployable microservices, so the two halves could ship on their own schedules and a fault in one stopped taking the other down with it.",
-      "Automated investment-processing workflows and customer notifications on AWS S3 and ECS, replacing steps that had been run by hand.",
-      "Built 25+ reusable React and TypeScript components across 10+ responsive screens, and integrated them against the APIs I had written on the backend.",
-    ],
-    technologies: ["C#", ".NET Core", "DynamoDB", "PostgreSQL", "AWS S3", "AWS ECS", "AWS Lambda", "API Gateway", "AWS SQS", "AWS SNS", "React", "TypeScript", "REST APIs"],
+    startDate: "2020-11",
+    endDate: "2023-03",
+    focus: "Backend APIs, event-driven processing, and full-stack pension and investment workflows.",
+    summary: "Built and maintained C#/.NET services and React/TypeScript interfaces for DNB pension and investment systems, with AWS infrastructure and production support.",
+    bullets: ["Designed REST APIs for pension and investment workflows integrating 4+ internal and external systems, including DNB microservices, Tietoevry services, Morningstar APIs, and DynamoDB.", "Improved API performance across 5+ services by parallelizing 2–3 independent downstream calls and caching repeated lookups.", "Built 25+ React/TypeScript components across 10+ pension and investment screens for balances, allocation, portfolio distribution, and fund selection.", "Designed event-driven pricing and investment processing using AWS ECS, SNS, and SQS across multiple product/customer segments.", "Standardized DTO and model transformations across layered services, reducing repetitive mapping code and simplifying endpoint development.", "Migrated 5+ repositories from Bitbucket/Jenkins/CloudFormation to GitLab, GitLab CI/CD, and Terraform across 4 environments.", "Supported ST, SIT, UAT, and Production by troubleshooting API integrations, authentication, DynamoDB, external services, and deployments.", "Upgraded backend services and dependencies from unsupported versions while preserving build and deployment compatibility."],
+    technologies: ["C#", ".NET", "React", "TypeScript", "DynamoDB", "REST APIs", "AWS ECS", "AWS SNS", "AWS SQS", "GitLab CI/CD", "Terraform"],
     advancementType: "standard",
     icon: "iron-pickaxe",
     evidenceItems: [
-      { icon: "repeater", label: "Concurrent calls", summary: "API latency from roughly 800 ms to 500 ms.", supportingBulletIndex: 0 },
-      { icon: "server-network", label: "Service split", summary: "A 25+ endpoint service into two deployable microservices.", supportingBulletIndex: 1 },
-      { icon: "hopper", label: "Workflow automation", summary: "Investment processing and notifications on AWS S3 and ECS.", supportingBulletIndex: 2 },
-      { icon: "crafting-table", label: "UI components", summary: "25+ reusable React components across 10+ screens.", supportingBulletIndex: 3 },
+      {
+        icon: "map",
+        label: "API integration",
+        summary: "4+ internal and external systems.",
+        supportingBulletIndex: 0
+      },
+      {
+        icon: "repeater",
+        label: "API performance",
+        summary: "Concurrent downstream calls and cached lookups across 5+ services.",
+        supportingBulletIndex: 1
+      },
+      {
+        icon: "crafting-table",
+        label: "UI components",
+        summary: "25+ components across 10+ screens.",
+        supportingBulletIndex: 2
+      },
+      {
+        icon: "server-network",
+        label: "Event-driven processing",
+        summary: "Pricing and investment processing with ECS, SNS, and SQS.",
+        supportingBulletIndex: 3
+      },
+      {
+        icon: "command-cube",
+        label: "Infrastructure migration",
+        summary: "5+ repositories migrated across 4 environments.",
+        supportingBulletIndex: 5
+      }
     ],
-    metrics: ["30+ REST APIs", "100K+ users", "100K+ customer accounts", "35% fewer production incidents", "95%+ sprint delivery rate", "100+ tracked tasks"],
+    clientOrContext: "DNB"
   },
   {
     id: "tcs-dnb-se2",
     organization: "Tata Consultancy Services",
-    clientOrContext: "DNB",
     title: "Software Engineer II",
-    startDate: "2023-09",
+    startDate: "2023-04",
     endDate: "2024-07",
-    focus: "Merger integration and release ownership for an inherited banking service.",
-    summary:
-      "DNB's merger with Sbanken required integrating Sbanken's savings and investment platform, whose microservices lacked the API specifications and system documentation the integration needed. I reverse-engineered them, then owned releases.",
-    bullets: [
-      "Reverse-engineered 15+ microservices for Sbanken's savings and investment platform, which processes 500K+ daily transactions, producing API specifications and system documentation to enable seamless DNB merger integration.",
-      "Owned 20+ production releases across four environments, covering backend development, testing, AWS deployment and release validation, as the engineer accountable for each one reaching production intact.",
-      "Built and maintained the delivery path with GitLab CI/CD and Terraform, using CloudWatch for observability.",
-      "Diagnosed production 4xx/5xx failures across service boundaries, where the reported symptom and the actual fault were usually in different services.",
-    ],
-    technologies: ["C#", ".NET Core", "AWS", "GitLab CI/CD", "Terraform", "CloudWatch", "REST APIs", "Microservices", "NUnit"],
+    focus: "Merger integration, transaction services, and production release ownership.",
+    summary: "Recovered undocumented Sbanken API contracts during the DNB merger and maintained transaction services through testing, releases, and production troubleshooting.",
+    bullets: ["Reverse-engineered 15+ undocumented Sbanken REST endpoints during the DNB-Sbanken merger, documenting API contracts, JWT authentication flows, downstream dependencies, data flows, and business rules for developers and QA.", "Developed and maintained transaction-related backend services, validating request/response contracts and edge cases with Postman and Swagger/OpenAPI.", "Owned selected microservices, delivering enhancements, resolving defects, and reviewing GitLab merge requests for code quality, test coverage, and maintainability.", "Delivered 20+ releases through ST, SIT, UAT, and Production using GitLab CI/CD and Terraform.", "Resolved production and pre-production issues across AWS-hosted services using CloudWatch logs, HTTP error analysis, authentication troubleshooting, and downstream dependency tracing."],
+    technologies: ["C#", ".NET", "REST APIs", "Microservices", "JWT", "Postman", "Swagger/OpenAPI", "AWS", "CloudWatch", "GitLab CI/CD", "Terraform"],
     advancementType: "milestone",
     icon: "compass",
     evidenceItems: [
-      { icon: "map", label: "Service mapping", summary: "15+ microservices reverse-engineered into API specs and docs.", supportingBulletIndex: 0 },
-      { icon: "shield", label: "Release ownership", summary: "20+ production releases across four environments.", supportingBulletIndex: 1 },
-      { icon: "command-cube", label: "Delivery pipeline", summary: "GitLab CI/CD and Terraform, observed with CloudWatch.", supportingBulletIndex: 2 },
-      { icon: "redstone-torch", label: "Production diagnosis", summary: "4xx/5xx failures traced across service boundaries.", supportingBulletIndex: 3 },
+      {
+        icon: "map",
+        label: "API contracts",
+        summary: "15+ undocumented REST endpoints mapped.",
+        supportingBulletIndex: 0
+      },
+      {
+        icon: "iron-pickaxe",
+        label: "Transaction services",
+        summary: "Request/response contracts and edge-case validation.",
+        supportingBulletIndex: 1
+      },
+      {
+        icon: "shield",
+        label: "Service ownership",
+        summary: "Enhancements, defect resolution, and merge-request review.",
+        supportingBulletIndex: 2
+      },
+      {
+        icon: "command-cube",
+        label: "Release delivery",
+        summary: "20+ releases across ST, SIT, UAT, and Production.",
+        supportingBulletIndex: 3
+      },
+      {
+        icon: "redstone-torch",
+        label: "Production diagnosis",
+        summary: "Logs, authentication, and downstream dependencies.",
+        supportingBulletIndex: 4
+      }
     ],
-    metrics: ["15+ microservices", "500K+ daily transactions", "99.8% service availability", "4 environments", "10+ C# .NET Core repositories", "25% reduction in PR rework/review time"],
+    clientOrContext: "DNB"
   },
   {
     id: "ub-tesserae",
     organization: "University at Buffalo",
-    clientOrContext: "Tesserae",
-    title: "Software Engineer, Part-time",
-    startDate: "2025-11",
+    title: "Software Engineer",
+    startDate: "2026-02",
     endDate: null,
-    location: "Remote",
-    website: "https://tesserae.caset.buffalo.edu/",
-    focus: "API performance and access control on a production research platform.",
-    summary:
-      "Tesserae is a research platform for intertextual analysis of classical corpora, used by scholars and run in production. My work is API performance, access control and making an inherited codebase safe to change.",
-    bullets: [
-      "Cut a rare-word API response from roughly 50,000 records to 50 per request. The endpoint was returning an entire result set to a client that only ever rendered a page of it; the fix was moving selection into the query rather than the browser.",
-      "Added role-based access control and rate limiting, securing 57+ admin endpoints that were previously reachable by any authenticated caller.",
-      "Debugged and refactored existing Flask and React code, and backed the changes with automated tests so the research team can deploy without manual verification.",
-      "Work AI-assisted with Claude Code and Codex for exploration and refactoring, with review and tests as the gate on anything that ships.",
-    ],
-    technologies: ["Python", "Flask", "React", "PostgreSQL", "RBAC", "Rate Limiting", "Pytest"],
+    focus: "Python/Flask performance, search cancellation, and research-platform security.",
+    summary: "Improved backend data paths and long-running search workflows on Tesserae, with session authentication, database-backed roles, and regression tests.",
+    bullets: ["Optimized Python/Flask data paths by eliminating an N+1 query pattern, adding SQL-backed pagination and lazy detail loading, and caching a ~700 KB metadata file per worker.", "Implemented cancellation across 7 long-running search pipelines from the React UI through Flask to cross-process workers under Apache/mod_wsgi.", "Introduced session-based authentication and database-backed roles to replace shared-password admin access, establishing the authorization model now used across 57 of 60 administrative routes.", "Expanded backend and frontend regression coverage using pytest, Vitest, and React Testing Library."],
+    technologies: ["Python", "Flask", "React", "PostgreSQL", "Session Authentication", "RBAC", "Apache/mod_wsgi", "pytest", "Vitest", "React Testing Library"],
     advancementType: "current",
     icon: "anvil",
     evidenceItems: [
-      { icon: "hopper", label: "Query-side paging", summary: "A response from roughly 50,000 records to 50.", supportingBulletIndex: 0 },
-      { icon: "shield", label: "Access control", summary: "RBAC and rate limiting on 57+ admin endpoints.", supportingBulletIndex: 1 },
-      { icon: "anvil", label: "Tested refactors", summary: "Flask and React changes backed by automated tests.", supportingBulletIndex: 2 },
-      { icon: "scroll", label: "Reviewed AI assist", summary: "Claude Code and Codex, gated by review and tests.", supportingBulletIndex: 3 },
+      {
+        icon: "hopper",
+        label: "Data paths",
+        summary: "SQL pagination, lazy loading, and per-worker metadata caching.",
+        supportingBulletIndex: 0
+      },
+      {
+        icon: "repeater",
+        label: "Search cancellation",
+        summary: "Cancellation across 7 cross-process pipelines.",
+        supportingBulletIndex: 1
+      },
+      {
+        icon: "shield",
+        label: "Authentication & roles",
+        summary: "Authorization model used across 57 of 60 admin routes.",
+        supportingBulletIndex: 2
+      },
+      {
+        icon: "book",
+        label: "Regression coverage",
+        summary: "pytest, Vitest, and React Testing Library.",
+        supportingBulletIndex: 3
+      }
     ],
+    clientOrContext: "Tesserae",
+    location: "Remote",
+    website: "https://tesserae.caset.buffalo.edu/"
   },
   {
     id: "skopus-ai",
     organization: "Skopus AI",
-    title: "Founding Engineer, Part-time",
+    website: "https://skopusai.com",
+    title: "Founding Engineer / AI Career Platform",
     startDate: "2026-05",
     endDate: null,
-    location: "Remote",
-    focus: "Founding engineer owning an AI/RAG service end-to-end.",
-    summary:
-      "Founding engineer on an AI product with no existing backend. I own the service end-to-end. I authored roughly 99% of a 13K+ source-line codebase, and every architectural call in it is mine.",
-    bullets: [
-      "Built and own an 8-endpoint AI/RAG service: semantic retrieval over pgvector, grounded analysis so answers stay tied to source material, intent routing to pick the right pipeline per request, and caching plus fallback workflows so a slow or failing model call degrades instead of breaking the product.",
-      "Enforce strict validation on every LLM response before it reaches a caller, which is what makes a probabilistic model safe to put behind a typed API contract.",
-      "Implemented Google OAuth end-to-end (OAuth 2.0 with PKCE, token handling and session security) rather than delegating auth to a drop-in widget.",
-      "Cover the API surface with contract testing so the Next.js/React front end and the service can move independently and integrate the two myself across the full stack.",
-    ],
-    technologies: ["Node.js", "TypeScript", "PostgreSQL", "pgvector", "Supabase", "AWS ECS", "OpenAI APIs", "Next.js", "React", "OAuth 2.0", "PKCE"],
+    focus: "Backend ownership, production RAG, secure services, and AWS delivery.",
+    summary: "Built and own the backend and separate RAG service for an AI career platform spanning resume ingestion, ATS analysis, and career Q&A.",
+    bullets: ["Built and owned a backend spanning 50+ REST API routes and a separate RAG service for resume ingestion, ATS analysis, and career Q&A.", "Hardened 8 OpenAI operations using 14 validation schemas, evidence-backed parsing, and 21 fallback paths.", "Automated TEST and PROD AWS ECS deployments with GitHub Actions, OIDC authentication, immutable image digests, health validation, and rollback controls.", "Secured backend-to-RAG traffic using HMAC-SHA256 signing, nonce replay protection, timestamps, and constant-time verification.", "Built concurrency-safe usage accounting across 5 AI features and 2 plan tiers using PostgreSQL advisory locks and reserve/commit/release workflows.", "Added observability around AI token usage, execution duration, success/failure, and request attribution."],
+    technologies: ["Node.js", "TypeScript", "PostgreSQL", "pgvector", "AWS ECS", "GitHub Actions", "Docker", "OpenAI APIs", "RAG", "Next.js", "React", "OAuth 2.0", "PKCE", "HMAC-SHA256"],
     advancementType: "current",
     icon: "enchanted-book",
     evidenceItems: [
-      { icon: "enchanted-book", label: "RAG service", summary: "8 endpoints: pgvector retrieval, routing, caching and fallback.", supportingBulletIndex: 0 },
-      { icon: "name-tag", label: "Validated output", summary: "Every LLM response checked against a typed API contract.", supportingBulletIndex: 1 },
-      { icon: "ender-chest", label: "OAuth with PKCE", summary: "Google OAuth, token handling and session security.", supportingBulletIndex: 2 },
-      { icon: "crafting-table", label: "Contract tests", summary: "Front end and service move independently.", supportingBulletIndex: 3 },
+      {
+        icon: "enchanted-book",
+        label: "Backend & RAG",
+        summary: "50+ REST API routes and a separate RAG service.",
+        supportingBulletIndex: 0
+      },
+      {
+        icon: "name-tag",
+        label: "Validated AI operations",
+        summary: "8 operations, 14 validation schemas, and 21 fallback paths.",
+        supportingBulletIndex: 1
+      },
+      {
+        icon: "command-cube",
+        label: "AWS deployments",
+        summary: "OIDC, immutable digests, health validation, and rollback.",
+        supportingBulletIndex: 2
+      },
+      {
+        icon: "shield",
+        label: "Service security",
+        summary: "HMAC signing and nonce replay protection.",
+        supportingBulletIndex: 3
+      },
+      {
+        icon: "repeater",
+        label: "Concurrency controls",
+        summary: "Advisory locks and reserve/commit/release accounting.",
+        supportingBulletIndex: 4
+      },
+      {
+        icon: "clock",
+        label: "AI observability",
+        summary: "Token usage, duration, outcomes, and request attribution.",
+        supportingBulletIndex: 5
+      }
     ],
-  },
+    location: "Remote"
+  }
 ];

@@ -1,9 +1,8 @@
-// Captured verbatim from Contact.tsx before the Nether portal redesign (Component 9).
-// Content is frozen: if a test against this fixture fails, fix the component, never this file.
+// Current authorized contact copy; channel destinations and functionality are preserved.
 export const SECTION_EYEBROW = "Nether Portal";
 export const SECTION_TITLE = "Open a connection";
 export const SECTION_DESCRIPTION =
-  "Open to Software Engineer, Backend, Full-Stack, Cloud and AI engineering roles. Email is the fastest way to reach me and I reply to everything.";
+  "Open to Software Engineer, Backend Engineer, Full-Stack Engineer, and Platform Engineer opportunities anywhere in the United States. Email is the fastest way to reach me.";
 export const PROMPT = "Choose a channel";
 export const EXTERNAL_TARGET = "_blank";
 export const EXTERNAL_REL = "noopener noreferrer";
@@ -21,4 +20,4 @@ export const ACTIONS = [
   { label: "Resume", href: "https://drive.google.com/file/d/19V3w4XkgKDMzZh3uAwgYrmuWBTB6IRsa/view?usp=sharing", external: true },
 ] as const;
 
-export const LOCATION_LINE = "New York · open to relocation";
+export const LOCATION_LINE = "Based in New York and open to Software Engineering opportunities anywhere in the United States, including remote, hybrid, onsite, and relocation opportunities.";

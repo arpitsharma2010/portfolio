@@ -3,7 +3,7 @@ import { ASSET_BASE } from "../../../utils/constants";
 
 /**
  * Single source for the Projects section: selector, panel, tooltips and tests all read from here.
- * Every statement is taken from the project copy already on the site; nothing is added from older resumes.
+ * Content follows the current positioning and existing project evidence.
  */
 export type ProjectTheme = "cartographer" | "vault" | "workbench" | "circuit" | "farm" | "library";
 
@@ -46,6 +46,76 @@ export interface ProjectDefinition extends Omit<ProjectSeed, "items"> {
 }
 
 const seeds: ProjectSeed[] = [
+{
+  id: "skopus-ai",
+  title: "Skopus AI",
+  summary: "AI career platform · Founding Engineer",
+  theme: "workbench",
+  container: "AI Engineering Chest",
+  badge: "enchanted-book",
+  problem: "Resume ingestion, ATS analysis, and career Q&A need grounded AI responses and reliable backend services.",
+  built: "Built and own 50+ REST API routes and a separate RAG service. Hardened 8 OpenAI operations with 14 validation schemas and 21 fallback paths. Automated TEST and PROD AWS ECS deployments with GitHub Actions, OIDC, immutable image digests, health validation, and rollback controls.",
+  challenge: "Concurrency-safe usage accounting across 5 AI features and 2 plan tiers uses PostgreSQL advisory locks and reserve/commit/release workflows. HMAC-SHA256 signing, timestamps, nonce replay protection, and constant-time verification secure backend-to-RAG traffic.",
+  outcome: "Observability covers AI token usage, execution duration, success/failure, and request attribution.",
+  stack: ["Node.js", "TypeScript", "REST APIs", "RAG", "OpenAI APIs", "PostgreSQL", "pgvector", "AWS ECS", "Docker", "GitHub Actions", "HMAC-SHA256"],
+  links: [{ label: "Visit Skopus AI", url: "https://skopusai.com" }],
+  items: [
+    {
+      id: "skopus-api",
+      itemName: "Backend & RAG",
+      icon: "server-network",
+      label: "Backend & RAG",
+      tip: "50+ REST API routes",
+      details: "Backend routes and a separate RAG service support resume ingestion, ATS analysis, and career Q&A.",
+      technologies: ["REST APIs", "RAG"]
+    },
+    {
+      id: "skopus-validation",
+      itemName: "AI Validation",
+      icon: "name-tag",
+      label: "AI Validation",
+      tip: "8 operations · 14 schemas · 21 fallbacks",
+      details: "Evidence-backed parsing and validation harden OpenAI operations.",
+      technologies: ["OpenAI APIs"]
+    },
+    {
+      id: "skopus-deploy",
+      itemName: "AWS Delivery",
+      icon: "command-cube",
+      label: "AWS Delivery",
+      tip: "TEST and PROD ECS deployments",
+      details: "GitHub Actions uses OIDC, immutable image digests, health validation, and rollback controls.",
+      technologies: ["AWS ECS", "GitHub Actions"]
+    },
+    {
+      id: "skopus-security",
+      itemName: "Service Security",
+      icon: "shield",
+      label: "Service Security",
+      tip: "HMAC-SHA256 signing",
+      details: "Nonce replay protection, timestamps, and constant-time verification secure service communication.",
+      technologies: ["HMAC-SHA256"]
+    },
+    {
+      id: "skopus-usage",
+      itemName: "Concurrency Controls",
+      icon: "repeater",
+      label: "Concurrency Controls",
+      tip: "5 AI features · 2 plan tiers",
+      details: "PostgreSQL advisory locks protect reserve/commit/release usage accounting.",
+      technologies: ["PostgreSQL"]
+    },
+    {
+      id: "skopus-observability",
+      itemName: "AI Observability",
+      icon: "clock",
+      label: "AI Observability",
+      tip: "Usage, duration, and outcomes",
+      details: "Tracks AI token usage, execution duration, success/failure, and request attribution.",
+      technologies: ["OpenAI APIs"]
+    }
+  ]
+},
   {
     id: "wandergenie",
     title: "WanderGenie",
@@ -55,9 +125,9 @@ const seeds: ProjectSeed[] = [
     badge: "compass",
     image: `${ASSET_BASE}Project/WanderGenie.jpeg`,
     problem: "A travel assistant that plans a trip by reasoning over real data instead of improvising an answer from the model's weights alone.",
-    built: "Three specialised agents coordinated with LangGraph, orchestrating four external tools and APIs across multi-step workflows. Retrieval is hybrid: pgvector for semantic similarity over embeddings, Neo4j for the relationships between places, combined with live external travel data before any recommendation is generated. Packaged with Docker and deployed on AWS.",
+    built: "Three specialised agents coordinated with LangGraph, orchestrating four external tools and APIs across multi-step workflows. Retrieval is hybrid: pgvector for semantic similarity over embeddings, Neo4j for the relationships between places, combined with live external travel data from OpenTripMap before any recommendation is generated. Packaged with Docker and deployed on AWS.",
     challenge: "Multi-agent graphs fail by looping: one agent hands work to another and the pair never terminates. Constraining the graph so each step either makes progress or hands back a deterministic fallback was the real engineering problem, not the prompting.",
-    stack: ["Python", "LangGraph", "OpenAI APIs", "pgvector", "Neo4j", "Embeddings", "Hybrid RAG", "Docker", "AWS"],
+    stack: ["Python", "LangGraph", "OpenAI APIs", "pgvector", "Neo4j", "Embeddings", "Hybrid RAG", "OpenTripMap", "Docker", "AWS"],
     links: [
       { label: "GitHub", url: "https://github.com/arpitsharma2010/WanderGenie-ai-travel-assistant" },
       { label: "DevPost", url: "https://devpost.com/software/wandergenie-ai-travel-assistant" },
@@ -74,7 +144,7 @@ const seeds: ProjectSeed[] = [
       { id: "wg-graph", itemName: "Redstone Dust", icon: "redstone-dust", label: "Place Graph", tip: "Relationships between places", technologies: ["Neo4j"],
         details: "Neo4j holds the relationships between places." },
       { id: "wg-rag", itemName: "Potion", icon: "potion", label: "Hybrid RAG", tip: "Vector + graph + live data", technologies: ["Hybrid RAG"],
-        details: "Retrieval is hybrid: pgvector similarity and Neo4j relationships are combined with live external travel data before any recommendation is generated." },
+        details: "Retrieval is hybrid: pgvector similarity and Neo4j relationships are combined with live external travel data from OpenTripMap before any recommendation is generated." },
       { id: "wg-guard", itemName: "Shield", icon: "shield", label: "Loop Guard", tip: "Progress or a deterministic fallback", technologies: ["LangGraph"],
         details: "Multi-agent graphs fail by looping. The graph is constrained so each step either makes progress or hands back a deterministic fallback." },
       { id: "wg-docker", itemName: "Barrel", icon: "barrel", label: "Packaging", tip: "Containerised service", technologies: ["Docker"],
@@ -91,16 +161,16 @@ const seeds: ProjectSeed[] = [
     container: "Redstone Storage Vault",
     badge: "redstone-dust",
     problem: "A working relational database engine written from scratch in C++: storage, indexing and query execution, not a wrapper over an existing one.",
-    built: "Disk-based storage with a buffer pool for caching pages in memory, a B+ Tree index for record retrieval and updates, and a Volcano-style iterator execution engine. Ordering and joins are handled by external merge sort and hash joins, so datasets larger than memory still process.",
+    built: "Disk-based storage with an LRU buffer pool for caching pages in memory, a B+ Tree index for record retrieval and updates, and a Volcano-style iterator execution engine. Ordering and joins are handled by external merge sort and hash joins, so datasets larger than memory still process.",
     challenge: "The gain came from the algorithms and the I/O pattern, which is the whole argument for understanding the layer underneath the query.",
     outcome: "Up to a 10x query-processing improvement on large datasets, from replacing nested-loop joins with hash joins and sorting externally rather than in memory.",
-    stack: ["C++", "B+ Tree", "Buffer Pool", "Volcano Model", "External Merge Sort", "Hash Joins", "POSIX I/O"],
+    stack: ["C++", "B+ Tree", "LRU Buffer Pool", "Volcano Model", "External Merge Sort", "Hash Joins", "POSIX I/O"],
     links: [],
     items: [
       { id: "tdb-storage", itemName: "Chest", icon: "chest", label: "Disk Storage", tip: "Disk-based record storage", technologies: ["C++", "POSIX I/O"],
         details: "Disk-based storage written from scratch in C++, not a wrapper over an existing engine." },
       { id: "tdb-buffer", itemName: "Hopper", icon: "hopper", label: "Buffer Pool", tip: "Caches pages in memory", technologies: ["Buffer Pool"],
-        details: "A buffer pool caches pages in memory." },
+        details: "An LRU buffer pool caches disk pages in memory." },
       { id: "tdb-index", itemName: "Map", icon: "map", label: "B+ Tree Index", tip: "Record retrieval and updates", technologies: ["B+ Tree"],
         details: "A B+ Tree index handles record retrieval and updates." },
       { id: "tdb-exec", itemName: "Repeater", icon: "repeater", label: "Execution Engine", tip: "Volcano-style iterators", technologies: ["Volcano Model"],
@@ -111,6 +181,37 @@ const seeds: ProjectSeed[] = [
         details: "Hash joins replaced nested-loop joins." },
       { id: "tdb-perf", itemName: "Clock", icon: "clock", label: "Query Performance", tip: "Up to 10x faster", technologies: ["Hash Joins", "External Merge Sort"],
         details: "Hash joins and external sorting produced up to a 10x query-processing improvement on large datasets." },
+    ],
+  },
+  {
+    id: "library",
+    title: "Library Management System",
+    summary: "Full-stack system with role-based dashboards",
+    theme: "library",
+    container: "Library Bookshelf",
+    badge: "enchanted-book",
+    problem: "A library system that administrators and borrowers both sign into, each with their own view.",
+    built: "A Java/Spring Boot 3 REST API with Spring MVC, Spring Security, Spring Data JPA/Hibernate, and MySQL, paired with a React/TypeScript frontend. JWT/OAuth-style resource-server security protects transactional checkout, return, and renewal workflows and role-based dashboards.",
+    stack: ["Java", "Spring Boot 3", "Spring MVC", "Spring Security", "Spring Data JPA/Hibernate", "MySQL", "React", "TypeScript", "REST APIs", "JWT"],
+    links: [
+      { label: "Frontend on GitHub", url: "https://github.com/arpitsharma2010/react-library-project" },
+      { label: "API on GitHub", url: "https://github.com/arpitsharma2010/spring-boot-library" },
+    ],
+    items: [
+      { id: "lib-system", itemName: "Book", icon: "book", label: "Full-Stack System", tip: "Admins and borrowers", technologies: ["Java", "React"],
+        details: "A full-stack library system used by administrators and borrowers." },
+      { id: "lib-api", itemName: "Iron Pickaxe", icon: "iron-pickaxe", label: "Spring Boot API", tip: "Java backend", technologies: ["Java", "Spring Boot"],
+        details: "The backend is a Spring Boot API written in Java." },
+      { id: "lib-jwt", itemName: "Name Tag", icon: "name-tag", label: "JWT Authentication", tip: "Token-based auth", technologies: ["JWT"],
+        details: "Authentication uses JWT." },
+      { id: "lib-oauth", itemName: "Portal", icon: "portal", label: "Resource-Server Security", tip: "JWT/OAuth-style security", technologies: ["Spring Security", "JWT"],
+        details: "JWT/OAuth-style resource-server security protects library workflows." },
+      { id: "lib-roles", itemName: "Shield", icon: "shield", label: "Role-Based Dashboards", tip: "Admin and borrower views", technologies: ["React"],
+        details: "Role-based dashboards for administrators and borrowers." },
+      { id: "lib-ui", itemName: "Crafting Table", icon: "crafting-table", label: "React Frontend", tip: "The dashboards' UI", technologies: ["React", "TypeScript"],
+        details: "The front end is built in React and TypeScript." },
+      { id: "lib-db", itemName: "Barrel", icon: "barrel", label: "MySQL Storage", tip: "Relational data", technologies: ["MySQL", "Spring Data JPA/Hibernate"],
+        details: "MySQL stores library data through Spring Data JPA/Hibernate." },
     ],
   },
   {
@@ -192,37 +293,7 @@ const seeds: ProjectSeed[] = [
         details: "The pipeline is written in Python." },
     ],
   },
-  {
-    id: "library",
-    title: "Library Management System",
-    summary: "Full-stack system with role-based dashboards",
-    theme: "library",
-    container: "Library Bookshelf",
-    badge: "enchanted-book",
-    problem: "A library system that administrators and borrowers both sign into, each with their own view.",
-    built: "A full-stack system with JWT/OAuth authentication and role-based dashboards for administrators and borrowers.",
-    stack: ["Java", "Spring Boot", "React", "SQL"],
-    links: [
-      { label: "Frontend on GitHub", url: "https://github.com/arpitsharma2010/react-library-project" },
-      { label: "API on GitHub", url: "https://github.com/arpitsharma2010/spring-boot-library" },
-    ],
-    items: [
-      { id: "lib-system", itemName: "Book", icon: "book", label: "Full-Stack System", tip: "Admins and borrowers", technologies: ["Java", "React"],
-        details: "A full-stack library system used by administrators and borrowers." },
-      { id: "lib-api", itemName: "Iron Pickaxe", icon: "iron-pickaxe", label: "Spring Boot API", tip: "Java backend", technologies: ["Java", "Spring Boot"],
-        details: "The backend is a Spring Boot API written in Java." },
-      { id: "lib-jwt", itemName: "Name Tag", icon: "name-tag", label: "JWT Authentication", tip: "Token-based auth", technologies: ["JWT"],
-        details: "Authentication uses JWT." },
-      { id: "lib-oauth", itemName: "Portal", icon: "portal", label: "OAuth Sign-in", tip: "OAuth authentication", technologies: ["OAuth"],
-        details: "OAuth sign-in alongside JWT authentication." },
-      { id: "lib-roles", itemName: "Shield", icon: "shield", label: "Role-Based Dashboards", tip: "Admin and borrower views", technologies: ["React"],
-        details: "Role-based dashboards for administrators and borrowers." },
-      { id: "lib-ui", itemName: "Crafting Table", icon: "crafting-table", label: "React Frontend", tip: "The dashboards' UI", technologies: ["React"],
-        details: "The front end is built in React." },
-      { id: "lib-db", itemName: "Barrel", icon: "barrel", label: "SQL Storage", tip: "Relational data", technologies: ["SQL"],
-        details: "Data is stored in a SQL database." },
-    ],
-  },
+
 ];
 
 export const projects: readonly ProjectDefinition[] = seeds.map((project) => ({
