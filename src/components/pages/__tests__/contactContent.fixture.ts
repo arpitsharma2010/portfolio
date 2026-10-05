@@ -17,7 +17,7 @@ export const CHANNELS = [
 
 export const ACTIONS = [
   { label: "Send message", href: "mailto:arpeet.sharma.1998@gmail.com", external: false },
-  { label: "Resume", href: "https://drive.google.com/file/d/19V3w4XkgKDMzZh3uAwgYrmuWBTB6IRsa/view?usp=sharing", external: true },
+  { label: "Resume", href: "https://drive.google.com/file/d/1CbOwHXZWWd0OlVN35aQIRQlCbBqkv32A/view?usp=sharing", external: true },
 ] as const;
 
 export const LOCATION_LINE = "Based in New York and open to Software Engineering opportunities anywhere in the United States, including remote, hybrid, onsite, and relocation opportunities.";

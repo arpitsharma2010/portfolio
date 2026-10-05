@@ -3,7 +3,7 @@ import { FiChevronLeft, FiChevronRight, FiExternalLink } from "react-icons/fi";
 import PageSection from "../common/PageSection.tsx";
 import { MinecraftItemIcon } from "../minecraft";
 import type { MinecraftIconName } from "../minecraft/types";
-import { RESUME_URL } from "../../utils/constants";
+import { RESUME_PREVIEW_URL, RESUME_URL } from "../../utils/constants";
 import "./resume/written-book.css";
 
 /** Two-page spread from this width up; below it the book shows one readable page at a time. */
@@ -175,6 +175,15 @@ const Resume: React.FC = () => {
 
         {/* This copy stays outside page state: always visible, always in the HTML. */}
         <div className="wbook__action">{resumeLink}</div>
+        <iframe
+          className="wbook__resume-preview"
+          title="Arpit Sharma resume"
+          src={RESUME_PREVIEW_URL}
+          width="640"
+          height="480"
+          loading="lazy"
+          allowFullScreen
+        />
       </article>
     </PageSection>
   );

@@ -99,6 +99,16 @@
 .wbook__action { display: flex; justify-content: center; }
 .wbook__action-icon { display: grid; place-items: center; width: 22px; height: 22px; }
 
+.wbook__resume-preview {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  height: clamp(480px, 75svh, 800px);
+  background: var(--wbook-paper);
+  border: 4px solid var(--wbook-edge);
+}
+
 /* Page turn: a short hinge from the spine plus fade. Content is never delayed or gated. */
 .wbook__spread--next > .wbook__page:not([hidden]) { transform-origin: left center; animation: wbook-turn 220ms ease-out; }
 .wbook__spread--prev > .wbook__page:not([hidden]) { transform-origin: right center; animation: wbook-turn-back 220ms ease-out; }

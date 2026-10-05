@@ -7,6 +7,6 @@ export const PAGE_HEADING = "Want the printable edition?";
 export const PAGE_COPY =
   "Open the full resume in Google Drive. It includes the same verified work history and engineering background presented throughout this world.";
 export const ACTION_LABEL = "Open resume";
-export const RESUME_HREF = "https://drive.google.com/file/d/19V3w4XkgKDMzZh3uAwgYrmuWBTB6IRsa/view?usp=sharing";
+export const RESUME_HREF = "https://drive.google.com/file/d/1CbOwHXZWWd0OlVN35aQIRQlCbBqkv32A/view?usp=sharing";
 export const RESUME_TARGET = "_blank";
 export const RESUME_REL = "noopener noreferrer";
