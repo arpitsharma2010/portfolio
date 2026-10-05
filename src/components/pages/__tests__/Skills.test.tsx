@@ -4,7 +4,7 @@ import Skills from "../Skills";
 import MinecraftHUD from "../../header/MinecraftHUD";
 import { coreToolkitItems, PROJECT_SOURCES, ROLE_SOURCES, SKILL_CATEGORIES, skillItems } from "../skills/skillItems";
 
-const chest = () => screen.getByRole("grid", { name: "Large Chest: technical skills" });
+const chest = () => screen.getByRole("region", { name: "Skill shelves" });
 const chestItems = () => within(chest()).getAllByRole("button");
 const detail = () => screen.getByText("Selected item").closest("section")!;
 const detailHeading = () => within(detail()).getByRole("heading", { level: 3 });
@@ -53,11 +53,11 @@ describe("skills data", () => {
   });
 });
 
-describe("Skills chest", () => {
+describe("Skills storage wall", () => {
   it("renders the semantic heading, chest presentation and every skill", () => {
     render(<Skills />);
     expect(screen.getByRole("heading", { level: 2, name: "Technical Skills" })).toBeInTheDocument();
-    expect(screen.getByText("Large Chest")).toBeInTheDocument();
+    expect(screen.getByText("Minecraft Armory")).toBeInTheDocument();
     expect(chestItems()).toHaveLength(skillItems.length);
     expect(skillItems.length).toBeGreaterThan(42);
     expect(screen.getByRole("status")).toHaveTextContent(`Showing ${skillItems.length} of ${skillItems.length} items`);
@@ -65,7 +65,7 @@ describe("Skills chest", () => {
 
   it("starts with no skill selected, filters immediately and never auto-selects a search result", () => {
     const { container } = render(<Skills />);
-    const pressedSlots = () => container.querySelectorAll(".mc-slot[aria-pressed='true']");
+    const pressedSlots = () => container.querySelectorAll(".sc-frame[aria-pressed='true']");
     expect(pressedSlots()).toHaveLength(0);
     expect(within(detail()).queryByRole("heading")).not.toBeInTheDocument();
 
@@ -86,13 +86,13 @@ describe("Skills chest", () => {
     expect(detail()).toHaveAttribute("aria-live", "polite");
   });
 
-  it("keeps empty chest slots out of the accessibility tree and focus order", () => {
+  it("renders labeled frames without empty or disabled inventory slots", () => {
     render(<Skills />);
-    const empties = chest().querySelectorAll(".mc-slot.is-empty");
-    expect(empties.length).toBeGreaterThan(0);
-    empties.forEach((empty) => {
-      expect(empty).toBeDisabled();
-      expect(empty).toHaveAttribute("aria-hidden", "true");
+    expect(chestItems()).toHaveLength(skillItems.length);
+    chestItems().forEach((button) => {
+      expect(button).toBeEnabled();
+      expect(button).not.toHaveAttribute("aria-hidden");
+      expect(button).toHaveAttribute("aria-controls", "sc-skill-detail");
     });
   });
 
@@ -105,7 +105,7 @@ describe("Skills chest", () => {
     const backend = skillItems.filter((item) => item.categoryId === "backend");
     expect(chestItems().map((button) => button.getAttribute("aria-label"))).toEqual(backend.map((item) => `${item.technology}, Backend`));
     expect(within(chest()).queryByRole("button", { name: /^Python,/ })).not.toBeInTheDocument();
-    expect(chest().querySelectorAll(".mc-slot")).toHaveLength(Math.ceil(skillItems.length / 9) * 9);
+    expect(chestItems()).toHaveLength(backend.length);
     expect(screen.getByRole("status")).toHaveTextContent(`Showing ${backend.length} of ${skillItems.length} items in Backend`);
     fireEvent.click(tab("All"));
     expect(chestItems()).toHaveLength(skillItems.length);
@@ -151,8 +151,10 @@ describe("Skills chest", () => {
     expect(within(detail()).queryByText("Experience")).not.toBeInTheDocument();
 
     fireEvent.keyDown(slot("AWS"), { key: "Enter" });
+    fireEvent.click(slot("AWS"));
     expect(detailHeading()).toHaveTextContent("AWS");
     fireEvent.keyDown(slot("Docker"), { key: " " });
+    fireEvent.click(slot("Docker"));
     expect(detailHeading()).toHaveTextContent("Docker");
 
     const rbac = slot("RBAC");
@@ -186,18 +188,32 @@ describe("Skills chest", () => {
     expect(react).toHaveFocus();
   });
 
-  it("exposes technology names and lore without interaction", () => {
-    render(<Skills />);
-    const python = slot("Python");
-    expect(document.getElementById(python.getAttribute("aria-describedby")!)).toHaveTextContent("Used in: Tesserae, WanderGenie");
-    const contents = screen.getByRole("heading", { name: "Chest contents" }).closest("section")!;
-    for (const item of skillItems) expect(contents).toHaveTextContent(item.technology);
+  it("shows every technology name in a button before any interaction", () => {
+    const { container } = render(<Skills />);
+    const names = [...chest().querySelectorAll(".sc-frame__name")].map((node) => node.textContent);
+    expect(names).toEqual(skillItems.map((item) => item.technology));
+    for (const button of chestItems()) {
+      const name = button.querySelector(".sc-frame__name")!;
+      expect(name).toBeVisible();
+      expect(button).toHaveAccessibleName(new RegExp(name.textContent!.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+    }
+    expect(container.querySelector(".sc-detail")).not.toBeVisible();
     expect(screen.queryByRole("tooltip", { hidden: true })).not.toBeInTheDocument();
+  });
+
+  it("puts the labeled Core Stack before the searchable category shelves", () => {
+    render(<Skills />);
+    const toolkit = screen.getByRole("list", { name: "Core Toolkit" });
+    expect([...toolkit.querySelectorAll(".sc-frame__name")].map((node) => node.textContent)).toEqual(coreToolkitItems.map((item) => item.technology));
+    expect(toolkit.compareDocumentPosition(chest()) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    for (const heading of ["Programming", "Backend", "Frontend", "Cloud & DevOps", "Databases", "Distributed Systems", "AI / LLM", "Security", "Testing / Tools"]) {
+      expect(within(chest()).getByRole("heading", { name: heading })).toBeVisible();
+    }
   });
 
   it("shares selection between the Core Toolkit and the chest", () => {
     render(<Skills />);
-    const toolkit = screen.getByRole("grid", { name: "Core Toolkit" });
+    const toolkit = screen.getByRole("list", { name: "Core Toolkit" });
     const buttons = within(toolkit).getAllByRole("button");
     expect(buttons).toHaveLength(coreToolkitItems.length);
     fireEvent.click(within(toolkit).getByRole("button", { name: /^React,/ }));
@@ -230,7 +246,7 @@ describe("Skills coexisting with the hotbar", () => {
     const first = slot("C#");
     first.focus();
     fireEvent.keyDown(first, { key: "ArrowDown" });
-    expect(document.activeElement?.closest("[role='grid']")).toBe(chest());
+    expect(chest()).toContainElement(document.activeElement as HTMLElement);
     expect(window.location.hash).toBe("");
   });
 

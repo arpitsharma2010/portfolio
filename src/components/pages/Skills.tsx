@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, type KeyboardEvent } from "react";
+import { flushSync } from "react-dom";
 import PageSection from "../common/PageSection.tsx";
-import { MinecraftInventoryGrid, MinecraftItemIcon, useMinecraftSelection } from "../minecraft";
+import { MinecraftItemIcon, useMinecraftSelection } from "../minecraft";
 import type { MinecraftItem } from "../minecraft";
 import {
   coreToolkitItems,
@@ -14,10 +15,55 @@ import {
 import "./skills/skills-chest.css";
 import { revealIfOffscreen } from "../../utils/motion";
 
-const CHEST_COLUMNS = 9;
-const CHEST_ROWS = Math.ceil(skillItems.length / CHEST_COLUMNS);
+/** Labels are part of each button, so the stack is readable before selection. */
+const SkillFrames = ({ items, label, selectedItemId, onSelect }: {
+  items: readonly SkillItem[];
+  label: string;
+  selectedItemId: string | null;
+  onSelect: (item: SkillItem) => void;
+}) => {
+  const handleKeys = (event: KeyboardEvent<HTMLUListElement>) => {
+    const buttons = [...event.currentTarget.querySelectorAll<HTMLButtonElement>("button")];
+    const index = buttons.indexOf(event.target as HTMLButtonElement);
+    if (index < 0) return;
+    const columns = getComputedStyle(event.currentTarget).gridTemplateColumns.split(" ").length;
+    const targets: Record<string, number> = {
+      ArrowRight: index + 1,
+      ArrowLeft: index - 1,
+      ArrowDown: index + columns,
+      ArrowUp: index - columns,
+      Home: 0,
+      End: buttons.length - 1,
+    };
+    if (!(event.key in targets)) return;
+    event.preventDefault();
+    buttons[targets[event.key]]?.focus();
+  };
 
-const slotLabel = (item: MinecraftItem) => `${(item as SkillItem).technology}, ${item.category}`;
+  return (
+    <ul className="sc-frames" aria-label={label} onKeyDown={handleKeys}>
+      {items.map((item) => (
+        <li key={item.id}>
+          <button
+            type="button"
+            className="sc-frame"
+            aria-label={`${item.technology}, ${item.categoryLabel}`}
+            aria-pressed={selectedItemId === item.id}
+            aria-controls="sc-skill-detail"
+            data-skill-id={item.id}
+            onClick={() => onSelect(item)}
+          >
+            <span className="sc-frame__icon" aria-hidden><MinecraftItemIcon name={item.icon} /></span>
+            <span className="sc-frame__name">{item.technology}</span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+const shelfLabel = (id: SkillCategoryId, label: string) =>
+  id === "languages" ? "Programming" : id === "testing" ? "Testing / Tools" : label;
 
 const EvidenceChips = ({ label, sources }: { label: string; sources: string[] }) => sources.length > 0 && (
   <div className="sc-detail__evidence">
@@ -26,9 +72,9 @@ const EvidenceChips = ({ label, sources }: { label: string; sources: string[] })
   </div>
 );
 
-/** Stays mounted while empty so the live region exists before the first pick; empty = label and a blank slot only. */
+/** Optional evidence stays mounted and opens only after an explicit selection. */
 const SkillDetail = ({ item, detailRef }: { item?: SkillItem; detailRef: React.Ref<HTMLElement> }) => (
-  <section ref={detailRef} className="sc-detail" aria-labelledby={item ? "sc-detail-title" : undefined} aria-live="polite">
+  <section id="sc-skill-detail" ref={detailRef} className="sc-detail" hidden={!item} aria-labelledby={item ? "sc-detail-title" : undefined} aria-live="polite">
     <p className="sc-label">Selected item</p>
     {item ? (
       <>
@@ -59,15 +105,14 @@ const Skills: React.FC = () => {
   const detailRef = useRef<HTMLElement>(null);
 
   const selectedItem = skillItems.find((item) => item.id === selectedItemId);
-  // Matches reflow to the front; the chest keeps its size so filtering never jumps the layout.
+  // Filtering preserves category shelves; selection never changes the available technologies.
   const visibleItems = skillItems.filter((item) => (category === "all" || item.categoryId === category) && matchesSearch(item, query));
   const categoryLabel = SKILL_CATEGORIES.find((entry) => entry.id === category)?.label;
   const status = `Showing ${visibleItems.length} of ${skillItems.length} items${categoryLabel ? ` in ${categoryLabel}` : ""}${query.trim() ? ` matching "${query.trim()}"` : ""}`;
 
   const selectSkill = (item: MinecraftItem) => {
-    select(item);
-    // Stacked layouts put the detail below the chest.
-    if (typeof window.matchMedia !== "function" || !window.matchMedia("(max-width: 1199px)").matches) return;
+    flushSync(() => select(item));
+    // Evidence is optional and remains reachable from any shelf.
     revealIfOffscreen(detailRef.current, .6, "nearest");
   };
 
@@ -75,7 +120,7 @@ const Skills: React.FC = () => {
 
   return (
     <PageSection
-      eyebrow="Large Chest"
+      eyebrow="Minecraft Armory"
       title="Technical Skills"
       description="The tools, languages and systems I build with. Explore engineering capabilities and their role, project, or toolkit context."
       variant="wood"
@@ -89,6 +134,19 @@ const Skills: React.FC = () => {
             </span>
             <p>Arpit&rsquo;s engineering toolkit · {skillItems.length} items</p>
           </div>
+
+          <section className="sc-toolkit" aria-labelledby="sc-core-title">
+            <h3 id="sc-core-title" className="sc-label">Core Stack</h3>
+            <p className="sc-note">Technologies with the broadest evidence across my roles and projects, in no particular order.</p>
+            <SkillFrames
+              items={coreToolkitItems}
+              label="Core Toolkit"
+              selectedItemId={selectedItemId}
+              onSelect={selectSkill}
+            />
+          </section>
+
+          <SkillDetail item={selectedItem} detailRef={detailRef} />
 
           <div className="sc-controls">
             <div className="sc-tabs" role="group" aria-label="Filter skills by category">
@@ -119,50 +177,28 @@ const Skills: React.FC = () => {
 
           <p className="sc-status" role="status">{status}</p>
 
-          <div className="sc-body">
-            <div className="sc-chest">
-              <MinecraftInventoryGrid
-                items={visibleItems}
-                rows={CHEST_ROWS}
-                columns={CHEST_COLUMNS}
-                mobileColumns={5}
-                ariaLabel="Large Chest: technical skills"
-                selectedItemId={selectedItemId}
-                onSelect={selectSkill}
-                getSlotLabel={slotLabel}
-              />
-              {visibleItems.length === 0 && <p className="sc-empty">No items match. Try another category or search.</p>}
-            </div>
-            <SkillDetail item={selectedItem} detailRef={detailRef} />
-          </div>
-
-          <div className="sc-toolkit">
-            <h3 className="sc-label">Core Toolkit</h3>
-            <p className="sc-note">Technologies with the broadest evidence across my roles and projects, in no particular order.</p>
-            <MinecraftInventoryGrid
-              items={coreToolkitItems}
-              rows={1}
-              columns={9}
-              mobileColumns={5}
-              ariaLabel="Core Toolkit"
-              selectedItemId={selectedItemId}
-              onSelect={selectSkill}
-              getSlotLabel={slotLabel}
-            />
-          </div>
+          <section className="sc-shelves" aria-label="Skill shelves">
+            {SKILL_CATEGORIES.map((entry) => {
+              const items = visibleItems.filter((item) => item.categoryId === entry.id);
+              if (items.length === 0) return null;
+              return (
+                <section key={entry.id} className="sc-shelf" aria-labelledby={`sc-shelf-${entry.id}`}>
+                  <h3 id={`sc-shelf-${entry.id}`} className="sc-shelf__title">
+                    <span aria-hidden><MinecraftItemIcon name={entry.icon} /></span>
+                    {shelfLabel(entry.id, entry.label)}
+                  </h3>
+                  <SkillFrames
+                    items={items}
+                    label={`${entry.label} skills`}
+                    selectedItemId={selectedItemId}
+                    onSelect={selectSkill}
+                  />
+                </section>
+              );
+            })}
+            {visibleItems.length === 0 && <p className="sc-empty">No items match. Try another category or search.</p>}
+          </section>
         </div>
-
-        <section className="sc-contents" aria-labelledby="sc-contents-title">
-          <h3 id="sc-contents-title">Chest contents</h3>
-          <dl>
-            {SKILL_CATEGORIES.map((entry) => (
-              <div key={entry.id}>
-                <dt>{entry.label}</dt>
-                <dd>{skillItems.filter((item) => item.categoryId === entry.id).map((item) => item.technology).join(", ")}</dd>
-              </div>
-            ))}
-          </dl>
-        </section>
       </div>
     </PageSection>
   );
