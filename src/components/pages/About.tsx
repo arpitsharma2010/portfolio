@@ -3,6 +3,7 @@ import PageSection from "../common/PageSection.tsx";
 import { MinecraftInventoryGrid, MinecraftItemIcon, MinecraftSlot, useMinecraftSelection } from "../minecraft";
 import type { MinecraftItem } from "../minecraft";
 import PlayerPreview from "./about/PlayerPreview.tsx";
+import AboutEntrance from "./about/AboutEntrance";
 import {
   aboutItems,
   craftingResult,
@@ -46,6 +47,7 @@ const About: React.FC = () => {
 
   return (
     <PageSection eyebrow="Player Inventory" title="About Arpit" variant="grass">
+      <AboutEntrance>
       <div className="player-inventory">
         <div className="pi-panel">
           <div className="pi-identity">
@@ -169,6 +171,7 @@ const About: React.FC = () => {
           </p>
         </div>
       </div>
+      </AboutEntrance>
     </PageSection>
   );
 };

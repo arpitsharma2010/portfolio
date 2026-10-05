@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 // Raw glob rather than node:fs (no @types/node); comments stripped so prose can't trip the guards.
-const sheets = import.meta.glob(["../index.css", "../components/header/minecraft-hud.css", "../components/end/end-encounter.css"], {
+const sheets = import.meta.glob(["../index.css", "../components/header/minecraft-hud.css", "../components/end/end-encounter.css", "../components/pages/about/about-entrance.css"], {
   query: "?raw",
   import: "default",
   eager: true,
@@ -10,6 +10,13 @@ const css = (path: string) => sheets[path].replace(/\/\*[\s\S]*?\*\//g, "");
 
 // jsdom has no layout engine, so these guard the specific sources of past horizontal overflow.
 describe("responsive layout guards", () => {
+  it("contains About particles without clipping inventory or intercepting input", () => {
+    const entranceCss = css("../components/pages/about/about-entrance.css");
+    expect(entranceCss).not.toMatch(/100vw|min-width:\s*[1-9]/);
+    expect(entranceCss).toMatch(/\.about-entrance__effect \{[^}]*inset: 0;[^}]*overflow: clip;[^}]*pointer-events: none/);
+    expect(entranceCss).not.toMatch(/\.about-entrance \{[^}]*overflow/);
+    expect(entranceCss).toMatch(/@media \(prefers-reduced-motion: reduce\)[\s\S]*opacity: 1/);
+  });
   it("never forces the page wider than a 320px viewport with a classic scrollbar", () => {
     const body = css("../index.css").match(/\nbody \{[^}]*\}/)![0];
     expect(body).not.toMatch(/min-width/);

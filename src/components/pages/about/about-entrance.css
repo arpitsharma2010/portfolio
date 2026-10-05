@@ -1,0 +1,64 @@
+.about-entrance {
+  position: relative;
+  min-width: 0;
+}
+
+.about-entrance[data-entrance="charge"] > .about-entrance__content {
+  opacity: 0;
+}
+
+.about-entrance__effect {
+  position: absolute;
+  inset: 0;
+  overflow: clip;
+  pointer-events: none;
+  /* Only decoration is clipped; inventory focus rings and tooltips remain intact. */
+}
+
+.about-entrance__creature {
+  position: absolute;
+  top: 36px;
+  left: calc(50% - 40px);
+  width: 80px;
+  height: 104px;
+  animation: about-creature-enter 200ms ease-out both, about-creature-charge 750ms 200ms ease-in both;
+}
+
+@keyframes about-creature-enter {
+  from { transform: translateX(-260px); }
+  to { transform: translateX(0); }
+}
+
+@keyframes about-creature-charge {
+  from { filter: brightness(1); }
+  to { filter: brightness(2.6); transform: scale(1.12); }
+}
+
+.about-entrance__burst {
+  position: absolute;
+  top: 88px;
+  left: 50%;
+}
+
+.about-entrance__burst i {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #77ae57;
+  box-shadow: inset -3px -3px #203f35;
+  animation: about-block-burst 400ms ease-out both;
+}
+
+.about-entrance__burst i:nth-child(3n) { background: #e8d58d; }
+.about-entrance__burst i:nth-child(4n) { width: 8px; height: 8px; }
+
+@keyframes about-block-burst {
+  from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  to { opacity: 0; transform: translate(var(--particle-x), var(--particle-y)) rotate(var(--particle-turn)) scale(.35); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-entrance[data-entrance="charge"] > .about-entrance__content { opacity: 1; }
+  .about-entrance__effect { display: none; }
+  .about-entrance__creature, .about-entrance__burst i { animation: none; }
+}
