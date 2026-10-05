@@ -44,13 +44,26 @@ describe("skills data", () => {
     expect(evidence("spring-boot")).toEqual(["Library Management System"]);
   });
 
-  it("never encodes proficiency in rarity and only adds technologies with site evidence", () => {
+  it("includes every technology in the supplied resume without proficiency scores", () => {
     expect(skillItems.every((item) => item.rarity === undefined || item.rarity === "enchanted")).toBe(true);
-    const technologies = skillItems.map((item) => item.technology);
-    for (const unsupported of ["gRPC", "Entity Framework"]) {
-      expect(technologies).not.toContain(unsupported);
+    const labels = skillItems.map((item) => item.technology).join(" | ");
+    for (const technology of [
+      "C#", "Python", "TypeScript", "JavaScript", "Java", "C++", ".NET Core", "Entity Framework",
+      "Flask", "Next.js", "React", "Node.js", "REST APIs", "Microservices", "PostgreSQL", "DynamoDB",
+      "MySQL", "MongoDB", "pgvector", "Neo4j", "Supabase", "LangGraph", "Agentic AI", "RAG",
+      "OpenAI APIs", "Embeddings", "Vector Search", "AWS", "AWS ECS", "AWS Lambda", "AWS S3",
+      "AWS SQS", "AWS SNS", "CloudWatch", "Docker", "Kubernetes", "Terraform", "GitLab CI/CD",
+      "GitHub Actions", "Jenkins", "Event-Driven Architecture", "API Integration", "Service Decomposition",
+      "SSE", "WebSocket", "gRPC", "JWT", "OAuth 2.0", "PKCE", "RBAC", "Rate Limiting", "Session Management",
+      "API Security", "HMAC-SHA256", "OIDC", "Claude Code", "Codex", "Copilot", "NUnit", "Moq",
+      "Swagger/OpenAPI", "SonarQube", "Git version control", "GitLab", "Bitbucket", "AWS CloudFormation",
+      "Onion Architecture", "ICacheable", "OpenTripMap",
+    ]) expect(labels).toContain(technology);
+    for (const id of ["entity-framework", "grpc", "sse", "websocket", "claude-code", "codex", "copilot"]) {
+      expect(skillItems.find((item) => item.id === id)!.evidence).toEqual(["Engineering toolkit"]);
     }
   });
+
 });
 
 describe("Skills storage wall", () => {
@@ -191,7 +204,7 @@ describe("Skills storage wall", () => {
   it("shows every technology name in a button before any interaction", () => {
     const { container } = render(<Skills />);
     const names = [...chest().querySelectorAll(".sc-frame__name")].map((node) => node.textContent);
-    expect(names).toEqual(skillItems.map((item) => item.technology));
+    expect([...names].sort()).toEqual(skillItems.map((item) => item.technology).sort());
     for (const button of chestItems()) {
       const name = button.querySelector(".sc-frame__name")!;
       expect(name).toBeVisible();

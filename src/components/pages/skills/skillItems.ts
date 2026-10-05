@@ -147,7 +147,7 @@ const seeds: SkillSeed[] = [
   },
   {
     id: "dotnet",
-    technology: ".NET",
+    technology: ".NET Core",
     itemName: "Diamond Pickaxe",
     icon: "diamond-pickaxe",
     categoryId: "backend",
@@ -451,8 +451,8 @@ const seeds: SkillSeed[] = [
     itemName: "Potion",
     icon: "potion",
     categoryId: "ai",
-    summary: "Grounded resume and career analysis and hybrid travel retrieval.",
-    uses: ["Resume and career Q&A", "Grounded travel planning"],
+    summary: "Retrieval-Augmented Generation (RAG) for grounded resume and career analysis and hybrid travel retrieval.",
+    uses: ["Resume and career Q&A", "Grounded travel planning", "Retrieval-Augmented Generation"],
     evidence: ["Skopus AI", "WanderGenie"]
   },
   {
@@ -587,13 +587,243 @@ const seeds: SkillSeed[] = [
   },
   {
     id: "postman",
-    technology: "Postman / Swagger",
+    technology: "Postman / Swagger/OpenAPI",
     itemName: "Book",
     icon: "book",
     categoryId: "testing",
     summary: "Validated transaction API request/response contracts and edge cases.",
     uses: ["Contract validation", "Edge-case checks"],
     evidence: ["TCS (DNB)"]
+  },
+  {
+    id: "entity-framework",
+    technology: "Entity Framework",
+    itemName: "Iron Pickaxe",
+    icon: "iron-pickaxe",
+    categoryId: "backend",
+    summary: "Object-relational mapping in my backend engineering toolkit.",
+    uses: ["Relational data access"],
+    evidence: ["Engineering toolkit"]
+  },
+  {
+    id: "onion-architecture",
+    technology: "Onion Architecture",
+    itemName: "Server Network",
+    icon: "server-network",
+    categoryId: "backend",
+    summary: "Layered API architecture for C#/.NET Core services at TCS (DNB).",
+    uses: ["Layered services", "DTO transformations"],
+    evidence: ["TCS (DNB)"]
+  },
+  {
+    id: "icacheable",
+    technology: "ICacheable",
+    itemName: "Repeater",
+    icon: "repeater",
+    categoryId: "backend",
+    summary: "Cached repeated downstream lookups in the DNB API workflows.",
+    uses: ["API lookup caching"],
+    evidence: ["TCS (DNB)"]
+  },
+  {
+    id: "supabase",
+    technology: "Supabase",
+    itemName: "Emerald Ore",
+    icon: "emerald-ore",
+    categoryId: "databases",
+    summary: "Supabase in my database and application development toolkit.",
+    uses: ["Application data services"],
+    evidence: ["Engineering toolkit"]
+  },
+  {
+    id: "lambda",
+    technology: "AWS Lambda",
+    itemName: "Command Block",
+    icon: "command-cube",
+    categoryId: "cloud",
+    summary: "Serverless compute in my AWS engineering toolkit.",
+    uses: ["Serverless functions"],
+    evidence: ["Engineering toolkit"]
+  },
+  {
+    id: "cloudformation",
+    technology: "AWS CloudFormation",
+    itemName: "Anvil",
+    icon: "anvil",
+    categoryId: "cloud",
+    summary: "Converted CloudFormation templates to Terraform across the DNB delivery environments.",
+    uses: ["Infrastructure template migration"],
+    evidence: ["TCS (DNB)"]
+  },
+  {
+    id: "oidc",
+    technology: "OIDC",
+    itemName: "Name Tag",
+    icon: "name-tag",
+    categoryId: "security",
+    summary: "GitHub Actions authenticates to AWS using OIDC instead of stored AWS keys at Skopus AI.",
+    uses: ["Deployment authentication"],
+    evidence: ["Skopus AI"]
+  },
+  {
+    id: "decomposition",
+    technology: "Service Decomposition",
+    itemName: "Server Network",
+    icon: "server-network",
+    categoryId: "distributed",
+    summary: "Service decomposition in my distributed systems engineering toolkit.",
+    uses: ["Service boundaries"],
+    evidence: ["Engineering toolkit"]
+  },
+  {
+    id: "sse",
+    technology: "SSE",
+    itemName: "Redstone Torch",
+    icon: "redstone-torch",
+    categoryId: "distributed",
+    summary: "Server-Sent Events in my API communication toolkit.",
+    uses: ["Server-to-client event streams"],
+    evidence: ["Engineering toolkit"]
+  },
+  {
+    id: "websocket",
+    technology: "WebSocket",
+    itemName: "Repeater",
+    icon: "repeater",
+    categoryId: "distributed",
+    summary: "WebSocket in my API communication toolkit.",
+    uses: ["Bidirectional communication"],
+    evidence: ["Engineering toolkit"]
+  },
+  {
+    id: "grpc",
+    technology: "gRPC",
+    itemName: "Server Network",
+    icon: "server-network",
+    categoryId: "distributed",
+    summary: "gRPC in my distributed services toolkit.",
+    uses: ["Remote procedure calls"],
+    evidence: ["Engineering toolkit"]
+  },
+  {
+    id: "rate-limiting",
+    technology: "Rate Limiting",
+    itemName: "Hopper",
+    icon: "hopper",
+    categoryId: "security",
+    summary: "Rate limiting in my API security toolkit.",
+    uses: ["Request-rate controls"],
+    evidence: ["Engineering toolkit"]
+  },
+  {
+    id: "session-management",
+    technology: "Session Management",
+    itemName: "Shield",
+    icon: "shield",
+    categoryId: "security",
+    summary: "Session management in my authentication and security toolkit.",
+    uses: ["Session lifecycle"],
+    evidence: ["Engineering toolkit"]
+  },
+  {
+    id: "claude-code",
+    technology: "Claude Code",
+    itemName: "Book",
+    icon: "book",
+    categoryId: "testing",
+    summary: "AI-assisted development tooling, with engineering review and tests governing changes.",
+    uses: ["Development assistance"],
+    evidence: ["Engineering toolkit"]
+  },
+  {
+    id: "codex",
+    technology: "Codex",
+    itemName: "Scroll",
+    icon: "scroll",
+    categoryId: "testing",
+    summary: "AI-assisted development tooling, with engineering review and tests governing changes.",
+    uses: ["Development assistance"],
+    evidence: ["Engineering toolkit"]
+  },
+  {
+    id: "copilot",
+    technology: "Copilot",
+    itemName: "Crafting Table",
+    icon: "crafting-table",
+    categoryId: "testing",
+    summary: "AI-assisted development tooling, with engineering review and tests governing changes.",
+    uses: ["Development assistance"],
+    evidence: ["Engineering toolkit"]
+  },
+  {
+    id: "nunit",
+    technology: "NUnit",
+    itemName: "Book",
+    icon: "book",
+    categoryId: "testing",
+    summary: "Unit testing in my .NET engineering toolkit.",
+    uses: ["Unit tests"],
+    evidence: ["Engineering toolkit"]
+  },
+  {
+    id: "moq",
+    technology: "Moq",
+    itemName: "Bow",
+    icon: "bow",
+    categoryId: "testing",
+    summary: "Mocking in my .NET testing toolkit.",
+    uses: ["Test doubles"],
+    evidence: ["Engineering toolkit"]
+  },
+  {
+    id: "sonarqube",
+    technology: "SonarQube",
+    itemName: "Anvil",
+    icon: "anvil",
+    categoryId: "testing",
+    summary: "Static analysis in my development toolkit.",
+    uses: ["Code-quality analysis"],
+    evidence: ["Engineering toolkit"]
+  },
+  {
+    id: "git",
+    technology: "Git version control",
+    itemName: "Map",
+    icon: "map",
+    categoryId: "testing",
+    summary: "Version control in my software delivery toolkit.",
+    uses: ["Change tracking", "Code collaboration"],
+    evidence: ["Engineering toolkit"]
+  },
+  {
+    id: "gitlab",
+    technology: "GitLab",
+    itemName: "Book",
+    icon: "book",
+    categoryId: "testing",
+    summary: "Repository migration and merge-request review on the DNB account.",
+    uses: ["Repositories", "Merge requests"],
+    evidence: ["TCS (DNB)"]
+  },
+  {
+    id: "bitbucket",
+    technology: "Bitbucket",
+    itemName: "Chest",
+    icon: "chest",
+    categoryId: "testing",
+    summary: "Migrated DNB repositories from Bitbucket to GitLab.",
+    uses: ["Repository migration"],
+    evidence: ["TCS (DNB)"]
+  },
+  {
+    id: "opentripmap",
+    technology: "OpenTripMap",
+    itemName: "Compass",
+    icon: "compass",
+    categoryId: "ai",
+    summary: "Travel data combined with vector and graph retrieval in WanderGenie.",
+    uses: ["Place recommendations"],
+    evidence: ["WanderGenie"]
   }
 ];
 
