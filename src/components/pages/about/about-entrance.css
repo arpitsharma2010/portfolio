@@ -15,42 +15,49 @@
   /* Only decoration is clipped; inventory focus rings and tooltips remain intact. */
 }
 
+.about-entrance__stage {
+  position: sticky;
+  top: 80px;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: min(68svh, 640px);
+}
+
 .about-entrance__creature {
-  position: absolute;
-  top: 36px;
-  left: calc(50% - 40px);
-  width: 80px;
-  height: 104px;
+  width: min(80%, 360px, 42svh);
+  height: auto;
+  filter: drop-shadow(12px 16px 0 rgb(32 63 53 / 20%));
   animation: about-creature-enter 200ms ease-out both, about-creature-charge 750ms 200ms ease-in both;
 }
 
 @keyframes about-creature-enter {
-  from { transform: translateX(-260px); }
+  from { transform: translateX(-460px); }
   to { transform: translateX(0); }
 }
 
 @keyframes about-creature-charge {
-  from { filter: brightness(1); }
-  to { filter: brightness(2.6); transform: scale(1.12); }
+  from { filter: brightness(1) drop-shadow(12px 16px 0 rgb(32 63 53 / 20%)); }
+  to { filter: brightness(2.6) drop-shadow(0 0 28px #b3d777); transform: scale(1.12); }
 }
 
 .about-entrance__burst {
   position: absolute;
-  top: 88px;
+  top: 50%;
   left: 50%;
 }
 
 .about-entrance__burst i {
   position: absolute;
-  width: 12px;
-  height: 12px;
+  width: 24px;
+  height: 24px;
   background: #77ae57;
   box-shadow: inset -3px -3px #203f35;
   animation: about-block-burst 400ms ease-out both;
 }
 
 .about-entrance__burst i:nth-child(3n) { background: #e8d58d; }
-.about-entrance__burst i:nth-child(4n) { width: 8px; height: 8px; }
+.about-entrance__burst i:nth-child(4n) { width: 16px; height: 16px; }
 
 @keyframes about-block-burst {
   from { opacity: 1; transform: translate(-50%, -50%) scale(1); }

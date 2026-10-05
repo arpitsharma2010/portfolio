@@ -67,6 +67,7 @@ export default function AboutEntrance({ children }: { children: ReactNode }) {
       <div className="about-entrance__content">{children}</div>
       {phase !== "idle" && (
         <div className="about-entrance__effect" aria-hidden="true">
+          <div className="about-entrance__stage">
           {phase === "charge" ? (
             // Original moss-green creature: offset visor, antenna, plated torso and four feet.
             <svg className="about-entrance__creature" viewBox="0 0 80 104" focusable="false" shapeRendering="crispEdges">
@@ -80,7 +81,7 @@ export default function AboutEntrance({ children }: { children: ReactNode }) {
             <div className="about-entrance__burst">
               {Array.from({ length: 24 }, (_, index) => {
                 const angle = index * Math.PI * 2 / 24;
-                const distance = 80 + index % 4 * 28;
+                const distance = 160 + index % 4 * 64;
                 return <i key={index} style={{
                   "--particle-x": `${Math.cos(angle) * distance}px`,
                   "--particle-y": `${Math.sin(angle) * distance}px`,
@@ -89,6 +90,7 @@ export default function AboutEntrance({ children }: { children: ReactNode }) {
               })}
             </div>
           )}
+          </div>
         </div>
       )}
     </div>
