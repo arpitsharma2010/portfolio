@@ -48,7 +48,7 @@ const Header: React.FC<HeaderProps> = ({
         </a>
         <div className="world-status" role="group" aria-label="Player status">
           <span className="world-status__online"><i aria-hidden /> Available for opportunities</span>
-          <span className="world-status__coords">New York • Open to U.S.-wide opportunities</span>
+          <span className="world-status__coords">New York • Open to U.S. wide opportunities</span>
           <button type="button" className="world-sound" aria-pressed={soundEnabled} onClick={toggleSound}>
             {soundEnabled ? <FiVolume2 aria-hidden /> : <FiVolumeX aria-hidden />}
             <span>{soundEnabled ? "Sound On" : "Sound Off"}</span>
